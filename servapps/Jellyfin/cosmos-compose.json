@@ -1,0 +1,33 @@
+{
+  "services": {
+    "{{self}}": {
+      "image": "lscr.io/linuxserver/jellyfin:latest",
+      "container_name": "{{self}}",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID=1000",
+        "PGID=1000"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true"
+      },
+      "volumes": [{
+        "source": "{{self}}-config",
+        "target": "/config",
+        "type": "volume"
+      }],
+      "routes": [
+        {
+          "name": "{{self}}",
+          "description": "Expose {{self}} to the web",
+          "useHost": true,
+          "target": "http://{{self}}:8096"
+        }
+      ]
+    }
+  },
+  "volumes": {
+    "{{self}}-config": {
+    }
+  }
+}
