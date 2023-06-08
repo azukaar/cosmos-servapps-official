@@ -6,7 +6,8 @@
       "restart": "unless-stopped",
       "environment": [
         "PUID=1000",
-        "PGID=1000"
+        "PGID=1000",
+        "TZ="
       ],
       "labels": {
         "cosmos-force-network-secured": "true"
@@ -21,7 +22,8 @@
           "name": "{{self}}",
           "description": "Expose {{self}} to the web",
           "useHost": true,
-          "target": "http://{{self}}:8096"
+          "target": "http://{{self}}:8096",
+          "mode": "SERVAPP"
         }
       ]
     }

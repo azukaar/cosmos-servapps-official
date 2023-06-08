@@ -1,0 +1,37 @@
+{
+  "services": {
+    "{{self}}": {
+      "image": "linuxserver/plex:latest",
+      "container_name": "{{self}}",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "VERSION=docker",
+        "TZ="
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true"
+      },
+      "volumes": [
+        {
+          "source": "{{self}}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{{self}}",
+          "description": "Expose {{self}} to the web",
+          "useHost": true,
+          "target": "http://{{self}}:32400",
+          "mode": "SERVAPP"
+        }
+      ]
+    }
+  },
+  "volumes": {
+    "{{self}}-config": {}
+  }
+}
