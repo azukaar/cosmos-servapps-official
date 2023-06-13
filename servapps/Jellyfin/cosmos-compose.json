@@ -4,13 +4,13 @@
       {
         "name": "moviePath",
         "label": "What is the path to your movies? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/movies",
+        "initialValue": "/usr/movies",
         "type": "text"
       },
       {
         "name": "seriePath",
         "label": "What is the path to your series? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/series",
+        "initialValue": "/usr/series",
         "type": "text"
       }
     ]

@@ -5,13 +5,13 @@
       {
         "name": "downloadPath",
         "label": "What is the path to download to? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/downloads",
+        "initialValue": "/usr/downloads",
         "type": "text"
       },
       {
         "name": "seriePath",
         "label": "What is the path to your series? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/series",
+        "initialValue": "/usr/series",
         "type": "text"
       },
       {

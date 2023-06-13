@@ -5,7 +5,7 @@
       {
         "name": "dataPath",
         "label": "What is the path to yrou data? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/data",
+        "initialValue": "/usr/data",
         "type": "text"
       }
     ]
