@@ -11,7 +11,7 @@
         "TZ=auto"
       ],
       "labels": {
-        "cosmos-force-network-secured": "true",
+        "cosmos-force-network-secured": "true"
       },
       "volumes": [{
         "source": "{ServiceName}-config",
