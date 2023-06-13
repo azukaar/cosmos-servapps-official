@@ -1,4 +1,20 @@
 {
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "moviePath",
+        "label": "What is the path to your movies? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/movies",
+        "type": "text"
+      },
+      {
+        "name": "seriePath",
+        "label": "What is the path to your series? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/series",
+        "type": "text"
+      }
+    ]
+  },
   "services": {
     "{ServiceName}": {
       "image": "linuxserver/plex:latest",
@@ -15,11 +31,27 @@
       "labels": {
         "cosmos-force-network-secured": "true"
       },
-      "volumes": [{
-        "source": "{ServiceName}-config",
-        "target": "/config",
-        "type": "volume"
-      }],
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {if Context.moviePath}
+        , {
+          "source": "{Context.moviePath}",
+          "target": "/data/movies",
+          "type": "bind"
+        }
+        {/if}
+        {if Context.seriePath}
+        , {
+          "source": "{Context.seriePath}",
+          "target": "/data/tvshows",
+          "type": "bind"
+        }
+        {/if}
+      ],
       "routes": [
         {
           "name": "{ServiceName}",
