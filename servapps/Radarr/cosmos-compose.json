@@ -10,8 +10,8 @@
       },
       {
         "name": "moviePath",
-        "label": "What is the path to your movie? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/movie",
+        "label": "What is the path to your movies? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/movies",
         "type": "text"
       },
       {

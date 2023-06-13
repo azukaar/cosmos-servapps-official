@@ -10,8 +10,8 @@
       },
       {
         "name": "musicPath",
-        "label": "What is the path to your music? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/music",
+        "label": "What is the path to your musics? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/musics",
         "type": "text"
       },
       {

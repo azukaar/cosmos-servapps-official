@@ -10,8 +10,8 @@
       },
       {
         "name": "seriePath",
-        "label": "What is the path to your serie? (leave empty to not mount anything)",
-        "initialValue": "/var/lib/serie",
+        "label": "What is the path to your series? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/series",
         "type": "text"
       },
       {
