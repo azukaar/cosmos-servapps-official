@@ -1,0 +1,99 @@
+
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "downloadPath",
+        "label": "What is the path to download to? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/downloads",
+        "type": "text"
+      },
+      {
+        "name": "musicPath",
+        "label": "What is the path to your music? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/music",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "downloader",
+        "name-container": "downloader-name",
+        "label": "What downloader do you want to use?",
+        "type": "container"
+      }
+      {if Context.downloader}
+      , {
+        "type": "warning",
+        "label": "When you first start Lidarr, please connect it to your downloader by using the URL: {Context.downloader}"
+      }
+      {/if}
+    ],
+    "post-install": [
+      {if Context.downloader}
+      {
+        "type": "warning",
+        "label": "When you first start Lidarr, please connect it to your downloader by using the URL: {Context.downloader}"
+      }
+      {/if}
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "lscr.io/linuxserver/lidarr:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {if Context.downloadPath}
+        , {
+          "source": "{Context.downloadPath}",
+          "target": "/downloads",
+          "type": "bind"
+        }
+        {/if}
+        {if Context.musicPath}
+        , {
+          "source": "{Context.musicPath}",
+          "target": "/music",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8686",
+          "mode": "SERVAPP",
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+      {if Context.downloader}
+      , "links": [
+        "{Context.downloader-name}"
+      ]
+      {/if}
+    }
+  }
+}

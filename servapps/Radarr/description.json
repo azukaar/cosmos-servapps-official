@@ -1,0 +1,8 @@
+{
+  "name": "Radarr",
+  "longDescription": "<p>Radarr is an independent fork of Sonarr reworked for automatically downloading movies via Usenet and BitTorrent. The project was inspired by other Usenet/BitTorrent movie downloaders such as CouchPotato.</p><p>Radarr provides a sleek, customizable interface to manage your movie collection, offering features like trailer linking, metadata fetching, and more. The software integrates with popular download clients and can automate your movie download process.</p><p>Radarr supports a variety of platforms including Windows, Linux, and MacOS, and also offers a mobile-friendly web interface. Setting up Radarr is straightforward. Get started today to streamline your movie downloading and management experience!</p>",
+  "description": "Radarr is an automated movie download application, similar to CouchPotato. It helps you to manage your movie collection with features like metadata fetching, trailer linking, and integration with popular download clients. Radarr works across Windows, Linux, MacOS and has a mobile-friendly web interface. Start using Radarr now to automate and enhance your movie downloading and management process.",
+  "tags": ["download", "torrent", "usenet", "movies", "automated", "downloader", "media", "collection", "usenet", "bittorrent", "windows", "linux", "macos", "web interface", "metadata", "movie management", "movie collection", "radarr"],
+  "repository": "https://github.com/Radarr/Radarr",
+  "image": "https://hub.docker.com/r/linuxserver/radarr"
+}

@@ -1,0 +1,55 @@
+
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "dataPath",
+        "label": "What is the path to yrou data? (leave empty to not mount anything)",
+        "initialValue": "/var/lib/data",
+        "type": "text"
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "linuxserver/nextcloud:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "environment": [
+        "NEXTCLOUD_TRUSTED_DOMAINS={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      {if Context.dataPath}
+      , {
+        "source": "{Context.dataPath}",
+        "target": "/data",
+        "type": "bind"
+      }
+      {/if}
+    ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "https://{ServiceName}:443",
+          "mode": "SERVAPP",
+          "AcceptInsecureHTTPSTarget": true
+        }
+      ]
+    }
+  }
+}
