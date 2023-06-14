@@ -20,8 +20,8 @@
       "image": "lscr.io/linuxserver/jellyfin:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "UID": "1000",
-      "GID": "1000",
+      "UID": 1000,
+      "GID": 1000,
       "environment": [
         "PUID=1000",
         "PGID=1000",
