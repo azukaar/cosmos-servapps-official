@@ -1,0 +1,8 @@
+{
+  "name": "PhotoPrism",
+  "longDescription": "<p>PhotoPrism is an open-source personal photo management tool that makes use of the latest technologies to provide an easy and intuitive way to keep your photos organized. It provides a web-based platform to browse, organize, and share your personal photo collection.</p><p>With features like smart search, automated tagging, and geolocation, PhotoPrism makes it easy to find and group your photos. It supports various image formats and RAW files from high-quality cameras. PhotoPrism can also automatically generate thumbnails and convert RAW images.</p><p>Available for Windows, Linux, MacOS, and other platforms, PhotoPrism offers a private, self-hosted solution for your photo management needs. Start using PhotoPrism today to take control of your photo collection!</p>",
+  "description": "PhotoPrism is an open-source personal photo management tool that uses smart search, automated tagging, and geolocation to help organize your photos. It supports various image formats, generates thumbnails, and converts RAW images. PhotoPrism works across various platforms and offers a private, self-hosted solution for managing your photos. Start using PhotoPrism today for your photo management needs.",
+  "tags": ["photo management", "image organizer", "smart search", "automated tagging", "geolocation", "thumbnails", "RAW images", "self-hosted", "windows", "linux", "macos", "photoprism"],
+  "repository": "https://github.com/photoprism/photoprism",
+  "image": "https://hub.docker.com/r/photoprism/photoprism"
+}

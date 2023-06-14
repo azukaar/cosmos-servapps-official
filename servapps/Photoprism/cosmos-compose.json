@@ -1,0 +1,104 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "originalsPath",
+        "label": "Where are your photos stored?",
+        "initialValue": "/usr/photos",
+        "type": "text"
+      },
+      {
+        "name": "storagePath",
+        "label": "Where should Photoprism store its data?",
+        "initialValue": "/usr/photoprism",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "photoprism/photoprism",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "user": "1000:1000",
+      "environment": [
+        "TZ=auto",
+        "PHOTOPRISM_UID=1000",
+        "PHOTOPRISM_GID=1000",
+        "PHOTOPRISM_DATABASE_NAME=photoprism",
+        "PHOTOPRISM_DATABASE_USER=photoprism",
+        "PHOTOPRISM_DATABASE_PASSWORD={Passwords.0}",
+        "PHOTOPRISM_SITE_URL={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "PHOTOPRISM_AUTH_MODE=public"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {
+          "source": "{Context.originalsPath}",
+          "target": "/photoprism/originals",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.storagePath}",
+          "target": "/photoprism/storage",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8123",
+          "mode": "SERVAPP",
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    },
+    
+    "{ServiceName}-mariadb": {
+      "image": "mariadb:10.11",
+      "restart": "unless-stopped",
+      "stop_grace_period": "5s",
+      "security_opt": [
+        "seccomp:unconfined",
+        "apparmor:unconfined"
+      ],
+      "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
+      "volumes": [
+        {
+          "source": "{ServiceName}-mariadb-data",
+          "target": "/var/lib/mysql",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "MARIADB_AUTO_UPGRADE=1",
+        "MARIADB_INITDB_SKIP_TZINFO=1",
+        "MARIADB_DATABASE=photoprism",
+        "MARIADB_USER=photoprism",
+        "MARIADB_PASSWORD=insecure",
+        "MARIADB_ROOT_PASSWORD={Passwords.0}"
+      ],
+      "container_name": "mariadb"
+    }
+  }
+}

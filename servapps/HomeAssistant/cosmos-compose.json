@@ -1,0 +1,32 @@
+{
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/home-assistant/home-assistant:stable",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "privileged": true,
+      "environment": [
+        "TZ=auto"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8123",
+          "mode": "SERVAPP"
+        }
+      ]
+    }
+  }
+}

@@ -8,6 +8,7 @@ let servappsJSON = []
 
 for (const file of servapps) {
   const servapp = require(`./servapps/${file}/description.json`)
+  servapp.id = file
   servapp.screenshots = [];
 
   // list all screenshots in the directory servapps/${file}/screenshots
@@ -23,3 +24,17 @@ for (const file of servapps) {
 }
 
 fs.writeFileSync('./servapps.json', JSON.stringify(servappsJSON, null, 2))
+
+for (const servapp of servappsJSON) {
+  servapp.compose = `http://localhost:3000/servapps/${servapp.id}/cosmos-compose.json`
+  servapp.icon = `http://localhost:3000/servapps/${servapp.id}/icon.png`
+  for (let i = 0; i < servapp.screenshots.length; i++) {
+    servapp.screenshots[i] = servapp.screenshots[i].replace('https://azukaar.github.io/cosmos-servapps-official', 'http://localhost:3000')
+  }
+}
+
+fs.writeFileSync('./servapps_test.json', JSON.stringify({
+  source: "",
+  showcase: [],
+  all: servappsJSON,
+}, null, 2))
