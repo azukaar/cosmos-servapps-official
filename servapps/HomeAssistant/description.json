@@ -4,5 +4,6 @@
   "description": "Home Assistant is an open-source home automation platform that focuses on privacy and local control. It allows you to control all your devices from a single interface, integrating with a large number of devices and services. Home Assistant offers advanced automation capabilities, running perfectly on a Raspberry Pi or a local server. Start using Home Assistant today for a comprehensive home automation solution.",
   "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
   "repository": "https://github.com/home-assistant/core",
-  "image": "https://hub.docker.com/r/homeassistant/home-assistant"
+  "image": "https://hub.docker.com/r/homeassistant/home-assistant",
+  "supported_architectures": ["amd64", "arm64"]
 }

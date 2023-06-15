@@ -12,12 +12,12 @@
         "label": "Where should Photoprism store its data?",
         "initialValue": "/usr/photoprism",
         "type": "text"
-      },
+      }
+    ],
+    "post-install": [
       {
-        "name": "adminOnly",
-        "label": "Do you want to make this service admin only?",
-        "initialValue": false,
-        "type": "checkbox"
+        "type": "success",
+        "label": "Photoprism is now installed and running. You can access it at {Hostnames.{StaticServiceName}.{StaticServiceName}.host}. and your credentials are user: cosmos / password: {Passwords.2}."
       }
     ]
   },
@@ -25,6 +25,7 @@
     "{ServiceName}": {
       "image": "photoprism/photoprism",
       "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,
       "GID": 1000,
@@ -33,14 +34,21 @@
         "TZ=auto",
         "PHOTOPRISM_UID=1000",
         "PHOTOPRISM_GID=1000",
+        "PHOTOPRISM_DATABASE_DRIVER=mysql",
+        "PHOTOPRISM_DATABASE_SERVER={ServiceName}-mariadb:3306",
         "PHOTOPRISM_DATABASE_NAME=photoprism",
         "PHOTOPRISM_DATABASE_USER=photoprism",
         "PHOTOPRISM_DATABASE_PASSWORD={Passwords.0}",
         "PHOTOPRISM_SITE_URL={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-        "PHOTOPRISM_AUTH_MODE=public"
+        "PHOTOPRISM_AUTH_MODE=password",
+        "PHOTOPRISM_ADMIN_PASSWORD={Passwords.2}",
+        "PHOTOPRISM_ADMIN_NAME=cosmos"
       ],
       "labels": {
         "cosmos-force-network-secured": "true"
+      },
+      "networks": {
+        "{ServiceName}-mariadb": {}
       },
       "volumes": [
         {
@@ -65,23 +73,24 @@
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
           "target": "http://{ServiceName}:8123",
-          "mode": "SERVAPP",
-          "AuthEnabled": true
-          {if Context.adminOnly}
-           , "AuthAdmin": true
-          {/if}
+          "mode": "SERVAPP"
         }
       ]
     },
     
     "{ServiceName}-mariadb": {
       "image": "mariadb:10.11",
+      "container_name": "{ServiceName}-mariadb",
+      "hostname": "{ServiceName}-mariadb",
       "restart": "unless-stopped",
-      "stop_grace_period": "5s",
+      "stop_grace_period": 5,
       "security_opt": [
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
+      "networks": {
+        "{ServiceName}-mariadb": {}
+      },
       "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
       "volumes": [
         {
@@ -95,10 +104,14 @@
         "MARIADB_INITDB_SKIP_TZINFO=1",
         "MARIADB_DATABASE=photoprism",
         "MARIADB_USER=photoprism",
-        "MARIADB_PASSWORD=insecure",
-        "MARIADB_ROOT_PASSWORD={Passwords.0}"
-      ],
-      "container_name": "mariadb"
+        "MARIADB_PASSWORD={Passwords.0}",
+        "MARIADB_ROOT_PASSWORD={Passwords.1}"
+      ]
+    }
+  },
+
+  "networks": {
+    "{ServiceName}-mariadb": {
     }
   }
 }

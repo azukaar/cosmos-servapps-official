@@ -4,5 +4,6 @@
   "description": "NZBGet is a high-performance Usenet downloader that uses NZB files to fetch content. It is designed to use minimal system resources while offering features such as a web-interface, API, automatic post-processing, and RSS feed support. NZBGet works well on various platforms including low powered devices. Start using NZBGet for your Usenet downloads today!",
   "tags": ["download", "torrent", "usenet", "downloader", "nzb", "windows", "linux", "macos", "raspberry pi", "performance", "rss feed", "post-processing", "nzbget"],
   "repository": "https://github.com/nzbget/nzbget",
-  "image": "https://hub.docker.com/r/linuxserver/nzbget"
+  "image": "https://hub.docker.com/r/linuxserver/nzbget",
+  "supported_architectures": ["amd64", "arm64"]
 }

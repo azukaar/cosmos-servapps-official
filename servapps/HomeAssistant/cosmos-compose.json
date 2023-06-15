@@ -1,4 +1,5 @@
-{
+{ 
+  "cosmos-installer": {},
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/home-assistant/home-assistant:stable",
