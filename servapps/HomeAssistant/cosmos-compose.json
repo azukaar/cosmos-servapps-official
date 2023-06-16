@@ -11,7 +11,7 @@
         "PUID=1000",
         "PGID=1000",
         "TZ=auto",
-        "PROXY_HOSTNAME=cosmos-server"
+        "PROXY_HOSTNAME=172.16.0.0/12"
       ],
       "labels": {
         "cosmos-force-network-secured": "true"
