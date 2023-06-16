@@ -1,13 +1,17 @@
 { 
-  "cosmos-installer": {},
+  "cosmos-installer": {
+  },
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/home-assistant/home-assistant:stable",
+      "image": "lscr.io/linuxserver/homeassistant:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "privileged": true,
       "environment": [
-        "TZ=auto"
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto",
+        "PROXY_HOSTNAME=cosmos-server"
       ],
       "labels": {
         "cosmos-force-network-secured": "true"
@@ -18,6 +22,9 @@
           "target": "/config",
           "type": "volume"
         }
+      ],
+      "post_install": [
+        "wget -O /config/configuration.yaml http://azukaar.github.io/cosmos-servapps-official/servapps/HomeAssistant/artefacts/configuration.yaml"
       ],
       "routes": [
         {

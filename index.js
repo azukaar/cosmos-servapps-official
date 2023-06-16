@@ -10,11 +10,19 @@ for (const file of servapps) {
   const servapp = require(`./servapps/${file}/description.json`)
   servapp.id = file
   servapp.screenshots = [];
+  servapp.artefacts = {};
 
   // list all screenshots in the directory servapps/${file}/screenshots
   const screenshots = fs.readdirSync(`./servapps/${file}/screenshots`)
   for (const screenshot of screenshots) {
     servapp.screenshots.push(`https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/screenshots/${screenshot}`)
+  }
+
+  if(fs.existsSync(`./servapps/${file}/artefacts`)) {
+    const artefacts = fs.readdirSync(`./servapps/${file}/artefacts`)
+    for(const artefact of artefacts) {
+      servapp.artefacts[artefact] = (`https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/artefacts/${artefact}`)
+    }
   }
 
   servapp.icon = `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/icon.png`
@@ -30,6 +38,9 @@ for (const servapp of servappsJSON) {
   servapp.icon = `http://localhost:3000/servapps/${servapp.id}/icon.png`
   for (let i = 0; i < servapp.screenshots.length; i++) {
     servapp.screenshots[i] = servapp.screenshots[i].replace('https://azukaar.github.io/cosmos-servapps-official', 'http://localhost:3000')
+  }
+  for (const artefact in servapp.artefacts) {
+    servapp.artefacts[artefact] = servapp.artefacts[artefact].replace('https://azukaar.github.io/cosmos-servapps-official', 'http://localhost:3000')
   }
 }
 
