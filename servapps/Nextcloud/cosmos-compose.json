@@ -9,6 +9,7 @@
       }
     ]
   },
+  "minVersion": "0.7.1",
   "services": {
     "{ServiceName}": {
       "image": "nextcloud",
@@ -16,10 +17,17 @@
       "restart": "unless-stopped",
       "environment": [
         "TZ=auto",
-        "NEXTCLOUD_TRUSTED_DOMAINS={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+        "NEXTCLOUD_TRUSTED_DOMAINS={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "MYSQL_DATABASE=nextcloud",
+        "MYSQL_USER=nextcloud",
+        "MYSQL_PASSWORD={Passwords.0}",
+        "MYSQL_HOST={ServiceName}-mariadb"
       ],
       "labels": {
         "cosmos-force-network-secured": "true"
+      },
+      "networks": {
+        "{ServiceName}-mariadb": {}
       },
       "volumes": [
         {
@@ -42,8 +50,104 @@
           "useHost": true,
           "target": "http://{ServiceName}:80",
           "mode": "SERVAPP"
+        },
+        {
+          "Name": "nextcloud_caldav",
+          "Description": "Redirect {ServiceName} caldav to proper route",
+          "UseHost": true,
+          "Host": "nextcloud.yann-server.com",
+          "UsePathPrefix": true,
+          "PathPrefix": "/.well-known/caldav",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 10000,
+          "CORSOrigin": "",
+          "StripPathPrefix": false,
+          "MaxBandwith": 0,
+          "AuthEnabled": false,
+          "AdminOnly": false,
+          "Target": "https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/remote.php/dav",
+          "SmartShield": {
+            "Enabled": true,
+            "PolicyStrictness": 0,
+            "PerUserTimeBudget": 0,
+            "PerUserRequestLimit": 0,
+            "PerUserByteLimit": 0,
+            "PerUserSimultaneous": 0,
+            "MaxGlobalSimultaneous": 0,
+            "PrivilegedGroups": 0
+          },
+          "Mode": "REDIRECT",
+          "BlockCommonBots": true,
+          "BlockAPIAbuse": false,
+          "AcceptInsecureHTTPSTarget": false
+        },
+        {
+          "Name": "nextcloud_carddav",
+          "Description": "Redirect {ServiceName} carddav to proper route",
+          "UseHost": true,
+          "Host": "nextcloud.yann-server.com",
+          "UsePathPrefix": true,
+          "PathPrefix": "/.well-known/carddav",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 10000,
+          "CORSOrigin": "",
+          "StripPathPrefix": false,
+          "MaxBandwith": 0,
+          "AuthEnabled": false,
+          "AdminOnly": false,
+          "Target": "https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/remote.php/dav",
+          "SmartShield": {
+            "Enabled": true,
+            "PolicyStrictness": 0,
+            "PerUserTimeBudget": 0,
+            "PerUserRequestLimit": 0,
+            "PerUserByteLimit": 0,
+            "PerUserSimultaneous": 0,
+            "MaxGlobalSimultaneous": 0,
+            "PrivilegedGroups": 0
+          },
+          "Mode": "REDIRECT",
+          "BlockCommonBots": true,
+          "BlockAPIAbuse": false,
+          "AcceptInsecureHTTPSTarget": false
         }
       ]
+    },
+    
+    "{ServiceName}-mariadb": {
+      "image": "mariadb:10.11",
+      "container_name": "{ServiceName}-mariadb",
+      "hostname": "{ServiceName}-mariadb",
+      "restart": "unless-stopped",
+      "stop_grace_period": 5,
+      "security_opt": [
+        "seccomp:unconfined",
+        "apparmor:unconfined"
+      ],
+      "networks": {
+        "{ServiceName}-mariadb": {}
+      },
+      "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
+      "volumes": [
+        {
+          "source": "{ServiceName}-mariadb-data",
+          "target": "/var/lib/mysql",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "MARIADB_AUTO_UPGRADE=1",
+        "MARIADB_INITDB_SKIP_TZINFO=1",
+        "MARIADB_DATABASE=nextcloud",
+        "MARIADB_USER=nextcloud",
+        "MARIADB_PASSWORD={Passwords.0}",
+        "MARIADB_ROOT_PASSWORD={Passwords.1}"
+      ]
+    }
+  },
+
+  "networks": {
+    "{ServiceName}-mariadb": {
     }
   }
 }
