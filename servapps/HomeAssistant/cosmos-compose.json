@@ -14,7 +14,8 @@
         "PROXY_HOSTNAME=172.16.0.0/12"
       ],
       "labels": {
-        "cosmos-force-network-secured": "true"
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true"
       },
       "volumes": [
         {

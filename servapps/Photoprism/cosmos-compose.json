@@ -45,7 +45,8 @@
         "PHOTOPRISM_ADMIN_NAME=cosmos"
       ],
       "labels": {
-        "cosmos-force-network-secured": "true"
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true"
       },
       "networks": {
         "{ServiceName}-mariadb": {}
