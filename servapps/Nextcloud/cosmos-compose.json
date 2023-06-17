@@ -1,18 +1,17 @@
-
 {
   "cosmos-installer": {
     "form": [
       {
         "name": "dataPath",
         "label": "What is the path to yrou data? (leave empty to not mount anything)",
-        "initialValue": "/usr/data",
+        "initialValue": "/usr/nextcloud-data",
         "type": "text"
       }
     ]
   },
   "services": {
     "{ServiceName}": {
-      "image": "linuxserver/nextcloud:latest",
+      "image": "nextcloud",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
@@ -25,13 +24,13 @@
       "volumes": [
         {
           "source": "{ServiceName}-config",
-          "target": "/config",
+          "target": "/var/www/html/config",
           "type": "volume"
         }
       {if Context.dataPath}
       , {
         "source": "{Context.dataPath}",
-        "target": "/data",
+        "target": "/var/www/html/data",
         "type": "bind"
       }
       {/if}
@@ -41,9 +40,8 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "https://{ServiceName}:443",
-          "mode": "SERVAPP",
-          "AcceptInsecureHTTPSTarget": true
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP"
         }
       ]
     }
