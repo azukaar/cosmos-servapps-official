@@ -15,14 +15,8 @@
       "image": "linuxserver/nextcloud:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "UID": 1000,
-      "GID": 1000,
       "environment": [
-        "PUID=1000",
-        "PGID=1000",
-        "TZ=auto"
-      ],
-      "environment": [
+        "TZ=auto",
         "NEXTCLOUD_TRUSTED_DOMAINS={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
       ],
       "labels": {
