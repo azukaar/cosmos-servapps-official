@@ -5,7 +5,7 @@
       {
         "name": "downloadPath",
         "label": "What is the path to download to? (leave empty to not mount anything)",
-        "initialValue": "/usr/downloads",
+        "initialValue": "{DefaultDataPath}/downloads",
         "type": "text"
       },
       {
@@ -16,6 +16,7 @@
       }
     ]
   },
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/sonarr:latest",

@@ -4,17 +4,18 @@
       {
         "name": "moviePath",
         "label": "What is the path to your movies? (leave empty to not mount anything)",
-        "initialValue": "/usr/movies",
+        "initialValue": "{DefaultDataPath}/movies",
         "type": "text"
       },
       {
         "name": "seriePath",
         "label": "What is the path to your series? (leave empty to not mount anything)",
-        "initialValue": "/usr/series",
+        "initialValue": "{DefaultDataPath}/series",
         "type": "text"
       }
     ]
   },
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "linuxserver/plex:latest",

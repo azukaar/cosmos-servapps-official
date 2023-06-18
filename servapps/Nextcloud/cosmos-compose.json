@@ -3,13 +3,13 @@
     "form": [
       {
         "name": "dataPath",
-        "label": "What is the path to yrou data? (leave empty to not mount anything)",
-        "initialValue": "/usr/nextcloud-data",
+        "label": "What is the path to your data? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/nextcloud-data",
         "type": "text"
       }
     ]
   },
-  "minVersion": "0.7.1",
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "nextcloud",

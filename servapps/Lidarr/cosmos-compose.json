@@ -5,13 +5,13 @@
       {
         "name": "downloadPath",
         "label": "What is the path to download to? (leave empty to not mount anything)",
-        "initialValue": "/usr/downloads",
+        "initialValue": "{DefaultDataPath}/downloads",
         "type": "text"
       },
       {
         "name": "musicPath",
         "label": "What is the path to your musics? (leave empty to not mount anything)",
-        "initialValue": "/usr/musics",
+        "initialValue": "{DefaultDataPath}/musics",
         "type": "text"
       },
       {
@@ -42,6 +42,7 @@
       {/if}
     ]
   },
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/lidarr:latest",

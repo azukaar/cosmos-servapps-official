@@ -4,13 +4,13 @@
       {
         "name": "originalsPath",
         "label": "Where are your photos stored?",
-        "initialValue": "/usr/photos",
+        "initialValue": "{DefaultDataPath}/photos",
         "type": "text"
       },
       {
         "name": "storagePath",
         "label": "Where should Photoprism store its data?",
-        "initialValue": "/usr/photoprism",
+        "initialValue": "{DefaultDataPath}/photoprism",
         "type": "text"
       }
     ],
@@ -21,6 +21,7 @@
       }
     ]
   },
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "photoprism/photoprism",
