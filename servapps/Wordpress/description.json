@@ -1,9 +1,9 @@
 {
-  "name": "Joplin",
-  "longDescription": "<p>Joplin is a free and open-source note-taking and to-do application, which can handle a large number of notes organised into notebooks. The notes are searchable, can be copied, tagged and modified directly from the applications or from your own text editor. It also supports markdown, with inline previewing.</p><p>Joplin offers end-to-end encryption and can synchronize with various cloud platforms, making it a secure choice for your note-taking needs. With its API, Joplin can be extended with plugins for custom functionality, further tailoring your note management experience.</p><p>Available for Windows, Linux, MacOS, iOS, and Android, Joplin is flexible to fit a variety of environments and workflows. Start using Joplin today to organize your thoughts and tasks in a secure and efficient manner!</p>",
-  "description": "Joplin is a free, open-source note-taking and to-do application that supports markdown and end-to-end encryption. It offers capabilities such as tagging, searching, and modifying notes, and can sync with various cloud platforms. It features an extensible plugin system, allowing for tailored functionality. Joplin is compatible across multiple platforms including Windows, Linux, MacOS, iOS, and Android.",
-  "tags": ["note-taking", "to-do", "markdown", "encryption", "syncing", "windows", "linux", "macos", "ios", "android", "self-hosted", "joplin"],
-  "repository": "https://github.com/laurent22/joplin",
-  "image": "https://hub.docker.com/r/joplin/server",
+  "name": "WordPress",
+  "longDescription": "<p>WordPress is a free and open-source content management system (CMS) based on PHP and MySQL. It is one of the most popular website management or blogging system in use on the Web, supporting more than 60 million websites.</p><p>WordPress allows users to create and edit websites through a central administrative dashboard, which includes a text editor for modifying content, menus and various design elements. It offers thousands of themes and plugins that can enhance functionality and customization options, making it suitable for a variety of website types, from personal blogs to online stores.</p><p>With its vast community, WordPress users have access to a plethora of resources, tutorials, and guides. Start your website journey with WordPress today!</p>",
+  "description": "WordPress is a free, open-source content management system based on PHP and MySQL. Known for its flexibility and ease-of-use, it supports a range of website types with thousands of plugins and themes. WordPress features a robust administrative dashboard for website creation, modification, and management. It is widely supported across various hosting platforms.",
+  "tags": ["cms", "website management", "blogging", "php", "mysql", "themes", "plugins", "self-hosted", "wordpress"],
+  "repository": "https://github.com/WordPress/WordPress",
+  "image": "https://hub.docker.com/_/wordpress",
   "supported_architectures": ["amd64", "arm64"]
-  }
+}
