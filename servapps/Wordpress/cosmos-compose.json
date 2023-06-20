@@ -18,7 +18,8 @@
         "WORDPRESS_DB_HOST={ServiceName}-mysql:3306",
         "WORDPRESS_DB_NAME=wordpress",
         "WORDPRESS_DB_USER=wordpress",
-        "WORDPRESS_DB_PASSWORD={Passwords.0}"
+        "WORDPRESS_DB_PASSWORD={Passwords.0}",
+        "WORDPRESS_CONFIG_EXTRA=$_SERVER['HTTPS'] = 'on';"
       ],
       "volumes": [
         {
