@@ -53,7 +53,7 @@
           "mode": "SERVAPP"
         },
         {
-          "Name": "nextcloud_caldav",
+          "Name": "{ServiceName}_caldav",
           "Description": "Redirect {ServiceName} caldav to proper route",
           "UseHost": true,
           "Host": "{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
@@ -83,7 +83,7 @@
           "AcceptInsecureHTTPSTarget": false
         },
         {
-          "Name": "nextcloud_carddav",
+          "Name": "{ServiceName}_carddav",
           "Description": "Redirect {ServiceName} carddav to proper route",
           "UseHost": true,
           "Host": "{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
