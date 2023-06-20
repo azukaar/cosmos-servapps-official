@@ -1,9 +1,9 @@
 {
-  "name": "Nextcloud",
-  "longDescription": "<p>Nextcloud is a suite of client-server software for creating and using file hosting services. It is functionally similar to Dropbox, but is free and open-source, allowing users to install it on private servers.</p><p>Nextcloud provides an array of features including file sharing, syncing, end-to-end encryption, collaboration tools, and more. Its extensible app ecosystem allows you to set up your own cloud storage service to your exact needs. You can also integrate Nextcloud with many known IT infrastructure systems.</p><p>Available for Windows, Linux, MacOS, and other platforms, Nextcloud is designed to work in a variety of environments including both on premise and cloud setups. Start using Nextcloud today to control and secure your own private cloud storage!</p>",
-  "description": "Nextcloud is an open-source, self-hosted file share and collaboration platform, similar to Dropbox. It offers features such as file sharing, syncing, encryption, and collaboration tools. With its extensible app ecosystem, you can tailor your cloud storage service to your needs. Nextcloud is compatible with numerous platforms and can be integrated with many IT infrastructure systems.",
-  "tags": ["storage", "file sharing", "syncing", "encryption", "collaboration", "windows", "linux", "macos", "self-hosted", "nextcloud"],
-  "repository": "https://github.com/nextcloud/server",
-  "image": "https://hub.docker.com/r/linuxserver/nextcloud",
+  "name": "Joplin",
+  "longDescription": "<p>Joplin is a free and open-source note-taking and to-do application, which can handle a large number of notes organised into notebooks. The notes are searchable, can be copied, tagged and modified directly from the applications or from your own text editor. It also supports markdown, with inline previewing.</p><p>Joplin offers end-to-end encryption and can synchronize with various cloud platforms, making it a secure choice for your note-taking needs. With its API, Joplin can be extended with plugins for custom functionality, further tailoring your note management experience.</p><p>Available for Windows, Linux, MacOS, iOS, and Android, Joplin is flexible to fit a variety of environments and workflows. Start using Joplin today to organize your thoughts and tasks in a secure and efficient manner!</p>",
+  "description": "Joplin is a free, open-source note-taking and to-do application that supports markdown and end-to-end encryption. It offers capabilities such as tagging, searching, and modifying notes, and can sync with various cloud platforms. It features an extensible plugin system, allowing for tailored functionality. Joplin is compatible across multiple platforms including Windows, Linux, MacOS, iOS, and Android.",
+  "tags": ["note-taking", "to-do", "markdown", "encryption", "syncing", "windows", "linux", "macos", "ios", "android", "self-hosted", "joplin"],
+  "repository": "https://github.com/laurent22/joplin",
+  "image": "https://hub.docker.com/r/joplin/server",
   "supported_architectures": ["amd64", "arm64"]
-}
+  }
