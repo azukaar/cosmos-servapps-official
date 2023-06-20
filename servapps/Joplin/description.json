@@ -1,0 +1,9 @@
+{
+  "name": "Nextcloud",
+  "longDescription": "<p>Nextcloud is a suite of client-server software for creating and using file hosting services. It is functionally similar to Dropbox, but is free and open-source, allowing users to install it on private servers.</p><p>Nextcloud provides an array of features including file sharing, syncing, end-to-end encryption, collaboration tools, and more. Its extensible app ecosystem allows you to set up your own cloud storage service to your exact needs. You can also integrate Nextcloud with many known IT infrastructure systems.</p><p>Available for Windows, Linux, MacOS, and other platforms, Nextcloud is designed to work in a variety of environments including both on premise and cloud setups. Start using Nextcloud today to control and secure your own private cloud storage!</p>",
+  "description": "Nextcloud is an open-source, self-hosted file share and collaboration platform, similar to Dropbox. It offers features such as file sharing, syncing, encryption, and collaboration tools. With its extensible app ecosystem, you can tailor your cloud storage service to your needs. Nextcloud is compatible with numerous platforms and can be integrated with many IT infrastructure systems.",
+  "tags": ["storage", "file sharing", "syncing", "encryption", "collaboration", "windows", "linux", "macos", "self-hosted", "nextcloud"],
+  "repository": "https://github.com/nextcloud/server",
+  "image": "https://hub.docker.com/r/linuxserver/nextcloud",
+  "supported_architectures": ["amd64", "arm64"]
+}

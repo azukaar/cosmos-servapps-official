@@ -15,7 +15,8 @@
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
-        "cosmos-auto-update": "true"
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/HomeAssistant/icon.png"
       },
       "volumes": [
         {
