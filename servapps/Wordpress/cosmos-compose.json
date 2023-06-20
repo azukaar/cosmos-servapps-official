@@ -7,7 +7,7 @@
       }
     ]
   },
-  "minVersion": "0.8.0",
+  "minVersion": "0.8.0-unstable3",
   "services": {
     "{ServiceName}": {
       "image": "wordpress",
