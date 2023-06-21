@@ -2,7 +2,7 @@
   "name": "WordPress",
   "longDescription": "<p>WordPress is a free and open-source content management system (CMS) based on PHP and MySQL. It is one of the most popular website management or blogging system in use on the Web, supporting more than 60 million websites.</p><p>WordPress allows users to create and edit websites through a central administrative dashboard, which includes a text editor for modifying content, menus and various design elements. It offers thousands of themes and plugins that can enhance functionality and customization options, making it suitable for a variety of website types, from personal blogs to online stores.</p><p>With its vast community, WordPress users have access to a plethora of resources, tutorials, and guides. Start your website journey with WordPress today!</p>",
   "description": "WordPress is a free, open-source content management system based on PHP and MySQL. Known for its flexibility and ease-of-use, it supports a range of website types with thousands of plugins and themes. WordPress features a robust administrative dashboard for website creation, modification, and management. It is widely supported across various hosting platforms.",
-  "tags": ["cms", "website management", "blogging", "php", "mysql", "themes", "plugins", "self-hosted", "wordpress"],
+  "tags": ["blogging", "cms", "website management", "php", "mysql", "themes", "plugins", "self-hosted", "wordpress"],
   "repository": "https://github.com/WordPress/WordPress",
   "image": "https://hub.docker.com/_/wordpress",
   "supported_architectures": ["amd64", "arm64"]
