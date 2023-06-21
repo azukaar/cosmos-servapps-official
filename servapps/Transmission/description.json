@@ -1,0 +1,9 @@
+{
+  "name": "Transmission",
+  "longDescription": "<p>Transmission is a cross-platform BitTorrent client that is open-source, volunteer-based, and free from advertisements. It is highly regarded for its low resource usage, simplicity, and performance.</p><p>With its intuitive interface, Transmission allows users to quickly and easily download and share files via the BitTorrent protocol. Its standout features include built-in encryption, webseed support, peer exchange, automatic port mapping, and the ability to set speed limits for individual torrents.</p><p>Transmission is available for a variety of platforms including Windows, Linux, and MacOS. It also provides a web interface for remote control, making it a popular choice among users looking for a lightweight, reliable BitTorrent client.</p>",
+  "description": "Transmission is an open-source, cross-platform BitTorrent client. It is widely praised for its minimal resource usage, ease-of-use, and performance. Transmission provides features like built-in encryption, webseed support, peer exchange, automatic port mapping, and individual torrent speed limit settings. It supports Windows, Linux, MacOS, and also offers a web interface for remote control.",
+  "tags": ["download", "torrent", "bittorrent", "downloader", "open-source", "cross-platform", "file sharing", "peer-to-peer", "p2p", "transmission", "windows", "linux", "macos", "web interface"],
+  "repository": "https://github.com/transmission/transmission",
+  "image": "https://hub.docker.com/r/linuxserver/transmission",
+  "supported_architectures": ["amd64", "arm64"]
+  }
