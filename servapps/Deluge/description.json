@@ -1,0 +1,9 @@
+{
+  "name": "Deluge",
+  "longDescription": "<p>Deluge is a lightweight, open-source BitTorrent client. It's highly extendable via a rich collection of plugins and is noted for its multi-platform compatibility and low resource demand.</p><p>Key features include support for a wide range of BitTorrent protocols, a web interface for remote control, encryption, peer exchange, speed limits, and proxy support. With its intuitive interface, users can easily download and share files via the BitTorrent protocol.</p><p>Deluge is compatible with various platforms, including Windows, Linux, and MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
+  "description": "Deluge is a lightweight, open-source BitTorrent client known for its extensibility and low resource demand. It supports multiple BitTorrent protocols, offers a web interface for remote control, and includes features like encryption, peer exchange, speed limits, and proxy support. Deluge is compatible with Windows, Linux, MacOS, and Docker.",
+  "tags": ["deluge", "open-source", "cross-platform", "BitTorrent client", "file sharing", "peer-to-peer", "p2p", "encryption", "web interface", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/deluge-torrent/deluge",
+  "image": "https://hub.docker.com/r/linuxserver/deluge",
+  "supported_architectures": ["amd64", "arm64"]
+}

@@ -2,15 +2,9 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "downloadPath",
-        "label": "What is the path to download to? (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/downloads",
-        "type": "text"
-      },
-      {
-        "name": "watchPath",
-        "label": "Do you want to add a watch folder? (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/torrent-watch",
+        "name": "workspacePath",
+        "label": "What is the path to your workspace? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/code-projects",
         "type": "text"
       },
       {
@@ -21,26 +15,24 @@
       }
     ]
   },
-  "minVersion": "0.8.0-unstable10",
+  "minVersion": "0.8.0",
   "services": {
     "{ServiceName}": {
-      "image": "lscr.io/linuxserver/transmission:latest",
+      "image": "lscr.io/linuxserver/code-server:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "privileged": true,
       "environment": [
         "PUID=1000",
         "PGID=1000",
-        "TZ=auto"
-      ],
-      "ports": [
-        "51413:51413",
-        "51413:51413/udp"
+        "TZ=auto",
+        "PROXY_DOMAIN={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "DEFAULT_WORKSPACE=/workspace"
       ],
       "labels": {
-        "cosmos-network-name": "AUTO",
+        "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Transmission/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/CodeServer/icon.png"
       },
       "volumes": [
         {
@@ -48,17 +40,10 @@
           "target": "/config",
           "type": "volume"
         }
-        {if Context.downloadPath}
+        {if Context.workspacePath}
         , {
-          "source": "{Context.downloadPath}",
-          "target": "/downloads",
-          "type": "bind"
-        }
-        {/if}
-        {if Context.watchPath}
-        , {
-          "source": "{Context.watchPath}",
-          "target": "/watch",
+          "source": "{Context.workspacePath}",
+          "target": "/workspace",
           "type": "bind"
         }
         {/if}
@@ -68,7 +53,7 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:9091",
+          "target": "http://{ServiceName}:8443",
           "mode": "SERVAPP",
           "AuthEnabled": true
           {if Context.adminOnly}

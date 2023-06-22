@@ -1,0 +1,9 @@
+{
+  "name": "Calibre",
+  "longDescription": "<p>Calibre is a powerful, open-source e-book management tool. It allows users to organize, save and manage e-books of various formats. Calibre supports a wide range of e-book formats including EPUB, Kindle, PDF, and more.</p><p>With its easy-to-use interface, Calibre allows users to convert e-books from different formats, sync e-books with e-book readers, and even provides news feeds from web sources. Calibre also features a built-in e-book viewer and a server for online access to your book collection.</p><p>Calibre is available for a variety of platforms, including Windows, Linux, and MacOS.</p>",
+  "description": "Calibre is an open-source e-book management tool that allows users to organize, save, and manage e-books of various formats. It supports a wide range of e-book formats and offers features like format conversion, e-book syncing, news feeds from web sources, a built-in e-book viewer, and a server for online access.",
+  "tags": ["e-book", "open-source", "cross-platform", "management", "calibre", "windows", "linux", "macos"],
+  "repository": "https://github.com/kovidgoyal/calibre",
+  "image": "https://hub.docker.com/r/linuxserver/calibre",
+  "supported_architectures": ["amd64", "arm64"]
+}
