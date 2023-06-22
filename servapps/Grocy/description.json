@@ -1,0 +1,9 @@
+{
+  "name": "Grocy",
+  "longDescription": "<p>Grocy is a self-hosted, open-source grocery management solution designed to help users manage their groceries. It provides a suite of tools for managing shopping lists, recipes, inventory, and chores.</p><p>Key features include stock management with a barcode scanner, recipe management, household chore management, and tracking of purchased items with expiration dates. Grocy helps users to avoid waste by providing reminders about due dates of perishable items.</p><p>Grocy is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
+  "description": "Grocy is a self-hosted, open-source grocery management solution offering features like stock management with a barcode scanner, recipe management, household chore management, and tracking of purchased items with expiration dates. Grocy is compatible with Windows, Linux, MacOS, and Docker.",
+  "tags": ["grocy", "open-source", "self-hosted", "grocery", "management", "shopping list", "inventory", "recipes", "chores", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/grocy/grocy",
+  "image": "https://hub.docker.com/r/linuxserver/grocy",
+  "supported_architectures": ["amd64", "arm64"]
+}
