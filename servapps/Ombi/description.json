@@ -1,0 +1,9 @@
+{
+  "name": "Ombi",
+  "longDescription": "<p>Ombi is an open-source, self-hosted web application that enables you to give your shared Plex or Emby users the ability to request content. It's an intuitive interface between your media server and the users.</p><p>Key features of Ombi include user management, a request system, notification system, and automatic updates. Ombi can be integrated with popular platforms such as Plex, Emby, Sonarr, Radarr, and Tautulli, making it an essential tool for managing requests for media content.</p><p>Ombi is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
+  "description": "Ombi is an open-source, self-hosted web application that enables Plex or Emby users to request content. It offers features like user management, a request system, notification system, and automatic updates. Ombi is compatible with popular platforms such as Plex, Emby, Sonarr, Radarr, and Tautulli. It can be run on Windows, Linux, MacOS, and Docker.",
+  "tags": ["ombi", "open-source", "self-hosted", "web application", "plex", "emby", "request system", "media content", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/Ombi-app/Ombi",
+  "image": "https://hub.docker.com/r/linuxserver/ombi",
+  "supported_architectures": ["amd64", "arm64"]
+}
