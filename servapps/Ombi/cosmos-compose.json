@@ -7,7 +7,8 @@
       "image": "lscr.io/linuxserver/ombi:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "privileged": true,
+      "UID": 1000,
+      "GID": 1000,
       "environment": [
         "PUID=1000",
         "PGID=1000",
