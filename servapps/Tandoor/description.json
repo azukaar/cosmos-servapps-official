@@ -1,0 +1,9 @@
+{
+    "name": "Tandoor",
+    "longDescription": "<p>Tandoor Recipes is the self hosted recipe manager with meal planning, shopping lists and cookbook collections.</p><p>The days of storing recipes on paper cards is in the past and what better way to preserve older recipes that were handed down then to log them into a digital, self hosted recipe manager where you can access them anywhere?</p><p>Tandoor Recipes is much more than a digital recipe reference archive, it's a complete meal planning power house.</p>",
+    "description": "Tandoor is a recipe manager that allows you to manage your ever growing collection of digital recipes.",
+    "tags": ["recipes", "meals", "shopping", "planning", "cookbook", "docker", "pwa"],
+    "repository": "https://github.com/TandoorRecipes/recipes",
+    "image": "https://hub.docker.com/r/vabene1111/recipes",
+    "supported_architectures": ["amd64", "arm64"]
+  }
