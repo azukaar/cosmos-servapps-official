@@ -45,7 +45,8 @@
           "UsePathPrefix": true,
           "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
           "target": "http://{ServiceName}:8536",
-          "mode": "SERVAPP"
+          "mode": "SERVAPP",
+          "hideFromDashboard": true
         },
         {
           "name": "{ServiceName}",
