@@ -1,0 +1,205 @@
+{
+  "cosmos-installer": {
+  },
+  "networks": {
+    "{ServiceName}-internal": {
+      "driver": "bridge",
+      "internal": true
+    }
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "dessalines/lemmy:latest",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "networks": {
+        "{ServiceName}-internal": {}
+      },
+      "tty": true,
+      "restart": "always",
+      "environment": [
+        "RUST_LOG=warn"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Lemmy/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "depends_on": [
+        "{ServiceName}-postgres",
+        "{ServiceName}-pictrs"
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-api",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "usePath": true,
+          "UsePathPrefix": true,
+          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "target": "http://{ServiceName}:8536",
+          "mode": "SERVAPP"
+        },
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}-ui:1234",
+          "mode": "SERVAPP"
+        }
+      ]
+    },
+    "{ServiceName}-ui": {
+      "image": "dessalines/lemmy-ui:latest",
+      "container_name": "{ServiceName}-ui",
+      "hostname": "{ServiceName}-ui",
+      "networks": {
+        "{ServiceName}-internal": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Lemmy/icon.png"
+      },
+      "environment": [
+        "LEMMY_UI_LEMMY_INTERNAL_HOST={ServiceName}:8536",
+        "LEMMY_UI_LEMMY_EXTERNAL_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "LEMMY_UI_HTTPS=true"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-config-themes",
+          "target": "/app/extra_themes",
+          "type": "volume"
+        }
+      ],
+      "depends_on": [
+        "{ServiceName}"
+      ],
+      "restart": "always"
+    },
+    "{ServiceName}-pictrs": {
+      "image": "asonix/pictrs:0.4.0-rc.7",
+      "hostname": "{ServiceName}-pictrs",
+      "container_name": "{ServiceName}-pictrs",
+      "networks": {
+        "{ServiceName}-internal": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Lemmy/icon.png"
+      },
+      "environment": [
+        "PICTRS_OPENTELEMETRY_URL=http://otel:4137",
+        "PICTRS__API_KEY={Passwords.1}",
+        "RUST_LOG=debug",
+        "RUST_BACKTRACE=full",
+        "PICTRS__MEDIA__VIDEO_CODEC=vp9",
+        "PICTRS__MEDIA__GIF__MAX_WIDTH=256",
+        "PICTRS__MEDIA__GIF__MAX_HEIGHT=256",
+        "PICTRS__MEDIA__GIF__MAX_AREA=65536",
+        "PICTRS__MEDIA__GIF__MAX_FRAME_COUNT=400"
+      ],
+      "user": "991:991",
+      "volumes": [
+        {
+          "source": "{ServiceName}-pictrs",
+          "target": "/mnt",
+          "type": "volume"
+        }
+      ],
+      "restart": "always",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "50m",
+          "max-file": "4"
+        }
+      },
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "690m"
+          }
+        }
+      },
+      "post_install": [
+        "chown -R 991:991 /mnt"
+      ]
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:15-alpine",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "networks": {
+        "{ServiceName}-internal": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Lemmy/icon.png"
+      },
+      "environment": [
+        "POSTGRES_USER=lemmy",
+        "POSTGRES_PASSWORD={Passwords.0}",
+        "POSTGRES_DB=lemmy"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "post_install": [
+        "echo '{' > /config/config.hjson",
+        "echo '  database: {' >> /config/config.hjson",
+        "echo '    host: {ServiceName}-postgres' >> /config/config.hjson",
+        "echo '    password: \"{Passwords.0}\"' >> /config/config.hjson",
+        "echo '  }' >> /config/config.hjson",
+        "echo '  hostname: \"{Hostnames.{StaticServiceName}.{StaticServiceName}.host}\"' >> /config/config.hjson",
+        "echo '  pictrs: {' >> /config/config.hjson",
+        "echo '    url: \"http://{ServiceName}-pictrs:8080\"' >> /config/config.hjson",
+        "echo '    api_key: \"{Passwords.1}\"' >> /config/config.hjson",
+        "echo '  }' >> /config/config.hjson",
+        "echo '  email: {' >> /config/config.hjson",
+        "echo '    smtp_server: \"{ServiceName}-postfix:25\"' >> /config/config.hjson",
+        "echo '    smtp_from_address: \"noreply@{Hostnames.{StaticServiceName}.{StaticServiceName}.host}\"' >> /config/config.hjson",
+        "echo '    tls_type: \"none\"' >> /config/config.hjson",
+        "echo '  }' >> /config/config.hjson",
+        "echo '}' >> /config/config.hjson"
+      ],
+      "restart": "always"
+    },
+    "{ServiceName}-postfix": {
+      "container_name": "{ServiceName}-postfix",
+      "hostname": "{ServiceName}-postfix",
+      "image": "mwader/postfix-relay",
+      "networks": {
+        "{ServiceName}-internal": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Lemmy/icon.png"
+      },
+      "environment": [
+        "POSTFIX_myhostname={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      ],
+      "restart": "always"
+    }
+  }
+}

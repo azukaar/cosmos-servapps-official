@@ -1,0 +1,9 @@
+{
+  "name": "Uptime Kuma",
+  "longDescription": "<p>Uptime Kuma is an open-source, self-hosted monitoring tool that allows users to monitor their online services and get alerts when they go down or become unresponsive. This robust yet user-friendly tool is designed to help you keep track of your services' uptime.</p><p>Key features of Uptime Kuma include status checking for various services including HTTP(s), TCP, and ICMP, detailed statistics with charts, and multiple notification methods (like email, Slack, Telegram, etc.). Its clean, intuitive user interface makes setup and management of monitored services easy.</p><p>Uptime Kuma is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
+  "description": "Uptime Kuma is an open-source, self-hosted monitoring tool for tracking the uptime of online services. It offers status checks for various services, detailed statistics with charts, and multiple notification methods. Uptime Kuma is compatible with Windows, Linux, MacOS, and Docker.",
+  "tags": ["uptime kuma", "open-source", "self-hosted", "monitoring", "uptime", "service status", "notifications", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/louislam/uptime-kuma",
+  "image": "https://hub.docker.com/r/louislam/uptime-kuma",
+  "supported_architectures": ["amd64", "arm64"]
+}

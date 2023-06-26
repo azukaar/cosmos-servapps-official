@@ -1,0 +1,90 @@
+{ 
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "The setup is not finished! Please follow: https://docker-mailserver.github.io/docker-mailserver/edge/usage/"
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/docker-mailserver/docker-mailserver:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "stop_grace_period": 60,
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
+        ],
+        "timeout": 3,
+        "retries": 0
+      },
+      "environment": [
+        "TZ=auto",
+        "OVERRIDE_HOSTNAME={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "LOG_LEVEL=info",
+        "ONE_DIR=1",
+        "ENABLE_RSPAMD=1",
+        "ENABLE_FAIL2BAN=1",
+        "ENABLE_CLAMAV=1"
+      ],
+      "cap_add": [
+        "NET_ADMIN"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/DockerMailServer/icon.png"
+      },
+      "ports": [
+        "25:25",
+        "143:143",
+        "587:587",
+        "993:993",
+        "465:465"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-mail-data",
+          "target": "/var/mail/",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-mail-state",
+          "target": "/var/mail-state/",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-mail-logs",
+          "target": "/var/log/mail/",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-config",
+          "target": "/tmp/docker-mailserver/",
+          "type": "volume"
+        },
+        {
+          "source": "/etc/localtime:ro",
+          "target": "/etc/localtime:ro",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
