@@ -1,9 +1,9 @@
 {
-  "name": "FreshRSS",
-  "longDescription": "<p>FreshRSS is an open-source, self-hosted RSS feed aggregator. It is lightweight, easy to use, and packed with features. FreshRSS lets you collect, manage, and read your RSS feeds from your own server, offering a high degree of control and privacy.</p><p>Key features include a responsive design that works well on desktop and mobile devices, the ability to import/export OPML files, multiple themes, filters, categories, and multi-user support with the ability to manage user roles. Furthermore, it's extensible with plugins for additional functionalities.</p><p>FreshRSS is compatible with various platforms, including Windows, Linux, and MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
-  "description": "FreshRSS is an open-source, self-hosted RSS feed aggregator that is lightweight and easy to use. Features include a responsive design, import/export OPML files, multiple themes, filters, categories, multi-user support, and extensibility with plugins. FreshRSS is compatible with Windows, Linux, MacOS, and Docker.",
-  "tags": ["freshrss", "open-source", "self-hosted", "RSS", "feed aggregator", "responsive", "OPML", "multi-user", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/FreshRSS/FreshRSS",
-  "image": "https://hub.docker.com/r/linuxserver/freshrss",
+  "name": "Lemmy",
+  "longDescription": "<p>Lemmy is an open-source, self-hosted, federated link aggregator application similar to Reddit, which allows users to create their own communities and share links and posts with others.</p><p>Key features of Lemmy include its ability to form federated link-aggregator communities, moderation tools, and the ability to vote on content. It also supports commenting and private messaging between users. Lemmy is designed to consume minimal resources and can be easily self-hosted on small servers.</p><p>Lemmy is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
+  "description": "Lemmy is an open-source, self-hosted, federated link aggregator similar to Reddit. It offers community formation, moderation tools, content voting, and supports commenting and private messaging between users. Lemmy can be run on Windows, Linux, MacOS, and Docker.",
+  "tags": ["lemmy", "open-source", "self-hosted", "federated", "link aggregator", "community", "moderation", "content voting", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/LemmyNet/lemmy",
+  "image": "https://hub.docker.com/r/dessalines/lemmy",
   "supported_architectures": ["amd64", "arm64"]
 }
