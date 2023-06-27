@@ -62,7 +62,7 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:8096",
+          "target": "http://{ServiceName}:32400",
           "mode": "SERVAPP"
         }
       ]
