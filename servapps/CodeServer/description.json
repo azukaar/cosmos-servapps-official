@@ -2,7 +2,7 @@
   "name": "Code-Server",
   "longDescription": "<p>Code-Server is an open-source project that allows developers to run Visual Studio Code, a popular development environment, on any machine remotely. This makes it possible to code on your cloud server, which can be particularly beneficial when dealing with large datasets, complex computations, or restricted local resources.</p><p>Key features of Code-Server include full Visual Studio Code experience, secure access over SSH or HTTPS, and compatibility with VS Code extensions. It is also designed to be easy to install and get up and running.</p><p>Code-Server is available on various platforms including Windows, Linux, and MacOS, and it supports Docker, making it a highly versatile tool for developers across different environments.</p>",
   "description": "Code-Server is an open-source tool that enables running Visual Studio Code on a remote server. It provides a full VS Code experience, secure remote access, and compatibility with VS Code extensions. Code-Server is compatible with Windows, Linux, MacOS, and Docker.",
-  "tags": ["code-server", "open-source", "cross-platform", "VS Code", "development environment", "remote coding", "SSH", "HTTPS", "windows", "linux", "macos", "docker"],
+  "tags": ["development", "visual studio code", "code-server", "open-source", "cross-platform", "VS Code", "development environment", "remote coding", "SSH", "HTTPS", "windows", "linux", "macos", "docker"],
   "repository": "https://github.com/cdr/code-server",
   "image": "https://hub.docker.com/r/codercom/code-server",
   "supported_architectures": ["amd64", "arm64"]

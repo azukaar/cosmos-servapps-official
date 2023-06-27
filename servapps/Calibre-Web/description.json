@@ -2,7 +2,7 @@
   "name": "Calibre-web",
   "longDescription": "<p>Calibre-web is a web application providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database. This software is a fork of the original Calibre web with several additional features and enhancements.</p><p>Calibre-web allows users to sort and categorize eBooks, provides a browser-based eBook reader, and even allows the sending of eBooks to Kindle devices. It also supports user management to control access to the eBook collection and offers the ability to interface with Goodreads for book reviews and recommendations.</p><p>Calibre-web is compatible with Docker and can be used on any platform that supports Docker.</p>",
   "description": "Calibre-web is a web application providing a clean interface for browsing, reading, and downloading eBooks using an existing Calibre database. It offers features like categorization, a browser-based eBook reader, sending eBooks to Kindle devices, user management, and Goodreads integration.",
-  "tags": ["e-book", "web interface", "management", "calibre-web", "docker", "reading", "goodreads", "kindle"],
+  "tags": ["e-book", "library", "reader", "web interface", "management", "calibre-web", "docker", "reading", "goodreads", "kindle"],
   "repository": "https://github.com/janeczku/calibre-web",
   "image": "https://hub.docker.com/r/linuxserver/calibre-web",
   "supported_architectures": ["amd64", "arm64"]

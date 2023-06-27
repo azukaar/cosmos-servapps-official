@@ -2,7 +2,7 @@
   "name": "Heimdall",
   "longDescription": "<p>Heimdall is an open-source, self-hosted dashboard software that allows you to organize and access your web-based applications and services all in one place. It's designed to provide a central hub to simplify your web environment.</p><p>Key features of Heimdall include the ability to add applications via a built-in library or by creating custom application definitions, custom themes, and the capacity to run on a desktop or mobile browser. It supports multiple users and each user can have their own personalized set of applications.</p><p>Heimdall is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
   "description": "Heimdall is an open-source, self-hosted dashboard software that provides a central hub for web-based applications and services. Features include a built-in application library, custom themes, multi-user support, and compatibility with desktop and mobile browsers. Heimdall is compatible with Windows, Linux, MacOS, and Docker.",
-  "tags": ["dashboard", "heimdall", "open-source", "self-hosted", "web-based applications", "services", "central hub", "multi-user", "windows", "linux", "macos", "docker"],
+  "tags": ["dashboard", "home", "icons", "open-source", "self-hosted", "web-based applications", "services", "central hub", "multi-user", "windows", "linux", "macos", "docker"],
   "repository": "https://github.com/linuxserver/Heimdall",
   "image": "https://hub.docker.com/r/linuxserver/heimdall",
   "supported_architectures": ["amd64", "arm64"]

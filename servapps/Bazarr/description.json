@@ -2,7 +2,7 @@
   "name": "Bazarr",
   "longDescription": "<p>Bazarr is a companion application to Sonarr and Radarr that manages and downloads subtitles based on your requirements. It was designed with the aim to make it easier for users to find and download subtitles for their media content.</p><p>Bazarr provides a simple and efficient interface to manage your subtitle collection, supporting many languages and integrating with popular subtitle providers. The software works seamlessly with Sonarr and Radarr to provide a unified experience for managing your media.</p><p>Bazarr supports a variety of platforms including Windows, Linux, and MacOS, and also offers a mobile-friendly web interface. Setting up Bazarr is easy, making it a must-have tool for anyone using Sonarr and Radarr.</p>",
   "description": "Bazarr is an automated subtitle download application designed to complement Sonarr and Radarr. It simplifies the process of finding and downloading subtitles in various languages. Bazarr supports Windows, Linux, MacOS and provides a mobile-friendly web interface. If you're using Sonarr and Radarr, Bazarr can enhance your media management experience.",
-  "tags": ["download", "subtitle", "automated", "downloader", "media", "collection", "sonarr", "radarr", "windows", "linux", "macos", "web interface", "movie management", "media management", "bazarr"],
+  "tags": ["download", "subtitle", "automation", "downloader", "media", "collection", "sonarr", "radarr", "windows", "linux", "macos", "web interface", "movie management", "media management", "bazarr"],
   "repository": "https://github.com/morpheus65535/bazarr",
   "image": "https://hub.docker.com/r/linuxserver/bazarr",
   "supported_architectures": ["amd64", "arm64"]

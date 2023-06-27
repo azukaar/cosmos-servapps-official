@@ -2,7 +2,7 @@
   "name": "Readarr",
   "longDescription": "<p>Readarr is an open-source, self-hosted PVR (Personal Video Recorder) for managing and downloading ebooks. It's built off of the Radarr, Sonarr, and Lidarr platforms and brings the same powerful features to the world of ebooks.</p><p>Key features of Readarr include the ability to add your favorite authors, automatic book searching, calendar integration, and the ability to import existing libraries. It supports integration with popular download clients and can send notifications via a number of platforms.</p><p>Readarr is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
   "description": "Readarr is an open-source, self-hosted PVR for managing and downloading ebooks. It offers features like adding favorite authors, automatic book searching, calendar integration, and importing existing libraries. Readarr supports integration with popular download clients and can send notifications. It can be run on Windows, Linux, MacOS, and Docker.",
-  "tags": ["download", "readarr", "open-source", "self-hosted", "PVR", "ebooks", "book management", "download", "windows", "linux", "macos", "docker"],
+  "tags": ["download", "ebooks", "readarr", "open-source", "self-hosted", "PVR", "book management", "download", "windows", "linux", "macos", "docker"],
   "repository": "https://github.com/Readarr/Readarr",
   "image": "https://hub.docker.com/r/linuxserver/readarr",
   "supported_architectures": ["amd64", "arm64"]

@@ -2,7 +2,7 @@
   "name": "Docker Mailserver",
   "longDescription": "<p>Docker Mailserver is a full-featured, open-source mailserver solution that is designed to run on Docker. It provides a comprehensive set of tools and features needed to run your own mailserver in a production environment.</p><p>Key features of Docker Mailserver include support for various protocols such as SMTP, IMAP, POP3, and LDAP. It also includes SpamAssassin for spam protection, ClamAV for antivirus, Postfix for SMTP, and Dovecot for IMAP/POP3. It also supports DKIM signing to authenticate your email and prevent phishing, and provides automated SSL/TLS certificates via Let's Encrypt.</p><p>Docker Mailserver is designed to be run on any platform that supports Docker, including Linux, MacOS, and Windows.</p>",
   "description": "Docker Mailserver is a full-featured, open-source mailserver solution that runs on Docker. It supports various protocols such as SMTP, IMAP, POP3, and LDAP, and includes features such as spam protection, antivirus, DKIM signing, and automated SSL/TLS certificates. Docker Mailserver can be run on platforms that support Docker, including Linux, MacOS, and Windows.",
-  "tags": ["docker mailserver", "open-source", "mail server", "docker", "SMTP", "IMAP", "POP3", "LDAP", "spam protection", "antivirus", "DKIM", "SSL/TLS", "linux", "macos", "windows"],
+  "tags": ["email", "mail server", "SMTP", "docker mailserver", "open-source", "mail server", "docker", "IMAP", "POP3", "LDAP", "spam protection", "antivirus", "DKIM", "SSL/TLS", "linux", "macos", "windows"],
   "repository": "https://github.com/docker-mailserver/docker-mailserver",
   "image": "https://hub.docker.com/r/mailserver/docker-mailserver",
   "supported_architectures": ["amd64", "arm64"]
