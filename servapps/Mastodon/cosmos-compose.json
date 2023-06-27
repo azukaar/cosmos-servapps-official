@@ -52,7 +52,6 @@
         "OTP_SECRET={Passwords.1}",
         "VAPID_PRIVATE_KEY=",
         "VAPID_PUBLIC_KEY=",
-        "SMTP_FROM_ADDRESS=notifications@{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "S3_ENABLED=false",
         "WEB_DOMAIN={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "SMTP_SERVER={Context.SMTP_SERVER}",
