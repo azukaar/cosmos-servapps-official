@@ -1,0 +1,151 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "SMTP_SERVER",
+        "label": "What SMTP server do you want to use?",
+        "initialValue": "smtp.example.com",
+        "type": "text"
+      },
+      {
+        "name": "SMTP_PORT",
+        "label": "What SMTP port does it use?",
+        "initialValue": "25",
+        "type": "text"
+      },
+      {
+        "name": "SMTP_LOGIN",
+        "label": "What is your SMTP login?",
+        "initialValue": "",
+        "type": "text"
+      },
+      {
+        "name": "SMTP_PASSWORD",
+        "label": "What is your SMTP password?",
+        "initialValue": "",
+        "type": "password"
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "lscr.io/linuxserver/mastodon:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto",
+        "LOCAL_DOMAIN={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "REDIS_HOST={ServiceName}-redis",
+        "REDIS_PORT=6379",
+        "DB_HOST={ServiceName}-postgres",
+        "DB_USER=mastodon",
+        "DB_NAME=mastodon",
+        "DB_PASS={Passwords.0}",
+        "DB_PORT=5432",
+        "ES_ENABLED=false",
+        "SECRET_KEY_BASE={Passwords.2}",
+        "OTP_SECRET={Passwords.1}",
+        "VAPID_PRIVATE_KEY=",
+        "VAPID_PUBLIC_KEY=",
+        "SMTP_FROM_ADDRESS=notifications@{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "S3_ENABLED=false",
+        "WEB_DOMAIN={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "SMTP_SERVER={Context.SMTP_SERVER}",
+        "SMTP_PORT={Context.SMTP_PORT}",
+        "SMTP_LOGIN={Context.SMTP_LOGIN}",
+        "SMTP_PASSWORD={Context.SMTP_PASSWORD}",
+        "SMTP_FROM_ADDRESS=notifications@{Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Mastodon/icon.png"
+      },
+      "networks": {
+        "{ServiceName}-data": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "https://{ServiceName}:443",
+          "mode": "SERVAPP",
+          "AcceptInsecureHTTPSTarget": true
+        }
+      ]
+    },
+    
+    "{ServiceName}-redis": {
+      "restart": "always",
+      "image": "redis:7-alpine",
+      "container_name": "{ServiceName}-redis",
+      "hostname": "{ServiceName}-redis",
+      "networks": {
+        "{ServiceName}-data": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Mastodon/icon.png"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ]
+      }
+    },
+
+    
+    "{ServiceName}-postgres": {
+      "image": "postgres",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "stop_grace_period": 5,
+      "security_opt": [
+        "seccomp:unconfined",
+        "apparmor:unconfined"
+      ],
+      "networks": {
+        "{ServiceName}-data": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Mastodon/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "POSTGRES_DB=mastodon",
+        "POSTGRES_USER=mastodon",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ]
+    }
+  },
+  
+  "networks": {
+    "{ServiceName}-data": {
+    }
+  }
+}
