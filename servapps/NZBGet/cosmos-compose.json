@@ -19,7 +19,7 @@
   "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
-      "image": "lscr.io/linuxserver/sonarr:latest",
+      "image": "lscr.io/linuxserver/nzbget:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,
