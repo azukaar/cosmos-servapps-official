@@ -1,0 +1,9 @@
+{
+  "name": "OhMyForm",
+  "longDescription": "<p>OhMyForm is a free, open-source software that allows you to craft beautiful forms in seconds for various purposes such as recruiting, market research, surveys, and more. It offers a user-friendly interface and features that make creating, administering, analyzing, and distributing forms straightforward.</p><p>Key features of OhMyForm include its wide variety of built-in tools, the ability to create embeddable forms, and a powerful community of contributors that constantly improve and vet the platform. As open-source software, OhMyForm is not only always improving but also completely free.</p><p>One of the advantages of OhMyForm is the ability to host it yourself, ensuring no installation fees or monthly charges. This commitment to being 100% open-source allows users to maintain full control over their forms and data.</p>",
+  "description": "OhMyForm is a free, open-source form creation software. It offers a range of features for creating, administering, analyzing, and distributing beautiful, embeddable forms for various purposes such as recruiting, market research, and surveys. OhMyForm allows for self-hosting with no installation fees or monthly charges.",
+  "tags": ["productivity", "open-source", "self-hosted", "form creation", "surveys", "recruiting", "market research", "embeddable forms"],
+  "repository": "https://github.com/ohmyform/ohmyform",
+  "image": "https://hub.docker.com/r/ohmyform/ohmyform",
+  "supported_architectures": ["amd64", "arm64"]
+}
