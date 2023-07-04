@@ -51,7 +51,13 @@
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
           "target": "http://{ServiceName}:8080",
-          "mode": "SERVAPP"
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
         }
       ]
     },

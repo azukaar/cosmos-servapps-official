@@ -58,6 +58,12 @@
           "useHost": true,
           "target": "http://{ServiceName}:8112",
           "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
           "AuthEnabled": true
           {if Context.adminOnly}
            , "AuthAdmin": true

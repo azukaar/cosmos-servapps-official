@@ -46,12 +46,24 @@
           "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
           "target": "http://{ServiceName}:8536",
           "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
           "hideFromDashboard": true
         },
         {
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
           "target": "http://{ServiceName}-ui:1234",
           "mode": "SERVAPP"
         }

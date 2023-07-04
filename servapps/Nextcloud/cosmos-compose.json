@@ -51,7 +51,13 @@
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
           "target": "http://{ServiceName}:80",
-          "mode": "SERVAPP"
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
         },
         {
           "Name": "{ServiceName}_caldav",
@@ -61,7 +67,7 @@
           "UsePathPrefix": true,
           "PathPrefix": "/.well-known/caldav",
           "Timeout": 14400000,
-          "ThrottlePerMinute": 10000,
+          "ThrottlePerMinute": 12000,
           "CORSOrigin": "",
           "StripPathPrefix": false,
           "MaxBandwith": 0,
@@ -69,14 +75,7 @@
           "AdminOnly": false,
           "Target": "https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/remote.php/dav",
           "SmartShield": {
-            "Enabled": true,
-            "PolicyStrictness": 0,
-            "PerUserTimeBudget": 0,
-            "PerUserRequestLimit": 0,
-            "PerUserByteLimit": 0,
-            "PerUserSimultaneous": 0,
-            "MaxGlobalSimultaneous": 0,
-            "PrivilegedGroups": 0
+            "Enabled": true
           },
           "Mode": "REDIRECT",
           "BlockCommonBots": true,
@@ -91,7 +90,7 @@
           "UsePathPrefix": true,
           "PathPrefix": "/.well-known/carddav",
           "Timeout": 14400000,
-          "ThrottlePerMinute": 10000,
+          "ThrottlePerMinute": 12000,
           "CORSOrigin": "",
           "StripPathPrefix": false,
           "MaxBandwith": 0,
@@ -99,14 +98,7 @@
           "AdminOnly": false,
           "Target": "https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/remote.php/dav",
           "SmartShield": {
-            "Enabled": true,
-            "PolicyStrictness": 0,
-            "PerUserTimeBudget": 0,
-            "PerUserRequestLimit": 0,
-            "PerUserByteLimit": 0,
-            "PerUserSimultaneous": 0,
-            "MaxGlobalSimultaneous": 0,
-            "PrivilegedGroups": 0
+            "Enabled": true
           },
           "Mode": "REDIRECT",
           "BlockCommonBots": true,

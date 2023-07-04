@@ -49,6 +49,12 @@
           "target": "http://{ServiceName}:3000",
           "hostPrefix": "admin-",
           "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
           "AuthEnabled": true,
           "AuthAdmin": true
         },
@@ -58,6 +64,12 @@
           "useHost": true,
           "target": "http://{ServiceName}:80",
           "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
           "AuthEnabled": true
         }
       ]

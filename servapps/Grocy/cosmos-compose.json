@@ -47,6 +47,12 @@
           "useHost": true,
           "target": "https://{ServiceName}:443",
           "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
           "AcceptInsecureHTTPSTarget": true,
           "AuthEnabled": true
           {if Context.adminOnly}
