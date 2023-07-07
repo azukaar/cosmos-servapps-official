@@ -1,6 +1,18 @@
 { 
   "cosmos-installer": {
     "form": [
+      {
+        "name": "modelPaths",
+        "label": "What is the path of your models? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/3D_models",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
     ]
   },
   "minVersion": "0.8.0",
@@ -14,10 +26,10 @@
       "environment": [
         "PUID=1000",
         "PGID=1000",
-        "REDIS_URL=redis://{ServiceName}-redis:{REDIS_PORT}/1",
+        "REDIS_URL=redis://{ServiceName}-redis:6379",
         "REDIS_PORT=6379",
         "SECRET_KEY_BASE={Passwords.3}",
-        "DB_HOST=postgresql://{DB_USER}:{DB_PASS}@{ServiceName}-postgres/{DB_NAME}?pool=5",
+        "DB_HOST={ServiceName}-postgres",
         "DB_USER=vandam",
         "DB_NAME=vandam",
         "DB_PASS={Passwords.0}",
@@ -33,20 +45,25 @@
         "{ServiceName}-data": {}
       },
       "volumes": [
+        {if Context.modelPaths}
         {
-          "source": "/usr/libraries",
-          "target": "/libraries",
+          "source": "{Context.modelPaths}",
+          "target": "/3D_models",
           "type": "bind"
         }
+        {/if}
       ],
       "routes": [
         {
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "https://{ServiceName}:3214",
+          "target": "http://{ServiceName}:3214",
           "mode": "SERVAPP",
-          "AcceptInsecureHTTPSTarget": true
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
         }
       ]
     },
