@@ -1,0 +1,9 @@
+{
+  "name": "Minecraft",
+  "longDescription": "<p>Minecraft is a highly popular and critically acclaimed sandbox video game developed by Mojang Studios. It allows players to explore a blocky, procedurally generated 3D world with virtually infinite terrain, and may discover and extract raw materials, craft tools and items, build structures, and interact with the game's various entities.</p><p>Gameplay involves players interacting with the game world by placing and breaking various types of blocks in a three-dimensional environment. In this environment, players can build creative structures, creations, and artwork on multiplayer servers and singleplayer worlds across multiple game modes. Minecraft supports a wide range of gameplay styles, including survival mode, creative mode, adventure mode, and spectator mode.</p><p>Minecraft is available on multiple platforms, including Windows, MacOS, Linux, and various consoles and mobile devices.</p>",
+  "description": "Minecraft is a sandbox video game developed by Mojang Studios that allows players to explore, interact with, and modify a dynamically-generated map made of blocks. Players can build structures, craft items, and interact with the game world in a variety of ways. The game supports multiple gameplay styles and modes, and is available on a wide range of platforms.",
+  "tags": ["game servers", "mojang", "sandbox", "game", "procedurally generated", "3D", "multiplayer", "singleplayer", "survival", "creative", "adventure", "spectator", "windows", "macos", "linux", "console", "mobile"],
+  "repository": "https://www.minecraft.net/",
+  "image": "https://www.minecraft.net/en-us/about-minecraft",
+  "supported_architectures": ["x86", "amd64", "arm", "arm64"]
+}
