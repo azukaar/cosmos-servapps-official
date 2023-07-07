@@ -1,9 +1,9 @@
 {
-  "name": "Mastodon",
-  "longDescription": "<p>Mastodon is a free and open-source self-hosted social networking service. It allows anyone to host their own server node in the network, while interacting with other users in a federated manner. It is similar to Twitter, but is distinguished by its decentralization and ability for users to host their own servers, and its character limit of 500 as opposed to Twitter's 280.</p><p>Key features of Mastodon include the ability to build your own community, granular, per-post privacy settings, and anti-abuse tools. It supports a rich variety of multimedia attachments in posts, and you can also choose to use content warnings on your posts for viewer discretion.</p><p>Mastodon can be run on any platform that supports Ruby, Node.js, and PostgreSQL, including various Linux distributions and Docker.</p>",
-  "description": "Mastodon is a free and open-source self-hosted social networking service. It features decentralization, ability to build your own community, per-post privacy settings, anti-abuse tools, and supports multimedia attachments. Mastodon can be run on any platform that supports Ruby, Node.js, and PostgreSQL, including various Linux distributions and Docker.",
-  "tags": ["social", "federation", "reddit", "open-source", "self-hosted", "federated", "link aggregator", "community", "moderation", "content voting", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/tootsuite/mastodon",
-  "image": "https://hub.docker.com/r/tootsuite/mastodon",
+  "name": "Van_DAM",
+  "longDescription": "<p>VanDAM is a Digital Asset Manager (DAM), specifically designed for 3D print files. Create a library pointing at your files on disk, and it will scan for models and parts. It assumes that any folders containing STL or OBJ files are models, and the files within them are parts. You can then view the files easily through your browser!</p>",
+  "description": "A self-hosted digital asset manager for 3d print files",
+  "tags": ["3d models", "3d printing"],
+  "repository": "https://github.com/Floppy/van_dam",
+  "image": "ghcr.io/floppy/van_dam",
   "supported_architectures": ["amd64", "arm64"]
 }
