@@ -1,0 +1,85 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "mountPoint",
+        "label": "What folder do you want to have available in Filebrowser?",
+        "initialValue": "/",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "A default account has been created with admin / admin as credentials. Please change them"
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "filebrowser/filebrowser:s6",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "tty": true,
+      "stdin_open": true,
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "post_install": [
+        "filebrowser config init",
+        "filebrowser users add admin admin"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/filebrowser/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "/usr/Filebrowser/{ServiceName}-database.db",
+          "target": "/database.db",
+          "type": "bind"
+        },
+        {
+          "source": "/usr/Filebrowser/.{ServiceName}-filebrowser.json",
+          "target": "/.filebrowser.json",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.mountPoint}",
+          "target": "/srv",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}

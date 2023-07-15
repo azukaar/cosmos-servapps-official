@@ -16,6 +16,7 @@
         "{ServiceName}-internal": {}
       },
       "tty": true,
+      "stdin_open": true,
       "restart": "always",
       "environment": [
         "RUST_LOG=warn"

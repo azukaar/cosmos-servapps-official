@@ -1,0 +1,9 @@
+{
+  "name": "Filebrowser",
+  "longDescription": "<p>Filebrowser is an open-source, self-hosted web application for managing files within your server's file system. The application provides a user-friendly interface, making it simple to navigate, upload, download, and manage your files.</p><p>Key features of Filebrowser include support for custom commands, user and permissions management, shareable links, and a built-in text editor. It also supports various media file previews, including video and image file formats.</p><p>Filebrowser is designed to run on any platform that supports Go, including various Linux distributions, Windows, and MacOS. Additionally, it can be easily deployed using Docker.</p>",
+  "description": "Filebrowser is an open-source, self-hosted web application for managing files within your server. It offers features like custom commands, user and permissions management, shareable links, built-in text editor, and media file previews. Filebrowser can be run on any platform that supports Go, including various Linux distributions, Windows, MacOS, and Docker.",
+  "tags": ["filebrowser", "open-source", "self-hosted", "file management", "custom commands", "permissions management", "shareable links", "text editor", "media previews", "go", "linux", "windows", "macos", "docker"],
+  "repository": "https://github.com/filebrowser/filebrowser",
+  "image": "https://hub.docker.com/r/filebrowser/filebrowser",
+  "supported_architectures": ["amd64", "arm64"]
+}

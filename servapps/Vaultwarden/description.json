@@ -1,0 +1,9 @@
+{
+  "name": "Vaultwarden",
+  "longDescription": "<p>Vaultwarden is an open-source password management server that is compatible with Bitwarden apps. It provides a secure and free self-hosted solution to store and synchronize sensitive data across multiple devices, with the ability to share data across organizations, users, and teams.</p><p>Written in Rust, Vaultwarden is designed for lightweight and low resource usage. It allows you to store all kinds of sensitive information, including passwords, credit card details, and secure notes, which can be accessed through Bitwarden's web, mobile, or browser extension apps.</p><p>Vaultwarden supports various platforms, including Linux, Windows, MacOS, and can be deployed easily using Docker.</p>",
+  "description": "Vaultwarden is an open-source, self-hosted password management server compatible with Bitwarden apps. Written in Rust, it provides a secure way to store and synchronize sensitive data across devices with lightweight and low resource usage. Vaultwarden supports various platforms, including Linux, Windows, MacOS, and Docker.",
+  "tags": ["productivity", "password-manager", "password manager", "bitwarden", "rust", "sensitive data", "synchronization", "linux", "windows", "macos", "docker"],
+  "repository": "https://github.com/dani-garcia/vaultwarden",
+  "image": "https://hub.docker.com/r/vaultwarden/server",
+  "supported_architectures": ["amd64", "arm64"]
+}
