@@ -39,6 +39,74 @@
       ],
       "routes": [
         {
+          "name": "{ServiceName}-api-1",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "usePath": true,
+          "UsePathPrefix": true,
+          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "target": "http://{ServiceName}:8536",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true,
+          "AddionalFilters":[
+            {
+              "Type": "method",
+              "Name": "",
+              "Value": "POST"
+            }
+          ]
+        },
+        {
+          "name": "{ServiceName}-api-2",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "usePath": true,
+          "UsePathPrefix": true,
+          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "target": "http://{ServiceName}:8536",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true,
+          "AddionalFilters": [{
+            "Type": "header",
+            "Name": "Accept",
+            "Value": "application/ld+json"
+          }]
+        },
+        {
+          "name": "{ServiceName}-api-3",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "usePath": true,
+          "UsePathPrefix": true,
+          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "target": "http://{ServiceName}:8536",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true,
+          "AddionalFilters": [{
+            "Type": "header",
+            "Name": "Accept",
+            "Value": "application/ld+json; profile=\"https://www.w3.org/ns/activitystreams\""
+          }]
+        },
+        {
           "name": "{ServiceName}-api",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
