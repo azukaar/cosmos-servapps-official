@@ -46,11 +46,16 @@
           "UsePathPrefix": false,
           "target": "http://{ServiceName}:8536",
           "mode": "SERVAPP",
+
           "Timeout": 14400000,
-          "ThrottlePerMinute": 12000,
+          "ThrottlePerMinute": 50000,
           "BlockCommonBots": true,
           "SmartShield": {
-            "Enabled": true
+            "Enabled": true,
+            "PolicyStrictness": 3,
+            "PerUserRequestLimit": 12000,
+            "PerUserSimultaneous": 100,
+            "MaxGlobalSimultaneous": 1000
           },
           "hideFromDashboard": true,
           "AddionalFilters":[
@@ -73,7 +78,11 @@
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
           "SmartShield": {
-            "Enabled": true
+            "Enabled": true,
+            "PolicyStrictness": 3,
+            "PerUserRequestLimit": 12000,
+            "PerUserSimultaneous": 100,
+            "MaxGlobalSimultaneous": 1000
           },
           "hideFromDashboard": true,
           "AddionalFilters": [{
@@ -94,7 +103,11 @@
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
           "SmartShield": {
-            "Enabled": true
+            "Enabled": true,
+            "PolicyStrictness": 3,
+            "PerUserRequestLimit": 12000,
+            "PerUserSimultaneous": 100,
+            "MaxGlobalSimultaneous": 1000
           },
           "hideFromDashboard": true,
           "AddionalFilters": [{
@@ -116,7 +129,11 @@
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
           "SmartShield": {
-            "Enabled": true
+            "Enabled": true,
+            "PolicyStrictness": 3,
+            "PerUserRequestLimit": 12000,
+            "PerUserSimultaneous": 100,
+            "MaxGlobalSimultaneous": 1000
           },
           "hideFromDashboard": true
         },
