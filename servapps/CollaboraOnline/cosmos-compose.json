@@ -1,0 +1,45 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "WOPIHost",
+        "label": "What is the dot escaped domain of your WOPI host?",
+        "initialValue": "https://nextcloud\\\\.example\\\\.com",
+        "type": "text"
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "collabora/code",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "aliasgroup1={Context.WOPIHost}",
+        "server_name={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://www.collaboraoffice.com/wp-content/uploads/2022/03/cropped-collabora-productivity-nav-icon.png"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "https://{ServiceName}:9980",
+          "AcceptInsecureHTTPSTarget": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true
+        }
+      ]
+    }
+  }
+}
