@@ -43,8 +43,7 @@
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
           "usePath": true,
-          "UsePathPrefix": true,
-          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "UsePathPrefix": false,
           "target": "http://{ServiceName}:8536",
           "mode": "SERVAPP",
           "Timeout": 14400000,
@@ -67,8 +66,7 @@
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
           "usePath": true,
-          "UsePathPrefix": true,
-          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "UsePathPrefix": false,
           "target": "http://{ServiceName}:8536",
           "mode": "SERVAPP",
           "Timeout": 14400000,
@@ -81,7 +79,7 @@
           "AddionalFilters": [{
             "Type": "header",
             "Name": "Accept",
-            "Value": "application/ld+json"
+            "Value": "application/activity+json"
           }]
         },
         {
@@ -89,8 +87,7 @@
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
           "usePath": true,
-          "UsePathPrefix": true,
-          "PathPrefix": "/{path:(?:api|pictrs|feeds|nodeinfo|.well-known)}",
+          "UsePathPrefix": false,
           "target": "http://{ServiceName}:8536",
           "mode": "SERVAPP",
           "Timeout": 14400000,
