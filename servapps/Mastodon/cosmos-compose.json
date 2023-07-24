@@ -86,7 +86,11 @@
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
           "SmartShield": {
-            "Enabled": true
+            "Enabled": true,
+            "PolicyStrictness": 3,
+            "PerUserRequestLimit": 12000,
+            "PerUserSimultaneous": 100,
+            "MaxGlobalSimultaneous": 1000
           },
           "AcceptInsecureHTTPSTarget": true
         }
