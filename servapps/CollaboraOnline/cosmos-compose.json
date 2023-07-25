@@ -2,9 +2,9 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "WOPIHost",
-        "label": "What is the dot escaped domain of your WOPI host?",
-        "initialValue": "https://nextcloud\\\\.example\\\\.com",
+        "name": "wopihost",
+        "label": "What is the domain of your WOPI host?",
+        "initialValue": "https://nextcloud.example.com",
         "type": "text"
       }
     ]
@@ -15,8 +15,8 @@
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
-        "aliasgroup1={Context.WOPIHost}",
-        "server_name={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+        "aliasgroup1={Context.wopihost}",
+        "server_name={Context.wopihost}"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
@@ -25,9 +25,84 @@
       },
       "routes": [
         {
-          "name": "{ServiceName}",
-          "description": "Expose {ServiceName} to the web",
+          "name": "{ServiceName}_browser",
+          "description": "{ServiceName} static assets",
           "useHost": true,
+          "host": "{Context.wopihost}",
+          "usePathPrefix": true,
+          "pathPrefix": "/browser",
+          "target": "https://{ServiceName}:9980",
+          "AcceptInsecureHTTPSTarget": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true
+        },
+        {
+          "name": "{ServiceName}_hosting_discovery",
+          "description": "{ServiceName} WOPI discovery URL",
+          "useHost": true,
+          "host": "{Context.wopihost}",
+          "usePathPrefix": true,
+          "pathPrefix": "/hosting/discovery",
+          "target": "https://{ServiceName}:9980",
+          "AcceptInsecureHTTPSTarget": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true
+        },
+        {
+          "name": "{ServiceName}_hosting_capabilities",
+          "description": "{ServiceName} capabilities",
+          "useHost": true,
+          "host": "{Context.wopihost}",
+          "usePathPrefix": true,
+          "pathPrefix": "/hosting/capabilities",
+          "target": "https://{ServiceName}:9980",
+          "AcceptInsecureHTTPSTarget": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true
+        },
+        {
+          "name": "{ServiceName}_cool",
+          "description": "{ServiceName} Fullscreen presentation and Image upload operations",
+          "useHost": true,
+          "host": "{Context.wopihost}",
+          "usePathPrefix": true,
+          "pathPrefix": "/cool",
+          "target": "https://{ServiceName}:9980",
+          "AcceptInsecureHTTPSTarget": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true
+        },
+        {
+          "name": "{ServiceName}_lool",
+          "description": "{ServiceName} compatibility with integrations that use the /lool/convert-to endpoint",
+          "useHost": true,
+          "host": "{Context.wopihost}",
+          "usePathPrefix": true,
+          "pathPrefix": "/lool",
           "target": "https://{ServiceName}:9980",
           "AcceptInsecureHTTPSTarget": true,
           "mode": "SERVAPP",
