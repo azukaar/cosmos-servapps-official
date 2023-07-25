@@ -21,7 +21,8 @@
         "MYSQL_DATABASE=nextcloud",
         "MYSQL_USER=nextcloud",
         "MYSQL_PASSWORD={Passwords.0}",
-        "MYSQL_HOST={ServiceName}-mariadb"
+        "MYSQL_HOST={ServiceName}-mariadb",
+        "NC_overwriteprotocol=https"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
@@ -46,19 +47,6 @@
       {/if}
     ],
       "routes": [
-        {
-          "name": "{ServiceName}",
-          "description": "Expose {ServiceName} to the web",
-          "useHost": true,
-          "target": "http://{ServiceName}:80",
-          "mode": "SERVAPP",
-          "Timeout": 14400000,
-          "ThrottlePerMinute": 12000,
-          "BlockCommonBots": true,
-          "SmartShield": {
-            "Enabled": true
-          }
-        },
         {
           "Name": "{ServiceName}_caldav",
           "Description": "Redirect {ServiceName} caldav to proper route",
@@ -104,6 +92,19 @@
           "BlockCommonBots": true,
           "BlockAPIAbuse": false,
           "AcceptInsecureHTTPSTarget": false
+        },
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
         }
       ]
     },
