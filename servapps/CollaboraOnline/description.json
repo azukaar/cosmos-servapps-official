@@ -1,9 +1,0 @@
-{
-  "name": "Collabora Online",
-  "longDescription": "<p>Collabora Online is a powerful collaborative Office suite that supports all major document, spreadsheet and presentation file formats, which you can integrate into your own infrastructure. Collabora Online provides data security and sovereignty, and is ideally suited to the demands of a modern distributed working environment. Delivering a familiar look and feel, Collabora Online represents a real alternative to other big-brands solutions, giving you control and flexibility.</p>",
-  "description": "Collabora Online is a powerful online office suite which you can integrate into your own infrastructure or access via one of our trusted hosting Partners.",
-  "tags": ["productivity",  "open-source", "office", "collaboration"],
-  "repository": "https://github.com/CollaboraOnline/online",
-  "image": "https://hub.docker.com/r/collabora/code",
-  "supported_architectures": ["amd64", "arm64"]
-}

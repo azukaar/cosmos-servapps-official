@@ -6,7 +6,19 @@
         "label": "What is the path to your data? (leave empty to not mount anything)",
         "initialValue": "{DefaultDataPath}/nextcloud-data",
         "type": "text"
+      },
+      {
+        "name": "enableCollabora",
+        "label": "Would you like to enable Collabora (for Nextcloud Office)?",
+        "initialValue": false,
+        "type": "checkbox"
       }
+      {if Context.enableCollabora}
+      , {
+        "type": "warning",
+        "label": "Make sure to use {Hostnames.{StaticServiceName}.{StaticServiceName}.host} for the Collabora domain."
+      }
+      {/if}
     ]
   },
   "minVersion": "0.7.6",
@@ -139,6 +151,43 @@
         "MARIADB_ROOT_PASSWORD={Passwords.1}"
       ]
     }
+
+
+    {if Context.enableCollabora}
+    , "{ServiceName}-collabora": {
+      "image": "collabora/code",
+      "container_name": "{ServiceName}-collabora",
+      "restart": "unless-stopped",
+      "environment": [
+        "aliasgroup1={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "server_name={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}-collabora",
+          "description": "Expose {ServiceName}-collabora to the web",
+          "useHost": true,
+          "host": "{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+          "usePathPrefix": true,
+          "pathPrefix": "/{path:(?:browser|hosting/(?:discovery|capabilities)|(?:c|l)ool)}",
+          "target": "https://{ServiceName}-collabora:9980",
+          "AcceptInsecureHTTPSTarget": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "hideFromDashboard": true
+        }
+      ]
+    }
+    {/if}
   },
 
   "networks": {
