@@ -40,7 +40,7 @@
         "PHOTOPRISM_DATABASE_NAME=photoprism",
         "PHOTOPRISM_DATABASE_USER=photoprism",
         "PHOTOPRISM_DATABASE_PASSWORD={Passwords.0}",
-        "PHOTOPRISM_SITE_URL={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "PHOTOPRISM_SITE_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "PHOTOPRISM_AUTH_MODE=password",
         "PHOTOPRISM_ADMIN_PASSWORD={Passwords.2}",
         "PHOTOPRISM_ADMIN_NAME=cosmos"
@@ -75,7 +75,7 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:8123",
+          "target": "http://{ServiceName}:2342",
           "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
