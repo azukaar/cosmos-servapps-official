@@ -17,7 +17,7 @@
     "post-install": [
       {
         "type": "success",
-        "label": "Photoprism is now installed and running. You can access it at {Hostnames.{StaticServiceName}.{StaticServiceName}.host}. and your credentials are user: cosmos / password: {Passwords.2}."
+        "label": "Photoprism is now installed and running. You can access it at {Hostnames.{StaticServiceName}.{StaticServiceName}.host}. and your credentials are user: admin / password: {Passwords.2}."
       }
     ]
   },
@@ -42,8 +42,7 @@
         "PHOTOPRISM_DATABASE_PASSWORD={Passwords.0}",
         "PHOTOPRISM_SITE_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "PHOTOPRISM_AUTH_MODE=password",
-        "PHOTOPRISM_ADMIN_PASSWORD={Passwords.2}",
-        "PHOTOPRISM_ADMIN_NAME=cosmos"
+        "PHOTOPRISM_ADMIN_PASSWORD={Passwords.2}"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
