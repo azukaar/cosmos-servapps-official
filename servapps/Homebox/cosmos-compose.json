@@ -1,0 +1,102 @@
+
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "mode",
+        "label": "[production, development]",
+        "initialValue": "production",
+        "type": "text"
+      },
+      {
+        "name": "logInfo",
+        "label": "[trace, debug, info, warn, error, critical]",
+        "initialValue": "info",
+        "type": "text"
+      },
+      {
+        "name": "logFormat",
+        "label": "[text, json]",
+        "initialValue": "text",
+        "type": "text"
+      },
+      {
+        "name": "port",
+        "label": "Port to run the web server on?",
+        "initialValue": "7745",
+        "type": "text"
+      },
+      {
+        "name": "maxUploadSize",
+        "label": "Maximum file upload size in MB?",
+        "initialValue": "10",
+        "type": "text"
+      },
+      {
+        "name": "allowRegistration",
+        "label": "Allow users to register themselves?",
+        "initialValue": true,
+        "type": "checkbox"
+      },
+      {
+        "name": "autoIncrement",
+        "label": "Auto increment the asset_id field for new items?",
+        "initialValue": true,
+        "type": "checkbox"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "ghcr.io/hay-kot/homebox:latest",
+      "environment": [
+        "HBOX_MODE={Context.mode}",
+        "HBOX_OPTIONS_ALLOW_REGISTRATION={Context.allowRegistration}",
+        "HBOX_OPTIONS_AUTO_INCREMENT_ASSET_ID={Context.autoIncrement}",
+        "HBOX_LOG_LEVEL={Context.logInfo}",
+        "HBOX_LOG_FORMAT={Context.logFormat}",
+        "HBOX_WEB_MAX_UPLOAD_SIZE={Context.maxUploadSize}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Homebox/icon.png"
+      },
+      "restart": "unless-stopped",
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "{ServiceName}-config",
+          "target": "/data"
+        }
+      ],
+      "routes": [
+        {
+          "Target": "http://{ServiceName}:{Context.port}",
+          "Mode": "SERVAPP",
+          "Name": "{ServiceName}",
+          "Description": "Expose {ServiceName} to the internet",
+          "UseHost": true,
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
