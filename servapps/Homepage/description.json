@@ -1,0 +1,9 @@
+{
+  "name": "Homepage",
+  "longDescription": "<p>Homepage is a modern (fully static, fast), secure (fully proxied), highly customizable application dashboard with integrations for more than 25 services and translations for over 15 languages. Easily configured via YAML files (or discovery via docker labels).</p>",
+  "description": "Homepage is a modern (fully static, fast), secure (fully proxied), highly customizable application dashboard with integrations for more than 25 services and translations for over 15 languages. Easily configured via YAML files (or discovery via docker labels).",
+  "tags": ["dashboard", "homepage", "integrations", "open-source", "self-hosted", "web-based applications", "services", "central hub", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/benphelps/homepage",
+  "image": "https://ghcr.io/benphelps/homepage",
+  "supported_architectures": ["amd64", "arm64"]
+}
