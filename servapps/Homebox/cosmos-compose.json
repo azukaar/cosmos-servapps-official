@@ -39,11 +39,11 @@
       ],
       "routes": [
         {
-          "Target": "http://{ServiceName}:7745",
-          "Mode": "SERVAPP",
-          "Name": "{ServiceName}",
-          "Description": "Expose {ServiceName} to the internet",
-          "UseHost": true,
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the internet",
+          "useHost": true,
+          "target": "http://{ServiceName}:7745",
+          "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
