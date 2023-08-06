@@ -20,13 +20,13 @@
       {
         "name": "exportDirectory",
         "label": "What is the path to the export directory?",
-        "initialValue": "{DefaultDataPath}/export",
+        "initialValue": "{DefaultDataPath}/Paperless-export",
         "type": "text"
       },
       {
         "name": "consumeDirectory",
         "label": "What is the path to the consume directory?",
-        "initialValue": "{DefaultDataPath}/consume",
+        "initialValue": "{DefaultDataPath}/Paperless-consume",
         "type": "text"
       },
       {
