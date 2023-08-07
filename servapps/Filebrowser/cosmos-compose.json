@@ -15,8 +15,8 @@
       },
       {
         "name": "noAuth",
-        "label": "Do you to disable Filebrowser authentication?",
-        "initialValue": false,
+        "label": "Uncheck to enable Filebrowser authentication (defaults to using Cosmos authentication)",
+        "initialValue": true,
         "type": "checkbox"
       }
     ],
