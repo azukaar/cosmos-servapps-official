@@ -9,28 +9,10 @@
       },
       { 
         "name": "useSocketProxy",
-        "label": "Do you want to use a Docker Host?",
+        "label": "Do you want to use a Docker Host? (aka Socket Proxy container)",
         "initialValue": false,
         "type": "checkbox"
       }
-      {if Context.useSocketProxy}
-        ,
-        { 
-          "name": "createSocketProxy",
-          "label": "Do you already have a socket-proxy container?",
-          "initialValue": false,
-          "type": "checkbox"
-        }
-        {if Context.createSocketProxy}
-          ,
-          {
-          "name": "socketProxy",
-          "name-container": "socket-proxy-name",
-          "label": "Where is your Socket Proxy container? (leave blank to create one)",
-          "type": "container"
-          }
-        {/if}
-      {/if}
     ]
   },
   "minVersion": "0.8.0",
@@ -73,68 +55,66 @@
           {/if}
         }
       ]
-      {if Context.socketProxy}
+      {if Context.useSocketProxy}
       , "links": [
-        "{Context.socket-proxy-name}"
+        "{ServiceName}-Socket-Proxy"
       ]
       {/if}
     }
     {if Context.useSocketProxy}
-      {if not Context.createSocketProxy}
-        ,
-        "Socket-Proxy": {
-          "image": "tecnativa/docker-socket-proxy",
-          "container_name": "Socket-Proxy",
-          "hostname": "Socket-Proxy",
-          "restart": "unless-stopped",
-          "security_opt": [
-            "no-new-privileges:true"
-          ],
-          "ports": [
-            "2375:2375"
-          ],
-          "labels": {
-            "cosmos-force-network-secured": "true",
-            "cosmos-network-name": "AUTO"
-          },
-          "volumes": [
-            {
-              "source": "/var/run/docker.sock",
-              "target": "/var/run/docker.sock",
-              "type": "bind"
-              }
-          ],
-          "environment": [
-            "LOG_LEVEL=info",
-            "EVENTS=1",
-            "PING=1",
-            "VERSION=1",
-            "AUTH=0",
-            "SECRETS=0",
-            "POST=0",
-            "BUILD=0",
-            "COMMIT=0",
-            "CONFIGS=0",
-            "CONTAINERS=1",
-            "DISTRIBUTION=0",
-            "EXEC=0",
-            "IMAGES=1", 
-            "INFO=1", 
-            "NETWORKS=1", 
-            "NODES=0",
-            "PLUGINS=0",
-            "SERVICES=1", 
-            "SESSION=0",
-            "SWARM=0",
-            "SYSTEM=0",
-            "TASKS=1", 
-            "VOLUMES=1" 
-          ],
-          "links": [
-            "{ServiceName}"
-          ]
-        }
-      {/if}
+      ,
+      "{ServiceName}-Socket-Proxy": {
+        "image": "tecnativa/docker-socket-proxy",
+        "container_name": "{ServiceName}-Socket-Proxy",
+        "hostname": "{ServiceName}-Socket-Proxy",
+        "restart": "unless-stopped",
+        "security_opt": [
+          "no-new-privileges:true"
+        ],
+        "ports": [
+          "2375:2375"
+        ],
+        "labels": {
+          "cosmos-force-network-secured": "true",
+          "cosmos-network-name": "AUTO"
+        },
+        "volumes": [
+          {
+            "source": "/var/run/docker.sock",
+            "target": "/var/run/docker.sock",
+            "type": "bind"
+            }
+        ],
+        "environment": [
+          "LOG_LEVEL=info",
+          "EVENTS=1",
+          "PING=1",
+          "VERSION=1",
+          "AUTH=0",
+          "SECRETS=0",
+          "POST=0",
+          "BUILD=0",
+          "COMMIT=0",
+          "CONFIGS=0",
+          "CONTAINERS=1",
+          "DISTRIBUTION=0",
+          "EXEC=0",
+          "IMAGES=1", 
+          "INFO=1", 
+          "NETWORKS=1", 
+          "NODES=0",
+          "PLUGINS=0",
+          "SERVICES=1", 
+          "SESSION=0",
+          "SWARM=0",
+          "SYSTEM=0",
+          "TASKS=1", 
+          "VOLUMES=1" 
+        ],
+        "links": [
+          "{ServiceName}"
+        ]
+      }
     {/if}
   }
 }
