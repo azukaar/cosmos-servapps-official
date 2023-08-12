@@ -10,10 +10,25 @@
       { 
         "name": "useSocketProxy",
         "label": "Do you want to use a Docker Host? (aka Socket Proxy container)",
-        "initialValue": false,
+        "initialValue": true,
         "type": "checkbox"
       }
+      {if Context.useSocketProxy}
+        , 
+        {
+          "type": "warning",
+          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-Socket-Proxy container. Use tcp://{ServiceName}-Socket-Proxy:2375"
+        }
+      {/if}
     ]
+    {if Context.useSocketProxy}
+      , "post-install": [
+        {
+          "type": "warning",
+          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-Socket-Proxy container. Use tcp://{ServiceName}-Socket-Proxy:2375"
+        }
+      ]
+    {/if}
   },
   "minVersion": "0.8.0",
   "services": {
@@ -55,11 +70,6 @@
           {/if}
         }
       ]
-      {if Context.useSocketProxy}
-      , "links": [
-        "{ServiceName}-Socket-Proxy"
-      ]
-      {/if}
     }
     {if Context.useSocketProxy}
       ,
@@ -76,7 +86,8 @@
         ],
         "labels": {
           "cosmos-force-network-secured": "true",
-          "cosmos-network-name": "AUTO"
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/UptimeKuma/icon.png"
         },
         "volumes": [
           {
