@@ -1,0 +1,9 @@
+{
+  "name": "Homebox",
+  "longDescription": "<p>Homebox is the inventory and organization system built for the Home User! With a focus on simplicity and ease of use, Homebox is the perfect solution for your home inventory, organization, and management needs.</p>",
+  "description": "Homebox is the inventory and organization system built for the Home User.",
+  "tags": ["home", "homebox", "organization", "inventory", "management", "docker", "linux"],
+  "repository": "https://github.com/hay-kot/homebox",
+  "image": "https://ghcr.io/hay-kot/homebox:latest",
+  "supported_architectures": ["amd64", "arm64"]
+  }

@@ -1,0 +1,9 @@
+{
+  "name": "Paperless-ngx",
+  "longDescription": "<p>Paperless-ngx is a community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.</p><p>This version of Paperless-ngx is configured using PostgreSQL as the database server, as well as Apache, Tika, and Gotenberg servers to provide support for consuming Office documents (Word, Excel, Power Point and their LibreOffice counterparts.</p>",
+  "description": "Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.",
+  "tags": ["document", "management", "organization", "archive", "collection", "web interface", "paper", "docker"],
+  "repository": "https://github.com/paperless-ngx/paperless-ngx",
+  "image": "https://ghcr.io/paperless-ngx/paperless-ngx",
+  "supported_architectures": ["amd64", "arm64"]
+}
