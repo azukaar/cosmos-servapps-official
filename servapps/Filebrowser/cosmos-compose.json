@@ -12,6 +12,12 @@
         "label": "Do you want to make this service admin only?",
         "initialValue": false,
         "type": "checkbox"
+      },
+      {
+        "name": "noAuth",
+        "label": "Uncheck to enable Filebrowser authentication (defaults to using Cosmos authentication)",
+        "initialValue": true,
+        "type": "checkbox"
       }
     ],
     "post-install": [
@@ -34,6 +40,9 @@
         "PUID=1000",
         "PGID=1000",
         "TZ=auto"
+        {if Context.noAuth}
+        , "NO_AUth=noauth"
+        {/if}
       ],
       "post_install": [
         "filebrowser config init",
