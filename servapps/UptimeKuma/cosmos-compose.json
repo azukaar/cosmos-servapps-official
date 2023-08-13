@@ -17,7 +17,7 @@
         , 
         {
           "type": "warning",
-          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-Socket-Proxy container. Use tcp://{ServiceName}-Socket-Proxy:2375"
+          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
         }
       {/if}
     ]
@@ -25,7 +25,7 @@
       , "post-install": [
         {
           "type": "warning",
-          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-Socket-Proxy container. Use tcp://{ServiceName}-Socket-Proxy:2375"
+          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
         }
       ]
     {/if}
@@ -73,10 +73,10 @@
     }
     {if Context.useSocketProxy}
       ,
-      "{ServiceName}-Socket-Proxy": {
+      "{ServiceName}-socket": {
         "image": "tecnativa/docker-socket-proxy",
-        "container_name": "{ServiceName}-Socket-Proxy",
-        "hostname": "{ServiceName}-Socket-Proxy",
+        "container_name": "{ServiceName}-socket",
+        "hostname": "{ServiceName}-socket",
         "restart": "unless-stopped",
         "security_opt": [
           "no-new-privileges:true"
@@ -110,17 +110,17 @@
           "CONTAINERS=1",
           "DISTRIBUTION=0",
           "EXEC=0",
-          "IMAGES=1", 
-          "INFO=1", 
-          "NETWORKS=1", 
+          "IMAGES=0", 
+          "INFO=0", 
+          "NETWORKS=0", 
           "NODES=0",
           "PLUGINS=0",
-          "SERVICES=1", 
+          "SERVICES=0", 
           "SESSION=0",
           "SWARM=0",
           "SYSTEM=0",
-          "TASKS=1", 
-          "VOLUMES=1" 
+          "TASKS=0", 
+          "VOLUMES=0"
         ],
         "links": [
           "{ServiceName}"
