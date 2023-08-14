@@ -11,25 +11,25 @@
       {
         "name": "sonarr",
         "name-container": "sonarr-name",
-        "label": "Where is you Sonarr instance? (leave blank if none)",
+        "label": "Where is your Sonarr instance? (leave blank if none)",
         "type": "container"
       },
       {
         "name": "radarr",
         "name-container": "radarr-name",
-        "label": "Where is you Radarr instance? (leave blank if none)",
+        "label": "Where is your Radarr instance? (leave blank if none)",
         "type": "container"
       },
       {
           "name": "lidarr",
           "name-container": "lidarr-name",
-          "label": "Where is you Lidarr instance? (leave blank if none)",
+          "label": "Where is your Lidarr instance? (leave blank if none)",
           "type": "container"
       },  
       {
           "name": "readarr",
           "name-container": "readarr-name",
-          "label": "Where is you Readarr instance? (leave blank if none)",
+          "label": "Where is your Readarr instance? (leave blank if none)",
           "type": "container"
       },
       {
@@ -46,7 +46,7 @@
       {/if}  
     ]
   },
-  "minVersion": "0.8.0-unstable10",
+  "minVersion": "0.8.0",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/prowlarr:latest",
@@ -92,32 +92,94 @@
       ],
       "links": [
         {if Context.sonarr}
-          "{Context.sonarr-name}"
-        {/if}
-        {if Context.radarr}
-          {if Context.sonarr}
-            ,
+          {if Context.radarr}
+            {if Context.lidarr}
+              {if Context.readarr}
+                {if Context.downloader}
+                  "{Context.sonarr-name}","{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}","{Context.downloader-name}"
+                {else}
+                  "{Context.sonarr-name}","{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}"
+                {/if}
+              {else}
+                "{Context.sonarr-name}","{Context.radarr-name}","{Context.lidarr-name}"
+                {if Context.downloader}
+                  ,"{Context.downloader-name}"
+                {/if}
+              {/if}
+            {else}
+              "{Context.sonarr-name}","{Context.radarr-name}"
+              {if Context.readarr}
+                ,"{Context.readarr-name}"
+              {/if}
+              {if Context.downloader}
+                ,"{Context.downloader-name}"
+              {/if}
+            {/if}
+          {else}
+            "{Context.sonarr-name}"
+            {if Context.lidarr}
+              ,"{Context.lidarr-name}"
+            {/if}
+            {if Context.readarr}
+              ,"{Context.readarr-name}"
+            {/if}
+            {if Context.downloader}
+              ,"{Context.downloader-name}"
+            {/if}
           {/if}
-          "{Context.radarr-name}"
-        {/if}
-        {if Context.lidarr}
-          {if Context.sonarr}
-            ,
+        {else}
+          {if Context.radarr}
+            {if Context.lidarr}
+              {if Context.readarr}
+                {if Context.downloader}
+                  "{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}","{Context.downloader-name}"
+                {else}
+                  "{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}"
+                {/if}
+              {else}
+                "{Context.radarr-name}","{Context.lidarr-name}"
+                {if Context.downloader}
+                  ,"{Context.downloader-name}"
+                {/if}
+              {/if}
+            {else}
+              "{Context.radarr-name}"
+              {if Context.readarr}
+                ,"{Context.readarr-name}"
+              {/if}
+              {if Context.downloader}
+                ,"{Context.downloader-name}"
+              {/if}
+            {/if}
+          {else}
+            {if Context.lidarr}
+              {if Context.readarr}
+                {if Context.downloader}
+                  "{Context.lidarr-name}","{Context.readarr-name}","{Context.downloader-name}"
+                {else}
+                  "{Context.lidarr-name}","{Context.readarr-name}"
+                {/if}
+              {else}
+                "{Context.lidarr-name}"
+                {if Context.downloader}
+                  ,"{Context.downloader-name}"
+                {/if}
+              {/if}
+            {else}
+              {if Context.readarr}
+                {if Context.downloader}
+                  "{Context.readarr-name}","{Context.downloader-name}"
+                {else}
+                  "{Context.readarr-name}"
+                {/if}
+              {else}
+                {if Context.downloader}
+                  "{Context.downloader-name}"
+                {/if}
+              {/if}
+            {/if}
           {/if}
-          "{Context.lidarr-name}"
         {/if}
-        {if Context.readarr}
-          {if Context.sonarr}
-            ,
-          {/if}
-          "{Context.readarr-name}"
-        {/if}
-        {if Context.downloader}
-          {if Context.sonarr}
-          ,
-          {/if}
-          "{Context.downloader-name}"
-        {/if}    
       ]
     }
   }
