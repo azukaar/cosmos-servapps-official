@@ -9,7 +9,7 @@
       },
       { 
         "name": "installImmichBkup",
-        "label": "Do you want to also create backups of your Immich database? (used for restore puposes if ever needed)",
+        "label": "Do you want to add a backup agent for the database? (https://immich.app/docs/administration/backup-and-restore)",
         "initialValue": false,
         "type": "checkbox"
       }
