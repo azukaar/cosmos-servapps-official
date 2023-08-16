@@ -6,6 +6,12 @@
         "label": "What is the path to your Photos? (leave empty to not mount anything)",
         "initialValue": "{DefaultDataPath}/photos",
         "type": "text"
+      },
+      { 
+        "name": "installImmichBkup",
+        "label": "Do you want to also create backups of your Immich database? (used for restore puposes if ever needed)",
+        "initialValue": false,
+        "type": "checkbox"
       }
     ]
   },
@@ -71,6 +77,9 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
+      "labels": {
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Immich/icon.png"
+      },
       "networks": {
         "{ServiceName}-databases": {}
       },
@@ -92,6 +101,9 @@
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
+      "labels": {
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Immich/icon.png"
+      },
       "networks": {
         "{ServiceName}-databases": {}
       },
@@ -108,6 +120,42 @@
         "redis_PASSWORD={Passwords.0}"
       ]
     }
+    {if Context.installImmichBkup}
+    ,
+    "{ServiceName}-backup": {
+      "image": "prodrigestivill/postgres-backup-local",
+      "container_name": "{ServiceName}-backup",
+      "hostname": "{ServiceName}-backup",
+      "restart": "unless-stopped",
+      "labels": {
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Immich/icon.png"
+      },
+      "networks": {
+        "{ServiceName}-databases": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-redis-data",
+          "target": "/db_dumps",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "POSTGRES_HOST={ServiceName}-postgres",
+        "POSTGRES_DB=immich",
+        "POSTGRES_USER=immich",
+        "POSTGRES_PASSWORD={Passwords.0}",
+        "SCHEDULE=@daily",
+        "BACKUP_KEEP_DAYS=7",
+        "BACKUP_KEEP_WEEKS=4",
+        "BACKUP_KEEP_MONTHS=6",
+        "BACKUP_DIR=/db_dumps"
+      ],
+      "depends_on": [
+        "{ServiceName}-postgres"
+      ]
+    }
+    {/if}
   },
   "networks": {
     "{ServiceName}-databases": {}
