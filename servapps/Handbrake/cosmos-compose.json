@@ -60,27 +60,27 @@
       "volumes": [
         {
           "source": "{ServiceName}-config",
-          "target": "/config:rw",
+          "target": "/config",
           "type": "volume"
         }
         {if Context.storagePath}
         , {
           "source": "{Context.storagePath}",
-          "target": "/storage:ro",
+          "target": "/storage",
           "type": "bind"
         }
         {/if}
         {if Context.outputPath}
         , {
           "source": "{Context.outputPath}",
-          "target": "/output:rw",
+          "target": "/output",
           "type": "bind"
         }
         {/if}
         {if Context.watchPath}
         , {
           "source": "{Context.watchPath}",
-          "target": "/watch:rw",
+          "target": "/watch",
           "type": "bind"
         }
         {/if}
