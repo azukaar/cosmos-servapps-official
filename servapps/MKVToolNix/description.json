@@ -2,7 +2,7 @@
   "name": "MKVToolNix",
   "longDescription": "<p>This project implements a Docker container for MKVToolNix.</p><p>The GUI of the application is accessed through a modern web browser (no installation or configuration needed on the client side) or via any VNC client.</p>",
   "description": "MKVToolNix is a set of tools to create, alter and inspect Matroska files.",
-  "tags": [],
+  "tags": ["media", "video", "conversion"],
   "repository": "https://github.com/jlesage/docker-mkvtoolnix",
   "image": "https://hub.docker.com/r/jlesage/mkvtoolnix",
   "supported_architectures": ["amd64"]
