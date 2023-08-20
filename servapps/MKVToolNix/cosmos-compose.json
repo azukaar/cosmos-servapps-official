@@ -4,26 +4,8 @@
       {
         "name": "storagePath",
         "label": "This location contains files from your host that need to be accessible to the application. (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}",
+        "initialValue": "",
         "type": "text"
-      },
-      {
-        "name": "watchPath",
-        "label": "This is where videos to be automatically converted are located (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/{ServiceName}/watch",
-        "type": "text"
-      },
-      {
-        "name": "outputPath",
-        "label": "This is where automatically converted video files are written (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/{ServiceName}/output",
-        "type": "text"
-      },
-      {
-        "name": "enableDevices",
-        "label": "Do you want to enable hardware acceleration? (only enable for Intel cpu)",
-        "initialValue": false,
-        "type": "checkbox"
       },
       {
         "name": "adminOnly",
@@ -36,7 +18,7 @@
   "minVersion": "0.9.19",
   "services": {
     "{ServiceName}": {
-      "image": "jlesage/handbrake:latest",
+      "image": "jlesage/mkvtoolnix",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,
@@ -44,19 +26,13 @@
       "environment": [
         "USER_ID=1000",
         "GROUP_ID=1000",
-        "TZ=auto",
-        "KEEP_APP_RUNNING=1"
+        "TZ=auto"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Handbrake/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/MKVToolNix/icon.png"
       },
-      {if Context.enableDevices}
-      "devices": [
-        "/dev/dri:/dev/dri"
-      ],
-      {/if}
       "volumes": [
         {
           "source": "{ServiceName}-config",
@@ -67,20 +43,6 @@
         , {
           "source": "{Context.storagePath}",
           "target": "/storage",
-          "type": "bind"
-        }
-        {/if}
-        {if Context.outputPath}
-        , {
-          "source": "{Context.outputPath}",
-          "target": "/output",
-          "type": "bind"
-        }
-        {/if}
-        {if Context.watchPath}
-        , {
-          "source": "{Context.watchPath}",
-          "target": "/watch",
           "type": "bind"
         }
         {/if}
