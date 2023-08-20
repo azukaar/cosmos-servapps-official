@@ -1,0 +1,9 @@
+{
+  "name": "Duplicati",
+  "longDescription": "<p>This project implements a Docker container for <a href=https://handbrake.fr/ target=_blank>HandBrake</a>.</p><p>The GUI of the application is accessed through a modern web browser (no installation or configuration needed on the client side) or via any VNC client.</p><p>A fully automated mode is also available: drop files into a watch folder and let HandBrake process them without any user interaction.</p><p>Full documentation is available at <a href=https://github.com/jlesage/docker-handbrake target=_blank>https://github.com/jlesage/docker-handbrake</a>.</p>",
+  "description": "HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs.",
+  "tags": ["backup", "automation", "encryption", "open-source", "cross-platform", "backup", "encryption", "scheduling", "automated backup", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/jlesage/docker-handbrake",
+  "image": "https://hub.docker.com/r/jlesage/handbrake",
+  "supported_architectures": ["amd64"]
+}
