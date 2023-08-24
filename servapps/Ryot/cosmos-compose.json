@@ -8,8 +8,7 @@
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
-        "DATABASE_URL=postgres://ryot:{Passwords.0}@{ServiceName}-postgres:5432/ryot",
-        "SERVER_INSECURE_COOKIE=true"
+        "DATABASE_URL=postgres://ryot:{Passwords.0}@{ServiceName}-postgres:5432/ryot"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
