@@ -1,0 +1,9 @@
+{
+  "name": "ntfy",
+  "longDescription": "<p>ntfy (pronounced \"notify\") is a simple HTTP-based pub-sub notification service. With ntfy, you can send notifications to your phone or desktop via scripts from any computer, without having to sign up or pay any fees.</p>",
+  "description": "Send push notifications to your phone or desktop using PUT/POST.",
+  "tags": ["notifications", "rest api", "curl", "push notifications"],
+  "repository": "https://github.com/binwiederhier/ntfy",
+  "image": "https://hub.docker.com/r/binwiederhier/ntfy",
+  "supported_architectures": ["amd64", "arm64"]
+}
