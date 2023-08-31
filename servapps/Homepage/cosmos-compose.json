@@ -1,0 +1,80 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "configPath",
+        "label": "Where do you want to store your config directory?",
+        "initialValue": "{DefaultDataPath}/homepage-config",
+        "type": "text"
+      },
+      {
+        "name": "dockerIntegration",
+        "label": "Do you want to enable Docker integration?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+      {if Context.dockerIntegration}
+        , {
+            "type": "warning",
+            "label": "This will grant Homepage access to Docker socket"
+           }
+      {/if}
+      , {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ]
+  },
+  "minVersion": "0.9.16",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/benphelps/homepage:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID=1000",
+        "PGID=1000"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Homepage/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{Context.configPath}",
+          "target": "/app/config",
+          "type": "bind"
+        }
+        {if Context.dockerIntegration}
+          , {
+            "source": "/var/run/docker.sock",
+            "target": "/var/run/docker.sock",
+            "type": "bind"
+          }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
