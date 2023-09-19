@@ -98,7 +98,7 @@
 
     
     "{ServiceName}-postgres": {
-      "image": "postgres:15",
+      "image": "postgres:15-alpine",
       "container_name": "{ServiceName}-postgres",
       "hostname": "{ServiceName}-postgres",
       "restart": "unless-stopped",
