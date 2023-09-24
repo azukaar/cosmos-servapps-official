@@ -22,7 +22,7 @@
       }
     ],
     "post_install": [
-      "sed -i -e "s/^host_whitelist *=.*$/host_whitelist ="{Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      "docker exec -it {ServiceName} /bin/bash sed -i -e "s/^host_whitelist *=.*$/host_whitelist ="{Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
     ]
   },
   "minVersion": "0.7.6",
