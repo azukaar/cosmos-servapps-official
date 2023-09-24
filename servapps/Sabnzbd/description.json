@@ -1,0 +1,9 @@
+{
+  "name": "Sabnzbd",
+  "longDescription": "Sabnzbd(http://sabnzbd.org/) makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction.",
+  "description": "Sabnzbd(http://sabnzbd.org/) makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction.",
+  "tags": ["download", "usenet", "downloader", "nzb", "windows", "linux", "macos", "raspberry pi", "performance", "rss feed", "post-processing", "nzbget", "sabnzbd"],
+  "repository": "hhttps://github.com/linuxserver/docker-sabnzbd",
+  "image": "https://hub.docker.com/r/linuxserver/sabnzbd",
+  "supported_architectures": ["amd64", "arm64"]
+}
