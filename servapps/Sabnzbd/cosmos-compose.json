@@ -9,17 +9,20 @@
         "type": "text"
       },
       {
+        "name": "configPath",
+        "label": "There are the configs of sabnzbd stored.",
+        "initialValue": "{DefaultDataPath}/sabnzbd/config",
+        "type": "text"
+      },
+      {
         "name": "adminOnly",
         "label": "Do you want to make this service admin only?",
         "initialValue": false,
         "type": "checkbox"
       }
     ],
-    "post-install": [
-      {
-        "type": "warning",
-        "label": "Before you can access the webinterface from the url. You need to edit the sabnzbd.ini in the config path and edit 'inet_exposure' to 5"
-      }
+    "post_install": [
+      "sed -i -e "s/^host_whitelist *=.*$/host_whitelist ="{ServiceName}"
     ]
   },
   "minVersion": "0.7.6",
@@ -41,11 +44,13 @@
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Sabnzbd/icon.png"
       },
       "volumes": [
-        {
-          "source": "{ServiceName}-config",
+        {if Context.configPath}
+       {
+          "source": "{Context.configPath}",
           "target": "/config",
-          "type": "volume"
+          "type": "bind"
         }
+        {/if}
         {if Context.downloadPath}
         , {
           "source": "{Context.downloadPath}",
