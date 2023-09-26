@@ -6,6 +6,12 @@
         "label": "What is the path to your downloads? (leave empty to not mount anything)",
         "initialValue": "{DefaultDataPath}/downloads",
         "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
       }
     ]
   },
