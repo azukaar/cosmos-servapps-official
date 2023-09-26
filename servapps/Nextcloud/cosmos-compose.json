@@ -22,6 +22,8 @@
         "MYSQL_USER=nextcloud",
         "MYSQL_PASSWORD={Passwords.0}",
         "MYSQL_HOST={ServiceName}-mariadb",
+        "REDIS_HOST={ServiceName}-redis",
+        "REDIS_HOST_PASSWORD={Passwords.2}",
         "NC_overwriteprotocol=https"
       ],
       "labels": {
@@ -110,7 +112,7 @@
     },
     
     "{ServiceName}-mariadb": {
-      "image": "mariadb:10.11",
+      "image": "mariadb:latest",
       "container_name": "{ServiceName}-mariadb",
       "hostname": "{ServiceName}-mariadb",
       "restart": "unless-stopped",
@@ -137,6 +139,33 @@
         "MARIADB_USER=nextcloud",
         "MARIADB_PASSWORD={Passwords.0}",
         "MARIADB_ROOT_PASSWORD={Passwords.1}"
+      ]
+    },
+
+    "{ServiceName}-redis": {
+      "image": "bitnami/redis:latest",
+      "container_name": "{ServiceName}-redis",
+      "hostname": "{ServiceName}-redis",
+      "restart": "unless-stopped",
+      "stop_grace_period": 5,
+      "security_opt": [
+        "seccomp:unconfined",
+        "apparmor:unconfined"
+      ],
+      "networks": {
+        "{ServiceName}-mariadb": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-redis-data",
+          "target": "/bitnami/redis",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "ALLOW_EMPTY_PASSWORD=no",
+        "REDIS_PASSWORD={Passwords.2}",
+        "REDIS_EXTRA_FLAGS=--auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb"
       ]
     }
   },
