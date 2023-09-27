@@ -1,0 +1,75 @@
+
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "downloadPath",
+        "label": "What is the path to download to? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/downloads",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post_install": [
+      "sed -i 's/^\\(host_whitelist *= *\\)\\(.*\\)$/\\1\\2, {Hostnames.{StaticServiceName}.{StaticServiceName}.host}/' sabnzbd.ini"
+    ]
+  },
+  "minVersion": "0.7.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "lscr.io/linuxserver/sabnzbd:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Sabnzbd/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {if Context.downloadPath}
+        , {
+          "source": "{Context.downloadPath}",
+          "target": "/downloads",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
