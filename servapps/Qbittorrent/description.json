@@ -1,0 +1,9 @@
+{
+  "name": "Transmission",
+  "longDescription": "<p>qBittorrent is a bittorrent client programmed in C++ / Qt that uses libtorrent (sometimes called libtorrent-rasterbar) by Arvid Norberg. It aims to be a good alternative to all other bittorrent clients out there. qBittorrent is fast, stable and provides unicode support as well as many features.</p><p>This Docker includes OpenVPN and WireGuard to ensure a secure and private connection to the Internet, including use of iptables to prevent IP leakage when the tunnel is down.</p>",
+  "description": "qBittorrent is a bittorrent client programmed in C++ / Qt that uses libtorrent (sometimes called libtorrent-rasterbar) by Arvid Norberg. It aims to be a good alternative to all other bittorrent clients out there. qBittorrent is fast, stable and provides unicode support as well as many features.",
+  "tags": ["download", "torrent", "bittorrent", "downloader", "open-source", "cross-platform", "file sharing", "peer-to-peer", "p2p", "qBittorrent", "windows", "linux", "macos", "web interface"],
+  "repository": "https://github.com/binhex/arch-qbittorrentvpn",
+  "image": "https://hub.docker.com/r/binhex/arch-qbittorrentvpn/dockerfile",
+  "supported_architectures": ["amd64", "arm64"]
+  }

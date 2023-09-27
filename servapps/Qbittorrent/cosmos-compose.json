@@ -1,0 +1,170 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "downloadPath",
+        "label": "What is the path to download to? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/downloads",
+        "type": "text"
+      },
+      {
+        "name": "LAN_NETWORK",
+        "label": "Here you can setup your lan network to easier access the webui",
+        "initialValue": "192.168.1.0/24",
+        "type": "text"
+      },
+      {
+        "name": "NAME_SERVERS",
+        "label": "Here you can setup the name servers you want to use.",
+        "initialValue": "84.200.69.80,37.235.1.174,1.1.1.1,37.235.1.177,84.200.70.40,1.0.0.1",
+        "type": "text"
+      },
+      {
+        "name": "VPN_ENABLED",
+        "label": "Here you can change if the vpn should be enabled or not",
+        "initialValue": "yes|no",
+        "type": "text"
+      },
+      {
+        "name": "VPN_USER",
+        "label": "Here you need to enter your username for the vpn if you want to use it.",
+        "initialValue": "vpn username",
+        "type": "text"
+      },
+      {
+        "name": "VPN_PASS",
+        "label": "Here you need to enter your password for the vpn if you want to use it.",
+        "initialValue": "vpn password",
+        "type": "text"
+      },
+      {
+        "name": "VPN_PROV",
+        "label": "Here you need to enter the VPN Provider",
+        "initialValue": "pia|airvpn|protonvpn|custom",
+        "type": "text"
+      },
+      {
+        "name": "VPN_CLIENT",
+        "label": "Here you can chose if you want to use openvpn or wireguard to connect to the vpn",
+        "initialValue": "openvpn|wireguard",
+        "type": "text"
+      },
+      {
+        "name": "VPN_OPTIONS",
+        "label": "Here you can setup additional openvpn cli options",
+        "initialValue": "additional openvpn cli options",
+        "type": "text"
+      },
+      {
+        "name": "STRICT_PORT_FORWARD",
+        "label": "Here you can chose if you want to use strict port forward or not (usefull for most private tracker but so far only available at pia)",
+        "initialValue": "yes|no",
+        "type": "text"
+      },
+      {
+        "name": "ENABLE_PRIVOXY",
+        "label": "Here you can chose if you want to enable privoxy or not.",
+        "initialValue": "yes|no",
+        "type": "text"
+      },
+      {
+        "name": "VPN_INPUT_PORTS",
+        "label": "Here you can setup incoming port numbers you want to use",
+        "initialValue": "port number(s)",
+        "type": "text"
+      },
+      {
+        "name": "VPN_OUTPUT_PORTS",
+        "label": "Here you can setup outgoing port numbers you want to use",
+        "initialValue": "port number(s)",
+        "type": "text"
+      },
+      {
+        "name": "DEBUG",
+        "label": "Do you want to enable Debugging?",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ]
+  },
+  "minVersion": "4.0.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "binhex/arch-qbittorrentvpn",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "UMASK=000",
+        "WEBUI_PORT=8461",
+        "LAN_NETWORK={Context.LAN_NETWORK}",
+        "NAME_SERVERS={Context.NAME_SERVERS}",
+        "VPN_ENABLED={Context.VPN_ENABLED}",
+        "VPN_USER={Context.VPN_USER}",
+        "VPN_PASS={Context.VPN_PASS}",
+        "VPN_PROV={Context.VPN_PROV}",
+        "VPN_CLIENT={Context.VPN_CLIENT}",
+        "VPN_OPTIONS={Context.VPN_OPTIONS}",
+        "STRICT_PORT_FORWARD={Context.STRICT_PORT_FORWARD}",
+        "ENABLE_PRIVOXY={Context.ENABLE_PRIVOXY}",
+        "VPN_INPUT_PORTS={Context.VPN_INPUT_PORTS}",
+        "VPN_OUTPUT_PORTS={Context.VPN_OUTPUT_PORTS}",
+        "DEBUG={Context.DEBUG}",
+        "TZ=auto"
+      ],
+      "ports": [
+        "6881:6881",
+        "8461:8461",
+        "8080:8080",
+        "8118:8118"
+      ],
+      "labels": {
+        "cosmos-network-name": "AUTO",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Qbittorent/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {if Context.downloadPath}
+        , {
+          "source": "{Context.downloadPath}",
+          "target": "/data/torrents",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8461",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
