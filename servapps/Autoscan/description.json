@@ -1,0 +1,9 @@
+{
+  "name": "Lidarr",
+  "longDescription": "<p>Lidarr is an automated music collection manager that can find, add, and manage music in your collection. With Lidarr, you can automatically search for new albums and singles from your favorite artists, and automatically download them to your media server. It is integrated with popular download clients and supports multiple music databases for metadata fetching.</p><p>Lidarr is a perfect solution for those who want to automate their music downloading and organization process. It is available for various platforms including Windows, Linux, and MacOS, and has a mobile-friendly web interface that works across different devices.</p><p>Setting up Lidarr is straightforward. Whether you are an audiophile with a large collection or someone who just loves listening to music, Lidarr can transform your music management experience!</p>",
+  "description": "Lidarr is an automated music manager for maintaining your music library. It does this by finding and automatically downloading your desired music tracks. It integrates with popular download clients and supports metadata fetching from multiple music databases. With Lidarr, your music downloading and organization process can be streamlined and automated. It supports various platforms and has a mobile-friendly web interface for easy access. Get started with Lidarr now and enhance your music management experience!",
+  "tags": ["download", "torrent", "music", "usenet", "automation", "manager", "media", "collection", "download", "metadata", "windows", "linux", "macos", "web interface", "streaming", "music library", "music database", "music management", "music collection", "lidarr"],
+  "repository": "https://github.com/lidarr/Lidarr",
+  "image": "https://hub.docker.com/r/linuxserver/lidarr",
+  "supported_architectures": ["amd64", "arm64"]
+}
