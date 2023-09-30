@@ -99,6 +99,7 @@
       "image": "binhex/arch-sabnzbdvpn",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "privileged": true,
       "UID": 1000,
       "GID": 1000,
       "environment": [
