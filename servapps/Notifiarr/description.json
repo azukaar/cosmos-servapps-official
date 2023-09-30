@@ -1,5 +1,5 @@
 {
-    "name": "Mealie",
+    "name": "Notifiarr",
     "longDescription": "<p>You just found one of the coolest tools on the Internet for a homelab enthusiast. We do notifications. We do them right. We've been doing then for years and we'll keep doing them for years to come. Notifiarr provides native custom integrations with dozens, maybe hundreds of applications and websites. That means these applications or websites can send data to Notifiarr, and we'll format a message according to your configuration then send it to your chat server.</p>",
     "description": "You just found one of the coolest tools on the Internet for a homelab enthusiast. We do notifications.",
     "tags": ["notifications", "rest api", "curl", "push notifications"],
