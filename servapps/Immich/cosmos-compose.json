@@ -8,11 +8,19 @@
         "type": "text"
       },
       { 
-        "name": "installImmichBkup",
+        "name": "installImmichBackup",
         "label": "Do you want to add a backup agent for the database? (https://immich.app/docs/administration/backup-and-restore)",
         "initialValue": false,
         "type": "checkbox"
       }
+      {if Context.installImmichBackup}
+      , { 
+        "name": "ImmichBackupPath",
+        "label": "Where do you want to save that backup?",
+        "initialValue": "{DefaultDataPath}/immich-backup",
+        "type": "text"
+      }
+      {/if}
     ]
   },
   "minVersion": "0.8.5",
@@ -120,7 +128,7 @@
         "redis_PASSWORD={Passwords.0}"
       ]
     }
-    {if Context.installImmichBkup}
+    {if Context.installImmichBackup}
     ,
     "{ServiceName}-backup": {
       "image": "prodrigestivill/postgres-backup-local",
@@ -135,9 +143,9 @@
       },
       "volumes": [
         {
-          "source": "{ServiceName}-redis-data",
+          "source": "{Context.ImmichBackupPath}",
           "target": "/db_dumps",
-          "type": "volume"
+          "type": "bind"
         }
       ],
       "environment": [
