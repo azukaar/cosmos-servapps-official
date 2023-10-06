@@ -62,7 +62,7 @@
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Mealie/icon.png"
       },
-      "volumes": [        
+      "volumes": [
         {
           "source": "{ServiceName}-config",
           "target": "/app/data",
