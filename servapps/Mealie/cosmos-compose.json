@@ -2,6 +2,12 @@
   "cosmos-installer": {
     "form": [
       {
+        "name": "data_directory",
+        "label": "Where do you want to store all of Mealie's data?",
+        "initialValue": "{DefaultDataPath}/mealie_data",
+        "type": "text"
+      },
+      {
         "name": "YOUR_EMAIL",
         "label": "Enter your Email for the initial user. This email will be your username.",
         "initialValue": "",
@@ -68,6 +74,13 @@
           "target": "/config",
           "type": "volume"
         }
+        {if Context.data_directory}
+        , {
+          "source": "{Context.data_directory}",
+          "target": "/app/data/",
+          "type": "bind"
+        }
+        {/if}
     ],
       "routes": [
         {
