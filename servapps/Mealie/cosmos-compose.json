@@ -2,12 +2,6 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "data_directory",
-        "label": "Where do you want to store all of Mealie's data?",
-        "initialValue": "{DefaultDataPath}/mealie_data",
-        "type": "text"
-      },
-      {
         "name": "YOUR_EMAIL",
         "label": "Enter your Email for the initial user. This email will be your username.",
         "initialValue": "",
@@ -68,17 +62,12 @@
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Mealie/icon.png"
       },
-      "volumes": [
-        {
-          "source": "{ServiceName}-config",
-          "target": "/config",
-          "type": "volume"
-        }
+      "volumes": [        
         {if Context.data_directory}
         , {
-          "source": "{Context.data_directory}",
-          "target": "/app/data/",
-          "type": "bind"
+          "source": "{ServiceName}-config",
+          "target": "/app/data",
+          "type": "volume"
         }
         {/if}
     ],
