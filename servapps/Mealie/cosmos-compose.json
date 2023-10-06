@@ -63,13 +63,11 @@
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Mealie/icon.png"
       },
       "volumes": [        
-        {if Context.data_directory}
-        , {
+        {
           "source": "{ServiceName}-config",
           "target": "/app/data",
           "type": "volume"
         }
-        {/if}
     ],
       "routes": [
         {
