@@ -1,0 +1,69 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "customIcons",
+        "label": "Where do you want to store your custom icons?",
+        "initialValue": "{DefaultDataPath}/icons",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "3.3",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/gethomepage/homepage:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Homepage/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/app/config",
+          "type": "volume"
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        }
+        {if Context.customIcons}
+        , {
+            "source": "{Context.photoPath}",
+            "target": "/app/public/icons",
+            "type": "bind"
+          }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "https://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AcceptInsecureHTTPSTarget": true,
+          "AuthEnabled": true,
+          "AuthAdmin": false
+        }
+      ]
+    }
+  }
+}
