@@ -40,7 +40,7 @@
         }
         {if Context.customIcons}
         , {
-            "source": "{Context.photoPath}",
+            "source": "{Context.customIcons}",
             "target": "/app/public/icons",
             "type": "bind"
           }
