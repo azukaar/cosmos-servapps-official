@@ -10,6 +10,7 @@
       "environment": [
         "TZ=auto",
         "ALLOWED_HOSTS={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "DB_ENGINE=django.db.backends.postgresql",
         "POSTGRES_DB=tandoor",
         "POSTGRES_USER=tandoor",
         "POSTGRES_PASSWORD={Passwords.0}",
