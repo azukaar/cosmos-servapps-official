@@ -1,0 +1,71 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "musicPath",
+        "label": "What is the path to your music? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/music",
+        "type": "text"
+      },
+      {
+        "name": "dataPath",
+        "label": "What is the path to your data? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/data",
+        "type": "text"
+      }
+    ]
+  },
+  "services": {
+    "navidrome": {
+      "image": "deluan/navidrome:latest",
+      "container_name": "{ServiceName}",
+      "user": "1000:1000", 
+      "ports": ["4533:4533"],
+      "restart": "unless-stopped",
+      "environment": {
+        "ND_SCANSCHEDULE": "1h",
+        "ND_LOGLEVEL": "info",
+        "ND_SESSIONTIMEOUT": "24h",
+        "ND_BASEURL": ""
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://github.com/navidrome/navidrome/blob/master/ui/public/android-chrome-512x512.png"
+      },
+      "volumes": [
+        "/path/to/data:/data",
+        "/path/to/your/music/folder:/music:ro",
+        { "if": "Context.musicPath" },
+        {
+          "source": "{Context.dataPath}",
+          "target": "/data",
+          "type": "bind"
+        },
+        { "endif": "Context.musicPath" },
+        { "if": "Context.dataPath" },
+        {
+          "source": "{Context.musicPath}",
+          "target": "/music:ro",
+          "type": "bind"
+        },
+        { "endif": "Context.dataPath" }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:4533",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
