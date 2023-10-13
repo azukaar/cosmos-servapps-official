@@ -31,7 +31,7 @@
           "source": "{ServiceName}-data",
           "target": "/data",
           "type": "volume",
-        },
+        }
         {if Context.musicPath}
         , {
           "source": "{Context.musicPath}",
