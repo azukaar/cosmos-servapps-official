@@ -21,22 +21,22 @@
         "type": "container"
       },
       {
-          "name": "lidarr",
-          "name-container": "lidarr-name",
-          "label": "Where is your Lidarr instance? (leave blank if none)",
-          "type": "container"
+        "name": "lidarr",
+        "name-container": "lidarr-name",
+        "label": "Where is your Lidarr instance? (leave blank if none)",
+        "type": "container"
       },  
       {
-          "name": "readarr",
-          "name-container": "readarr-name",
-          "label": "Where is your Readarr instance? (leave blank if none)",
-          "type": "container"
+        "name": "readarr",
+        "name-container": "readarr-name",
+        "label": "Where is your Readarr instance? (leave blank if none)",
+        "type": "container"
       },
       {
-          "name": "downloader",
-          "name-container": "downloader-name",
-          "label": "What downloader do you want to use?",
-          "type": "container"
+        "name": "downloader",
+        "name-container": "downloader-name",
+        "label": "What downloader do you want to use?",
+        "type": "container"
       }
       {if Context.downloader}
       , {
@@ -91,95 +91,11 @@
         }
       ],
       "links": [
-        {if Context.sonarr}
-          {if Context.radarr}
-            {if Context.lidarr}
-              {if Context.readarr}
-                {if Context.downloader}
-                  "{Context.sonarr-name}","{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}","{Context.downloader-name}"
-                {else}
-                  "{Context.sonarr-name}","{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}"
-                {/if}
-              {else}
-                "{Context.sonarr-name}","{Context.radarr-name}","{Context.lidarr-name}"
-                {if Context.downloader}
-                  ,"{Context.downloader-name}"
-                {/if}
-              {/if}
-            {else}
-              "{Context.sonarr-name}","{Context.radarr-name}"
-              {if Context.readarr}
-                ,"{Context.readarr-name}"
-              {/if}
-              {if Context.downloader}
-                ,"{Context.downloader-name}"
-              {/if}
-            {/if}
-          {else}
-            "{Context.sonarr-name}"
-            {if Context.lidarr}
-              ,"{Context.lidarr-name}"
-            {/if}
-            {if Context.readarr}
-              ,"{Context.readarr-name}"
-            {/if}
-            {if Context.downloader}
-              ,"{Context.downloader-name}"
-            {/if}
-          {/if}
-        {else}
-          {if Context.radarr}
-            {if Context.lidarr}
-              {if Context.readarr}
-                {if Context.downloader}
-                  "{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}","{Context.downloader-name}"
-                {else}
-                  "{Context.radarr-name}","{Context.lidarr-name}","{Context.readarr-name}"
-                {/if}
-              {else}
-                "{Context.radarr-name}","{Context.lidarr-name}"
-                {if Context.downloader}
-                  ,"{Context.downloader-name}"
-                {/if}
-              {/if}
-            {else}
-              "{Context.radarr-name}"
-              {if Context.readarr}
-                ,"{Context.readarr-name}"
-              {/if}
-              {if Context.downloader}
-                ,"{Context.downloader-name}"
-              {/if}
-            {/if}
-          {else}
-            {if Context.lidarr}
-              {if Context.readarr}
-                {if Context.downloader}
-                  "{Context.lidarr-name}","{Context.readarr-name}","{Context.downloader-name}"
-                {else}
-                  "{Context.lidarr-name}","{Context.readarr-name}"
-                {/if}
-              {else}
-                "{Context.lidarr-name}"
-                {if Context.downloader}
-                  ,"{Context.downloader-name}"
-                {/if}
-              {/if}
-            {else}
-              {if Context.readarr}
-                {if Context.downloader}
-                  "{Context.readarr-name}","{Context.downloader-name}"
-                {else}
-                  "{Context.readarr-name}"
-                {/if}
-              {else}
-                {if Context.downloader}
-                  "{Context.downloader-name}"
-                {/if}
-              {/if}
-            {/if}
-          {/if}
-        {/if}
+        "{Context.sonarr-name}", 
+        "{Context.radarr-name}", 
+        "{Context.lidarr-name}", 
+        "{Context.readarr-name}", 
+        "{Context.downloader-name}"
       ]
     }
   }
