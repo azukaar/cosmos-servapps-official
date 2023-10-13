@@ -30,13 +30,13 @@
         {
           "source": "{ServiceName}-data",
           "target": "/data",
-          "type": "volume",
+          "type": "volume"
         }
         {if Context.musicPath}
         , {
           "source": "{Context.musicPath}",
           "target": "/music",
-          "type": "bind",
+          "type": "bind"
         }
         {/if}
       ],
@@ -53,7 +53,7 @@
           "SmartShield": {
             "Enabled": true
           },
-          "AuthEnabled": true,
+          "AuthEnabled": true
           {if Context.adminOnly}
            , "AuthAdmin": true
           {/if}
