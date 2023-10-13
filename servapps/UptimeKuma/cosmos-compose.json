@@ -9,7 +9,7 @@
       },
       { 
         "name": "useSocketProxy",
-        "label": "Do you want to use a Docker Host? (aka Socket Proxy container)",
+        "label": "Do you want to use a socket-proxy for increased security? (i.e., create socket-proxy container insead of exposing docker.sock)",
         "initialValue": true,
         "type": "checkbox"
       }
