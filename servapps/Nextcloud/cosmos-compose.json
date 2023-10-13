@@ -32,7 +32,7 @@
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nextcloud/icon.png"
       },
       "networks": {
-        "{ServiceName}-mariadb": {}
+        "{ServiceName}-databases": {}
       },
       "volumes": [
         {
@@ -112,7 +112,7 @@
     },
     
     "{ServiceName}-mariadb": {
-      "image": "mariadb:latest",
+      "image": "mariadb:10.11",
       "container_name": "{ServiceName}-mariadb",
       "hostname": "{ServiceName}-mariadb",
       "restart": "unless-stopped",
@@ -122,7 +122,7 @@
         "apparmor:unconfined"
       ],
       "networks": {
-        "{ServiceName}-mariadb": {}
+        "{ServiceName}-databases": {}
       },
       "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
       "volumes": [
@@ -143,7 +143,7 @@
     },
 
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:latest",
+      "image": "bitnami/redis:7",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
@@ -153,7 +153,7 @@
         "apparmor:unconfined"
       ],
       "networks": {
-        "{ServiceName}-mariadb": {}
+        "{ServiceName}-databases": {}
       },
       "volumes": [
         {
@@ -171,7 +171,7 @@
   },
 
   "networks": {
-    "{ServiceName}-mariadb": {
+    "{ServiceName}-databases": {
     }
   }
 }
