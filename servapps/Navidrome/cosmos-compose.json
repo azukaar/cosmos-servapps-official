@@ -37,7 +37,7 @@
         {
           "source": "{Context.dataPath}",
           "target": "/data",
-          "type": "bind",
+          "type": "volume",
           "if": "Context.dataPath"
         },
         {
