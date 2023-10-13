@@ -34,8 +34,6 @@
         "cosmos-icon": "https://github.com/navidrome/navidrome/blob/master/ui/public/android-chrome-512x512.png"
       },
       "volumes": [
-        "/path/to/data:/data",
-        "/path/to/your/music/folder:/music:ro",
         { "if": "Context.musicPath" },
         {
           "source": "{Context.dataPath}",
