@@ -29,13 +29,13 @@
       },
       "volumes": [
         {
-          "source": "{Context.dataPath}",
+          "source": "{ServiceName}-data",
           "target": "/data",
           "type": "volume"
         }
         {if Context.musicPath}
         , {
-          "source": "{ServiceName}-data",
+          "source": "{Context.musicPath}",
           "target": "/music",
           "type": "bind"
         }
