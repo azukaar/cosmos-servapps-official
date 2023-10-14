@@ -143,7 +143,7 @@
     },
 
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:7",
+      "image": "bitnami/redis:latest",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
