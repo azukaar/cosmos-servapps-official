@@ -9,7 +9,7 @@
       }
     ]
   },
-  "minVersion": "3.3",
+  "minVersion": "0.8.8",
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/gethomepage/homepage:latest",
