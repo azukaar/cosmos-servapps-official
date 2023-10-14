@@ -1,0 +1,64 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "bookPath",
+        "label": "What is the path to your books? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/books",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "2.1",
+  "services": {
+    "{ServiceName}": {
+      "image": "lscr.io/linuxserver/kavita:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "ports": [
+        "5000:5000"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/kavita/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {if Context.bookPath}
+        , {
+          "source": "{Context.bookPath}",
+          "target": "/data/books",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
