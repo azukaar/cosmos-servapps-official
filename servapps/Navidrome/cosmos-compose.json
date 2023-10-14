@@ -15,7 +15,7 @@
       "container_name": "{ServiceName}",
       "ports": ["4533:4533"],
       "restart": "unless-stopped",
-      "env": [
+      "environment": [
         "ND_SCANSCHEDULE=1h",
         "ND_LOGLEVEL=info",
         "ND_SESSIONTIMEOUT=24h",
