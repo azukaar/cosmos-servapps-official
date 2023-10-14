@@ -18,7 +18,8 @@
       "env": [
         "ND_SCANSCHEDULE=1h",
         "ND_LOGLEVEL=info",
-        "ND_SESSIONTIMEOUT=24h"
+        "ND_SESSIONTIMEOUT=24h",
+        "ND_BASEURL:"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
