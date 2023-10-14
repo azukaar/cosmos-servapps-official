@@ -13,6 +13,8 @@
     "{ServiceName}": {
       "image": "deluan/navidrome:latest",
       "container_name": "{ServiceName}",
+      "UID": 1000,
+      "GID": 1000,
       "ports": ["4533:4533"],
       "restart": "unless-stopped",
       "environment": [
