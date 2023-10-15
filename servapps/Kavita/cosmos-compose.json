@@ -3,13 +3,13 @@
     "form": [
       {
         "name": "bookPath",
-        "label": "What is the path to your books? (leave empty to not mount anything)",
+        "label": "What is the path to your books? (leave Kavita to not mount anything)",
         "initialValue": "{DefaultDataPath}/books",
         "type": "text"
       }
     ]
   },
-  "minVersion": "2.1",
+  "minVersion": "0.10.2",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/kavita:latest",
@@ -22,13 +22,10 @@
         "PGID=1000",
         "TZ=auto"
       ],
-      "ports": [
-        "5000:5000"
-      ],
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/kavita/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Kavita/icon.png"
       },
       "volumes": [
         {
