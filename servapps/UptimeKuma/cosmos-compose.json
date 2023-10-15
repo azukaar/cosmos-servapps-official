@@ -6,8 +6,29 @@
         "label": "Do you want to make this service admin only?",
         "initialValue": false,
         "type": "checkbox"
+      },
+      { 
+        "name": "useSocketProxy",
+        "label": "Do you want to use a socket-proxy for increased security? (i.e., create socket-proxy container insead of exposing docker.sock)",
+        "initialValue": true,
+        "type": "checkbox"
       }
+      {if Context.useSocketProxy}
+        , 
+        {
+          "type": "warning",
+          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
+        }
+      {/if}
     ]
+    {if Context.useSocketProxy}
+      , "post-install": [
+        {
+          "type": "warning",
+          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
+        }
+      ]
+    {/if}
   },
   "minVersion": "0.8.0",
   "services": {
@@ -50,5 +71,61 @@
         }
       ]
     }
+    {if Context.useSocketProxy}
+      ,
+      "{ServiceName}-socket": {
+        "image": "tecnativa/docker-socket-proxy",
+        "container_name": "{ServiceName}-socket",
+        "hostname": "{ServiceName}-socket",
+        "restart": "unless-stopped",
+        "security_opt": [
+          "no-new-privileges:true"
+        ],
+        "ports": [
+          "2375:2375"
+        ],
+        "labels": {
+          "cosmos-force-network-secured": "true",
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/UptimeKuma/icon.png"
+        },
+        "volumes": [
+          {
+            "source": "/var/run/docker.sock",
+            "target": "/var/run/docker.sock",
+            "type": "bind"
+            }
+        ],
+        "environment": [
+          "LOG_LEVEL=info",
+          "EVENTS=1",
+          "PING=1",
+          "VERSION=1",
+          "AUTH=0",
+          "SECRETS=0",
+          "POST=0",
+          "BUILD=0",
+          "COMMIT=0",
+          "CONFIGS=0",
+          "CONTAINERS=1",
+          "DISTRIBUTION=0",
+          "EXEC=0",
+          "IMAGES=0", 
+          "INFO=0", 
+          "NETWORKS=0", 
+          "NODES=0",
+          "PLUGINS=0",
+          "SERVICES=0", 
+          "SESSION=0",
+          "SWARM=0",
+          "SYSTEM=0",
+          "TASKS=0", 
+          "VOLUMES=0"
+        ],
+        "links": [
+          "{ServiceName}"
+        ]
+      }
+    {/if}
   }
 }
