@@ -46,7 +46,7 @@
       {/if}  
     ]
   },
-  "minVersion": "0.8.0",
+  "minVersion": "0.10.3",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/prowlarr:latest",
