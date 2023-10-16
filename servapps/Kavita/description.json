@@ -1,6 +1,6 @@
 {
   "name": "Kavita",
-  "description": "https://wiki.kavitareader.com/) is a rocket fueled self-hosted digital library which supports a vast array of file formats. Install to start reading and share your server with your friends.",
+  "description": "Digital library which supports a vast array of file formats. Install to start reading and share your server with your friends.",
   "longDescription": "<p>Kavita is a full-fledged, fast, cross-platform, & open-source manga, comic, and book server. Built from the ground up with a focus on manga and a goal of being a full solution to your reading needs. Set up your own server and share your manga, comics, and e-book collection with your friends and family.</p>",
   "tags": ["media", "server", "books", "ebooks", "android", "ios", "web", "browser", "media management", "media organizer", "media collection", "media library", "media manager"],
   "repository": "https://github.com/linuxserver/docker-kavita",
