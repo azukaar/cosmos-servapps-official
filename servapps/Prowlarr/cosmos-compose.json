@@ -1,0 +1,102 @@
+
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "sonarr",
+        "name-container": "sonarr-name",
+        "label": "Where is your Sonarr instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "radarr",
+        "name-container": "radarr-name",
+        "label": "Where is your Radarr instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "lidarr",
+        "name-container": "lidarr-name",
+        "label": "Where is your Lidarr instance? (leave blank if none)",
+        "type": "container"
+      },  
+      {
+        "name": "readarr",
+        "name-container": "readarr-name",
+        "label": "Where is your Readarr instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "downloader",
+        "name-container": "downloader-name",
+        "label": "What downloader do you want to use?",
+        "type": "container"
+      }
+      {if Context.downloader}
+      , {
+        "type": "warning",
+        "label": "When you first start Prowlarr, please connect it to your downloader by using the URL: {Context.downloader}. Don't forget to also add your applications and add the server links and corresponding API key (i.e. http://{ServiceName}:9696 and http://{Context.sonarr}:8989 along with sonarr API key)"
+      }
+      {/if}  
+    ]
+  },
+  "minVersion": "0.10.3",
+  "services": {
+    "{ServiceName}": {
+      "image": "lscr.io/linuxserver/prowlarr:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@master/png/prowlarr.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:9696",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ],
+      "links": [
+        "{Context.sonarr-name}", 
+        "{Context.radarr-name}", 
+        "{Context.lidarr-name}", 
+        "{Context.readarr-name}", 
+        "{Context.downloader-name}"
+      ]
+    }
+  }
+}
