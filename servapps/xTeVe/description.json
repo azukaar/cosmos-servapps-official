@@ -1,0 +1,9 @@
+{
+  "name": "xTeVe",
+  "description": "xTeVe is a M3U proxy server used by apps like Plex (requires plex pass) or Jellyfin. It emulates a physical tuner allowing you to expose IPTV channels.",
+  "longDescription": "<p>xTeVe is a M3U proxy server for Plex, Emby, Jellyfin and any client and provider which supports the .TS and .M3U8 (HLS) streaming formats.</p><p>xTeVe emulates a SiliconDust HDHomeRun OTA tuner, which allows it to expose IPTV style channels to software, which would not normally support it.</p><p>Note: you need to provide both the m3u and xml channel lineups. xTeVe will then allow you to map them and expose an endpoint for your Plex/Jellyfin to leverage.</p>",
+  "tags": ["media", "iptv", "tvguide", "open-source", "self-hosted", "web application", "plex", "emby", "jellyfin", "request system", "media content", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/dnsforge-repo/xteve",
+  "image": "https://hub.docker.com/r/dnsforge/xteve",
+  "supported_architectures": ["amd64"]
+}
