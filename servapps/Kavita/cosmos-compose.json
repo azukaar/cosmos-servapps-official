@@ -3,7 +3,7 @@
     "form": [
       {
         "name": "bookPath",
-        "label": "What is the path to your books? (leave Kavita to not mount anything)",
+        "label": "What is the path to your books? (leave empty to not mount anything)",
         "initialValue": "{DefaultDataPath}/books",
         "type": "text"
       }
