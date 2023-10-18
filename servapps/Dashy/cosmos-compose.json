@@ -3,8 +3,8 @@
     "form": [
       {
         "name": "configPath",
-        "label": "What is the path to your config? (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/app/public",
+        "label": "What is the path to your conf.yml? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/app/public/conf.yml",
         "type": "text"
       }
     ]
@@ -28,7 +28,7 @@
         {if Context.configPath}
         {
           "source": "{Context.configPath}",
-          "target": "/app/public",
+          "target": "/app/public/conf.yml",
           "type": "bind"
         }
         {/if}
