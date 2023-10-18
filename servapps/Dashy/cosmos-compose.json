@@ -4,7 +4,7 @@
       {
         "name": "configPath",
         "label": "What is the path to your config? (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/app/public/conf.yml",
+        "initialValue": "{DefaultDataPath}/app/public",
         "type": "text"
       }
     ]
@@ -28,7 +28,7 @@
         {if Context.configPath}
         {
           "source": "{Context.configPath}",
-          "target": "/app/public/conf.yml",
+          "target": "/app/public",
           "type": "bind"
         }
         {/if}
