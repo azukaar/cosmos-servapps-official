@@ -1,0 +1,25 @@
+{
+    "name": "Dashy",
+    "longDescription": "<p>Dashy helps you organize your self-hosted services by making them accessible from a single place.</p><p>With Dashy, you can create a personalized dashboard for all your self-hosted apps and services. It offers a user-friendly web interface that allows you to organize your services, display real-time status monitoring, use widgets to showcase information, and enable instant search for quick access to your applications. Dashy is highly customizable, supporting various color themes, icon options, and authentication methods for multi-user access.</p><p>It's designed with a focus on privacy, offers multi-language support, and can be easily set up with Docker or deployed on bare metal. Dashy is under active development, continually adding new features, and is 100% free and open-source.</p>",
+    "description": "Dashy helps you create a unified dashboard for your self-hosted services. It offers real-time status monitoring, widgets, instant search, and customization options. Dashy is privacy-focused, cross-platform, and can be easily deployed using Docker. It's a user-friendly solution to streamline access to your self-hosted applications.",
+    "tags": [
+        "self-hosted services",
+        "dashboard",
+        "web interface",
+        "widgets",
+        "customization",
+        "authentication",
+        "privacy-focused",
+        "open-source",
+        "Docker",
+        "cross-platform",
+        "multi-language support"
+    ],
+    "repository": "https://github.com/Lissy93/dashy",
+    "image": "https://hub.docker.com/r/lissy93/dashy",
+    "supported_architectures": [
+        "amd64",
+        "arm32v7",
+        "arm64v8"
+    ]
+}
