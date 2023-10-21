@@ -99,6 +99,10 @@
       "image": "binhex/arch-qbittorrentvpn",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "privileged": true,
+      "sysctls": {
+        "net.ipv4.conf.all.src_valid_mark": "1"
+      },
       "UID": 1000,
       "GID": 1000,
       "environment": [
