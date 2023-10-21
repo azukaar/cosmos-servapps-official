@@ -139,6 +139,7 @@
       "hostname": "{ServiceName}-backup",
       "restart": "unless-stopped",
       "labels": {
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, DB_DATABASE_NAME",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Immich/icon.png"
       },
       "networks": {
