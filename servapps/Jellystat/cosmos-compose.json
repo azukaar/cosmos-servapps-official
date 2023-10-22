@@ -32,6 +32,7 @@
         "POSTGRES_PASSWORD={Passwords.0}"
       ],
       "labels": {
+        "cosmos-persistent-env": "POSTGRES_PASSWORD, POSTGRES_USER, POSTGRES_DB",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Jellystat/icon.png"
@@ -60,6 +61,7 @@
         "JWT_SECRET={Passwords.0}123456748"
       ],
       "labels": {
+        "cosmos-persistent-env": "JWT_SECRET, POSTGRES_PASSWORD, POSTGRES_USER",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Jellystat/icon.png"

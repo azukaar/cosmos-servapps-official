@@ -86,6 +86,7 @@
         "SMTP_AUTH_MECHANISM={Context.SMTP_AUTH_MECHANISM}"
       ],
       "labels": {
+        "cosmos-persistent-env": "ADMIN_TOKEN",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Vaultwarden/icon.png"
