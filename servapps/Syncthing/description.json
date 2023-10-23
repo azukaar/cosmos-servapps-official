@@ -1,0 +1,9 @@
+{
+    "name": "Syncthing",
+    "longDescription": "Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers. Syncthing's primary goals are safety from data loss, security against attackers, ease of use, automation, and universal availability. It's designed for individual users who want a safe, secure, and user-friendly file synchronization solution. Syncthing supports a wide range of platforms, including Windows, Mac, Linux, and more. You can find the source code and further information on the official GitHub repository.",
+    "description": "Syncthing is a continuous file synchronization program that prioritizes safety, security, ease of use, and automation. It's designed for individual users and supports a wide range of platforms, including Windows, Mac, and Linux.",
+    "tags": ["file synchronization", "data security", "automation", "cross-platform", "individual users", "open-source", "continuous synchronization"],
+    "repository": "https://github.com/syncthing/syncthing",
+    "image": "https://hub.docker.com/r/syncthing/syncthing",
+    "supported_architectures": ["amd64", "arm64"]
+  }
