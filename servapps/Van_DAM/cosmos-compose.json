@@ -37,6 +37,7 @@
         
       ],
       "labels": {
+        "cosmos-persistent-env": "SECRET_KEY_BASE, DB_PASS, DB_USER, DB_NAME",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Van_DAM/icon.png"
@@ -107,6 +108,7 @@
         "{ServiceName}-data": {}
       },
       "labels": {
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Van_DAM/icon.png"
