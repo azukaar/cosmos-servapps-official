@@ -43,6 +43,7 @@
       "devices": [
         "/dev/dri:/dev/dri"
       ],
+      {/if},
       "volumes": [
         {
           "source": "{ServiceName}-config",
