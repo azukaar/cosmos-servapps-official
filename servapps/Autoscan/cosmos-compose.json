@@ -4,9 +4,57 @@
     "form": [
       {
         "name": "downloadPath",
-        "label": "What is the path to your media? (leave empty to not mount anything)",
-        "initialValue": "{DefaultDataPath}/media",
+        "label": "What is the path to download to? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/downloads",
         "type": "text"
+      },
+      {
+        "name": "seriePath",
+        "label": "What is the path to your series? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/series",
+        "type": "text"
+      },
+      {
+        "name": "moviePath",
+        "label": "What is the path to your movies? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/movies",
+        "type": "text"
+      },
+      {
+        "name": "mediaServer",
+        "name-container": "media-server",
+        "label": "Where is you Media Server instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "sonarr",
+        "name-container": "sonarr-name",
+        "label": "Where is you Sonarr instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "radarr",
+        "name-container": "radarr-name",
+        "label": "Where is you Radarr instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "lidarr",
+        "name-container": "lidarr-name",
+        "label": "Where is you Lidarr instance? (leave blank if none)",
+        "type": "container"
+      },
+      {
+        "name": "readarr",
+        "name-container": "readarr-name",
+        "label": "Where is you Readarr instance? (leave blank if none)",
+        "type": "container"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "You have to edit the config of autoscan yourself it is located in the config-volume"
       }
     ]
   },
@@ -40,11 +88,42 @@
         {if Context.downloadPath}
         , {
           "source": "{Context.downloadPath}",
-          "target": "/data",
+          "target": "/downloads",
+          "type": "bind"
+        }
+        {/if}
+        {if Context.seriePath}
+        , {
+          "source": "{Context.seriePath}",
+          "target": "/tv",
+          "type": "bind"
+        }
+        {/if}
+        {if Context.moviePath}
+        , {
+          "source": "{Context.moviePath}",
+          "target": "/movies",
           "type": "bind"
         }
         {/if}
       ]
+      , "links": [
+        {if Context.sonarr}
+          "{Context.sonarr-name}"
+        {/if}
+        {if Context.radarr}
+          "{Context.radarr-name}"
+        {/if}
+        {if Context.readarr}
+        "{Context.readarr-name}"
+        {/if}
+        {if Context.mediaServer}
+        "{Context.media-server-name}"
+        {/if}
+        {if Context.lidarr}
+        "{Context.lidarr-name}"
+        {/if}
+    ]
     }
   }
 }
