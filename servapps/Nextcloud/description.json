@@ -4,6 +4,6 @@
   "description": "Nextcloud is an open-source, self-hosted file share and collaboration platform, similar to Dropbox. It offers features such as file sharing, syncing, encryption, and collaboration tools. With its extensible app ecosystem, you can tailor your cloud storage service to your needs. Nextcloud is compatible with numerous platforms and can be integrated with many IT infrastructure systems.",
   "tags": ["storage", "file sharing", "syncing", "encryption", "collaboration", "windows", "linux", "macos", "self-hosted", "nextcloud"],
   "repository": "https://github.com/nextcloud/server",
-  "image": "https://hub.docker.com/r/linuxserver/nextcloud",
+  "image": "https://hub.docker.com/_/nextcloud/",
   "supported_architectures": ["amd64", "arm64"]
 }
