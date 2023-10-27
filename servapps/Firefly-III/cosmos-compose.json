@@ -73,8 +73,8 @@
         "MARIADB_ROOT_PASSWORD={Passwords.2}"
       ],
       "labels": {
-        "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD",
-      },
+        "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD"
+      }
     }
   },
 
