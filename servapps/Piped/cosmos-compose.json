@@ -86,7 +86,7 @@
                 "name": "{ServiceName}-backend",
                 "description": "Expose {ServiceName}-backend to the web",
                 "useHost": true,
-                "target": "http://{ServiceName}-api:8080",
+                "target": "http://{ServiceName}-backend:8080",
                 "mode": "SERVAPP",
                 "Timeout": 14400000,
                 "ThrottlePerMinute": 12000,
