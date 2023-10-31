@@ -1,0 +1,129 @@
+{
+    "cosmos-installer": {
+       "form": [
+          {
+             "name": "configPath",
+             "label": "What is the path to your config.properties? (See https://github.com/TeamPiped/Piped-Docker/blob/main/template/config.properties and replace anything with _HOSTNAME to match the routes generated)",
+             "initialValue": "{DefaultDataPath}/config/config.properties",
+             "type": "text"
+          }
+       ]
+    },
+    "services": {
+       "{ServiceName}": {
+          "image": "1337kavin/piped-frontend:latest",
+          "restart": "unless-stopped",
+          "container_name": "{ServiceName}",
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:80",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+                
+             }
+          ],
+          "labels": {
+            "cosmos-network-name": "AUTO",
+            "cosmos-auto-update": "true",
+            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png"
+          }
+       },
+       "{ServiceName}-proxy": {
+          "image": "1337kavin/piped-proxy:latest",
+          "restart": "unless-stopped",
+          "environment": [
+             "UDS=1"
+          ],
+          "volumes": [
+            {
+              "source": "{ServiceName}-proxy",
+              "target": "/app/socket",
+              "type": "volume"
+              
+            }
+        ],
+          "container_name": "{ServiceName}-proxy",
+          "routes": [
+             {
+                "name": "{ServiceName}-proxy",
+                "description": "Expose {ServiceName}-proxy to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}-proxy:8080",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "labels": {
+            "cosmos-network-name": "AUTO",
+            "cosmos-auto-update": "true"
+          }
+       },
+       "{ServiceName}-backend": {
+          "image": "1337kavin/piped:latest",
+          "restart": "unless-stopped",
+          "volumes": [
+            {
+              "source": "{Context.configPath}",
+              "target": "/app/config.properties",
+              "type": "bind"
+              
+            }
+        ],
+          "container_name": "{ServiceName}-backend",
+          "routes": [
+             {
+                "name": "{ServiceName}-backend",
+                "description": "Expose {ServiceName}-backend to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}-api:8080",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "labels": {
+            "cosmos-network-name": "AUTO",
+            "cosmos-auto-update": "true"
+          }
+       },
+       "{ServiceName}-postgres": {
+          "image": "postgres:15",
+          "restart": "unless-stopped",
+          "volumes": [
+            {
+              "source": "{ServiceName}-db",
+              "target": "/var/lib/postgresql/data",
+              "type": "volume"
+              
+            }
+        ],
+          "environment": [
+             "POSTGRES_DB=piped",
+             "POSTGRES_USER=piped",
+             "POSTGRES_PASSWORD=changeme"
+          ],
+          "container_name": "{ServiceName}-postgres",
+          "labels": {
+            "cosmos-network-name": "AUTO",
+            "cosmos-auto-update": "true"
+          }
+       }
+    }
+ }
