@@ -31,7 +31,6 @@
              }
           ],
           "labels": {
-            "cosmos-network-name": "AUTO",
             "cosmos-auto-update": "true",
             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png"
           }
@@ -67,7 +66,6 @@
              }
           ],
           "labels": {
-            "cosmos-network-name": "AUTO",
             "cosmos-auto-update": "true"
           }
        },
@@ -99,7 +97,6 @@
              }
           ],
           "labels": {
-            "cosmos-network-name": "AUTO",
             "cosmos-auto-update": "true"
           }
        },
@@ -121,7 +118,6 @@
           ],
           "container_name": "{ServiceName}-postgres",
           "labels": {
-            "cosmos-network-name": "AUTO",
             "cosmos-auto-update": "true"
           }
        }
