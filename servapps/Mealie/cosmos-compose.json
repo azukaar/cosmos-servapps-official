@@ -42,7 +42,7 @@
   "minVersion": "0.8.4",
   "services": {
     "{ServiceName}": {
-      "image": "hkotel/mealie:omni-nightly",
+      "image": "ghcr.io/mealie-recipes/mealie:v1.0.0-RC1.1",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
