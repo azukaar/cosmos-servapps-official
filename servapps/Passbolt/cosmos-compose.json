@@ -1,0 +1,88 @@
+{
+    "cosmos-installer": {
+        "form": [
+          {
+            "name": "Passbolt",
+            "label": "Where do you store your Passbolt?",
+            "initialValue": "{DefaultDataPath}/Passbolt",
+            "type": "text"
+          },
+          {
+            "name": "adminOnly",
+            "label": "Do you want to make this service admin only?",
+            "initialValue": false,
+            "type": "checkbox"
+          }
+        ]
+      },
+    "minVersion": "0.9.6",
+    "services": {
+      "{ServiceName}-db": {
+        "image": "postgres:latest",
+        "restart": "unless-stopped",
+        "environment": [
+          "POSTGRES_DB=passbolt",
+          "POSTGRES_USER=passbolt",
+          "POSTGRES_PASSWORD=P4ssb0lt"
+        ],
+        "volumes": [
+          {
+            "source": "database_volume",
+            "target": "/var/lib/postgresql/data",
+            "type": "volume"
+          }
+        ],
+        "container_name": "{ServiceName}-db"
+      },
+      "{ServiceName}-passbolt": {
+        "image": "passbolt/passbolt:latest",
+        "restart": "unless-stopped",
+        "tty": true,
+        "depends_on": [
+          "{ServiceName}-db"
+        ],
+        "environment": [
+          "APP_FULL_BASE_URL=https://passbolt.local",
+          "DATASOURCES_DEFAULT_DRIVER=Cake\\Database\\Driver\\Postgres",
+          "DATASOURCES_DEFAULT_ENCODING=utf8",
+          "DATASOURCES_DEFAULT_URL=postgres://passbolt:P4ssb0lt@db:5432/passbolt?schema=passbolt",
+          "EMAIL_TRANSPORT_DEFAULT_HOST=smtp.domain.tld",
+          "EMAIL_TRANSPORT_DEFAULT_PORT=587"
+        ],
+        "volumes": [
+          {
+            "source": "gpg_volume",
+            "target": "/etc/passbolt/gpg",
+            "type": "volume"
+          },
+          {
+            "source": "jwt_volume",
+            "target": "/etc/passbolt/jwt",
+            "type": "volume"
+          }
+        ],
+        "command": "bash -c \"/usr/bin/wait-for.sh -t 0 db:5432 -- /docker-entrypoint.sh\"\n",
+        "container_name": "{ServiceName}-passbolt"
+      }
+    },
+    "volumes": {
+      "database_volume": {},
+      "gpg_volume": {},
+      "jwt_volume": {}
+    },
+    "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+  }

@@ -1,0 +1,10 @@
+{
+    "name": "Passbolt",
+    "longDescription": "<p>Passbolt is an open source password manager for teams. It provides a single platform to manage credentials, with a focus on security, collaboration and privacy. Passbolt is built for collaboration. Benefit from powerful auditing tools and unparalleled granularity for access control and encrypted data.</p>",
+    "description": "Passbolt's security model supports user-owned secret keys and end-to-end encryption, and is regularly evaluated by top penetration testers. Passbolt believes in being open, transparent and accountable. Headquarters are in the EU, specifically in Luxembourg data privacy is in our DNA. Even the paid versions are 100% open source. This ensures transparency and allows anyone to review the code.",
+    "tags": ["productivity", "password-manager", "password manager", "bitwarden", "rust", "sensitive data", "synchronization", "linux", "windows", "macos", "docker"],
+    "repository": "https://github.com/passbolt/passbolt_docker",
+    "image": "https://hub.docker.com/r/passbolt/passbolt",
+    "supported_architectures": ["amd64", "arm64"]
+  }
+  
