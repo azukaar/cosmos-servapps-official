@@ -2,7 +2,7 @@
     "version": "3",
     "services": {
       "postgresql": {
-        "image": "postgres:13",
+        "image": "postgres:14",
         "environment": [
           "POSTGRES_USER=sonarqube",
           "POSTGRES_PASSWORD=YzcxF3R6Z1lgABkU9ezWzdOX",

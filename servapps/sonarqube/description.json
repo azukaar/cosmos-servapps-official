@@ -1,9 +1,9 @@
 {
-    "name": "Sonarr",
+    "name": "SonarQube",
     "longDescription": "<p>SonarQube is an open-source platform developed by SonarSource for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs and code smells on 29 programming languages.</p>",
     "description": "SonarQube is the leading tool for continuously inspecting the Code Quality and Security of your codebases, and guiding development teams during Code Reviews.",
     "tags": ["download", "tv shows", "torrent", "usenet", "automated", "manager", "media", "collection", "windows", "linux", "macos", "web interface", "metadata", "episode tracking", "quality upgrades", "sonarr"],
-    "repository": "hhttps://github.com/vncloudsco/docker-sonarqube",
+    "repository": "https://github.com/vncloudsco/docker-sonarqube",
     "image": "https://hub.docker.com/r/vouu/sonarqube",
     "supported_architectures": ["amd64", "arm64"]
   }
