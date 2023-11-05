@@ -1,0 +1,53 @@
+{
+    "version": "3",
+    "services": {
+      "postgresql": {
+        "image": "postgres:13",
+        "environment": [
+          "POSTGRES_USER=sonarqube",
+          "POSTGRES_PASSWORD=YzcxF3R6Z1lgABkU9ezWzdOX",
+          "POSTGRES_DB=sonarqube"
+        ],
+        "volumes": [
+          {
+            "source": "database-data",
+            "target": "/var/lib/postgresql/data/",
+            "type": "volume"
+          }
+        ],
+        "container_name": "postgresql"
+      },
+      "sonarqube": {
+        "image": "vouu/sonarqube:full",
+        "volumes": [
+          {
+            "source": "sonarqube_data",
+            "target": "/opt/sonarqube/data",
+            "type": "volume"
+          },
+          {
+            "source": "sonarqube_extensions",
+            "target": "/opt/sonarqube/extensions",
+            "type": "volume"
+          },
+          {
+            "source": "sonarqube_logs",
+            "target": "/opt/sonarqube/logs",
+            "type": "volume"
+          },
+          {
+            "source": "/mnt/sonarqube/sonar.properties",
+            "target": "/opt/sonarqube/conf/sonar.properties",
+            "type": "bind"
+          }
+        ],
+        "container_name": "sonarqube"
+      }
+    },
+    "volumes": {
+      "database-data": {},
+      "sonarqube_logs": {},
+      "sonarqube_extensions": {},
+      "sonarqube_data": {}
+    }
+  }
