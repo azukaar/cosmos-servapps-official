@@ -43,7 +43,8 @@ let apps = {
   "all": servappsJSON
 }
 
-fs.writeFileSync('./servapps.json', JSON.stringify(apps, null, 2))
+fs.writeFileSync('./servapps.json', JSON.stringify(servappsJSON, null, 2))
+fs.writeFileSync('./servapps_new.json', JSON.stringify(apps, null, 2))
 
 for (const servapp of servappsJSON) {
   servapp.compose = `http://localhost:3000/servapps/${servapp.id}/cosmos-compose.json`
