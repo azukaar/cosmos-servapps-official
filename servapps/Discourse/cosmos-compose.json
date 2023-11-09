@@ -42,7 +42,7 @@
             "environment": [
                 "ALLOW_EMPTY_PASSWORD=yes",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-                "DISCOURSE_DATABASE_HOST=postgresql",
+                "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
                 "DISCOURSE_DATABASE_USER=bn_discourse",
                 "DISCOURSE_DATABASE_NAME=bitnami_discourse",
@@ -86,7 +86,7 @@
             "environment": [
                 "ALLOW_EMPTY_PASSWORD=yes",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-                "DISCOURSE_DATABASE_HOST=postgresql",
+                "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
                 "DISCOURSE_DATABASE_USER=bn_discourse",
                 "DISCOURSE_DATABASE_NAME=bitnami_discourse",
