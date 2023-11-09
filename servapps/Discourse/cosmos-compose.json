@@ -102,7 +102,7 @@
                 "DISCOURSE_DATABASE_NAME=bitnami_discourse",
                 "DISCOURSE_REDIS_HOST=redis",
                 "DISCOURSE_REDIS_PORT_NUMBER=6379"
-            ],
+            ]
         }
     },
     "networks": {
