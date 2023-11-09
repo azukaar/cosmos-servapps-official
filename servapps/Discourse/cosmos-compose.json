@@ -62,7 +62,7 @@
                 "POSTGRESQL_PASSWORD={Passwords.1}",
                 "POSTGRESQL_USERNAME=bn_discourse",
                 "POSTGRESQL_DATABASE=bitnami_discourse"
-            ],
+            ]
         },
         "{ServiceName}-redis": {
             "image": "docker.io/bitnami/redis:7.0",
