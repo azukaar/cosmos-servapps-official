@@ -1,5 +1,38 @@
 {
-    "cosmos-installer": {},
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "REDMINE_USERNAME",
+        "label": "What Redmine username do you want to use?",
+        "initialValue": "user",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_PASSWORD",
+        "label": "What Redmine password does it use?",
+        "initialValue": "bitnami1",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_EMAIL",
+        "label": "What is your Redmine email login?",
+        "initialValue": "user@example.com",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_FIRST_NAME",
+        "label": "What is your Redmine first name?",
+        "initialValue": "UserName",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_LAST_NAME",
+        "label": "What is your Redmine LastName?",
+        "initialValue": "LastName",
+        "type": "text"
+      }
+    ]
+  },
     "minVersion": "0.8.0",
     "services": {
       "{ServiceName}": {
@@ -18,7 +51,12 @@
           "REDMINE_DATABASE_HOST={ServiceName}-db",
           "REDMINE_DATABASE_PORT_NUMBER=3306",
           "REDMINE_DATABASE_USER=bn_redmine",
-          "REDMINE_DATABASE_NAME=bitnami_redmine"
+          "REDMINE_DATABASE_NAME=bitnami_redmine",
+          "REDMINE_USERNAME={Context.REDMINE_USERNAME}",
+          "REDMINE_PASSWORD={Context.REDMINE_PASSWORD}",
+          "REDMINE_EMAIL={Context.REDMINE_EMAIL}",
+          "REDMINE_FIRST_NAME={Context.REDMINE_FIRST_NAME}",
+          "REDMINE_LAST_NAME={Context.REDMINE_LAST_NAME}"
         ],
         "networks": {
             "{ServiceName}": {}
