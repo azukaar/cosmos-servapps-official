@@ -4,8 +4,8 @@
     "services": {
       "{ServiceName}": {
         "image": "docker.io/bitnami/redmine:5",
-        "container_name": "{ServiceName}-redmine",
-        "hostname": "{ServiceName}-redmine",
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
         "volumes": [
           {
             "source": "{ServiceName}-redmine",

@@ -5,6 +5,7 @@
         "{ServiceName}": {
             "image": "drone/drone",
             "container_name": "{ServiceName}",
+            "hostname": "{ServiceName}",
             "restart": "unless-stopped",
             "environment": [
                 "TZ=auto",
@@ -14,6 +15,7 @@
                 "USER_GID=1000"
             ],
             "labels": {
+                "cosmos-persistent-env": "DRONE_SERVER_PROTO, DRONE_SERVER_HOST, DRONE_RPC_SECRET",
                 "cosmos-network-name": "AUTO",
                 "cosmos-auto-update": "true",
                 "cosmos-icon": "https://comos.manhtuong.net//servapps/Drone/icon.png"
