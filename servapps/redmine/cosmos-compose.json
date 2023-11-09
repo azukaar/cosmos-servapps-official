@@ -27,7 +27,7 @@
             "cosmos-persistent-env": "REDMINE_DATABASE_PASSWORD, REDMINE_DATABASE_HOST, REDMINE_DATABASE_USER, REDMINE_DATABASE_NAME, REDMINE_DATABASE_PORT_NUMBER",
             "cosmos-force-network-secured": "true",
             "cosmos-auto-update": "true",
-            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Firefly-III/icon.png"
+            "cosmos-icon": "https://comos.manhtuong.net/servapps/Redmine/icon.png"
           },
         "routes": [{
             "name": "{ServiceName}-redmine",
