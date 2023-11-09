@@ -30,10 +30,10 @@
             "cosmos-icon": "https://comos.manhtuong.net/servapps/Redmine/icon.png"
           },
         "routes": [{
-            "name": "{ServiceName}-redmine",
-            "description": "Expose {ServiceName}-redmine to the web",
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
             "useHost": true,
-            "target": "http://{ServiceName}-redmine:3000",
+            "target": "http://{ServiceName}:3000",
             "mode": "SERVAPP",
             "Timeout": 14400000,
             "ThrottlePerMinute": 12000,
