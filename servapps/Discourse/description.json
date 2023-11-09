@@ -2,7 +2,7 @@
     "name": "Discourse",
     "longDescription": "<p>Discourse is an open source Internet forum system. Features include threading, categorization and tagging of discussions, configurable access control, live updates, expanding link previews, infinite scrolling, and real-time notifications. It is customizable via its plugin architecture and its theming system</p>",
     "description": "Discourse is modern forum software for your community. Use it as a mailing list, discussion forum, long-form chat room, and more!",
-    "tags": ["development", "git", "repository management", "code collaboration", "issue tracking", "go", "self-hosted", "gitea"],
+    "tags": ["development", "self-hosted", "forum", "threading"],
     "repository": "https://github.com/bitnami/containers/blob/main/bitnami/discourse",
     "image": "https://hub.docker.com/r/bitnami/discourse",
     "supported_architectures": ["amd64", "arm64"]
