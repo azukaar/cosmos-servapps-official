@@ -70,7 +70,7 @@
         "{ServiceName}-sidekiq": {
             "image": "docker.io/bitnami/discourse:3",
             "networks": {
-                "discourse": {}
+                "{ServiceName}-discourse": {}
             },
             "volumes": [{
                 "source": "sidekiq_data",
@@ -94,6 +94,6 @@
     "networks": {
         "{ServiceName}-postgresql": {},
         "{ServiceName}-redis": {},
-        "discourse": {}
+        "{ServiceName}-discourse": {}
     }
 }
