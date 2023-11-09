@@ -35,10 +35,10 @@
                 "target": "/bitnami/discourse",
                 "type": "volume"
             }],
-            "networks": [
-                "{ServiceName}-postgresql",
-                "{ServiceName}-redis"
-            ],
+            "networks": {
+                "{ServiceName}-postgresql": {},
+                "{ServiceName}-redis": {}
+            },
             "environment": [
                 "ALLOW_EMPTY_PASSWORD=yes",
                 "DISCOURSE_HOST: {Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
@@ -69,9 +69,9 @@
         },
         "{ServiceName}-sidekiq": {
             "image": "docker.io/bitnami/discourse:3",
-            "networks": [
-                "discourse"
-            ],
+            "networks": {
+                "discourse": {}
+            },
             "volumes": [{
                 "source": "sidekiq_data",
                 "target": "/bitnami/discourse",
