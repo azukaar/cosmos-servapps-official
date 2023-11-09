@@ -1,9 +1,0 @@
-{
-  "name": "Audiobookshelf",
-  "longDescription": "<p>Audiobookshelf is an open-source, self-hosted, audiobook and podcast server. It features an Android and iOS app for streaming your library, multi-user support, storing progress per user, and syncing across devices.</p><p>It also includes various audiobook management services like metadata fetching, chapter editing tools, and media merging.</p>",
-  "description": "Audiobookshelf is a self-hosted audiobook and podcast server.",
-  "tags": ["e-book", "library", "audiobook", "open-source", "management", "audiobookshelf", "docker", "linux", "ios", "android"],
-  "repository": "https://github.com/advplyr/audiobookshelf",
-  "image": "https://hub.docker.com/r/advplyr/audiobookshelf",
-  "supported_architectures": ["amd64", "arm64"]
-  }

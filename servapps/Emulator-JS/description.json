@@ -1,9 +1,0 @@
-{
-  "name": "Emulator-JS",
-  "longDescription": "<p>Emulator-JS is an open-source, in-browser multi-system emulator. It leverages JavaScript to emulate a wide range of gaming consoles, creating a convenient, accessible, and platform-agnostic gaming experience.</p><p>Key features of Emulator-JS include compatibility with multiple console systems, an intuitive ROM management system, and the ability to save game states. Because it's browser-based, Emulator-JS eliminates the need for complex installations or system-specific emulators.</p><p>As Emulator-JS runs directly in the browser, it can be used on any platform that supports a modern web browser, including Windows, Linux, MacOS, and even mobile devices. This makes it highly versatile for users across different environments.</p>",
-  "description": "Emulator-JS is an open-source, in-browser multi-system emulator. It allows users to play games from various console systems directly in the browser, facilitated by an intuitive ROM management system. Emulator-JS can be used on any platform that supports a modern web browser, such as Windows, Linux, MacOS, and mobile devices.",
-  "tags": [ "gaming", "emulation", "web","open-source", "cross-platform", "emulator", "in-browser", "gaming", "rom management", "javascript", "windows", "linux", "macos", "mobile"],
-  "repository": "https://github.com/EmulatorJS/EmulatorJS",
-  "image": "https://hub.docker.com/r/linuxserver/emulatorjs",
-  "supported_architectures": ["amd64", "arm64"]
-}

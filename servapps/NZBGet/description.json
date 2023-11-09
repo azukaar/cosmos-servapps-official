@@ -1,9 +1,0 @@
-{
-  "name": "NZBGet",
-  "longDescription": "<p>NZBGet is a robust and lightweight Usenet downloader. It can download files from Usenet servers via NZB index files. The software is focused on performance and uses very little system resources, while achieving high download speeds.</p><p>NZBGet offers a variety of features including web-interface, API, automatic post-processing, RSS feed support, and more. It is also designed to work well on low powered devices like Raspberry Pi.</p><p>Available on multiple platforms including Windows, MacOS, Linux, and others, NZBGet is easy to set up and use. Start using NZBGet today for efficient Usenet downloading!</p>",
-  "description": "NZBGet is a high-performance Usenet downloader that uses NZB files to fetch content. It is designed to use minimal system resources while offering features such as a web-interface, API, automatic post-processing, and RSS feed support. NZBGet works well on various platforms including low powered devices. Start using NZBGet for your Usenet downloads today!",
-  "tags": ["download", "torrent", "usenet", "downloader", "nzb", "windows", "linux", "macos", "raspberry pi", "performance", "rss feed", "post-processing", "nzbget"],
-  "repository": "https://github.com/nzbget/nzbget",
-  "image": "https://hub.docker.com/r/linuxserver/nzbget",
-  "supported_architectures": ["amd64", "arm64"]
-}

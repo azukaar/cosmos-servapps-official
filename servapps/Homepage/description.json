@@ -1,9 +1,0 @@
-{
-  "name": "Homepage",
-  "longDescription": "<p>A modern, fully static, fast, secure fully proxied, highly customizable application dashboard with integrations for over 100 services and translations into multiple languages. Easily configured via YAML files or through docker label discovery..</p><p>Heimdall is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
-  "description": "A highly customizable application dashboard with integrations for over 100 services and translations into multiple languages.",
-  "tags": ["dashboard", "home", "icons", "open-source", "self-hosted", "web-based applications", "services", "central hub", "multi-user", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/gethomepage/homepage",
-  "image": "https://github.com/gethomepage/homepage/pkgs/container/homepage",
-  "supported_architectures": ["amd64", "arm64"]
-}

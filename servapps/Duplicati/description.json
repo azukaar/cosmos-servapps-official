@@ -1,9 +1,0 @@
-{
-  "name": "Duplicati",
-  "longDescription": "<p>Duplicati is an open-source backup software designed to secure your data by creating, encrypting, and storing backups of your files. It can backup your files to local drives or various online storage services.</p><p>Key features of Duplicati include AES-256 encryption, incremental backups, scheduling, and automated backups. It also supports backup verification, ensuring that your files are not corrupted or lost. Its web-based interface makes it easy to manage and schedule your backups.</p><p>Duplicati is compatible with various platforms, including Windows, Linux, and MacOS, and it supports Docker, making it a versatile tool for various environments.</p>",
-  "description": "Duplicati is an open-source backup software that creates, encrypts, and stores backups of your files. It offers AES-256 encryption, incremental backups, scheduling, automated backups, and backup verification. Duplicati is compatible with Windows, Linux, MacOS, and Docker.",
-  "tags": ["backup", "automation", "encryption", "open-source", "cross-platform", "backup", "encryption", "scheduling", "automated backup", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/duplicati/duplicati",
-  "image": "https://hub.docker.com/r/duplicati/duplicati",
-  "supported_architectures": ["amd64", "arm64"]
-}

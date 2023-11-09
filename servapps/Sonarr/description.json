@@ -1,9 +1,0 @@
-{
-  "name": "Sonarr",
-  "longDescription": "<p>Sonarr is a multi-platform app to search, download, and manage TV shows. It automates the process of searching for new episodes, and can automatically download these files with your preferred download software.</p><p>Sonarr offers features such as automatic quality upgrades, series and episode tracking, and metadata fetching to enrich your media library. The interface is user-friendly and mobile-responsive, ensuring you can manage your TV shows easily on any device.</p><p>Available for Windows, Linux, and MacOS, Sonarr makes the TV show management process easy and efficient. Get started with Sonarr today and transform your media management experience!</p>",
-  "description": "Sonarr is an automated TV show manager that can search, download, and manage your TV series. It offers features like automatic quality upgrades, episode tracking, and metadata fetching. Sonarr works across various platforms including Windows, Linux, MacOS, and has a mobile-friendly web interface. Start using Sonarr now to automate your TV show management process.",
-  "tags": ["download", "tv shows", "torrent", "usenet", "automated", "manager", "media", "collection", "windows", "linux", "macos", "web interface", "metadata", "episode tracking", "quality upgrades", "sonarr"],
-  "repository": "https://github.com/Sonarr/Sonarr",
-  "image": "https://hub.docker.com/r/linuxserver/sonarr",
-  "supported_architectures": ["amd64", "arm64"]
-}

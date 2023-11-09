@@ -1,9 +1,0 @@
-{
-  "name": "Navidrome",
-  "longDescription": "<p>Navidrome is an open-source music server and streamer that allows you to manage, listen to, and stream your music collection from anywhere. With Navidrome, you can organize your music library, create playlists, and access your favorite songs via a web interface.</p><p>Key features of Navidrome include a user-friendly web interface, support for various audio formats, album artwork display, and the ability to scrobble your music plays to Last.fm. It provides an excellent solution for music enthusiasts who want to have their music library at their fingertips.</p><p>Navidrome is cross-platform, making it accessible on Windows, Linux, and macOS. It's also available as a Docker container for easy deployment.</p>",
-  "description": "Navidrome is an open-source music server and streamer that lets you manage, listen to, and stream your music collection through a user-friendly web interface. It supports various audio formats and offers Last.fm scrobbling. Navidrome is cross-platform and available as a Docker container.",
-  "tags": ["music server", "music streamer", "open-source", "cross-platform", "audio formats", "Last.fm", "web interface", "music management", "playlists", "Docker", "Windows", "Linux", "macOS"],
-  "repository": "https://github.com/deluan/navidrome",
-  "image": "https://hub.docker.com/r/deluan/navidrome",
-  "supported_architectures": ["amd64", "arm64"]
-}

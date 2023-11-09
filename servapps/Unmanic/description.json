@@ -1,9 +1,0 @@
-{
-  "name": "Unmanic",
-  "description": "Unmanic is a simple tool for optimising your file library. You can use it to convert your files into a single, uniform format, manage file movements based on timestamps, or execute custom commands against a file based on its file size.",
-  "longDescription": "<p>Unmanic is a simple tool for optimising your file library. You can use it to convert your files into a single, uniform format, manage file movements based on timestamps, or execute custom commands against a file based on its file size.</p><p>Simply configure Unmanic pointing it at your library and let it automatically manage that library for you.</p><p>Unmanic provides you with the following main functions:</p><ul><li>A scheduler built in to scan your whole library for files that do not conform to your configured file presets. Files found requiring processing are then queued.</li><li>A file/directory monitor. When a file is modified, or a new file is added in your library, Unmanic is able to again test that against your configured file presets. Like the first function, if this file requires processing, it is added to a queue for processing.</li><li>A handler to manage running multiple file manipulation tasks at a time.</li><li>A Web UI to easily configure, manage and monitor the progress of your library optimisation.</li></ul>",
-  "tags": ["media", "server", "tv", "videos", "web", "browser", "media browser", "media server", "media streaming", "media player", "media center", "media management", "media organizer", "media collection", "media library", "media manager"],
-  "repository": "https://github.com/Unmanic/unmanic",
-  "image": "https://hub.docker.com/r/josh5/unmanic",
-  "supported_architectures": ["amd64", "arm7", "arm64"]
-}
