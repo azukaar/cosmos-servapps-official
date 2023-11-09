@@ -78,7 +78,7 @@
                 "source": "redis_data",
                 "target": "/bitnami/redis",
                 "type": "volume"
-            }],
+            }]
         },
         "{ServiceName}-sidekiq": {
             "image": "docker.io/bitnami/discourse:3",
