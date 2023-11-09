@@ -1,0 +1,41 @@
+{
+    "cosmos-installer": {},
+    "minVersion": "0.8.0-unstable9",
+    "services": {
+        "{ServiceName}": {
+            "image": "drone/drone",
+            "container_name": "{ServiceName}",
+            "restart": "unless-stopped",
+            "environment": [
+                "TZ=auto",
+                "DRONE_SERVER_PROTO: https",
+                "DRONE_SERVER_HOST: {Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+                "DRONE_RPC_SECRET: {Passwords.0}",
+                "USER_GID=1000"
+            ],
+            "labels": {
+                "cosmos-network-name": "AUTO",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://comos.manhtuong.net//servapps/Drone/icon.png"
+            },
+            "volumes": [{
+                "source": "{ServiceName}-data",
+                "target": "/data",
+                "type": "volume"
+            }],
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:80",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+        }
+    }
+}
