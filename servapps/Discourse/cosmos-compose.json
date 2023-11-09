@@ -72,7 +72,7 @@
                 "{ServiceName}": {}
             },
             "environment": [
-                "ALLOW_EMPTY_PASSWORD=yes"
+                "REDIS_PASSWORD={Passwords.2}"
             ],
             "volumes": [{
                 "source": "redis_data",
@@ -94,14 +94,14 @@
             }],
             "command": "/opt/bitnami/scripts/discourse-sidekiq/run.sh",
             "environment": [
-                "ALLOW_EMPTY_PASSWORD=yes",
+                "DISCOURSE_REDIS_PASSWORD={Passwords.2}",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
                 "DISCOURSE_DATABASE_USER=bn_discourse",
                 "DISCOURSE_DATABASE_PASSWORD={Passwords.1}",
                 "DISCOURSE_DATABASE_NAME=bitnami_discourse",
-                "DISCOURSE_REDIS_HOST=redis",
+                "DISCOURSE_REDIS_HOST={ServiceName}-redis",
                 "DISCOURSE_REDIS_PORT_NUMBER=6379"
             ]
         }
