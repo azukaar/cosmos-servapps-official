@@ -53,6 +53,11 @@
                 "POSTGRESQL_CLIENT_CREATE_DATABASE_EXTENSIONS=hstore,pg_trgm"
             ],
             "container_name": "{ServiceName}-discourse",
+            "labels": {
+                "cosmos-network-name": "AUTO",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://comos.manhtuong.net//servapps/Discourse/icon.png"
+            },
             "routes": [{
                 "name": "{ServiceName}-discourse",
                 "description": "Expose {ServiceName}-discourse to the web",
