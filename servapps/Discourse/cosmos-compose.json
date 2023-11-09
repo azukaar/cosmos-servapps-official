@@ -10,16 +10,16 @@
                 "type": "volume"
             }],
             "environment": [
-                "ALLOW_EMPTY_PASSWORD: yes",
-                "POSTGRESQL_USERNAME: bn_discourse",
-                "POSTGRESQL_DATABASE: bitnami_discourse"
+                "ALLOW_EMPTY_PASSWORD=yes",
+                "POSTGRESQL_USERNAME=bn_discourse",
+                "POSTGRESQL_DATABASE=bitnami_discourse"
             ],
             "container_name": "{ServiceName}-postgresql"
         },
         "{ServiceName}-redis": {
             "image": "docker.io/bitnami/redis:7.0",
             "environment": [
-                "ALLOW_EMPTY_PASSWORD: yes"
+                "ALLOW_EMPTY_PASSWORD=yes"
             ],
             "volumes": [{
                 "source": "redis_data",
@@ -41,16 +41,16 @@
             },
             "environment": [
                 "ALLOW_EMPTY_PASSWORD=yes",
-                "DISCOURSE_HOST: {Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-                "DISCOURSE_DATABASE_HOST: postgresql",
-                "DISCOURSE_DATABASE_PORT_NUMBER: 5432",
-                "DISCOURSE_DATABASE_USER: bn_discourse",
-                "DISCOURSE_DATABASE_NAME: bitnami_discourse",
-                "DISCOURSE_REDIS_HOST: redis",
-                "DISCOURSE_REDIS_PORT_NUMBER: 6379",
-                "POSTGRESQL_CLIENT_POSTGRES_USER: postgres",
-                "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME: bitnami_discourse",
-                "POSTGRESQL_CLIENT_CREATE_DATABASE_EXTENSIONS: hstore,pg_trgm"
+                "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+                "DISCOURSE_DATABASE_HOST=postgresql",
+                "DISCOURSE_DATABASE_PORT_NUMBER=5432",
+                "DISCOURSE_DATABASE_USER=bn_discourse",
+                "DISCOURSE_DATABASE_NAME=bitnami_discourse",
+                "DISCOURSE_REDIS_HOST=redis",
+                "DISCOURSE_REDIS_PORT_NUMBER=6379",
+                "POSTGRESQL_CLIENT_POSTGRES_USER=postgres",
+                "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=bitnami_discourse",
+                "POSTGRESQL_CLIENT_CREATE_DATABASE_EXTENSIONS=hstore,pg_trgm"
             ],
             "container_name": "{ServiceName}-discourse",
             "routes": [{
@@ -79,14 +79,14 @@
             }],
             "command": "/opt/bitnami/scripts/discourse-sidekiq/run.sh",
             "environment": [
-                "ALLOW_EMPTY_PASSWORD: yes",
-                "DISCOURSE_HOST: {Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-                "DISCOURSE_DATABASE_HOST: postgresql",
-                "DISCOURSE_DATABASE_PORT_NUMBER: 5432",
-                "DISCOURSE_DATABASE_USER: bn_discourse",
-                "DISCOURSE_DATABASE_NAME: bitnami_discourse",
-                "DISCOURSE_REDIS_HOST: redis",
-                "DISCOURSE_REDIS_PORT_NUMBER: 6379"
+                "ALLOW_EMPTY_PASSWORD=yes",
+                "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+                "DISCOURSE_DATABASE_HOST=postgresql",
+                "DISCOURSE_DATABASE_PORT_NUMBER=5432",
+                "DISCOURSE_DATABASE_USER=bn_discourse",
+                "DISCOURSE_DATABASE_NAME=bitnami_discourse",
+                "DISCOURSE_REDIS_HOST=redis",
+                "DISCOURSE_REDIS_PORT_NUMBER=6379"
             ],
             "container_name": "{ServiceName}-sidekiq"
         }

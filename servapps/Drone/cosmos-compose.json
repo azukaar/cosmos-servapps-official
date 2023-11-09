@@ -8,9 +8,9 @@
             "restart": "unless-stopped",
             "environment": [
                 "TZ=auto",
-                "DRONE_SERVER_PROTO: https",
-                "DRONE_SERVER_HOST: {Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-                "DRONE_RPC_SECRET: {Passwords.0}",
+                "DRONE_SERVER_PROTO=https",
+                "DRONE_SERVER_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+                "DRONE_RPC_SECRET={Passwords.0}",
                 "USER_GID=1000"
             ],
             "labels": {
