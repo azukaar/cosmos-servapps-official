@@ -11,7 +11,7 @@
         "name": "REDMINE_PASSWORD",
         "label": "What Redmine password does it use?",
         "initialValue": "bitnami1",
-        "type": "text"
+        "type": "password"
       },
       {
         "name": "REDMINE_EMAIL",
