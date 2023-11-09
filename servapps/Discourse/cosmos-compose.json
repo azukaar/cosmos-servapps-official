@@ -90,5 +90,10 @@
             ],
             "container_name": "{ServiceName}-sidekiq"
         }
-    }
+    },
+    "networks": {
+        "{ServiceName}-postgresql": {},
+        "{ServiceName}-redis": {},
+        "discourse": {}
+    },
 }
