@@ -95,5 +95,5 @@
         "{ServiceName}-postgresql": {},
         "{ServiceName}-redis": {},
         "discourse": {}
-    },
+    }
 }
