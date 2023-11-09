@@ -15,7 +15,6 @@
                 "{ServiceName}": {}
             },
             "environment": [
-                "POSTGRESQL_PASSWORD={Passwords.1}",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
@@ -23,6 +22,7 @@
                 "DISCOURSE_DATABASE_NAME=bitnami_discourse",
                 "DISCOURSE_REDIS_HOST=redis",
                 "DISCOURSE_REDIS_PORT_NUMBER=6379",
+                "POSTGRESQL_CLIENT_POSTGRES_PASSWORD={Passwords.1}",
                 "POSTGRESQL_CLIENT_POSTGRES_USER=postgres",
                 "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=bitnami_discourse",
                 "POSTGRESQL_CLIENT_CREATE_DATABASE_EXTENSIONS=hstore,pg_trgm"
@@ -94,11 +94,12 @@
             }],
             "command": "/opt/bitnami/scripts/discourse-sidekiq/run.sh",
             "environment": [
-                "POSTGRESQL_PASSWORD={Passwords.1}",
+                "ALLOW_EMPTY_PASSWORD=yes",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
                 "DISCOURSE_DATABASE_USER=bn_discourse",
+                "DISCOURSE_DATABASE_PASSWORD={Passwords.1}",
                 "DISCOURSE_DATABASE_NAME=bitnami_discourse",
                 "DISCOURSE_REDIS_HOST=redis",
                 "DISCOURSE_REDIS_PORT_NUMBER=6379"
