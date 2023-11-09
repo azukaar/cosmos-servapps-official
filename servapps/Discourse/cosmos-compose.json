@@ -7,7 +7,7 @@
             "container_name": "{ServiceName}",
             "hostname": "{ServiceName}",
             "volumes": [{
-                "source": "discourse_data",
+                "source": "{ServiceName}-discourse_data",
                 "target": "/bitnami/discourse",
                 "type": "volume"
             }],
@@ -54,7 +54,7 @@
                 "{ServiceName}": {}
             },
             "volumes": [{
-                "source": "postgresql_data",
+                "source": "{ServiceName}-postgresql_data",
                 "target": "/bitnami/postgresql",
                 "type": "volume"
             }],
@@ -75,7 +75,7 @@
                 "REDIS_PASSWORD={Passwords.2}"
             ],
             "volumes": [{
-                "source": "redis_data",
+                "source": "{ServiceName}-redis_data",
                 "target": "/bitnami/redis",
                 "type": "volume"
             }]
@@ -88,7 +88,7 @@
                 "{ServiceName}": {}
             },
             "volumes": [{
-                "source": "sidekiq_data",
+                "source": "{ServiceName}-sidekiq_data",
                 "target": "/bitnami/discourse",
                 "type": "volume"
             }],
