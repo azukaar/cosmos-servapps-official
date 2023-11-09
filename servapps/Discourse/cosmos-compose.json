@@ -2,45 +2,20 @@
     "cosmos-installer": {},
     "minVersion": "0.8.0",
     "services": {
-        "{ServiceName}-postgresql": {
-            "image": "docker.io/bitnami/postgresql:16",
-            "volumes": [{
-                "source": "postgresql_data",
-                "target": "/bitnami/postgresql",
-                "type": "volume"
-            }],
-            "environment": [
-                "ALLOW_EMPTY_PASSWORD=yes",
-                "POSTGRESQL_USERNAME=bn_discourse",
-                "POSTGRESQL_DATABASE=bitnami_discourse"
-            ],
-            "container_name": "{ServiceName}-postgresql"
-        },
-        "{ServiceName}-redis": {
-            "image": "docker.io/bitnami/redis:7.0",
-            "environment": [
-                "ALLOW_EMPTY_PASSWORD=yes"
-            ],
-            "volumes": [{
-                "source": "redis_data",
-                "target": "/bitnami/redis",
-                "type": "volume"
-            }],
-            "container_name": "{ServiceName}-redis"
-        },
-        "{ServiceName}-discourse": {
+        "{ServiceName}": {
             "image": "docker.io/bitnami/discourse:3",
+            "container_name": "{ServiceName}",
+            "hostname": "{ServiceName}",
             "volumes": [{
                 "source": "discourse_data",
                 "target": "/bitnami/discourse",
                 "type": "volume"
             }],
             "networks": {
-                "{ServiceName}-postgresql": {},
-                "{ServiceName}-redis": {}
+                "{ServiceName}": {}
             },
             "environment": [
-                "ALLOW_EMPTY_PASSWORD=yes",
+                "POSTGRESQL_PASSWORD={Passwords.1}",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
@@ -52,7 +27,6 @@
                 "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=bitnami_discourse",
                 "POSTGRESQL_CLIENT_CREATE_DATABASE_EXTENSIONS=hstore,pg_trgm"
             ],
-            "container_name": "{ServiceName}-discourse",
             "labels": {
                 "cosmos-network-name": "AUTO",
                 "cosmos-auto-update": "true",
@@ -72,10 +46,46 @@
                 }
             }]
         },
+        "{ServiceName}-postgresql": {
+            "image": "docker.io/bitnami/postgresql:16",
+            "container_name": "{ServiceName}-postgresql",
+            "hostname": "{ServiceName}-postgresql",
+            "networks": {
+                "{ServiceName}": {}
+            },
+            "volumes": [{
+                "source": "postgresql_data",
+                "target": "/bitnami/postgresql",
+                "type": "volume"
+            }],
+            "environment": [
+                "POSTGRESQL_PASSWORD={Passwords.1}",
+                "POSTGRESQL_USERNAME=bn_discourse",
+                "POSTGRESQL_DATABASE=bitnami_discourse"
+            ],
+        },
+        "{ServiceName}-redis": {
+            "image": "docker.io/bitnami/redis:7.0",
+            "container_name": "{ServiceName}-redis",
+            "hostname": "{ServiceName}-redis",
+            "networks": {
+                "{ServiceName}": {}
+            },
+            "environment": [
+                "ALLOW_EMPTY_PASSWORD=yes"
+            ],
+            "volumes": [{
+                "source": "redis_data",
+                "target": "/bitnami/redis",
+                "type": "volume"
+            }],
+        },
         "{ServiceName}-sidekiq": {
             "image": "docker.io/bitnami/discourse:3",
+            "container_name": "{ServiceName}-sidekiq",
+            "hostname": "{ServiceName}-sidekiq",
             "networks": {
-                "{ServiceName}-discourse": {}
+                "{ServiceName}": {}
             },
             "volumes": [{
                 "source": "sidekiq_data",
@@ -84,7 +94,7 @@
             }],
             "command": "/opt/bitnami/scripts/discourse-sidekiq/run.sh",
             "environment": [
-                "ALLOW_EMPTY_PASSWORD=yes",
+                "POSTGRESQL_PASSWORD={Passwords.1}",
                 "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "DISCOURSE_DATABASE_HOST={ServiceName}-postgresql",
                 "DISCOURSE_DATABASE_PORT_NUMBER=5432",
@@ -93,12 +103,9 @@
                 "DISCOURSE_REDIS_HOST=redis",
                 "DISCOURSE_REDIS_PORT_NUMBER=6379"
             ],
-            "container_name": "{ServiceName}-sidekiq"
         }
     },
     "networks": {
-        "{ServiceName}-postgresql": {},
-        "{ServiceName}-redis": {},
-        "{ServiceName}-discourse": {}
+        "{ServiceName}": {}
     }
 }
