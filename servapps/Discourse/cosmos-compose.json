@@ -1,10 +1,5 @@
 {
-    "cosmos-installer": {
-        "post-install": [{
-            "type": "info",
-            "label": "The SSH port for this container is 222"
-        }]
-    },
+    "cosmos-installer": {},
     "minVersion": "0.8.0",
     "{ServiceName}-postgresql": {
         "postgresql": {
