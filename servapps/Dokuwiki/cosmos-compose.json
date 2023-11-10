@@ -1,0 +1,57 @@
+{
+  "cosmos-installer": {
+            "form": [{
+                "name": "DOKUWIKI_USERNAME",
+                "label": "What Dokuwiki do you want to use?",
+                "initialValue": "admin",
+                "type": "text"
+            },
+            {
+                "name": "DOKUWIKI_PASSWORD",
+                "label": "What Dokuwiki admin password do you want?",
+                "initialValue": "password",
+                "type": "password"
+            },
+            {
+                "name": "DOKUWIKI_EMAIL",
+                "label": "What Dokuwiki admin email do you want?",
+                "initialValue": "admin@Dokuwiki.com",
+                "type": "text"
+            }
+        ]
+  },
+    "minVersion": "0.8.0",
+    "services": {
+      "{ServiceName}": {
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
+        "image": "docker.io/bitnami/dokuwiki",
+        "environment": [
+          "DOKUWIKI_USERNAME={Context.DOKUWIKI_USERNAME}",
+          "DOKUWIKI_PASSWORD={Context.DOKUWIKI_PASSWORD}",
+          "DOKUWIKI_EMAIL={Context.DOKUWIKI_EMAIL}",
+          "PHP_ENABLE_OPCACHE=yes"
+      ],
+        "volumes": [
+          {
+            "source": "{ServiceName}-dokuwiki_data",
+            "target": "/bitnami/dokuwiki",
+            "type": "volume"
+          }
+        ],
+        "routes": [{
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+              "Enabled": true
+          }
+      }]
+      }
+    }
+  }
