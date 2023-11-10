@@ -1,0 +1,84 @@
+{
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "info",
+        "label": "The default username: user and the default password is: bitnami. You can change these in the admin panel of the application. If you get an http mixed content error, change the HTTP_SERVER on config.php file to https"
+      }
+    ]
+   },
+    "minVersion": "0.8.0",
+    "services": {
+      "{ServiceName}": {
+        "image": "docker.io/bitnami/opencart",
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
+        "volumes": [
+          {
+            "source": "{ServiceName}-opencart_data",
+            "target": "/bitnami/opencart",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "OPENCART_DATABASE_PASSWORD={Passwords.1}",
+          "OPENCART_DATABASE_HOST={ServiceName}-db",
+          "OPENCART_DATABASE_PORT_NUMBER=3306",
+          "OPENCART_DATABASE_USER=bn_opencart",
+          "OPENCART_DATABASE_NAME=bitnami_opencart",
+          "OPENCART_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+        ],
+        "networks": {
+            "{ServiceName}": {}
+          },
+          "labels": {
+            "cosmos-force-network-secured": "true",
+            "cosmos-auto-update": "true",
+            "cosmos-icon": "https://comos.manhtuong.net/servapps/Redmine/icon.png"
+          },
+        "routes": [{
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
+            "useHost": true,
+            "target": "http://{ServiceName}:8080",
+            "mode": "SERVAPP",
+            "Timeout": 14400000,
+            "ThrottlePerMinute": 12000,
+            "BlockCommonBots": true,
+            "SmartShield": {
+                "Enabled": true
+            }
+        }]
+
+      },
+      "{ServiceName}-db": {
+        "image": "docker.io/bitnami/mariadb:11.1",
+        "container_name": "{ServiceName}-db",
+        "hostname": "{ServiceName}-db",
+        "restart": "unless-stopped",
+        "networks": {
+            "{ServiceName}": {}
+          },
+        "volumes": [
+          {
+            "source": "{ServiceName}-db",
+            "target": "/bitnami/mariadb",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "MARIADB_DATABASE=bitnami_opencart",
+          "MARIADB_USER=bn_opencart",
+          "MARIADB_PASSWORD={Passwords.1}",
+          "MARIADB_ROOT_PASSWORD={Passwords.2}"
+        ],
+        "labels": {
+          "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD",
+          "cosmos-force-network-secured": "true"
+        }
+      }
+    },
+    "networks": {
+        "{ServiceName}": {}
+      }
+  }
