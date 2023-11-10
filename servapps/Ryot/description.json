@@ -1,9 +1,0 @@
-{
-  "name": "Ryot",
-  "longDescription": "<p>Ryot is a self hosted platform for tracking various facets of your life - media, fitness etc. Imagine you have a special notebook where you can write down all the media you have consumed, like books you've read, shows you have watched, video games you have played or workouts you have done. Now, imagine that instead of a physical notebook, you have a special tool on your computer or phone that lets you keep track of all these digitally.</p>",
-  "description": "A self hosted platform for tracking various facets of your life - media, fitness etc.",
-  "tags": ["tracker", "media", "fitness", "open-source", "collection", "docker", "windows", "linux", "macos", "web interface", "metadata", "episode tracking", "movie tracking", "audiobook tracking", "reading tracking", "fitness tracking", "integrations", "ryot"],
-  "repository": "https://github.com/IgnisDa/ryot",
-  "image": "https://ghcr.io/ignisda/ryot",
-  "supported_architectures": ["amd64", "arm64"]
-}

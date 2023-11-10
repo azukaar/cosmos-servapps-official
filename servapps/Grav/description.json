@@ -1,9 +1,0 @@
-{
-  "name": "Grav",
-  "longDescription": "<p>Grav is an open-source, self-hosted, flat-file content management system (CMS). Unlike traditional CMS platforms, Grav does not use a database to store content, making it incredibly lightweight and easy to manage.</p><p>Key features of Grav include powerful content filtering, multi-language support, flexible templating with Twig, and simple content creation process with Markdown. Its extendibility with a rich ecosystem of plugins and themes, plus a strong focus on performance, makes Grav a versatile platform for creating all kinds of websites.</p><p>Grav is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
-  "description": "Grav is an open-source, self-hosted, flat-file content management system (CMS). It offers features like content filtering, multi-language support, flexible templating with Twig, and simple content creation with Markdown. Grav can be extended with plugins and themes. It can be run on Windows, Linux, MacOS, and Docker.",
-  "tags": ["web", "blog", "code", "open-source", "self-hosted", "CMS", "flat-file", "content management", "twig", "markdown", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/getgrav/grav",
-  "image": "https://hub.docker.com/r/getgrav/grav",
-  "supported_architectures": ["amd64", "arm64"]
-}

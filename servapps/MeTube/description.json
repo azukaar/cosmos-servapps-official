@@ -1,9 +1,0 @@
-{
-  "name": "MeTube",
-  "description": "youtube-dl web UI",
-  "longDescription": "<p>Web GUI for youtube-dl (using the yt-dlp fork) with playlist support. Allows you to download videos from YouTube and dozens of other sites.</p>",
-  "tags": ["youtube", "youtube-dl", "download", "videos", "music", "media"],
-  "repository": "https://github.com/alexta69/metube",
-  "image": "https://github.com/alexta69/metube/pkgs/container/metube",
-  "supported_architectures": ["amd64", "arm64"]
-}

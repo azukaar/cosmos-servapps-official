@@ -1,9 +1,0 @@
-{
-  "name": "Firefly III",
-  "description": "A free and open source personal finance manager",
-  "longDescription": "<p>Firefly III is a (self-hosted) manager for your personal finances. It can help you keep track of your expenses and income, so you can spend less and save more. Firefly III supports the use of budgets, categories and tags. Using a bunch of external tools, you can import data. It also has many neat financial reports available.</p>",
-  "tags": ["money", "personal-finance", "finance", "credit-card", "budgeting", "cash-flow", "budget", "expenses", "paycheck"],
-  "repository": "https://github.com/firefly-iii/firefly-iii",
-  "image": "https://hub.docker.com/r/fireflyiii/core",
-  "supported_architectures": ["amd64", "arm64"]
-}

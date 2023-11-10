@@ -1,9 +1,0 @@
-{
-    "name": "KitchenOwl",
-    "longDescription": "<p>KitchenOwl is a smart grocery list and recipe manager.</p><p>Easily add items to your shopping list before you go shopping. You can also create recipes and get suggestions on what you want to cook.</p><p>Track your expenses so you know how much you've spent.</p>",
-    "description": "KitchenOwl helps you organize your grocery life.",
-    "tags": ["recipes", "meals", "shopping", "planning", "expenses", "docker"],
-    "repository": "https://github.com/tombursch/kitchenowl",
-    "image": "https://hub.docker.com/r/tombursch/kitchenowl",
-    "supported_architectures": ["amd64", "arm64"]
-}

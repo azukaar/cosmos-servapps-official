@@ -1,9 +1,0 @@
-{
-  "name": "Jellystat",
-  "description": "Jellystat is a free and open source Statistics App for Jellyfin! (This project is still in development - expect some weirdness)",
-  "longDescription": "<p>Think of Jellystat as a Jellyfin version of Tautulli for Plex</p>",
-  "tags": ["media", "stats", "library", "open-source", "self-hosted", "web application", "jellyfin", "media content", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/CyferShepard/Jellystat",
-  "image": "https://hub.docker.com/r/cyfershepard/jellystat",
-  "supported_architectures": ["amd64", "arm64"]
-}

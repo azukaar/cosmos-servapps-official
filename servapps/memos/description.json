@@ -1,9 +1,0 @@
-{
-  "name": "memos",
-  "description": "A privacy-first, lightweight note-taking service. Easily capture and share your great thoughts.",
-  "longDescription": "<p>Pure text with added Markdown support. Say goodbye to the overwhelming mental burden of rich formatting and embrace a minimalist approach.</p><p>Customize and share your notes effortlessly. With our intuitive sharing features, you can easily collaborate and distribute your notes with others.</p>",
-  "tags": ["markdown", "social-network", "memo", "note-taking", "notes", "microblog"],
-  "repository": "https://github.com/usememos/memos",
-  "image": "https://github.com/usememos/memos/pkgs/container/memos",
-  "supported_architectures": ["amd64", "arm64"]
-}

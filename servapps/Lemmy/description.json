@@ -1,9 +1,0 @@
-{
-  "name": "Lemmy",
-  "longDescription": "<p>Lemmy is an open-source, self-hosted, federated link aggregator application similar to Reddit, which allows users to create their own communities and share links and posts with others.</p><p>Key features of Lemmy include its ability to form federated link-aggregator communities, moderation tools, and the ability to vote on content. It also supports commenting and private messaging between users. Lemmy is designed to consume minimal resources and can be easily self-hosted on small servers.</p><p>Lemmy is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
-  "description": "Lemmy is an open-source, self-hosted, federated link aggregator similar to Reddit. It offers community formation, moderation tools, content voting, and supports commenting and private messaging between users. Lemmy can be run on Windows, Linux, MacOS, and Docker.",
-  "tags": ["social", "federation", "reddit", "open-source", "self-hosted", "federated", "link aggregator", "community", "moderation", "content voting", "windows", "linux", "macos", "docker"],
-  "repository": "https://github.com/LemmyNet/lemmy",
-  "image": "https://hub.docker.com/r/dessalines/lemmy",
-  "supported_architectures": ["amd64", "arm64"]
-}
