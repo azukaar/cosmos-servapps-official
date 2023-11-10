@@ -1,0 +1,9 @@
+{
+    "name": "Drupal",
+    "longDescription": "<p>Drupal is distributed with a license usually called open source. It means that in contrast to nearly all other publishing systems of the same magnitude, Drupal is free of charge. There is no fee to download or start using Drupal, and no yearly license payment to continue to use it.</p>",
+    "description": "Drupal runs on any computing platform that supports both a web server capable of running PHP and a database to store content and configuration.",
+    "tags": ["development", "repository management", "code collaboration", "issue tracking", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/drupal",
+    "supported_architectures": ["amd64", "arm64"]
+}

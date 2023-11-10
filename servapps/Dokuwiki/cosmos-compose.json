@@ -39,6 +39,12 @@
             "type": "volume"
           }
         ],
+        "labels": {
+          "cosmos-persistent-env": "DOKUWIKI_USERNAME, DOKUWIKI_PASSWORD, DOKUWIKI_EMAIL, PHP_ENABLE_OPCACHE",
+          "cosmos-force-network-secured": "true",
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://comos.manhtuong.net/servapps/Dokuwiki/icon.png"
+        },
         "routes": [{
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
