@@ -1,9 +1,0 @@
-{
-    "name": "Redmine",
-    "longDescription": "<p>Redmine is a free and open source, web-based project management and issue tracking tool. It allows users to manage multiple projects and associated subprojects. It features per project wikis and forums, time tracking, and flexible, role-based access control.</p>",
-    "description": "Redmine is a flexible project management web application. Written using the Ruby on Rails framework, it is cross-platform and cross-database.",
-    "tags": ["development", "repository management", "code collaboration", "issue tracking", "self-hosted"],
-    "repository": "https://github.com/bitnami/containers/",
-    "image": "https://hub.docker.com/r/bitnami/redmine",
-    "supported_architectures": ["amd64", "arm64"]
-}
