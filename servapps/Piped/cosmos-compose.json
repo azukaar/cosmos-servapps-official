@@ -95,8 +95,7 @@
                 "{ServiceName}-postgres"
             ],
             "post_install": [
-              "wget -O /app/config.properties http://azukaar.github.io/cosmos-servapps-official/servapps/Piped/artefacts/config.properties",
-              
+              "wget -O /app/config.properties http://azukaar.github.io/cosmos-servapps-official/servapps/Piped/artefacts/config.properties"
             ],
             "volumes": [
                 {
