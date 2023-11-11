@@ -1,13 +1,5 @@
 {
     "cosmos-installer": {
-        "form": [
-            {
-                "name": "configPath",
-                "label": "What is the path to your config.properties? (See https://github.com/TeamPiped/Piped-Docker/blob/main/template/config.properties and replace anything with _HOSTNAME to match the routes generated)",
-                "initialValue": "{DefaultDataPath}/config/config.properties",
-                "type": "text"
-            }
-        ]
     },
     "services": {
         "{ServiceName}": {
@@ -102,11 +94,15 @@
             "depends_on": [
                 "{ServiceName}-postgres"
             ],
+            "post_install": [
+              "wget -O /app/config.properties http://azukaar.github.io/cosmos-servapps-official/servapps/Piped/artefacts/config.properties",
+              
+            ],
             "volumes": [
                 {
-                    "source": "{Context.configPath}",
-                    "target": "/app/config.properties",
-                    "type": "bind"
+                    "source": "{ServiceName}-backend",
+                    "target": "/app",
+                    "type": "volume"
                 }
             ],
             "container_name": "{ServiceName}-backend",
