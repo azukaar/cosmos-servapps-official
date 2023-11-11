@@ -1,5 +1,11 @@
 {
     "cosmos-installer": {
+        "post-install": [
+          {
+            "type": "warning",
+            "label": "You need to create a proper config file for the backend in the volume attached (It has to be in /var/lib/docker/volumes/{ServiceName}-backend/_data/config.properties). Don't forget to set the proper DB URL and PWD in it."
+          }
+        ]
     },
     "services": {
         "{ServiceName}": {
@@ -93,9 +99,6 @@
             ],
             "depends_on": [
                 "{ServiceName}-postgres"
-            ],
-            "post_install": [
-              "wget -O /app/config.properties http://azukaar.github.io/cosmos-servapps-official/servapps/Piped/artefacts/config.properties"
             ],
             "volumes": [
                 {
