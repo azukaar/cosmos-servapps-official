@@ -17,7 +17,8 @@
             "labels": {
                 "cosmos-force-network-secured": "true",
                 "cosmos-auto-update": "true",
-                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png"
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png",
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
                 
             },
             "networks": {
@@ -41,16 +42,13 @@
             "environment": [
                 "POSTGRES_DB=piped",
                 "POSTGRES_USER=piped",
-                "POSTGRES_PASSWORD=changeme",
+                "POSTGRES_PASSWORD={Passwords.0}",
                 "DATABASE_HOST={ServiceName}-postgres"
             ]
         },
         "{ServiceName}-proxy": {
             "image": "1337kavin/piped-proxy:latest",
             "restart": "unless-stopped",
-            "environment": [
-                "UDS=1"
-            ],
             "volumes": [
                 {
                     "source": "{ServiceName}-proxy",
@@ -61,14 +59,15 @@
             "container_name": "{ServiceName}-proxy",
             "labels": {
                 "cosmos-force-network-secured": "true",
-                "cosmos-auto-update": "true"
+                "cosmos-auto-update": "true",
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
             },
              "environment": [
+                "UDS=1",
                 "POSTGRES_DB=piped",
                 "POSTGRES_USER=piped",
-                "POSTGRES_PASSWORD=changeme",
+                "POSTGRES_PASSWORD={Passwords.0}",
                 "DATABASE_HOST={ServiceName}-postgres"
-                 
             ],
             "networks": {
                "{ServiceName}-net": {}
@@ -83,6 +82,7 @@
                     "Timeout": 14400000,
                     "ThrottlePerMinute": 12000,
                     "BlockCommonBots": true,
+                    "HideFromDashboard": true,
                     "SmartShield": {
                         "Enabled": true
                     }
@@ -96,7 +96,7 @@
                 "POSTGRES_DB=piped",
                 "DB_PORT=5432",
                 "POSTGRES_USER=piped",
-                "POSTGRES_PASSWORD=changeme",
+                "POSTGRES_PASSWORD={Passwords.0}",
                 "DATABASE_HOST={ServiceName}-postgres"
             ],
             "depends_on": [
@@ -112,7 +112,8 @@
             "container_name": "{ServiceName}-backend",
             "labels": {
                 "cosmos-force-network-secured": "true",
-                "cosmos-auto-update": "true"
+                "cosmos-auto-update": "true",
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
             },
             "networks": {
                "{ServiceName}-net": {}
@@ -127,6 +128,7 @@
                     "Timeout": 14400000,
                     "ThrottlePerMinute": 12000,
                     "BlockCommonBots": true,
+                    "HideFromDashboard": true,
                     "SmartShield": {
                         "Enabled": true
                     }
@@ -157,7 +159,7 @@
                 "POSTGRES_DB=piped",
                 "DB_PORT=5432",
                 "POSTGRES_USER=piped",
-                "POSTGRES_PASSWORD=changeme",
+                "POSTGRES_PASSWORD={Passwords.0}",
                 "DATABASE_HOST={ServiceName}-postgres"
             ]
         }
