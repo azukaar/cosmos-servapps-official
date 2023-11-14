@@ -1,0 +1,9 @@
+{
+    "name": "Keycloak",
+    "longDescription": "<p>Keycloak is an open source software product to allow single sign-on with identity and access management aimed at modern applications and services. As of March 2018 this WildFly community project is under the stewardship of Red Hat who use it as the upstream project for their RH-SSO product.</p>",
+    "description": "Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services.",
+    "tags": ["sso", "management", "Identity", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/Keycloak",
+    "supported_architectures": ["amd64", "arm64"]
+}

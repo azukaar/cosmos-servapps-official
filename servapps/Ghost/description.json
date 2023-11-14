@@ -1,0 +1,9 @@
+{
+    "name": "Ghost",
+    "longDescription": "<p>Ghost is a powerful app for professional publishers to create, share, and grow a business around their content. It comes with modern tools to build a website, publish content, send newsletters & offer paid subscriptions to members.</p>",
+    "description": "Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance",
+    "tags": ["blog", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers",
+    "image": "https://hub.docker.com/r/bitnami/ghost/",
+    "supported_architectures": ["amd64", "arm64"]
+}

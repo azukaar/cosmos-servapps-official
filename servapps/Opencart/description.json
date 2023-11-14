@@ -1,0 +1,9 @@
+{
+    "name": "OpenCart",
+    "longDescription": "<p>OpenCart is an online store management system. It is PHP-based, using a MySQL database and HTML components. Support is provided for different languages and currencies.</p> The default username: <b>user</b> and the default password is: <b>bitnami</b>. You can change these in the admin panel of the application. If you get an http mixed content error, change the HTTP_SERVER on <b>config.php</b> file to https",
+    "description": "A free shopping cart system. OpenCart is an open source PHP-based online e-commerce solution.",
+    "tags": ["development", "shopping", "self-hosted", "management"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/opencart",
+    "supported_architectures": ["amd64", "arm64"]
+}

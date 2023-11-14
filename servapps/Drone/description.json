@@ -1,0 +1,9 @@
+{
+    "name": "Drone",
+    "longDescription": "<p>Drone CI is an open-source CI server acquired by Harness. It is used to build and test software, either on a developer's local machine or in a continuous integration environment like any public cloud.</p><p>With Drone, you can automate your software delivery pipeline from code commit to production.</p><p>In addition to building software, Drone allows you to build, test, and deploy your applications.</p><p>Drone CI is considered a modern CI tool as it uses the declarative approach in the form of YAML files to automate tests and extensively employs Docker containers at every step. The build pipelines take less time, and it is easy to set up and run.</p>",
+    "description": "Drone by Harness™ is a modern Continuous Integration platform that empowers busy teams to automate their build, test and release workflows using a powerful, cloud native pipeline engine.",
+    "tags": ["development", "git", "repository management", "code collaboration", "issue tracking", "self-hosted"],
+    "repository": "https://www.drone.io/",
+    "image": "https://hub.docker.com/r/drone/drone",
+    "supported_architectures": ["amd64", "arm64"]
+}

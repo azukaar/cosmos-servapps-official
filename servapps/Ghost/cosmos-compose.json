@@ -1,0 +1,104 @@
+{
+    "cosmos-installer": {
+        "form": [{
+                "name": "GHOST_USERNAME",
+                "label": "What Ghost username do you want to use?",
+                "initialValue": "username",
+                "type": "text"
+            },
+            {
+                "name": "GHOST_PASSWORD",
+                "label": "What Ghost password does it use?",
+                "initialValue": "bitnami1",
+                "type": "password"
+            },
+            {
+                "name": "GHOST_EMAIL",
+                "label": "What is your Ghost email login?",
+                "initialValue": "user@example.com",
+                "type": "text"
+            },
+            {
+                "name": "GHOST_HOST",
+                "label": "What is your Ghost run on domain?",
+                "initialValue": "UserName",
+                "type": "text"
+            },
+            {
+                "name": "GHOST_BLOG_TITLE",
+                "label": "What is your Ghost title?",
+                "initialValue": "LastName",
+                "type": "text"
+            }
+        ]
+    },
+    "minVersion": "0.8.0",
+    "services": {
+        "{ServiceName}": {
+            "image": "docker.io/bitnami/ghost:5",
+            "container_name": "{ServiceName}",
+            "hostname": "{ServiceName}",
+            "environment": [
+                "GHOST_USERNAME={Context.GHOST_USERNAME}",
+                "GHOST_PASSWORD={Context.GHOST_PASSWORD}",
+                "GHOST_EMAIL={Context.GHOST_EMAIL}",
+                "GHOST_HOST={Context.GHOST_HOST}",
+                "GHOST_BLOG_TITLE={Context.GHOST_BLOG_TITLE}",
+                "GHOST_DATABASE_HOST={ServiceName}-db",
+                "GHOST_DATABASE_PORT_NUMBER=3306",
+                "GHOST_DATABASE_USER=Ghost",
+                "GHOST_DATABASE_PASSWORD={Passwords.2}",
+                "GHOST_DATABASE_NAME=Ghost"
+            ],
+            "networks": {
+                "{ServiceName}": {}
+            },
+            "labels": {
+                "cosmos-persistent-env": "GHOST_USERNAME, GHOST_PASSWORD, GHOST_EMAIL, GHOST_HOST, GHOST_BLOG_TITLE, GHOST_DATABASE_HOST, GHOST_DATABASE_PORT_NUMBER, GHOST_DATABASE_USER, GHOST_DATABASE_PASSWORD",
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://comos.manhtuong.net/servapps/Ghost/icon.png"
+            },
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:2368",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+
+        },
+        "{ServiceName}-db": {
+            "image": "docker.io/bitnami/mysql:8.0",
+            "container_name": "{ServiceName}-db",
+            "hostname": "{ServiceName}-db",
+            "restart": "unless-stopped",
+            "networks": {
+                "{ServiceName}": {}
+            },
+            "volumes": [{
+                "source": "{ServiceName}-db",
+                "target": "/bitnami/mysql",
+                "type": "volume"
+            }],
+            "environment": [
+                "MYSQL_ROOT_PASSWORD={Passwords.3}",
+                "MYSQL_DATABASE=Ghost",
+                "MYSQL_USER=Ghost",
+                "MYSQL_PASSWORD={Passwords.2}"
+            ],
+            "labels": {
+                "cosmos-persistent-env": "MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD"
+            }
+        }
+    },
+    "networks": {
+        "{ServiceName}": {}
+    }
+}

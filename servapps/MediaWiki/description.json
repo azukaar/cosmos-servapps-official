@@ -1,0 +1,9 @@
+{
+    "name": "MediaWiki",
+    "longDescription": "<p>MediaWiki is free and open-source wiki software originally developed by Magnus Manske for use on Wikipedia on January 25, 2002 and further improved by Lee Daniel Crocker, after which it has been coordinated by the Wikimedia Foundation.</p>",
+    "description": "The MediaWiki software is used by tens of thousands of websites and thousands of companies and organisations. It powers Wikipedia and also this website. MediaWiki helps you collect and organise knowledge and make it available to people.",
+    "tags": ["wiki", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/MediaWiki",
+    "supported_architectures": ["amd64", "arm64"]
+}
