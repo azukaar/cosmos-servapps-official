@@ -1,0 +1,59 @@
+{
+    "cosmos-installer": {
+        "form": [{
+                "name": "JENKINS_USERNAME",
+                "label": "What is your Username jenkins login?",
+                "initialValue": "tinyactive",
+                "type": "text"
+            },
+            {
+                "name": "JENKINS_PASSWORD",
+                "label": "What is your password jenkins login?",
+                "initialValue": "tinyactive",
+                "type": "password"
+            },
+            {
+                "name": "JENKINS_EMAIL",
+                "label": "What is your email jenkins login?",
+                "initialValue": "cosmo@tinyactive.net",
+                "type": "text"
+            }
+        ]
+    },
+    "minVersion": "0.9.0",
+    "services": {
+        "{ServiceName}": {
+            "image": "docker.io/bitnami/jenkins",
+            "container_name": "{ServiceName}",
+            "restart": "unless-stopped",
+            "environment": [
+                "JENKINS_PASSWORD={Context.JENKINS_PASSWORD}",
+                "JENKINS_USERNAME={Context.JENKINS_USERNAME}",
+                "JENKINS_EMAIL={Context.JENKINS_EMAIL}"
+            ],
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://comos.manhtuong.net/servapps/Jenkins/icon.png"
+            },
+            "volumes": [{
+                "source": "{ServiceName}-jenkins_data",
+                "target": "/bitnami/jenkins",
+                "type": "volume"
+            }],
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:8080",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+        }
+    }
+}
