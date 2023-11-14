@@ -1,0 +1,9 @@
+{
+  "name": "Baserow",
+  "longDescription": "<p>Create your own database without technical experience. Our user friendly no-code tool gives you the powers of a developer without leaving your browser.</p>",
+  "description": "Open source no-code database and Airtable alternative",
+  "tags": ["database", "no-code", "airtable"],
+  "repository": "https://gitlab.com/baserow/baserow",
+  "image": "https://hub.docker.com/r/baserow/baserow",
+  "supported_architectures": ["amd64", "arm64"]
+}
