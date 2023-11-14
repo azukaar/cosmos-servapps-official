@@ -1,0 +1,9 @@
+{
+    "name": "Dokuwiki",
+    "longDescription": "<p>DokuWiki is an open source wiki application licensed under GPLv2 and written in the PHP programming language. It works on plain text files and thus does not need a database. Its syntax is similar to the one used by MediaWiki. It is often recommended as a more lightweight, easier to customize alternative to MediaWiki.</p>",
+    "description": "DokuWiki. DokuWiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.",
+    "tags": ["wiki", "note", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/dokuwiki",
+    "supported_architectures": ["amd64", "arm64"]
+}

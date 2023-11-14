@@ -1,0 +1,81 @@
+{
+  "cosmos-installer": {},
+    "minVersion": "0.8.0",
+    "services": {
+      "{ServiceName}": {
+        "image": "monica",
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
+        "volumes": [
+          {
+            "source": "{ServiceName}-monica-data",
+            "target": "/var/www/html/storage",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "APP_KEY=base64:7ZCNatgavRKG9zh67rc2JP+PAUewZA5UABnMgpGSieA=",
+          "DB_PASSWORD={Passwords.1}",
+          "DB_HOST={ServiceName}-db",
+          "DB_PORT=3306",
+          "DB_USERNAME=monica",
+          "DB_DATABASE=monica",
+          "APP_TRUSTED_PROXIES=*",
+          "APP_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+          "APP_ENV=production"
+        ],
+        "networks": {
+            "{ServiceName}": {}
+          },
+          "labels": {
+            "cosmos-persistent-env": "DB_PASSWORD, DB_HOST, DB_PORT, DB_USERNAME",
+            "cosmos-force-network-secured": "true",
+            "cosmos-auto-update": "true",
+            "cosmos-icon": "https://comos.manhtuong.net/servapps/Monica/icon.png"
+          },
+        "routes": [{
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
+            "useHost": true,
+            "target": "http://{ServiceName}:80",
+            "mode": "SERVAPP",
+            "Timeout": 14400000,
+            "ThrottlePerMinute": 12000,
+            "BlockCommonBots": true,
+            "SmartShield": {
+                "Enabled": true
+            }
+        }]
+
+      },
+      "{ServiceName}-db": {
+        "image": "docker.io/bitnami/mariadb:11.1",
+        "container_name": "{ServiceName}-db",
+        "hostname": "{ServiceName}-db",
+        "restart": "unless-stopped",
+        "networks": {
+            "{ServiceName}": {}
+          },
+        "volumes": [
+          {
+            "source": "{ServiceName}-db",
+            "target": "/bitnami/mariadb",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "MARIADB_DATABASE=monica",
+          "MARIADB_USER=monica",
+          "MARIADB_PASSWORD={Passwords.1}",
+          "MARIADB_ROOT_PASSWORD={Passwords.2}"
+        ],
+        "labels": {
+          "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD",
+          "cosmos-force-network-secured": "true"
+        }
+      }
+    },
+    "networks": {
+        "{ServiceName}": {}
+      }
+  }

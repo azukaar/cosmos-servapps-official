@@ -1,0 +1,9 @@
+{
+    "name": "Monica",
+    "longDescription": "<p>Can you remember the names of the children of all your friends? Can you remember the wedding anniversary of your brother? Can you tell the last time you called your grand mother and what you talked about? Monica lets you quickly and easily log all those information so you can be a better friend, family member or spouse.</p>",
+    "description": "Monica is a great open source personal relationship management system to organize the interactions with your loved ones..",
+    "tags": ["crm", "self-hosted"],
+    "repository": "https://github.com/docker-library/docs/tree/master/monica/",
+    "image": "https://hub.docker.com/_/monica",
+    "supported_architectures": ["amd64", "arm64"]
+}

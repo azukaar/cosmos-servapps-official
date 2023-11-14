@@ -1,0 +1,9 @@
+{
+    "name": "Sonarqube",
+    "longDescription": "<p>SonarQube is an open-source platform developed by SonarSource for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs and code smells on 29 programming languages.</p>",
+    "description": "Empower development teams with a code quality, security and static analysis solution that deeply integrates into your enterprise environment.",
+    "tags": ["development", "repository management", "code collaboration", "issue tracking", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/Odoo",
+    "supported_architectures": ["amd64", "arm64"]
+}

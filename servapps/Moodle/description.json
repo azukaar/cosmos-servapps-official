@@ -1,0 +1,9 @@
+{
+    "name": "Moodle",
+    "longDescription": "<p>Moodle is a free and open-source learning management system written in PHP and distributed under the GNU General Public License. Moodle is used for blended learning, distance education, flipped classroom and other online learning projects in schools, universities, workplaces and other sectors..</p>",
+    "description": "Moodle is a Learning Platform or course management system (CMS) - a free Open Source software package designed to help educators create effective online.",
+    "tags": ["Learning", "lms", "Moodle LMS LMS", "Moodle LMS", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers",
+    "image": "https://hub.docker.com/r/bitnami/moodle",
+    "supported_architectures": ["amd64", "arm64"]
+}
