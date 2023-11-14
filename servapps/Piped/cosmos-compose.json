@@ -1,0 +1,168 @@
+{
+    "cosmos-installer": {
+        "post-install": [
+          {
+            "type": "warning",
+            "label": "You need to create a proper config file for the backend in the volume attached (It has to be in /var/lib/docker/volumes/{ServiceName}-backend/_data/config.properties). Don't forget to set the proper DB URL and PWD in it."
+          }
+        ]
+    },
+    "services": {
+        "{ServiceName}": {
+            "image": "1337kavin/piped-frontend:latest",
+            "restart": "unless-stopped",
+            "container_name": "{ServiceName}",
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png",
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+            },
+            "networks": {
+               "{ServiceName}-net": {}
+            },
+            "routes": [
+                {
+                    "name": "{ServiceName}",
+                    "description": "Expose {ServiceName} to the web",
+                    "useHost": true,
+                    "target": "http://{ServiceName}:80",
+                    "mode": "SERVAPP",
+                    "Timeout": 14400000,
+                    "ThrottlePerMinute": 12000,
+                    "BlockCommonBots": true,
+                    "SmartShield": {
+                        "Enabled": true
+                    }
+                }
+            ],
+            "environment": [
+                "POSTGRES_DB=piped",
+                "POSTGRES_USER=piped",
+                "POSTGRES_PASSWORD={Passwords.0}",
+                "DATABASE_HOST={ServiceName}-postgres",
+                "BACKEND_HOSTNAME={Hostnames.{StaticServiceName}-backend.{StaticServiceName}-backend.host}"
+            ]
+        },
+        "{ServiceName}-proxy": {
+            "image": "1337kavin/piped-proxy:latest",
+            "restart": "unless-stopped",
+            "volumes": [
+                {
+                    "source": "{ServiceName}-proxy",
+                    "target": "/app/socket",
+                    "type": "volume"
+                }
+            ],
+            "container_name": "{ServiceName}-proxy",
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+            },
+             "environment": [
+                "UDS=1",
+                "POSTGRES_DB=piped",
+                "POSTGRES_USER=piped",
+                "POSTGRES_PASSWORD={Passwords.0}",
+                "DATABASE_HOST={ServiceName}-postgres"
+            ],
+            "networks": {
+               "{ServiceName}-net": {}
+            },
+            "routes": [
+                {
+                    "name": "{ServiceName}-proxy",
+                    "description": "Expose {ServiceName}-proxy to the web",
+                    "useHost": true,
+                    "target": "http://{ServiceName}-proxy:8080",
+                    "mode": "SERVAPP",
+                    "Timeout": 14400000,
+                    "ThrottlePerMinute": 12000,
+                    "BlockCommonBots": true,
+                    "HideFromDashboard": true,
+                    "SmartShield": {
+                        "Enabled": true
+                    }
+                }
+            ]
+        },
+        "{ServiceName}-backend": {
+            "image": "1337kavin/piped:latest",
+            "restart": "unless-stopped",
+            "environment": [
+                "POSTGRES_DB=piped",
+                "DB_PORT=5432",
+                "POSTGRES_USER=piped",
+                "POSTGRES_PASSWORD={Passwords.0}",
+                "DATABASE_HOST={ServiceName}-postgres"
+            ],
+            "depends_on": [
+                "{ServiceName}-postgres"
+            ],
+            "volumes": [
+                {
+                    "source": "{ServiceName}-backend",
+                    "target": "/app",
+                    "type": "volume"
+                }
+            ],
+            "container_name": "{ServiceName}-backend",
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+            },
+            "networks": {
+               "{ServiceName}-net": {}
+            },
+            "routes": [
+                {
+                    "name": "{ServiceName}-backend",
+                    "description": "Expose {ServiceName}-backend to the web",
+                    "useHost": true,
+                    "target": "http://{ServiceName}-backend:8080",
+                    "mode": "SERVAPP",
+                    "Timeout": 14400000,
+                    "ThrottlePerMinute": 12000,
+                    "BlockCommonBots": true,
+                    "HideFromDashboard": true,
+                    "SmartShield": {
+                        "Enabled": true
+                    }
+                }
+            ]
+        },
+        "{ServiceName}-postgres": {
+            "image": "postgres:15",
+            "restart": "unless-stopped",
+            "hostname": "{ServiceName}-postgres",
+            "container_name": "{ServiceName}-postgres",
+            "labels": {
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true"
+            },
+            "networks": {
+               "{ServiceName}-net": {}
+            },
+            "volumes": [
+                {
+                    "source": "{ServiceName}-db",
+                    "target": "/var/lib/postgresql/data",
+                    "type": "volume"
+                }
+            ],
+            "environment": [
+                "POSTGRES_DB=piped",
+                "DB_PORT=5432",
+                "POSTGRES_USER=piped",
+                "POSTGRES_PASSWORD={Passwords.0}",
+                "DATABASE_HOST={ServiceName}-postgres"
+            ]
+        }
+    },
+    "networks": {
+       "{ServiceName}-net": {}
+    }
+}
