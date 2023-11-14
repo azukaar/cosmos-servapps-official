@@ -14,7 +14,6 @@
     "image": "https://hub.docker.com/r/rssbridge/rss-bridge",
     "supported_architectures": [
         "amd64",
-        "arm32v7",
-        "arm64v8"
+        "arm64"
     ]
 }
