@@ -15,7 +15,7 @@
       },
       { 
         "name": "useHwTranscoding",
-        "label": "Do you want to use HW Transcoding? (assumes intel chip for VAAPI encoder)",
+        "label": "Do you want to mount /dev/dri? (only if you know what you are doing)",
         "initialValue": false,
         "type": "checkbox"
       }
