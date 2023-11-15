@@ -5,6 +5,6 @@
     "tags": ["health", "erm", "insurance", "healthcare", "medical records"],
     "repository":"https://github.com/fastenhealth/fasten-onprem",
     "image":"ghcr.io/fastenhealth/fasten-onprem",
-    "supported_architectures": []
+    "supported_architectures": ["amd64", "arm64"]
 
 }

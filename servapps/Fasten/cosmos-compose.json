@@ -1,12 +1,7 @@
 {
     "cosmos-installer": {
         "form": [
-            {
-                "name":"dataPath",
-                "label":"",
-                "initialValue": "{DefaultDataPath}/fasten",
-                "type": "text"
-            }
+            
         ]
     },
     "minVersion": "0.8.0",
@@ -14,9 +9,9 @@
         "{ServiceName}": {
         "image": "ghcr.io/fastenhealth/fasten-onprem:main",
         "restart": "unless-stopped",
-        "ports": [
-            "9090:8080"
-        ],
+        "ports": 
+            " 9090:8080"
+        ,
         "container_name": "{ServiceName}",
         "labels": {
             "cosmos-force-network-secured": "true",
@@ -26,7 +21,7 @@
           "volumes": [
             {
               "source": "{ServiceName}",
-              "target": "/baserow/data",
+              "target": "/{ServiceName}/data",
               "type": "volume"
             }
         ],
@@ -35,7 +30,7 @@
               "name": "{ServiceName}",
               "description": "Expose {ServiceName} to the web",
               "useHost": true,
-              "target": "http://{ServiceName}:80",
+              "target": "http://{ServiceName}:8080",
               "mode": "SERVAPP",
               "Timeout": 14400000,
               "ThrottlePerMinute": 12000,
