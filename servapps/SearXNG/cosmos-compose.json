@@ -5,7 +5,7 @@
           "container_name": "{ServiceName}-redis",
           "hostname": "{ServiceName}-redis",
           "image": "redis:alpine",
-          "command": "redis-server --save \"\" --appendonly no",
+          "command": "redis-server --save "" --appendonly no",
           "networks": {
              "{ServiceName}-net": {}
           },
