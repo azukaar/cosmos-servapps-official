@@ -1,9 +1,5 @@
 {
-    "cosmos-installer": {
-        "form": [
-            
-        ]
-    },
+    "cosmos-installer": {},
     "minVersion": "0.8.0",
     "services": {
         "{ServiceName}": {
@@ -17,13 +13,13 @@
           },
           "volumes": [
             {
-                "source":"/config",
-                "target":"/opt/fasten/config",
-                "type":"bind"
+                "source": "/config",
+                "target": "/opt/fasten/config",
+                "type": "bind"
             },
             {
-              "source": "{ServiceName}-data",
-              "target": "/opt/fasten/db",
+              "source":"{ServiceName}-data",
+              "target":"/opt/fasten/db",
               "type": "volume"
             }
         ],
@@ -38,15 +34,11 @@
               "ThrottlePerMinute": 12000,
               "BlockCommonBots": true,
               "SmartShield": {
-                "Enabled": true
-              }
+                                "Enabled": true
+                             }
             }
-        ]
-
-
-
+                ]
         }
     }
-    
 
 }
