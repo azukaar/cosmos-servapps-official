@@ -1,0 +1,115 @@
+{
+    "cosmos-installer": {
+       "form": [
+          {
+             "name": "extensionPath",
+             "label": "What is the path to your extensions?",
+             "initialValue": "{DefaultDataPath}/app/extensions",
+             "type": "text"
+          }
+       ],
+       "post-install": [
+          {
+             "type": "warning",
+             "label": "You are going to need to copy environment variables for setup."
+          },
+          {
+             "type": "info",
+             "label": "MySQL Host and Name = {ServiceName}-mariadb\n || MySQL User = flarum\n || MySQL Password = {Passwords.0}\n || MySQL Prefix = flarum_\n"
+          }
+       ]
+    },
+    "services": {
+       "{ServiceName}": {
+          "image": "mondedie/flarum:stable",
+          "container_name": "{ServiceName}",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:8888",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "environment": [
+             "DEBUG=false",
+             "FORUM_URL= *URL",
+             "DB_HOST={ServiceName}-mariadb",
+             "DB_NAME={ServiceName}-mariadb",
+             "DB_USER=flarum",
+             "DB_PASS={Passwords.0}",
+             "DB_PREF=flarum_",
+             "DB_PORT=3306",
+             "FLARUM_ADMIN_USER=admin",
+             "FLARUM_ADMIN_PASS={Passwords.0}",
+             "FLARUM_ADMIN_MAIL=admin@domain.tld",
+             "FLARUM_TITLE=Test flarum"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-assets",
+                "target": "/flarum/app/public/assets",
+                "type": "volume"
+             },
+             {
+                "source": "{Context.extensionPath}",
+                "target": "/flarum/app/extensions",
+                "type": "bind"
+             },
+             {
+                "source": "{ServiceName}-logs",
+                "target": "/flarum/app/storage/logs",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Flarum/icon.png",
+             "cosmos-persistent-env": "DEBUG, FORUM_URL, DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PREF, DB_PORT, FLARUM_ADMIN_USER, FLARUM_ADMIN_PASS, FLARUM_ADMIN_MAIL, FLARUM_TITLE"
+          },
+          "depends_on": [
+             "{ServiceName}-mariadb"
+          ]
+       },
+       "{ServiceName}-mariadb": {
+          "hostname": "{ServiceName}-mariadb",
+          "image": "mariadb:10.5",
+          "container_name": "{ServiceName}-mariadb",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "environment": [
+             "MYSQL_ROOT_PASSWORD={Passwords.0}",
+             "MYSQL_DATABASE={ServiceName}-mariadb",
+             "MYSQL_USER=flarum",
+             "MYSQL_PASSWORD={Passwords.0}"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-mariadb_data",
+                "target": "/var/lib/mysql",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-persistent-env": "MYSQL_PASSWORD, MYSQL_USER, MYSQL_DATABASE, MYSQL_ROOT_PASSWORD"
+          }
+       }
+    },
+    "networks": {
+       "{ServiceName}-net": {}
+    }
+ }
