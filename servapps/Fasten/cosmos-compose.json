@@ -9,9 +9,6 @@
         "{ServiceName}": {
         "image": "ghcr.io/fastenhealth/fasten-onprem:main",
         "restart": "unless-stopped",
-        "ports": 
-            " 9090:8080"
-        ,
         "container_name": "{ServiceName}",
         "labels": {
             "cosmos-force-network-secured": "true",
@@ -20,8 +17,13 @@
           },
           "volumes": [
             {
-              "source": "{ServiceName}",
-              "target": "/{ServiceName}/data",
+                "source":"/config",
+                "target":"/opt/fasten/config",
+                "type":"bind"
+            },
+            {
+              "source": "{ServiceName}-data",
+              "target": "/opt/fasten/db",
               "type": "volume"
             }
         ],
