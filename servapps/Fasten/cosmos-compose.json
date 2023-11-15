@@ -13,8 +13,8 @@
           },
           "volumes": [
             {
-                "source": "/config",
-                "target": "/opt/fasten/config",
+                "source": "/config.yml",
+                "target": "/opt/fasten/config/config.yml",
                 "type": "bind"
             },
             {
