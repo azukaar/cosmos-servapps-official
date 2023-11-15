@@ -12,6 +12,12 @@
         "label": "What is the path to your series? (leave empty to not mount anything)",
         "initialValue": "{DefaultDataPath}/series",
         "type": "text"
+      },
+      { 
+        "name": "useHwTranscoding",
+        "label": "Do you want to mount /dev/dri? (only if you know what you are doing)",
+        "initialValue": false,
+        "type": "checkbox"
       }
     ]
   },
@@ -33,6 +39,11 @@
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Emby/icon.png"
       },
+      {if Context.useHwTranscoding}
+      "devices": [
+        "/dev/dri:/dev/dri"
+      ],
+      {/if},
       "volumes": [
         {
           "source": "{ServiceName}-config",

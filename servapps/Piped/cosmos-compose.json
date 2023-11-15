@@ -17,7 +17,6 @@
                 "cosmos-auto-update": "true",
                 "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png",
                 "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
-                
             },
             "networks": {
                "{ServiceName}-net": {}
@@ -41,7 +40,8 @@
                 "POSTGRES_DB=piped",
                 "POSTGRES_USER=piped",
                 "POSTGRES_PASSWORD={Passwords.0}",
-                "DATABASE_HOST={ServiceName}-postgres"
+                "DATABASE_HOST={ServiceName}-postgres",
+                "BACKEND_HOSTNAME={Hostnames.{StaticServiceName}-backend.{StaticServiceName}-backend.host}"
             ]
         },
         "{ServiceName}-proxy": {

@@ -1,0 +1,19 @@
+{
+    "name": "RSS-Bridge",
+    "longDescription": "<p>The RSS feed for websites missing it.</p><p>With RSS-Bridge, you can create RSS Feeds for websites that usually don't provide Feeds. You can either use one of the many already existing bridges or create your own.</p>",
+    "description": "With RSS-Bridge, you can host your own Feed creator for websites that do not provide feeds.",
+    "tags": [
+        "self-hosted services",
+        "rss",
+        "web interface",
+        "open-source",
+        "Docker",
+        "cross-platform"
+    ],
+    "repository": "https://github.com/RSS-Bridge/rss-bridge",
+    "image": "https://hub.docker.com/r/rssbridge/rss-bridge",
+    "supported_architectures": [
+        "amd64",
+        "arm64"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Jenkins",
+    "longDescription": "<p>Jenkins is typically run as a standalone application in its own process. The Jenkins WAR file bundles Winstone, a Jetty servlet container wrapper, and can be started on any operating system or platform with a version of Java supported by Jenkins.</p>",
+    "description": "Jenkins an open source automation server which enables developers around the world to reliably build, test, and deploy their software.",
+    "tags": ["development", "git", "repository management", "code collaboration", "issue tracking", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/jenkins",
+    "supported_architectures": ["amd64", "arm64"]
+}

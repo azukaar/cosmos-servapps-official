@@ -1,0 +1,9 @@
+{
+    "name": "Tautulli",
+    "longDescription": "<p>Tautulli is a 3rd party application that you can run alongside your Plex Media Server to monitor activity and track various statistics. Most importantly, these statistics include what has been watched, who watched it, when and where they watched it, and how it was watched.</p>",
+    "description": "Tautulli A Python based monitoring and tracking tool for Plex Media Server.",
+    "tags": ["media", "movies", "streaming", "tv", "music", "photos", "videos", "audiobooks", "podcasts", "dlna", "chromecast", "android", "ios", "roku", "firetv", "smarttv", "web", "browser", "kodi", "emby", "plex", "media browser", "media server", "media streaming", "media player", "media center", "media management", "media organizer", "media collection", "media library", "media manager", "media sharing", "media transcoding", "media casting", "media casting", "media casting"],
+    "repository": "https://github.com/Tautulli/Tautulli/",
+    "image": "https://hub.docker.com/r/linuxserver/tautulli",
+    "supported_architectures": ["amd64", "arm64"]
+}

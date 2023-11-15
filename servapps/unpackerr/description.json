@@ -1,0 +1,9 @@
+{
+  "name": "Unpackerr",
+  "description": "Unpackerr extracts your Sonarr/Radarr/Lidarr torrent files.",
+  "longDescription": "<p>Unpackerr extracts your Sonarr/Radarr/Lidarr torrent files.</p>",
+  "tags": ["media", "server", "tv", "videos", "media management", "download", "zip", "unpack", "rar"],
+  "repository": "https://github.com/hotio/unpackerr/pkgs/container/unpackerr",
+  "image": "https://github.com/hotio/unpackerr/pkgs/container/unpackerr",
+  "supported_architectures": ["amd64", "arm64"]
+}

@@ -1,0 +1,102 @@
+{
+    "cosmos-installer": {
+        "form": [{
+                "name": "SUITECRM_USERNAME",
+                "label": "What Suitecrm username admin do you want to use?",
+                "initialValue": "user",
+                "type": "text"
+            },
+            {
+                "name": "SUITECRM_PASSWORD",
+                "label": "What Suitecrm password admin does it use?",
+                "initialValue": "password",
+                "type": "password"
+            },
+            {
+                "name": "SUITECRM_EMAIL",
+                "label": "What is your Suitecrm email admin?",
+                "initialValue": "user@example.com",
+                "type": "text"
+            },
+            {
+                "name": "SUITECRM_HOST",
+                "label": "What is your Suitecrm domain?",
+                "initialValue": "example.com",
+                "type": "text"
+            }
+        ]
+    },
+    "minVersion": "0.8.0",
+    "services": {
+        "{ServiceName}": {
+            "image": "bitnami/suitecrm",
+            "container_name": "{ServiceName}",
+            "hostname": "{ServiceName}",
+            "volumes": [{
+                "source": "{ServiceName}-suitecrm",
+                "target": "/bitnami/suitecrm",
+                "type": "volume"
+            }],
+            "environment": [
+                "SUITECRM_DATABASE_PASSWORD={Passwords.1}",
+                "SUITECRM_DATABASE_HOST={ServiceName}-db",
+                "SUITECRM_DATABASE_PORT_NUMBER=3306",
+                "SUITECRM_DATABASE_USER=bn_suitecrm",
+                "SUITECRM_DATABASE_NAME=bitnami_suitecrm",
+                "SUITECRM_USERNAME={Context.SUITECRM_USERNAME}",
+                "SUITECRM_PASSWORD={Context.SUITECRM_PASSWORD}",
+                "SUITECRM_EMAIL={Context.SUITECRM_EMAIL}",
+                "SUITECRM_HOST={Context.SUITECRM_HOST}"
+            ],
+            "networks": {
+                "{ServiceName}": {}
+            },
+            "labels": {
+                "cosmos-persistent-env": "SUITECRM_DATABASE_PASSWORD, SUITECRM_DATABASE_HOST, SUITECRM_DATABASE_PORT_NUMBER, SUITECRM_DATABASE_USER, SUITECRM_DATABASE_NAME",
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://comos.manhtuong.net/servapps/Suitecrm/icon.png"
+            },
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:8080",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+
+        },
+        "{ServiceName}-db": {
+            "image": "docker.io/bitnami/mariadb:11.1",
+            "container_name": "{ServiceName}-db",
+            "hostname": "{ServiceName}-db",
+            "restart": "unless-stopped",
+            "networks": {
+                "{ServiceName}": {}
+            },
+            "volumes": [{
+                "source": "{ServiceName}-db",
+                "target": "/bitnami/mariadb",
+                "type": "volume"
+            }],
+            "environment": [
+                "MARIADB_DATABASE=bitnami_suitecrm",
+                "MARIADB_USER=bn_suitecrm",
+                "MARIADB_PASSWORD={Passwords.1}",
+                "MARIADB_ROOT_PASSWORD={Passwords.2}"
+            ],
+            "labels": {
+                "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD"
+            }
+        }
+    },
+    "networks": {
+        "{ServiceName}": {}
+    }
+}
