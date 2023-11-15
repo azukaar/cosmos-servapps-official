@@ -1,0 +1,39 @@
+{
+    "cosmos-installer": {},
+    "minVersion": "0.9.0",
+    "services": {
+        "{ServiceName}": {
+            "image": "actualbudget/actual-server:latest",
+            "container_name": "{ServiceName}",
+            "restart": "unless-stopped",
+            "environment": [
+                "ACTUAL_PORT=8080",
+                "ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB=20",
+                "ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB=50"
+            ],
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://comos.manhtuong.net/servapps/Actual-server/icon.png"
+            },
+            "volumes": [{
+                "source": "{ServiceName}-actual-data",
+                "target": "/data",
+                "type": "volume"
+            }],
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:8080",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+        }
+    }
+}
