@@ -1,7 +1,7 @@
 {
-    "name": "Searx",
-    "longDescription": "Searx is a privacy-respecting, open-source metasearch engine that aggregates results from various search engines while respecting user privacy. It allows users to search without being tracked and provides customizable search preferences. Searx can be self-hosted or used on public instances, giving users control over their search experience.",
-    "description": "Searx is an open-source metasearch engine focused on privacy and user control.",
+    "name": "SearXNG",
+    "longDescription": "SearXNG is a privacy-respecting, open-source metasearch engine that aggregates results from various search engines while respecting user privacy. It allows users to search without being tracked and provides customizable search preferences. SearXNG can be self-hosted or used on public instances, giving users control over their search experience.",
+    "description": "SearXNG is an open-source metasearch engine focused on privacy and user control.",
     "tags": ["search engine", "privacy", "open-source", "metasearch"],
     "repository": "https://github.com/searxng/searxng",
     "image": "https://hub.docker.com/r/searxng/searxng",
