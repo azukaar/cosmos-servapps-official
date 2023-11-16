@@ -1,0 +1,85 @@
+{
+  "cosmos-installer": {},
+  "minVersion": "0.9.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "docker.n8n.io/n8nio/n8n",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "DB_TYPE=postgresdb",
+        "DB_POSTGRESDB_HOST={ServiceName}-postgres",
+        "DB_POSTGRESDB_PORT=5432",
+        "DB_POSTGRESDB_DATABASE=n8n",
+        "DB_POSTGRESDB_USER=n8n",
+        "DB_POSTGRESDB_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "DB_POSTGRESDB_PORT, DB_POSTGRESDB_PORT, DB_POSTGRESDB_DATABASE, DB_POSTGRESDB_USER, DB_POSTGRESDB_PASSWORD",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://comos.manhtuong.net/servapps/N8n/icon.png"
+      },
+      "networks": {
+        "{ServiceName}-postgres": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-n8n_storage",
+          "target": "/home/node/.n8n",
+          "type": "volume"
+        }
+    ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5678",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    },
+    
+    "{ServiceName}-postgres": {
+      "image": "postgres:15-alpine",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "networks": {
+        "{ServiceName}-postgres": {}
+      },
+      "stop_grace_period": 5,
+      "security_opt": [
+        "seccomp:unconfined",
+        "apparmor:unconfined"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ],
+      "labels": {
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+      },
+      "environment": [
+        "POSTGRES_DB=n8n",
+        "POSTGRES_USER=n8n",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ]
+    }
+  },
+
+  "networks": {
+    "{ServiceName}-postgres": {
+    }
+  }
+}
