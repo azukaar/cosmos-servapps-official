@@ -1,0 +1,85 @@
+{
+    "cosmos-installer": null,
+    "services": {
+       "{ServiceName}-redis": {
+          "container_name": "{ServiceName}-redis",
+          "hostname": "{ServiceName}-redis",
+          "image": "redis:alpine",
+          "command": "redis-server --save \"\" --appendonly no",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "tmpfs": [
+             {
+                "source": "{ServiceName}-redistemp",
+                "target": "/var/lib/redis",
+                "type": "volume"
+             }
+          ],
+          "cap_drop": [
+             "ALL"
+          ],
+          "cap_add": [
+             "SETGID",
+             "SETUID",
+             "DAC_OVERRIDE"
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true"
+          }
+       },
+       "{ServiceName}": {
+          "container_name": "{ServiceName}",
+          "image": "searxng/searxng:latest",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "volumes": [
+             {
+                "source": "{ServiceName}-data",
+                "target": "/etc/searxng",
+                "type": "volume"
+             }
+          ],
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:8080",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "cap_drop": [
+             "ALL"
+          ],
+          "cap_add": [
+             "CHOWN",
+             "SETGID",
+             "SETUID"
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/SearXNG/icon.png"
+          },
+          "logging": {
+             "driver": "json-file",
+             "options": {
+                "max-size": "1m",
+                "max-file": "1"
+             }
+          }
+       }
+    },
+    "networks": {
+       "{ServiceName}-net": {}
+    }
+ }
