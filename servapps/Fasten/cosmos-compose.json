@@ -1,44 +1,43 @@
 {
-    "cosmos-installer": {},
-    "minVersion": "0.8.0",
-    "services": {
-        "{ServiceName}": {
-        "image": "ghcr.io/fastenhealth/fasten-onprem:main",
-        "restart": "unless-stopped",
-        "container_name": "{ServiceName}",
-        "labels": {
-            "cosmos-force-network-secured": "true",
-            "cosmos-auto-update": "true",
-            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Fasten/icon.png"
-          },
-          "volumes": [
-            {
-                "source": "/config.yml",
-                "target": "/opt/fasten/config/config.yml",
-                "type": "bind"
-            },
-            {
-              "source":"{ServiceName}-data",
-              "target":"/opt/fasten/db",
-              "type": "volume"
-            }
-        ],
-        "routes": [
-            {
-              "name": "{ServiceName}",
-              "description": "Expose {ServiceName} to the web",
-              "useHost": true,
-              "target": "http://{ServiceName}:8080",
-              "mode": "SERVAPP",
-              "Timeout": 14400000,
-              "ThrottlePerMinute": 12000,
-              "BlockCommonBots": true,
-              "SmartShield": {
-                                "Enabled": true
-                             }
-            }
-                ]
+  "cosmos-installer": {},
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/fastenhealth/fasten-onprem:main",
+      "restart": "unless-stopped",
+      "container_name": "{ServiceName}",
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Fasten/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/opt/fasten/config/",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-data",
+          "target": "/opt/fasten/db",
+          "type": "volume"
         }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
     }
-
+  }
 }

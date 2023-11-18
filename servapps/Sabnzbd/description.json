@@ -1,0 +1,9 @@
+{
+  "name": "SABnzbd",
+  "longDescription": "<p>SABnzbd is an open-source binary newsreader and Usenet downloader. It simplifies the process of downloading from Usenet by automating the majority of tasks involved. SABnzbd is renowned for its ease of use, high-speed downloading capabilities, and extensive customization options.</p><p>With features like web-interface accessibility, API support, automatic post-processing, and RSS feed integration, SABnzbd stands out as a versatile tool for Usenet downloading. It is optimized to run efficiently on various hardware, including low-powered devices like the Raspberry Pi.</p><p>SABnzbd is cross-platform, available on Windows, MacOS, Linux, and other operating systems, making it accessible to a wide range of users. Embrace the power and simplicity of SABnzbd for your Usenet downloading needs.</p>",
+  "description": "SABnzbd is an advanced Usenet downloader that automates the process of downloading and managing files from Usenet. It features a user-friendly web interface, API support, automatic post-processing, and RSS feed integration. Optimized for performance, SABnzbd runs smoothly on different platforms, including low-powered devices. Experience efficient Usenet downloading with SABnzbd!",
+  "tags": ["usenet", "downloader", "newsreader", "sabnzbd", "windows", "linux", "macos", "raspberry pi", "performance", "rss feed", "post-processing", "open-source"],
+  "repository": "https://github.com/sabnzbd/sabnzbd",
+  "image": "https://hub.docker.com/r/linuxserver/sabnzbd",
+  "supported_architectures": ["amd64", "arm64"]
+}
