@@ -1,7 +1,7 @@
 {
-    "name": "UniFi Controller",
-    "longDescription": "UniFi Controller is a management software designed for Ubiquiti Networks hardware, providing centralized management of Ubiquiti devices. It allows users to configure, monitor, and manage networks of Ubiquiti devices, including access points, switches, and security gateways. The Controller offers features like analytics, guest portal, firmware updates, and network mapping.",
-    "description": "UniFi Controller is a management software for Ubiquiti Networks hardware, enabling centralized device management.",
+    "name": "Unifi Controller",
+    "longDescription": "Unifi Controller is a management software designed for Ubiquiti Networks hardware, providing centralized management of Ubiquiti devices. It allows users to configure, monitor, and manage networks of Ubiquiti devices, including access points, switches, and security gateways. The Controller offers features like analytics, guest portal, firmware updates, and network mapping.",
+    "description": "Unifi Controller is a management software for Ubiquiti Networks hardware, enabling centralized device management.",
     "tags": ["network management", "Ubiquiti Networks", "hardware", "management software"],
     "repository": "https://github.com/jacobalberty/unifi-docker",
     "image": "https://hub.docker.com/r/jacobalberty/unifi",
