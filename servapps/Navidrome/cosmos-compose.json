@@ -11,7 +11,7 @@
   },
   "services": {
     "{ServiceName}": {
-      "image": "deluan/navidrome:latest",
+      "image": "ghcr.io/navidrome/navidrome:latest",
       "container_name": "{ServiceName}",
       "UID": 1000,
       "GID": 1000,
