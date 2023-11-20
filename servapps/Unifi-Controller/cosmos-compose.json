@@ -21,8 +21,14 @@
           "container_name": "{ServiceName}",
           "restart": "unless-stopped",
           "ports": [
+             "3478:3478/udp",
+             "6789:6789",
+             "8443:8443",
              "8080:8080",
-             "3478:3478/udp"
+             "8880:8880",
+             "8843:8843",
+             "10001:10001/udp"
+              
           ],
           "environment": [
              "TZ=\"{Context.timezone}\""
