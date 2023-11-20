@@ -27,12 +27,12 @@
              },
              {
                 "source": "{ServiceName}-log",
-                "target": "/unify/log",
+                "target": "/unifi/log",
                 "type": "volume"
              },
              {
                 "source": "{ServiceName}-data",
-                "target": "/unify/data",
+                "target": "/unifi/data",
                 "type": "volume"
              }
           ],
