@@ -26,7 +26,7 @@
                 "type": "volume"
              }
           ],
-          "user": "1000:1000",
+          "user": "unify",
           "init": true,
           "routes": [
              {
@@ -45,7 +45,7 @@
              }
           ],
           "labels": {
-             "cosmos-force-network-secured": "true",
+             "cosmos-force-network-secured": "false",
              "cosmos-auto-update": "true",
              "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Unify-Controller/icon.png",
              "cosmos-persistent-env": "TZ"
