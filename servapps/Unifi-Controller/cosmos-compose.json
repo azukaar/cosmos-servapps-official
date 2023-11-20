@@ -7,12 +7,6 @@
              "initialValue": "Etc/UTC",
              "type": "text"
           }
-       ],
-       "post-install": [
-          {
-             "type": "warning",
-             "label": "You will need to open 3478/udp,6789,8443,8080,8880,8843,10001/udp on your router for devices."
-          }
        ]
     },
     "services": {
