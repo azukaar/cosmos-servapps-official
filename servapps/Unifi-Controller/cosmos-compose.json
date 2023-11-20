@@ -1,13 +1,5 @@
 {
-    "cosmos-installer": {
-       "form": [
-          {
-             "name": "timezone",
-             "label": "What is your timezone in TZ format?",
-             "initialValue": "Etc/UTC",
-             "type": "text"
-          }
-       ]
+    "cosmos-installer": {       
     },
     "services": {
        "{ServiceName}": {
@@ -25,7 +17,7 @@
               
           ],
           "environment": [
-             "TZ=\"{Context.timezone}\""
+             "TZ=Auto"
           ],
           "volumes": [
              {
