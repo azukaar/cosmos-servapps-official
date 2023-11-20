@@ -24,6 +24,16 @@
                 "source": "{ServiceName}-unifi",
                 "target": "/unifi",
                 "type": "volume"
+             },
+             {
+                "source": "{ServiceName}-log",
+                "target": "/unify/log",
+                "type": "volume"
+             },
+             {
+                "source": "{ServiceName}-data",
+                "target": "/unify/data",
+                "type": "volume"
              }
           ],
           "user": "1000:1000",
