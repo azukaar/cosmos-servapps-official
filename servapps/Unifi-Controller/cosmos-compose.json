@@ -21,8 +21,8 @@
           ],
           "volumes": [
              {
-                "source": "{ServiceName}-unify",
-                "target": "/unify",
+                "source": "{ServiceName}-unifi",
+                "target": "/unifi",
                 "type": "volume"
              }
           ],
