@@ -1,0 +1,73 @@
+{
+    "cosmos-installer": {
+       "form": [
+          {
+             "name": "timezone",
+             "label": "What is your timezone in TZ format?",
+             "initialValue": "Etc/UTC",
+             "type": "text"
+          }
+       ],
+       "post-install": [
+          {
+             "type": "warning",
+             "label": "You will need to open 8080 and 3478/udp on your router for devices."
+          }
+       ]
+    },
+    "services": {
+       "{ServiceName}": {
+          "image": "jacobalberty/unifi",
+          "container_name": "{ServiceName}",
+          "restart": "unless-stopped",
+          "ports": [
+             "8080:8080",
+             "3478:3478/udp"
+          ],
+          "environment": [
+             "TZ=\"{Context.timezone}\""
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-unify",
+                "target": "/unify",
+                "type": "volume"
+             },
+             {
+                "source": "{ServiceName}-log",
+                "target": "/unify/log",
+                "type": "volume"
+             },
+             {
+                "source": "{ServiceName}-data",
+                "target": "/unify/data",
+                "type": "volume"
+             }
+          ],
+          "user": "unifi",
+          "init": true,
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "https://{ServiceName}:8443",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "AcceptInsecureHTTPSTarget": true,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Unify-Controller/icon.png",
+             "cosmos-persistent-env": "TZ"
+          }
+       }
+    }
+ }
