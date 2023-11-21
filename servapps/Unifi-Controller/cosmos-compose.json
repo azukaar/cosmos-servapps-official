@@ -1,53 +1,57 @@
 {
     "cosmos-installer": {
-       "post-install": [
-          {
-             "type": "warning",
-             "label": "Read the GitHub Page for info about adopting devices and other stuff: https://github.com/jacobalberty/unifi-docker/#adopting-access-points-and-unifi-devices."
-          }
+        "post-install": [
+            {
+                "type": "warning",
+                "label": "Read the GitHub Page for info about adopting devices and other stuff: https://github.com/jacobalberty/unifi-docker/#adopting-access-points-and-unifi-devices."
+            }
         ]
     },
+    "networks": {
+        "macvlan_network": {
+            "driver": "macvlan",
+            "driver_opts": {
+                "parent": "eth0"  // Replace "eth0" with your host's interface
+            },
+            "ipam_config": [
+                {
+                    "subnet": "192.168.1.0/24",  // Specify your desired subnet
+                    "gateway": "192.168.1.1"    // Specify the gateway IP
+                }
+            ]
+        }
+    },
     "services": {
-       "{ServiceName}": {
-          "image": "jacobalberty/unifi",
-          "container_name": "{ServiceName}",
-          "restart": "unless-stopped",
-          "ports": [
-             "3478:3478/udp",
-             "6789:6789",
-             "8443:8443",
-             "8080:8080",
-             "8880:8880",
-             "8843:8843",
-             "10001:10001/udp"
-              
-          ],
-          "environment": [
-             "TZ=auto"
-          ],
-          "volumes": [
-             {
-                "source": "{ServiceName}-unifi",
-                "target": "/unifi",
-                "type": "volume"
-             }
-          ],
-           "networks": {
+        "{ServiceName}": {
+            "image": "jacobalberty/unifi",
+            "container_name": "{ServiceName}",
+            "restart": "unless-stopped",
+            "ports": [
+                "3478:3478/udp",
+                "6789:6789",
+                "8443:8443",
+                "8080:8080",
+                "8880:8880",
+                "8843:8843",
+                "10001:10001/udp"
+            ],
+            "environment": [
+                "TZ=auto"
+            ],
+            "volumes": [
+                {
+                    "source": "{ServiceName}-unifi",
+                    "target": "/unifi",
+                    "type": "volume"
+                }
+            ],
+            "user": "unifi",
+            "init": true,
+            "networks": {
                 "macvlan_network": {
-                    "driver": "macvlan",
-                    "driver_opts": {
-                        "parent": "eth0"  
-                    },
-                    "ipam_config": [
-                        {
-                            "subnet": "192.168.50.0/24",  
-                            "gateway": "192.168.50.1"    
-                        }
-                    ]
+                    "ipv4_address": "192.168.1.100" // Assign a specific IP within the subnet
                 }
             },
-          "user": "unifi",
-          "init": true,
           "routes": [
              {
                 "name": "{ServiceName}",
