@@ -1,0 +1,9 @@
+{
+  "name": "ESPHome",
+  "longDescription": "<p>ESPhome is a platform for creating custom firmware for ESP8266 and ESP32 chips using YAML configuration files. It turns these definitions into C++ firmware for easy integration of various smart devices.</p><p>ESPhome is seamlessly integrated with Home Assistant, an open-source home automation platform. With this integration, devices configured via ESPhome are automatically discovered and added to Home Assistant setups.</p><p>The platform boasts a robust community and extensive documentation. This, along with features like Over-The-Air (OTA) updates, makes ESPhome a favorite among smart home enthusiasts.</p>",
+  "description": "ESPHome is a system to control your microcontrollers by simple yet powerful configuration files and control them remotely through Home Automation systems.",
+  "tags": ["development", "open-source", "cross-platform", "ESPHome", "Home Assistant","windows", "linux", "macos", "docker","automation"],
+  "repository": "https://github.com/esphome/esphome",
+  "image": "https://github.com/esphome/esphome/pkgs/container/esphome",
+  "supported_architectures": ["amd64", "arm64"]
+}

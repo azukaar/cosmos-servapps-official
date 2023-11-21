@@ -1,0 +1,9 @@
+{
+  "name": "Firefox",
+  "longDescription": "<p>Firefox, developed by Mozilla Foundation, is a leading open-source web browser known for its emphasis on privacy, security, and speed. It offers a user-friendly experience with extensive customization options, including a vast library of add-ons and themes.</p><p>Firefox is designed with advanced security features like Enhanced Tracking Protection to automatically block many trackers, safeguarding user data. Its efficient performance and developer-friendly tools make it a top choice for both general users and web developers. Firefox Sync allows seamless access to bookmarks, history, and tabs across devices.</p><p>Available on multiple platforms, including Windows, MacOS, Linux, Android, and iOS, Firefox is committed to empowering users with a fast, secure, and private browsing experience.</p>",
+  "description": "Firefox is a feature-rich web browser focusing on user privacy and security. It provides a customizable user interface, a wide range of extensions, sync capabilities, and efficient performance. Firefox is designed for various platforms and is dedicated to promoting an open and accessible internet.",
+  "tags": ["web browser", "privacy", "security", "mozilla", "firefox", "open source", "extensions", "cross-platform", "sync", "user-friendly", "performance", "developer tools"],
+  "repository": "https://github.com/mozilla/firefox",
+  "image": "https://hub.docker.com/r/linuxserver/firefox",
+  "supported_architectures": ["amd64", "arm64"]
+}

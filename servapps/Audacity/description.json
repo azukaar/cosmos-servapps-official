@@ -1,0 +1,9 @@
+{
+  "name": "Audacity",
+  "longDescription": "<p>Audacity is a renowned open-source audio editing and recording software. Known for its versatility and ease of use, it is widely used by professionals and hobbyists alike for a range of audio editing tasks. Audacity supports multi-track editing, a host of audio effects, and extensive file format compatibility.</p><p>Its intuitive user interface allows users to easily record live audio, convert tapes and records into digital recordings or CDs, edit sound files, and more. Audacity also features powerful analysis tools and can be extended with a variety of plug-ins.</p><p>Available on multiple platforms including Windows, MacOS, and Linux, Audacity is the go-to solution for anyone looking to perform high-quality audio editing and recording without the need for expensive software.</p>",
+  "description": "Audacity is a free, open-source, cross-platform audio software for multi-track editing and recording. It offers a comprehensive suite of tools for editing audio, adding effects, and supporting various file formats. With an intuitive interface, it is ideal for both beginners and professionals looking to produce high-quality audio on Windows, MacOS, and Linux.",
+  "tags": ["audio editing", "recording", "open-source", "audacity", "windows", "linux", "macos", "multi-track", "sound effects", "file conversion", "plug-ins"],
+  "repository": "https://github.com/audacity/audacity",
+  "image": "https://hub.docker.com/r/linuxserver/audacity",
+  "supported_architectures": ["amd64", "arm64"]
+}

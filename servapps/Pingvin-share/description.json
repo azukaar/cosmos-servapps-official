@@ -1,0 +1,9 @@
+{
+  "name": "Pingvin-share",
+  "longDescription": "<p>Pingvin Share is self-hosted file sharing platform and an alternative for WeTransfer.<br /><br />  ## ✨ Features<br />  <br />  - Share files using a link<br />  - Unlimited file size (restricted only by disk space)<br />  - Set an expiration date for shares<br />  - Secure shares with visitor limits and passwords<br />  - Email recipients<br />  - Integration with ClamAV for security scans</p>",
+  "description": "file sharing platform that combines lightness and beauty, perfect for seamless and efficient file sharing",
+  "tags": ["share", "file"],
+  "repository": "https://github.com/stonith404/pingvin-share",
+  "image": "https://hub.docker.com/r/stonith404/pingvin-share",
+  "supported_architectures": ["amd64", "arm64"]
+}
