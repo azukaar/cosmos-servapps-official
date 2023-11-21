@@ -1,5 +1,10 @@
 {
-    "cosmos-installer": {       
+    "cosmos-installer": {
+        "post-install": [
+          {
+             "type": "warning",
+             "label": "Read the GitHub Page for info about adopting devices and other stuff: https://github.com/jacobalberty/unifi-docker/#adopting-access-points-and-unifi-devices."
+          },
     },
     "services": {
        "{ServiceName}": {
