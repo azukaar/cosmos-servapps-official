@@ -1,5 +1,13 @@
 {
     "cosmos-installer": {
+        "form": [
+      {
+        "name": "netint",
+        "label": "What is your network interface? (default is eth0)",
+        "initialValue": "eth0",
+        "type": "text"
+      }
+        ],
         "post-install": [
             {
                 "type": "warning",
@@ -15,7 +23,7 @@
         "{ServiceName}-net": {
             "driver": "macvlan",
             "driver_opts": {
-                "parent": "eth0"  
+                "parent": "{Context.netint}"  
             },
             "ipam_config": [
                 {
