@@ -32,6 +32,20 @@
                 "type": "volume"
              }
           ],
+           "networks": {
+                "macvlan_network": {
+                    "driver": "macvlan",
+                    "driver_opts": {
+                        "parent": "eth0"  // Replace "eth0" with your host's interface
+                    },
+                    "ipam_config": [
+                        {
+                            "subnet": "192.168.50.0/24",  // Specify your desired subnet
+                            "gateway": "192.168.50.1"    // Specify the gateway IP
+                        }
+                    ]
+                }
+            },
           "user": "unifi",
           "init": true,
           "routes": [
