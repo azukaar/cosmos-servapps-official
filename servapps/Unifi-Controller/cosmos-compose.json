@@ -36,12 +36,12 @@
                 "macvlan_network": {
                     "driver": "macvlan",
                     "driver_opts": {
-                        "parent": "eth0"  // Replace "eth0" with your host's interface
+                        "parent": "eth0"  
                     },
                     "ipam_config": [
                         {
-                            "subnet": "192.168.50.0/24",  // Specify your desired subnet
-                            "gateway": "192.168.50.1"    // Specify the gateway IP
+                            "subnet": "192.168.50.0/24",  
+                            "gateway": "192.168.50.1"    
                         }
                     ]
                 }
