@@ -5,7 +5,6 @@
        "{ServiceName}": {
           "image": "jacobalberty/unifi",
           "container_name": "{ServiceName}",
-          "network_mode": "host",
           "restart": "unless-stopped",
           "ports": [
              "3478:3478/udp",
