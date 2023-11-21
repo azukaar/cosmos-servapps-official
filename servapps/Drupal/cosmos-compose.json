@@ -51,7 +51,9 @@
             "cosmos-persistent-env": "DRUPAL_DATABASE_PASSWORD, DRUPAL_DATABASE_HOST, DRUPAL_DATABASE_PORT_NUMBER, DRUPAL_DATABASE_USER, DRUPAL_DATABASE_NAME",
             "cosmos-force-network-secured": "true",
             "cosmos-auto-update": "true",
-            "cosmos-icon": "https://comos.manhtuong.net/servapps/Redmine/icon.png"
+            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Redmine/icon.png",
+            "cosmos-stack": "{ServiceName}",
+            "cosmos-stack-main": "{ServiceName}"
           },
         "routes": [{
             "name": "{ServiceName}",
@@ -91,7 +93,9 @@
         ],
         "labels": {
           "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD",
-          "cosmos-force-network-secured": "true"
+          "cosmos-force-network-secured": "true",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
         }
       }
     },

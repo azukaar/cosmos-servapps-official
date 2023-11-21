@@ -14,7 +14,7 @@
             "labels": {
                 "cosmos-force-network-secured": "true",
                 "cosmos-auto-update": "true",
-                "cosmos-icon": "https://comos.manhtuong.net/servapps/Tautulli/icon.png"
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Tautulli/icon.png"
             },
             "volumes": [{
                 "source": "{ServiceName}-tautulli_data",

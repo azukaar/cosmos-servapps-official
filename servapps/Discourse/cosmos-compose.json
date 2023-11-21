@@ -39,7 +39,9 @@
         "cosmos-persistent-env": "DISCOURSE_DATABASE_HOST, DISCOURSE_DATABASE_NAME, DISCOURSE_DATABASE_PASSWORD, DISCOURSE_REDIS_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://comos.manhtuong.net/servapps/Odoo/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Odoo/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "networks": {
         "{ServiceName}-postgres": {}
@@ -90,7 +92,9 @@
         "cosmos-persistent-env": "DISCOURSE_DATABASE_HOST, DISCOURSE_DATABASE_NAME, DISCOURSE_DATABASE_PASSWORD, DISCOURSE_REDIS_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://comos.manhtuong.net/servapps/Odoo/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Odoo/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "networks": {
         "{ServiceName}-postgres": {}
@@ -124,7 +128,9 @@
         }
       ],
       "labels": {
-        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "environment": [
         "POSTGRES_DB=discourse",
@@ -148,7 +154,9 @@
         }
       ],
       "labels": {
-        "cosmos-persistent-env": "DISCOURSE_REDIS_PASSWORD"
+        "cosmos-persistent-env": "DISCOURSE_REDIS_PASSWORD",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "environment": [
         "REDIS_PASSWORD={Passwords.1}"

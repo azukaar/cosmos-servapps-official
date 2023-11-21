@@ -42,7 +42,9 @@
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/UptimeKuma/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/UptimeKuma/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "volumes": [
         {
@@ -87,7 +89,9 @@
         "labels": {
           "cosmos-force-network-secured": "true",
           "cosmos-auto-update": "true",
-          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/UptimeKuma/icon.png"
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/UptimeKuma/icon.png",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
         },
         "volumes": [
           {

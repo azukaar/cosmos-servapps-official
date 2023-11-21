@@ -34,7 +34,9 @@
         "cosmos-persistent-env": "ODOO_DATABASE_PASSWORD, ODOO_DATABASE_NAME, ODOO_DATABASE_USER, ODOO_DATABASE_PORT_NUMBER",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://comos.manhtuong.net/servapps/Odoo/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Odoo/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "networks": {
         "{ServiceName}-postgres": {}
@@ -84,7 +86,9 @@
         }
       ],
       "labels": {
-        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "environment": [
         "POSTGRES_DB=odoo",
