@@ -15,7 +15,7 @@
             },
             {
                 "type": "warning",
-                "label": "This app is known as 10.0.37.59 on the network. Make sure this is compatible with your setup."
+                "label": "This app is known as 10.0.37.59 on the network. Tutorial on Macvlan setup: https://blog.ivansmirnov.name/set-up-pihole-using-docker-macvlan-network/."
             }
         ]
     },
