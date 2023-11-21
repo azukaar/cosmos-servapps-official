@@ -15,23 +15,9 @@
             },
             {
                 "type": "warning",
-                "label": "This app is known as 192.168.50.100 on the network. Make sure this is compatible with your setup."
+                "label": "This app is known as 10.0.37.59 on the network. Make sure this is compatible with your setup."
             }
         ]
-    },
-    "networks": {
-        "{ServiceName}-net": {
-            "driver": "macvlan",
-            "driver_opts": {
-                "parent": "{Context.netint}"  
-            },
-            "ipam_config": [
-                {
-                    "subnet": "192.168.50.0/24",  
-                    "gateway": "192.168.50.1"   
-                }
-            ]
-        }
     },
     "services": {
         "{ServiceName}": {
@@ -61,7 +47,7 @@
             "init": true,
             "networks": {
                 "{ServiceName}-net": {
-                    "ipv4_address": "192.168.50.100" 
+                    "ipv4_address": "10.0.37.59" 
                 }
             },
           "routes": [
@@ -87,5 +73,22 @@
              "cosmos-persistent-env": "TZ"
           }
        }
-    }
+    },
+    "networks": {
+      "{ServiceName}-net": {
+         "driver": "macvlan",
+         "driver_opts": {
+            "parent": "{Context.netint}"
+         },
+         "ipam": {
+            "config": [
+               {
+                  "subnet": "10.0.37.9/24",
+                  "gateway": "10.0.37.1",
+                  "ip_range": "10.0.37.59/28"
+               }
+            ]
+         }
+      }
+    }   
  }
