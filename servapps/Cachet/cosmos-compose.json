@@ -23,7 +23,9 @@
                 "cosmos-persistent-env": "DB_PASSWORD, DB_DATABASE, DB_USERNAME, DB_PORT, DB_HOST",
                 "cosmos-force-network-secured": "true",
                 "cosmos-auto-update": "true",
-                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Cachet/icon.png"
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Cachet/icon.png",
+                "cosmos-stack": "{ServiceName}",
+                "cosmos-stack-main": "{ServiceName}"
             },
             "networks": {
                 "{ServiceName}-postgres": {}
@@ -61,18 +63,10 @@
                 "target": "/var/lib/postgresql/data",
                 "type": "volume"
             }],
-            "labels": { <<
-                <<
-                <<
-                < HEAD "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD" ===
-                    ===
-                    =
-                    "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+            "labels": {
+                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
                 "cosmos-stack": "{ServiceName}",
-                "cosmos-stack-main": "{ServiceName}" >>>
-                    >>>
-                    >
-                    e70fca9ee97745cb99f46f299c6c9369271cf5d7
+                "cosmos-stack-main": "{ServiceName}"
             },
             "environment": [
                 "POSTGRES_DB=cachethq",
