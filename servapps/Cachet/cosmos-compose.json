@@ -61,8 +61,18 @@
                 "target": "/var/lib/postgresql/data",
                 "type": "volume"
             }],
-            "labels": {
-                "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+            "labels": { <<
+                <<
+                <<
+                < HEAD "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD" ===
+                    ===
+                    =
+                    "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+                "cosmos-stack": "{ServiceName}",
+                "cosmos-stack-main": "{ServiceName}" >>>
+                    >>>
+                    >
+                    e70fca9ee97745cb99f46f299c6c9369271cf5d7
             },
             "environment": [
                 "POSTGRES_DB=cachethq",
