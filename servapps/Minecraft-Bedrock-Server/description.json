@@ -1,5 +1,5 @@
 {
-    "name": "Minecraft Bedrock Server (Docker)",
+    "name": "Minecraft Bedrock Server",
     "longDescription": "Minecraft Bedrock Server (Docker) is a containerized version of the Bedrock Dedicated Server, providing a selectable version and configurable environment variables for managing a Minecraft Bedrock server instance. It allows users to run a Bedrock Dedicated Server within a Docker container, offering features like version selection, environment variable configuration for server properties, and management through Docker Compose or Kubernetes.",
     "description": "Minecraft Bedrock Server (Docker) allows easy deployment and management of a Bedrock Dedicated Server using Docker containers.",
     "tags": ["minecraft", "bedrock", "server", "docker", "containerization"],
