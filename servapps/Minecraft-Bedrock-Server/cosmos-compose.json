@@ -86,7 +86,7 @@
           {
              "name": "cheats",
              "label": "Is cheats allowed? (true,false)",
-             "initialValue": false,
+             "initialValue": "false",
              "type": "select",
              "options": [
                 [
