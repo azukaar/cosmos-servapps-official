@@ -90,11 +90,11 @@
              "type": "select",
              "options": [
                 [
-                   true,
+                   "true",
                    "Yes"
                 ],
                 [
-                   false,
+                   "false",
                    "No"
                 ]
              ]
