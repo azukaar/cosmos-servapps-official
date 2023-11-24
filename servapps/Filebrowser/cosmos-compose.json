@@ -19,13 +19,15 @@
         "initialValue": true,
         "type": "checkbox"
       }
-    ],
-    "post-install": [
+    ]
+    {if not Context.noAuth}
+    , "post-install": [
       {
         "type": "warning",
         "label": "A default account has been created with admin / admin as credentials. Please change them"
       }
     ]
+    {/if}
   },
   "services": {
     "{ServiceName}": {
@@ -41,7 +43,7 @@
         "PGID=1000",
         "TZ=auto"
         {if Context.noAuth}
-        , "NO_AUth=noauth"
+        , "FB_NOAUTH=true"
         {/if}
       ],
       "post_install": [
