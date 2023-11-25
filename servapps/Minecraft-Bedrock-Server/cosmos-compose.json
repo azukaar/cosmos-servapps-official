@@ -1,0 +1,157 @@
+{
+    "cosmos-installer": {
+       "form": [
+          {
+             "name": "name",
+             "label": "What do you wanna call this server?",
+             "initialValue": "minecraft",
+             "type": "text"
+          },
+          {
+             "name": "port",
+             "label": "What port do you want to use? You must open this udp port",
+             "initialValue": "19132",
+             "type": "text"
+          },
+          {
+             "name": "version",
+             "label": "What MC version do you want to use? (ex. 1.19.2, use LATEST for latest version or PREVIEW for latest preview)",
+             "initialValue": "LATEST",
+             "type": "text"
+          },
+          {
+             "name": "gamemode",
+             "label": "What gamemode do you want to use? (survival,creative,adventure)",
+             "initialValue": "survival",
+             "type": "select",
+             "options": [
+                [
+                   "survival",
+                   "Survival"
+                ],
+                [
+                   "creative",
+                   "Creative"
+                ],
+                [
+                   "adventure",
+                   "Adventure"
+                ]
+             ]
+          },
+          {
+             "name": "difficulty",
+             "label": "What difficulty do you want to use? (peaceful,easy,normal,hard)",
+             "initialValue": "normal",
+             "type": "select",
+             "options": [
+                [
+                   "peaceful",
+                   "Peaceful"
+                ],
+                [
+                   "easy",
+                   "Easy"
+                ],
+                [
+                   "normal",
+                   "Normal"
+                ],
+                [
+                   "hard",
+                   "Hard"
+                ]
+             ]
+          },
+          {
+             "name": "level-type",
+             "label": "What world-type do you want to use? (FLAT, LEGACY, DEFAULT )",
+             "initialValue": "DEFAULT",
+             "type": "select",
+             "options": [
+                [
+                   "FLAT",
+                   "Flat"
+                ],
+                [
+                   "LEGACY",
+                   "Legacy"
+                ],
+                [
+                   "DEFAULT",
+                   "Default"
+                ]
+             ]
+          },
+          {
+             "name": "cheats",
+             "label": "Is cheats allowed? (true,false)",
+             "initialValue": "false",
+             "type": "select",
+             "options": [
+                [
+                   "true",
+                   "Yes"
+                ],
+                [
+                   "false",
+                   "No"
+                ]
+             ]
+          },
+          {
+             "name": "players",
+             "label": "How many people can join this server? (any number)",
+             "initialValue": 10,
+             "type": "text"
+          },
+          {
+             "name": "level-seed",
+             "label": "What is the seed of the level?",
+             "initialValue": "",
+             "type": "text"
+          }
+       ],
+       "post-install": [
+          {
+             "type": "warning",
+             "label": "As it is impossible to include all the configuration options in the installer, you can check the docs for more information on how to configure your server: https://github.com/itzg/docker-minecraft-bedrock-server"
+          }
+       ]
+    },
+    "services": {
+       "{ServiceName}": {
+          "image": "itzg/minecraft-bedrock-server",
+          "container_name": "{ServiceName}",
+          "restart": "unless-stopped",
+          "environment": [
+             "EULA=TRUE",
+             "SERVER_NAME={Context.name}",
+             "VERSION={Context.version}",
+             "GAMEMODE={Context.gamemode}",
+             "DIFFICULTY={Context.difficulty}",
+             "LEVEL_TYPE={Context.level-type}",
+             "ALLOW_CHEATS={Context.cheats}",
+             "MAX_PLAYERS={Context.players}",
+             "LEVEL_NAME={Context.name}",
+             "LEVEL_SEED={Context.level-seed}"
+          ],
+          "ports": [
+             "{Context.port}:19132/udp"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-data",
+                "target": "/data",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Minecraft-Bedrock-Server/icon.png"
+          },
+          "stdin_open": true,
+          "tty": true
+       }
+    }
+ }
