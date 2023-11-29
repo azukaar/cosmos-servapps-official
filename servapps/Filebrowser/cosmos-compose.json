@@ -57,13 +57,13 @@
       },
       "volumes": [
         {
-          "source": "/usr/Filebrowser/{ServiceName}-database.db",
-          "target": "/database.db",
+          "source": "/usr/Filebrowser/filebrowser.db",
+          "target": "/database/filebrowser.db",
           "type": "bind"
         },
         {
-          "source": "/usr/Filebrowser/.{ServiceName}-filebrowser.json",
-          "target": "/.filebrowser.json",
+          "source": "/usr/Filebrowser/settings.json",
+          "target": "/config/settings.json",
           "type": "bind"
         },
         {
