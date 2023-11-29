@@ -42,6 +42,11 @@
           "source": "{ServiceName}-config",
           "target": "/var/www/html/config",
           "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-custom_apps",
+          "target": "/var/www/html/custom_apps",
+          "type": "volume"
         }
       {if Context.dataPath}
       , {
