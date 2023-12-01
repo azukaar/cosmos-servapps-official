@@ -1,0 +1,52 @@
+{
+  "cosmos-installer": {
+  },
+  "minVersion": "0.7.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "emqx/emqx:5.3.1",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "ports": [
+        "18083:18083/tcp",
+        "8883:8883/tcp",
+        "8084:8084/tcp",
+        "8083:8083/tcp",
+        "1883:1883/tcp"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Plex/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-log",
+          "target": "/opt/emqx/log",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-data",
+          "target": "/opt/emqx/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:18083",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
