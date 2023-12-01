@@ -1,6 +1,6 @@
 {
     "name": "Openspeedtest",
-    "longDescription": "<p>SpeedTest by OpenSpeedTest™ is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript and only uses built-in Web APIs like XMLHttpRequest (XHR), HTML, CSS, JS, & SVG. No Third-Party frameworks or libraries are Required. All we need is a static web server like NGINX. This project was started in 2011 and moved to OpenSpeedTest.com dedicated Project/Domain Name in 2013.</p>",
+    "longDescription": "<p>SpeedTest by OpenSpeedTest™ is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript and only uses built-in Web APIs like XMLHttpRequest (XHR), HTML, CSS, JS, & SVG. No Third-Party frameworks or libraries are Required. All we need is a static web server like NGINX. This project was started in 2011 and moved to OpenSpeedTest.com dedicated Project/Domain Name in 2013.</p> <p>For better results choose expose ports option and access speedtest on cosmos-ip:3333 (or the port you provided).",
     "description": "HTML5 Internet Speed Test. no Flash or Java!",
     "tags": ["self-hosted", "management"],
     "repository": "https://github.com/openspeedtest/Speed-Test",
