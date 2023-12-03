@@ -1,5 +1,11 @@
 {
   "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "info",
+        "label": "The default username is admin and the default password is public. You can change these in the admin panel of the application."
+      }
+    ]
   },
   "minVersion": "0.7.6",
   "services": {
