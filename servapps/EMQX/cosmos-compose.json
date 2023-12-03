@@ -24,7 +24,7 @@
       ],
       "labels": {
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Plex/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/EMQX/icon.png"
       },
       "volumes": [
         {
