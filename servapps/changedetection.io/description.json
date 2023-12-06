@@ -1,0 +1,9 @@
+{
+    "name": "changedetection",
+    "longDescription": "ChangeDetection.io is an advanced web monitoring service designed to track changes across websites. This tool is particularly useful for individuals and businesses needing to stay informed about updates, new content, or alterations on specific web pages. It works by regularly scanning designated websites and comparing current page content with previously stored versions. Users can receive notifications whenever a change is detected. This functionality is invaluable for competitive analysis, tracking regulatory changes, monitoring competitors' pricing strategies, or staying updated with news or content updates. The service offers a user-friendly interface, customizable alert settings, and robust scanning capabilities, making it a go-to solution for comprehensive web change detection.",
+    "description": "changedetection.io is a free website change monitoring tool. Receive alerts by email, SMS or Slack when your website is down or has unexpected changes.",
+    "tags": ["monitor", "website", "change", "detection", "alert", "open source", "diff", "tracker", "utilities"],
+    "repository": "https://github.com/dgtlmoon/changedetection.io",
+    "image": "https://hub.docker.com/r/linuxserver/changedetection.io",
+    "supported_architectures": ["amd64", "arm64"]
+}
