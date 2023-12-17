@@ -3,13 +3,9 @@
     "form":[
       {
         "name": "EXPOSE_PORTS",
-        "label": "Do you want to expose the ports eg: your-ip-addres:3333 ? ( which will result in more accurate speedtests ).",
-        "initialValue": "Yes",
-        "type": "select",
-        "options": [
-          ["", ""],
-          ["Yes", "Yes"]
-        ]
+        "label": "Do you want to expose the ports eg: your-ip-addres:3333 ? ( Highly recommened, will result in more accurate speedtests ).",
+        "initialValue": true,
+        "type": "checkbox"
       },
       {
         "name": "PORT_NUMBER",
@@ -21,7 +17,7 @@
     "post-install": [
       {
         "type": "warning",
-        "label": "Speedtest results may be unreleable if you are accesing through domain name instead of ip:port ."
+        "label": "Speedtest results may be unreleable if you are accesing through domain name instead of ip:3333 (replace port if you changed it) "
       }
     ]
   },
