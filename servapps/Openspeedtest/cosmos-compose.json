@@ -1,5 +1,26 @@
 {
-  "cosmos-installer": {},
+  "cosmos-installer": {
+    "form":[
+      {
+        "name": "EXPOSE_PORTS",
+        "label": "Do you want to expose the ports eg: your-ip-addres:3333 ? ( Highly recommened, will result in more accurate speedtests ).",
+        "initialValue": true,
+        "type": "checkbox"
+      },
+      {
+        "name": "PORT_NUMBER",
+        "label": "Which port you want to use to speedtest on ? (Only used If Ports are exposed)",
+        "initialValue": "3333",
+        "type": "text"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "Speedtest results may be unreleable if you are accesing through domain name instead of ip:3333 (replace port if you changed it) "
+      }
+    ]
+  },
   "services": {
     "{ServiceName}": {
       "image": "openspeedtest/latest:latest",
@@ -7,9 +28,19 @@
 
       "restart": "always",
       "environment": [],
+      {if Context.EXPOSE_PORTS}
+      "ports": [
+        "{Context.PORT_NUMBER}:3000"
+      ],
+      {/if}
       "labels": {
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Openspeedtest/icon.png",
-        "cosmos-force-network-secured": "true",
+        {if Context.EXPOSE_PORTS}
+          "cosmos-force-network-secured": "false",
+        {else}
+          "cosmos-force-network-secured": "true",
+        {/if}
+        
         "cosmos-auto-update": "true"
       },
       "volumes": [],
