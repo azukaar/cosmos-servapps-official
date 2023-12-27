@@ -1,13 +1,26 @@
 {
     "cosmos-installer": {
+      "form": [
+        {
+          "name": "openPorts",
+          "label": "Choose opened port for your tracking device, (for traccar client, mobile app port is 5055) Device list: https://www.traccar.org/devices/ , if you need, you can add more later...",
+          "initialValue": "5055",
+          "type": "number"
+        }
+      ],
 
       "post-install": [
         {
           "type": "info",
           "label": "App for tracking a various of gps."
+        },
+        {
+          "type": "warning",
+          "label": "Dont forget to create account and disable registration in your Traccar app."
         }
       ]
     },
+    "minVersion": "0.13.1",
     "services": {
       "{ServiceName}": {
         "image": "traccar/traccar:latest",
@@ -17,8 +30,8 @@
         "UID": 1000,
         "GID": 1000,
         "ports": [
-          "5000-5150:5000-5150/tcp",
-          "5000-5150:5000-5150/udp",
+          "{Context.openPorts}:{Context.openPorts}/tcp",
+          "{Context.openPorts}:{Context.openPorts}/udp",
           "8082:8082/tcp"
         ],
         "labels": {
