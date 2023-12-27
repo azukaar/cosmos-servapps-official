@@ -3,8 +3,14 @@
       "form": [
         {
           "name": "openPorts",
-          "label": "Choose opened port for your tracking device, (for traccar client, mobile app port is 5055) Device list: https://www.traccar.org/devices/ , if you need, you can add more later...",
+          "label": "Choose opened port for your tracking device, (for traccar client, mobile app port is 5055)",
           "initialValue": "5055",
+          "type": "number"
+        },
+        {
+          "name": "openwebsitePort",
+          "label": "Port for your Traccar user-interface",
+          "initialValue": "8082",
           "type": "number"
         }
       ],
@@ -32,7 +38,7 @@
         "ports": [
           "{Context.openPorts}:{Context.openPorts}/tcp",
           "{Context.openPorts}:{Context.openPorts}/udp",
-          "8082:8082/tcp"
+          "{Context.openwebsitePort}:8082/tcp"
         ],
         "labels": {
           "cosmos-auto-update": "true",
