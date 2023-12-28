@@ -2,7 +2,7 @@
     "name": "Traccar",
     "description": "Modern GPS Tracking Platform for your cars.",
     "longDescription": "<p>Traccar is an open-source GPS tracking system. It's designed to track the location of various GPS-enabled devices like vehicles, personal trackers, or mobile phones in real-time. </p><p>Device list: https://www.traccar.org/devices/ , if you need more tracking device, add your ports in ServerApps > Traccar > View Details > Network. </p> <p>The recommended solution for production use is to link to an external MySQL database.</p>",
-    "tags": ["tracking", "geo-positioning", "open-source", "self-hosted", "web application", "linux", "docker"],
+    "tags": ["tracking", "geo-positioning", "open-source", "self-hosted", "web application", "linux", "docker", "car"],
     "repository": "https://www.traccar.org/source-code/",
     "image": "https://hub.docker.com/r/traccar/traccar",
     "supported_architectures": ["amd64"]
