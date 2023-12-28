@@ -1,0 +1,76 @@
+{
+    "cosmos-installer": {
+      "form": [
+        {
+          "name": "openPorts",
+          "label": "Choose opened port for your tracking device, (for traccar client, mobile app port is 5055)",
+          "initialValue": "5055",
+          "type": "number"
+        },
+        {
+          "name": "openwebsitePort",
+          "label": "Port for your Traccar user-interface",
+          "initialValue": "8082",
+          "type": "number"
+        }
+      ],
+
+      "post-install": [
+        {
+          "type": "info",
+          "label": "App for tracking a various of gps."
+        },
+        {
+          "type": "warning",
+          "label": "Dont forget to create account and disable registration in your Traccar app."
+        }
+      ]
+    },
+    "minVersion": "0.13.1",
+    "services": {
+      "{ServiceName}": {
+        "image": "traccar/traccar:latest",
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
+        "restart": "unless-stopped",
+        "UID": 1000,
+        "GID": 1000,
+        "ports": [
+          "{Context.openPorts}:{Context.openPorts}/tcp",
+          "{Context.openPorts}:{Context.openPorts}/udp",
+          "{Context.openwebsitePort}:8082/tcp"
+        ],
+        "labels": {
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Traccar/icon.png"
+        },
+        "volumes": [
+          {
+            "source": "{ServiceName}.xml",
+            "target": "/opt/traccar/traccar.xml",
+            "type": "volume"
+          },
+          {
+            "source": "{ServiceName}-logs",
+            "target": "/opt/traccar/logs",
+            "type": "volume"
+          }
+        ],
+        "routes": [
+          {
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
+            "useHost": true,
+            "target": "http://{ServiceName}:8082",
+            "mode": "SERVAPP",
+            "Timeout": 14400000,
+            "ThrottlePerMinute": 12000,
+            "BlockCommonBots": true,
+            "SmartShield": {
+              "Enabled": true
+            }
+          }
+        ]
+      }
+    }
+  }
