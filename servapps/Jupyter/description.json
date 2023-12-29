@@ -1,0 +1,9 @@
+{
+    "name": "Jupyter Notebook",
+    "description": "A versatile, web-based interactive computing platform that allows you to type live code, equations, and visualize.",
+    "longDescription": "<p>A Jupyter Notebook is an interactive computing environment that enables users to create and share documents that contain live code, equations, visualizations, and narrative text. It's particularly useful for data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.</p>",
+    "tags": ["data_analysis", "python", "open-source", "self-hosted", "web application", "linux", "docker", "educational"],
+    "repository": "https://github.com/jupyter/docker-stacks",
+    "image": "https://hub.docker.com/r/jupyter/datascience-notebook",
+    "supported_architectures": ["amd64", "arm64"]
+  }
