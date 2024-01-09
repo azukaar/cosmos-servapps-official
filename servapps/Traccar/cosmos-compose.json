@@ -46,13 +46,18 @@
         },
         "volumes": [
           {
-            "source": "{ServiceName}.xml",
-            "target": "/opt/traccar/traccar.xml",
+            "source": "{ServiceName}-custom-conf",
+            "target": "/opt/traccar/conf",
             "type": "volume"
           },
           {
             "source": "{ServiceName}-logs",
             "target": "/opt/traccar/logs",
+            "type": "volume"
+          },
+          {
+            "source": "{ServiceName}-data",
+            "target": "/opt/traccar/data",
             "type": "volume"
           }
         ],
