@@ -64,7 +64,7 @@
       ],
       "depends_on": [
         "{ServiceName}-redis",
-        "{ServiceName}-database",    
+        "{ServiceName}-database"
       ],
       "routes": [
         {
@@ -126,7 +126,7 @@
       ],
       "depends_on": [
         "{ServiceName}-redis",
-        "{ServiceName}-database",      
+        "{ServiceName}-database"
       ],
       "restart": "always"
     },
