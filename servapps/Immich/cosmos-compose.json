@@ -64,7 +64,8 @@
       ],
       "depends_on": [
         "{ServiceName}-redis",
-        "{ServiceName}-database"
+        "{ServiceName}-database",
+        "typesense"
       ],
       "routes": [
         {
@@ -126,7 +127,8 @@
       ],
       "depends_on": [
         "{ServiceName}-redis",
-        "{ServiceName}-database"
+        "{ServiceName}-database",
+        "typesense"
       ],
       "restart": "always"
     },
@@ -163,6 +165,35 @@
       ],
       "restart": "always"
     },
+    "typesense": {
+      "container_name": "typesense",
+      "hostname": "typesense",
+      "image": "typesense/typesense:0.24.1@sha256:9bcff2b829f12074426ca044b56160ca9d777a0c488303469143dd9f8259d4dd",
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "environment": [
+        "TYPESENSE_API_KEY={Passwords.0}",
+        "TYPESENSE_DATA_DIR=/data",
+        "GLOG_minloglevel=1"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "TYPESENSE_API_KEY",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "false",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Immich/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-tsdata",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "restart": "always"
+    },
     "{ServiceName}-redis": {
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
@@ -183,7 +214,7 @@
     "{ServiceName}-database": {
       "container_name": "{ServiceName}-database",
       "hostname": "{ServiceName}-database",
-      "image": "tensorchord/pgvecto-rs:pg14-v0.1.11",
+      "image": "postgres:14-alpine@sha256:50d9be76e9a90da4c781554955e0ffc79d9d5c4226838e64b36aacc97cbc35ad",
       "user": "postgres",
       "networks": {
         "{ServiceName}": {}
