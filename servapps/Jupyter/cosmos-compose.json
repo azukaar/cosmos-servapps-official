@@ -2,23 +2,16 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "openPorts",
-        "label": "Choose interface port to avoid collision with other containers.",
-        "initialValue": "8888",
-        "type": "number"
-      },
-      {
         "name": "jovyanROOT",
-        "label": "Do you want to make Jovyan sudo user ?",
+        "label": "Do you need to use sudo in your notebooks?",
         "initialValue": false,
         "type": "checkbox"
-      }
-    ],
-
-    "post-install": [
+      },
       {
-        "type": "info",
-        "label": "App was sucessfully installed..."
+        "name": "workPath",
+        "label": "What is the path to your notebooks?",
+        "initialValue": "{DefaultDataPath}/work",
+        "type": "text"
       }
     ]
   },
@@ -47,9 +40,9 @@
       },
       "volumes": [
         {
-          "source": "{ServiceName}-work",
+          "source": "{Context.workPath}",
           "target": "/home/jovyan/work",
-          "type": "volume"
+          "type": "bind"
         },
         {
           "source": "{ServiceName}-datasets",
