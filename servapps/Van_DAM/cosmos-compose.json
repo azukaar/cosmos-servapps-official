@@ -30,8 +30,8 @@
         "REDIS_PORT=6379",
         "SECRET_KEY_BASE={Passwords.3}",
         "DB_HOST={ServiceName}-postgres",
-        "DB_USER=vandam",
-        "DB_NAME=vandam",
+        "DB_USER=manyfold",
+        "DB_NAME=manyfold",
         "DB_PASS={Passwords.0}",
         "DB_PORT=5432"
         
@@ -127,8 +127,8 @@
         }
       ],
       "environment": [
-        "POSTGRES_DB=vandam",
-        "POSTGRES_USER=vandam",
+        "POSTGRES_DB=manyfold",
+        "POSTGRES_USER=manyfold",
         "POSTGRES_PASSWORD={Passwords.0}"
       ]
     }
