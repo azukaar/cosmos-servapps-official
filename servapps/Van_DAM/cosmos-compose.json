@@ -18,7 +18,7 @@
   "minVersion": "0.8.0",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/manyfold3d/manyfold:nightly",
+      "image": "ghcr.io/manyfold3d/manyfold:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,
