@@ -40,6 +40,11 @@
           "type": "volume"
         },
         {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
           "source": "{Context.icons}",
           "target": "/app/public/icons",
           "type": "bind"
