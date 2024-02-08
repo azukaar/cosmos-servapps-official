@@ -40,7 +40,7 @@
           "type": "volume"
         }
         {if Context.downloadsPath}
-        {
+        , {
           "source": "{Context.downloadsPath}",
           "target": "/usr/local/share/twitchautomator/data/storage",
           "type": "bind"
