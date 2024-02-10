@@ -75,6 +75,7 @@
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
+          "CORSOrigin": "*",
           "SmartShield": {
             "Enabled": true
           }
