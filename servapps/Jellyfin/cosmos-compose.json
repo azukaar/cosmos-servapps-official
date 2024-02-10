@@ -66,7 +66,7 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true,
-            "PerUserRequestLimit": 25000,
+            "PerUserRequestLimit": 25000
           }
         }
       ]
