@@ -22,15 +22,15 @@
          {
             "name": "community",
             "label": "Public or Private? (true,false)",
-            "initialValue": "false",
+            "initialValue": false,
             "type": "select",
             "options": [
                [
-                  "true",
+                  true,
                   "Yes"
                ],
                [
-                  "false",
+                  false,
                   "No"
                ]
             ]
@@ -68,7 +68,7 @@
             "8211:8211/udp",
             "27015:27015/udp"
          ],
-         "environment": {
+         "environment": [
             "PORT": 8211,
             "PLAYERS": "{Context.players}",
             "SERVER_PASSWORD": "{Context.password}",
@@ -80,7 +80,7 @@
             "COMMUNITY": "{Context.community}",
             "SERVER_NAME": "{Context.name}",
             "SERVER_DESCRIPTION": "{Context.description}"
-         },
+         ],
          "volumes": [
             {
                "type": "volume",
