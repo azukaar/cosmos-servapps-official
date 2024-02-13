@@ -23,17 +23,7 @@
             "name": "community",
             "label": "Public or Private? (true,false)",
             "initialValue": false,
-            "type": "select",
-            "options": [
-               [
-                  true,
-                  "Yes"
-               ],
-               [
-                  false,
-                  "No"
-               ]
-            ]
+            "type": "checkbox"
          },
          {
             "name": "players",
