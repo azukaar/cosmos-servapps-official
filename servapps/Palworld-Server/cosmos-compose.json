@@ -69,7 +69,7 @@
             "27015:27015/udp"
          ],
          "environment": [
-            "PORT": 8211,
+            "PORT": "8211",
             "PLAYERS": "{Context.players}",
             "SERVER_PASSWORD": "{Context.password}",
             "MULTITHREADING": true,
