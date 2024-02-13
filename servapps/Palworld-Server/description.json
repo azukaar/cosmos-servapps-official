@@ -1,0 +1,9 @@
+{
+    "name": "Palworld Dedicated Server Docker",
+    "description": "Docker container for hosting Palworld dedicated servers.",
+    "repository": "https://github.com/thijsvanloef/palworld-server-docker",
+    "image": "https://hub.docker.com/r/thijsvanloef/palworld-server-docker",
+    "documentation": "https://github.com/thijsvanloef/palworld-server-docker/blob/main/README.md",
+    "supported_os": ["Linux (Ubuntu/Debian)", "Windows 10,11", "MacOS (including Apple Silicon M1/M2/M3)"],
+    "supported_cpu_architectures": ["x64", "ARM64"]
+}
