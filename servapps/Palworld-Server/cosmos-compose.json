@@ -17,7 +17,7 @@
             "name": "adminpassword",
             "label": "What Password do you want for the admin?",
             "initialValue": "Password",
-            "type": "text"
+            "type": "password"
          },
          {
             "name": "community",
