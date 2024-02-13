@@ -11,7 +11,7 @@
             "name": "password",
             "label": "What Password do you want for the server?",
             "initialValue": "Password",
-            "type": "text"
+            "type": "password"
          },
          {
             "name": "adminpassword",
