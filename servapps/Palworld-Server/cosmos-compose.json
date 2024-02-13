@@ -69,17 +69,17 @@
             "27015:27015/udp"
          ],
          "environment": [
-            "PORT": "8211",
-            "PLAYERS": "{Context.players}",
-            "SERVER_PASSWORD": "{Context.password}",
-            "MULTITHREADING": true,
-            "RCON_ENABLED": true,
-            "RCON_PORT": 25575,
-            "TZ": "Auto",
-            "ADMIN_PASSWORD": "{Context.adminpassword}",
-            "COMMUNITY": "{Context.community}",
-            "SERVER_NAME": "{Context.name}",
-            "SERVER_DESCRIPTION": "{Context.description}"
+            "PORT=8211",
+            "PLAYERS={Context.players}",
+            "SERVER_PASSWORD={Context.password}",
+            "MULTITHREADING=true",
+            "RCON_ENABLED=true",
+            "RCON_PORT=25575",
+            "TZ=Auto",
+            "ADMIN_PASSWORD={Context.adminpassword}",
+            "COMMUNITY={Context.community}",
+            "SERVER_NAME={Context.name}",
+            "SERVER_DESCRIPTION={Context.description}"
          ],
          "volumes": [
             {
