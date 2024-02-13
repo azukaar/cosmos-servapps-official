@@ -37,13 +37,24 @@
             "initialValue": "MOHAWK DINOSAUR",
             "type": "text"
          },
+         
+         {
+            "name": "gamePort",
+            "label": "You must open a udp game port for this service",
+            "initialValue": 27015,
+            "type": "text"
+         },
+
+         {
+            "name": "communityPort",
+            "label": "You must open a udp community port toshoe up in the server tab",
+            "initialValue": 8211,
+            "type": "text"
+         },
+
          {
             "type": "warning",
             "label": "As it is impossible to include all the configuration options in the installer, you can check the docs for more information on how toconfigure your server https://github.com/thijsvanloef/palworld-server-docker"
-         },
-         {
-            "type": "warning",
-            "label": "You must open UDP PORT 8211 for Gameplay, and UDP PORT 27015 to show up in the community server tab"
          }
       ]
    },
@@ -55,8 +66,8 @@
          "hostname": "{ServiceName}",
          "stop_grace_period": "30s",
          "ports": [
-            "8211:8211/udp",
-            "27015:27015/udp"
+            "{Context.gamePort}:8211/udp",
+            "{Context.communityPort}:27015/udp"
          ],
          "environment": [
             "PORT=8211",
