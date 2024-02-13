@@ -21,7 +21,7 @@
          },
          {
             "name": "community",
-            "label": "Public or Private? (true,false)",
+            "label": "Public Server? (true,false)",
             "initialValue": false,
             "type": "checkbox"
          },
