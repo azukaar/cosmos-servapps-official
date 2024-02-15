@@ -28,7 +28,16 @@ for (const file of servapps) {
   }
 
   servapp.icon = `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/icon.png`
-  servapp.compose = `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/cosmos-compose.json`
+  //Common Format,used by most
+  const YMLComposeSource =  `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/docker-compose.yml`;
+  if(fs.existsSync(`./servapps/${file}/docker-compose.yml`)) {
+    servapp.compose = YMLComposeSource;
+  }
+  //Cosmos Legacy Format
+  const CosmosComposeSource =  `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/cosmos-compose.json`; 
+  if(fs.existsSync(`./servapps/${file}/cosmos-compose.json`)) {
+    servapp.compose = CosmosComposeSource;
+    }
 
   servappsJSON.push(servapp)
 }
