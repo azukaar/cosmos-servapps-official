@@ -183,7 +183,7 @@
     "{ServiceName}-database": {
       "container_name": "{ServiceName}-database",
       "hostname": "{ServiceName}-database",
-      "image": "tensorchord/pgvecto-rs:pg14-v0.1.11",
+      "image": "tensorchord/pgvecto-rs:pg14-v0.2.0",
       "user": "postgres",
       "networks": {
         "{ServiceName}": {}
