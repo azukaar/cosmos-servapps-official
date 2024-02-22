@@ -1,0 +1,9 @@
+{
+  "name": "Immich",
+  "longDescription": "<p>Immich is an open-source personal photo management tool that makes use of the latest technologies to provide an easy and intuitive way to keep your photos organized. It provides a web-based platform to browse, organize, and share your personal photo collection.</p><p>With features like smart search, automated tagging, and geolocation, Immich makes it easy to find and group your photos. It supports various image formats and RAW files from high-quality cameras. Immich can also automatically generate thumbnails and convert RAW images.</p><p>Available for Windows, Linux, MacOS, and other platforms, Immich offers a private, self-hosted solution for your photo management needs. Start using Immich today to take control of your photo collection!</p>",
+  "description": "Immich - High performance self-hosted photo and video backup solution",
+  "tags": ["photo management", "image organizer", "smart search", "automated tagging", "geolocation", "thumbnails", "RAW images", "self-hosted", "windows", "linux", "macos", "Immich"],
+  "repository": "https://github.com/immich-app/immich",
+  "image": "ghcr.io/immich-app/immich-server",
+  "supported_architectures": ["amd64", "arm64"]
+}
