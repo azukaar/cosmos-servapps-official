@@ -17,7 +17,7 @@
         "name": "SONARQUBE_EMAIL",
         "label": "What Sonarqube email does it use?",
         "initialValue": "email@Sonarqube.com",
-        "type": "password"
+        "type": "email"
       }
     ]
   },
@@ -60,7 +60,7 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:8069",
+          "target": "http://{ServiceName}:9000",
           "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
