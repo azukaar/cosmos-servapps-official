@@ -1,0 +1,76 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "openPorts",
+        "label": "Choose opened port for your tracking device's, (for traccar client, mobile app port is 5055)",
+        "initialValue": "5055",
+        "type": "number"
+      },
+      {
+        "name": "customConf",
+        "label": "Choose path to your config traccar.xml",
+        "initialValue": "{DefaultDataPath}/traccar.xml",
+        "type": "text"
+      }
+    ],
+
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "Don't forget to create account and disable registration in your Traccar app, also open necessary ports for tracking devices if you are behind NAT!"
+      }
+    ]
+  },
+  "minVersion": "0.13.1",
+  "services": {
+    "{ServiceName}": {
+      "image": "traccar/traccar:latest",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "ports": [
+        "{Context.openPorts}:{Context.openPorts}/tcp",
+        "{Context.openPorts}:{Context.openPorts}/udp"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Traccar/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{Context.customConf}",
+          "target": "/opt/traccar/conf/traccar.xml",
+          "type": "bind"
+        },
+        {
+          "source": "{ServiceName}-logs",
+          "target": "/opt/traccar/logs",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-data",
+          "target": "/opt/traccar/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8082",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
