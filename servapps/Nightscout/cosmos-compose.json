@@ -1,0 +1,63 @@
+{
+    "cosmos-installer": {
+    },
+    "minVersion": "0.4.0",
+    "services": {
+      "{ServiceName}": {
+        "image": "nightscout/cgm-remote-monitor:latest",
+        "container_name": "{ServiceName}",
+        "restart": "unless-stopped",
+        "environment": [
+          "NODE_ENV=production",
+          "TZ=Etc/UTC",
+          "INSECURE_USE_HTTP=true",
+          "MONGO_CONNECTION=mongodb://{ServiceName}-mongo:27017/nightscout",
+          "API_SECRET=passwordpassword",
+          "ENABLE=careportal rawbg iob",
+          "AUTH_DEFAULT_ROLES=denied"
+        ],
+        "labels": {
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nightscout/icon.png",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
+        },
+        "volumes": [],
+        "routes": [
+            {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:1337",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }
+        ]
+      },
+
+      "{ServiceName}-mongo": {
+        "image": "mongo:4.4",
+        "container_name": "{ServiceName}-mongo",
+        "hostname": "{ServiceName}-mongo",
+        "labels": {
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nightscout/icon_mongo.png",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
+        },
+        "environment": [],
+        "restart": "unless-stopped",
+        "volumes": [
+          {
+            "source": "{ServiceName}-mongo-data",
+            "target": "/data/db",
+            "type": "volume"
+          }
+        ]
+      }
+    }
+}
