@@ -9,10 +9,10 @@
         "restart": "unless-stopped",
         "environment": [
           "NODE_ENV=production",
-          "TZ=Etc/UTC",
+          "TZ=auto",
           "INSECURE_USE_HTTP=true",
           "MONGO_CONNECTION=mongodb://{ServiceName}-mongo:27017/nightscout",
-          "API_SECRET=passwordpassword",
+          "API_SECRET={Passwords.0}",
           "ENABLE=careportal rawbg iob",
           "AUTH_DEFAULT_ROLES=denied"
         ],
