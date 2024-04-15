@@ -1,0 +1,9 @@
+{
+    "name": "Nightscout",
+    "description": "Web-based CGM (Continuous Glucose Monitor) to allow multiple caregivers to remotely view a patient's glucose data in real time",
+    "longDescription": "<p>Nightscout (also known as CGM in the Cloud) is an open-source cloud application used by people with diabetes and parents of kids with diabetes to visualize, store and share the data from their Continuous Glucose Monitoring sensors in real-time. Once setup, Nightscout acts as a central repository of blood glucose and insulin dosing/treatment data for a single person, allowing you to view the CGM graph and treatment data anywhere using just a web browser connected to the internet.</p>",
+    "tags": ["health", "cgm", "diabetes"],
+    "repository": "https://github.com/nightscout/cgm-remote-monitor",
+    "image": "https://hub.docker.com/r/nightscout/cgm-remote-monitor",
+    "supported_architectures": ["amd64", "arm64"]
+}
