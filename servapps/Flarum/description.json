@@ -1,0 +1,9 @@
+{
+    "name": "Flarum",
+    "longDescription": "Flarum is an open-source forum software designed to be simple, fast, and easy to use. It provides a modern and responsive user interface, making discussions and interactions within a community more engaging. Flarum is built using PHP and the Laravel framework, and it uses the Mithril JavaScript framework for its front-end.",
+    "description": "Flarum is a modern and responsive open-source forum software written in PHP and Laravel.",
+    "tags": ["forum software", "open-source", "PHP", "community", "laravel"],
+    "repository": "https://github.com/mondediefr/docker-flarum",
+    "image": "https://hub.docker.com/r/mondedie/flarum",
+    "supported_architectures": ["amd64", "arm64"]
+}

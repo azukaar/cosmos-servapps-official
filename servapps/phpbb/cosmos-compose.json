@@ -1,0 +1,84 @@
+{
+    "cosmos-installer": null,
+    "services": {
+       "{ServiceName}-mariadb": {
+          "image": "docker.io/bitnami/mariadb:10.11",
+          "container_name": "{ServiceName}-mariadb",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "hostname": "{ServiceName}-mariadb",
+          "environment": [
+             "MARIADB_PASSWORD={Passwords.0}",
+             "MARIADB_ROOT_PASSWORD={Passwords.0}",
+             "MARIADB_USER=bn_phpbb",
+             "MARIADB_DATABASE={ServiceName}-phpbb"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-mariadb_data",
+                "target": "/bitnami/mariadb",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-persistent-env": "MARIADB_PASSWORD, MARIADB_USER, MARIADB_DATABASE, MARIADB_ROOT_PASSWORD",
+             "cosmos-stack": "{ServiceName}",
+             "cosmos-stack-main": "{ServiceName}"
+          }
+       },
+       "{ServiceName}": {
+          "image": "docker.io/bitnami/phpbb:3",
+          "container_name": "{ServiceName}",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "environment": [
+             "PHPBB_DATABASE_HOST={ServiceName}-mariadb",
+             "PHPBB_DATABASE_PORT_NUMBER=3306",
+             "PHPBB_DATABASE_USER=bn_phpbb",
+             "PHPBB_DATABASE_NAME={ServiceName}-phpbb",
+             "PHPBB_DATABASE_PASSWORD={Passwords.0}"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-data",
+                "target": "/bitnami/phpbb",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/phpbb/icon.png",
+             "cosmos-persistent-env": "PHPBB_DATABASE_HOST, PHPBB_DATABASE_PORT_NUMBER, PHPBB_DATABASE_USER, PHPBB_DATABASE_NAME, PHPBB_DATABASE_PASSWORD",
+             "cosmos-stack": "{ServiceName}",
+             "cosmos-stack-main": "{ServiceName}"
+          },
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "https://{ServiceName}:8443",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "AcceptInsecureHTTPSTarget": true,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "depends_on": [
+             "{ServiceName}-mariadb"
+          ]
+       }
+    },
+    "networks": {
+       "{ServiceName}-net": {}
+    }
+ }

@@ -1,0 +1,108 @@
+{
+  "cosmos-installer": {
+    "form": [{
+      "name": "MOODLE_USERNAME",
+      "label": "What Moodle username admin do you want to use?",
+      "initialValue": "admin",
+      "type": "text"
+  },
+  {
+      "name": "MOODLE_PASSWORD",
+      "label": "What Moodle password admin does it use?",
+      "initialValue": "admin",
+      "type": "password"
+  },
+  {
+      "name": "MOODLE_EMAIL",
+      "label": "What is your Moodle email admin?",
+      "initialValue": "user@example.com",
+      "type": "text"
+  }
+]
+  },
+    "minVersion": "0.8.0",
+    "services": {
+      "{ServiceName}": {
+        "image": "docker.io/bitnami/moodle",
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
+        "volumes": [
+          {
+            "source": "{ServiceName}-moodle_data",
+            "target": "/bitnami/moodle",
+            "type": "volume"
+          },
+          {
+            "source": "{ServiceName}-moodledata_data",
+            "target": "/bitnami/moodledata",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "MOODLE_USERNAME={Context.MOODLE_USERNAME}",
+          "MOODLE_PASSWORD={Context.MOODLE_PASSWORD}",
+          "MOODLE_EMAIL={Context.MOODLE_EMAIL}",
+          "MOODLE_DATABASE_HOST={ServiceName}-db",
+          "MOODLE_DATABASE_PORT_NUMBER=3306",
+          "MOODLE_DATABASE_USER=bn_moodle",
+          "MOODLE_DATABASE_NAME=bitnami_moodle",
+          "MOODLE_DATABASE_PASSWORD={Passwords.1}"
+        ],
+        "networks": {
+            "{ServiceName}": {}
+          },
+          "labels": {
+            "cosmos-persistent-env": "MOODLE_DATABASE_HOST, MOODLE_DATABASE_PORT_NUMBER, MOODLE_DATABASE_USER, MOODLE_DATABASE_NAME, MOODLE_DATABASE_PASSWORD",
+            "cosmos-force-network-secured": "true",
+            "cosmos-auto-update": "true",
+            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Moodle/icon.png",
+            "cosmos-stack": "{ServiceName}",
+            "cosmos-stack-main": "{ServiceName}"
+          },
+        "routes": [{
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
+            "useHost": true,
+            "target": "http://{ServiceName}:8080",
+            "mode": "SERVAPP",
+            "Timeout": 14400000,
+            "ThrottlePerMinute": 12000,
+            "BlockCommonBots": true,
+            "SmartShield": {
+                "Enabled": true
+            }
+        }]
+
+      },
+      "{ServiceName}-db": {
+        "image": "docker.io/bitnami/mariadb:11.1",
+        "container_name": "{ServiceName}-db",
+        "hostname": "{ServiceName}-db",
+        "restart": "unless-stopped",
+        "networks": {
+            "{ServiceName}": {}
+          },
+        "volumes": [
+          {
+            "source": "{ServiceName}-db",
+            "target": "/bitnami/mariadb",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "MARIADB_DATABASE=bitnami_moodle",
+          "MARIADB_USER=bn_moodle",
+          "MARIADB_PASSWORD={Passwords.1}",
+          "MARIADB_ROOT_PASSWORD={Passwords.2}"
+        ],
+        "labels": {
+          "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
+        }
+      }
+    },
+    "networks": {
+        "{ServiceName}": {}
+      }
+  }

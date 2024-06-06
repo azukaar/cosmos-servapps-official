@@ -23,9 +23,12 @@
         }
       ],
       "labels": {
+        "cosmos-persistent-env": "WORDPRESS_DB_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Wordpress/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Wordpress/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "networks": {
         "{ServiceName}-mysql": {}
@@ -67,6 +70,11 @@
           "type": "volume"
         }
       ],
+      "labels": {
+        "cosmos-persistent-env": "MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
       "environment": [
         "MYSQL_DATABASE=wordpress",
         "MYSQL_USER=wordpress",

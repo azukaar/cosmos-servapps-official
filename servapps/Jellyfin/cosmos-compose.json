@@ -65,7 +65,8 @@
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
           "SmartShield": {
-            "Enabled": true
+            "Enabled": true,
+            "PerUserRequestLimit": 25000
           }
         }
       ]

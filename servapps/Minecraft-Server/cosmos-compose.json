@@ -48,6 +48,7 @@
           ["SPIGOT", "Spigot"],
           ["FORGE", "Forge"],
           ["PAPER", "Paper"],
+          ["PURPUR", "Purpur"],
           ["FABRIC", "Fabric"]
         ]
       },

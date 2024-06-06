@@ -65,7 +65,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-config",
-          "target": "/config",
+          "target": "/app/data",
           "type": "volume"
         }
     ],

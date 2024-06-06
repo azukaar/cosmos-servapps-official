@@ -1,0 +1,59 @@
+{   
+   "cosmos-installer": {
+    "form": [
+        {
+            "name": "hostPath",
+            "label": "Enter a directory so that synchronized files are available on the host",
+            "initialValue": "{DefaultDataPath}",
+            "type": "text"
+        }
+    ]
+},
+    "version": "3",
+    "services": {
+       "syncthing": {
+          "image": "syncthing/syncthing",
+          "container_name": "{ServiceName}",
+          "hostname": "my-{ServiceName}",
+          "environment": [
+             "PUID=1000",
+             "PGID=1000"
+          ],
+          "labels": {
+            "cosmos-auto-update": "true",
+            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Syncthing/icon.png"
+          },
+          "volumes": [
+             {if Context.hostPath}
+             {
+               "source": "{Context.hostPath}",
+               "target": "/var/syncthing",
+               "type": "bind"
+             }
+             {/if}
+          ],
+          "ports": [
+             "22000:22000/tcp",
+             "22000:22000/udp",
+             "21027:21027/udp"
+          ],
+          "restart": "unless-stopped",
+          "routes": [
+            {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "https://{ServiceName}:8384",
+                "AcceptInsecureHTTPSTarget": true,
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }
+        ]
+       }
+    }
+ }

@@ -1,0 +1,9 @@
+{
+    "name": "Suitecrm",
+    "longDescription": "<p>SuiteCRM is an open-source Customer Relationship Management application for servers written in PHP. It is a software fork of the popular customer relationship management system from SugarCRM and its base is built on the last open-source SugarCRM release.</p>",
+    "description": "Open Source CRM (Customer Relationship Management) software solution for SME and Enterprise. Available as SaaS or on-premise.",
+    "tags": ["crm", "self-hosted"],
+    "repository": "https://github.com/bitnami/containers/",
+    "image": "https://hub.docker.com/r/bitnami/suitecrm",
+    "supported_architectures": ["amd64", "arm64"]
+}

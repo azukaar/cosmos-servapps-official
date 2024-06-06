@@ -1,0 +1,9 @@
+{
+  "name": "IT-Tools",
+  "description": "Collection of handy online tools for developers, with great UX.",
+  "longDescription": "<p>IT Tools is a free and open-source collection of handy online tools for developers & people working in IT. It includes a token generator, case converter, base converter QR code generator, Git cheatsheet, lorem ipsum generator,.. and many more !</p>",
+  "tags": ["productivity", "tools", "developer-tools", "it", "collection"],
+  "repository": "https://github.com/CorentinTh/it-tools",
+  "image": "https://hub.docker.com/r/corentinth/it-tools",
+  "supported_architectures": ["amd64", "arm64"]
+}

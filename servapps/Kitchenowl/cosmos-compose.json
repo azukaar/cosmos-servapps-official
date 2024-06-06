@@ -12,7 +12,9 @@
             "labels": {
                 "cosmos-force-network-secured": "true",
                 "cosmos-auto-update": "true",
-                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Kitchenowl/icon.png"
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Kitchenowl/icon.png",
+                "cosmos-stack": "{ServiceName}",
+                "cosmos-stack-main": "{ServiceName}"
             },
             "networks": {
                 "{ServiceName}-network": {}
@@ -41,9 +43,12 @@
             "container_name": "{ServiceName}-backend",
             "restart": "unless-stopped",
             "labels": {
+                "cosmos-persistent-env": "JWT_SECRET_KEY",
                 "cosmos-force-network-secured": "true",
                 "cosmos-auto-update": "true",
-                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Kitchenowl/icon.png"
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Kitchenowl/icon.png",
+                "cosmos-stack": "{ServiceName}",
+                "cosmos-stack-main": "{ServiceName}"
             },
             "networks": {
                 "{ServiceName}-network": {}

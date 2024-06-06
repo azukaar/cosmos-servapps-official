@@ -1,0 +1,9 @@
+{
+    "name": "Cachet",
+    "longDescription": "<p>Cachet is an open-source status page system designed to help you keep track of your system status and share it with your user base. It is built to be responsive and works seamlessly across different devices.</p>",
+    "description": "Cachet, the open-source status page system.",
+    "tags": ["technical", "administration", "server", "open-source", "self-hosted", "monitoring", "uptime", "service status", "notifications", "windows", "linux", "macos", "docker"],
+    "repository": "https://github.com/cachethq/cachet/",
+    "image": "https://hub.docker.com/r/vouu/cachet/",
+    "supported_architectures": ["amd64", "arm64"]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Threadfin",
+  "description": "M3U Proxy for Plex DVR and Emby/Jellyfin Live TV. Based on xTeVe.",
+  "longDescription": "<p>Threadfin is a M3U proxy server for Plex, Emby, Jellyfin and any client and provider which supports the .TS and .M3U8 (HLS) streaming formats.</p><p>Threadfin emulates a SiliconDust HDHomeRun OTA tuner, which allows it to expose IPTV style channels to software, which would not normally support it. This Docker image includes the following packages and features:</p><ul><li>Threadfin (Linux) x86 64 bit ffmpeg Support Runs as unprivileged user</li></ul>",
+  "tags": ["media", "iptv", "tvguide", "open-source", "self-hosted", "web application", "plex", "emby", "jellyfin", "request system", "media content", "windows", "linux", "macos", "docker"],
+  "repository": "https://github.com/Threadfin/Threadfin",
+  "image": "https://hub.docker.com/r/fyb3roptik/threadfin",
+  "supported_architectures": ["amd64","arm64","arm/v7","arm/v8"]
+}

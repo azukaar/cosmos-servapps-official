@@ -1,0 +1,9 @@
+{
+  "name": "Webtop",
+  "longDescription": "<p>Webtop - Alpine, Ubuntu, Fedora, and Arch based containers containing full desktop environments in officially supported flavors accessible via any modern web browser</p>",
+  "description": "Webtop - Alpine, Ubuntu, Fedora, and Arch based containers containing full desktop environments in officially supported flavors accessible via any modern web browser",
+  "tags": ["Desktop", "VNC", "KASM"],
+  "repository": "https://github.com/kasmtech",
+  "image": "https://hub.docker.com/r/linuxserver/docker-webtop",
+  "supported_architectures": ["amd64", "arm64"]
+}

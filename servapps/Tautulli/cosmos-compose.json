@@ -1,0 +1,39 @@
+{
+    "cosmos-installer": {},
+    "minVersion": "0.9.0",
+    "services": {
+        "{ServiceName}": {
+            "image": "lscr.io/linuxserver/tautulli",
+            "container_name": "{ServiceName}",
+            "restart": "unless-stopped",
+            "environment": [
+                "PUID=1001",
+                "PGID=1001",
+                "TZ=Etc/UTC"
+            ],
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Tautulli/icon.png"
+            },
+            "volumes": [{
+                "source": "{ServiceName}-tautulli_data",
+                "target": "/config",
+                "type": "volume"
+            }],
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:8181",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+        }
+    }
+}

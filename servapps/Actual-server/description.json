@@ -1,0 +1,9 @@
+{
+    "name": "Actual",
+    "longDescription": "<p>Actual Budget is a super fast and privacy-focused app for managing your finances. At its heart is the well proven and much loved Envelope Budgeting methodology. You own your data and can do whatever you want with it.Featuring multi - device sync,optional end - to - end encryption and so much more. < /p>",
+    "description": "Automated finance tools are great, except when they aren’t. We provide you with tools that are quick to use, but ultimately you are in control. We help you learn, instead of dictating.",
+    "tags": ["Automated", "finance", "self-hosted"],
+    "repository": "https://github.com/actualbudget/actual-server/",
+    "image": "https://hub.docker.com/r/actualbudget/actual-server",
+    "supported_architectures": ["amd64", "arm64"]
+}

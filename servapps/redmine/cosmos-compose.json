@@ -1,0 +1,118 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "REDMINE_USERNAME",
+        "label": "What Redmine username do you want to use?",
+        "initialValue": "user",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_PASSWORD",
+        "label": "What Redmine password does it use?",
+        "initialValue": "bitnami1",
+        "type": "password"
+      },
+      {
+        "name": "REDMINE_EMAIL",
+        "label": "What is your Redmine email login?",
+        "initialValue": "user@example.com",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_FIRST_NAME",
+        "label": "What is your Redmine first name?",
+        "initialValue": "UserName",
+        "type": "text"
+      },
+      {
+        "name": "REDMINE_LAST_NAME",
+        "label": "What is your Redmine LastName?",
+        "initialValue": "LastName",
+        "type": "text"
+      }
+    ]
+  },
+    "minVersion": "0.8.0",
+    "services": {
+      "{ServiceName}": {
+        "image": "docker.io/bitnami/redmine:5",
+        "container_name": "{ServiceName}",
+        "hostname": "{ServiceName}",
+        "volumes": [
+          {
+            "source": "{ServiceName}-redmine",
+            "target": "/bitnami/redmine",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "REDMINE_DATABASE_PASSWORD={Passwords.1}",
+          "REDMINE_DATABASE_HOST={ServiceName}-db",
+          "REDMINE_DATABASE_PORT_NUMBER=3306",
+          "REDMINE_DATABASE_USER=bn_redmine",
+          "REDMINE_DATABASE_NAME=bitnami_redmine",
+          "REDMINE_USERNAME={Context.REDMINE_USERNAME}",
+          "REDMINE_PASSWORD={Context.REDMINE_PASSWORD}",
+          "REDMINE_EMAIL={Context.REDMINE_EMAIL}",
+          "REDMINE_FIRST_NAME={Context.REDMINE_FIRST_NAME}",
+          "REDMINE_LAST_NAME={Context.REDMINE_LAST_NAME}"
+        ],
+        "networks": {
+            "{ServiceName}": {}
+          },
+          "labels": {
+            "cosmos-persistent-env": "REDMINE_DATABASE_PASSWORD, REDMINE_DATABASE_HOST, REDMINE_DATABASE_USER, REDMINE_DATABASE_NAME, REDMINE_DATABASE_PORT_NUMBER",
+            "cosmos-force-network-secured": "true",
+            "cosmos-auto-update": "true",
+            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Redmine/icon.png",
+            "cosmos-stack": "{ServiceName}",
+            "cosmos-stack-main": "{ServiceName}"
+          },
+        "routes": [{
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
+            "useHost": true,
+            "target": "http://{ServiceName}:3000",
+            "mode": "SERVAPP",
+            "Timeout": 14400000,
+            "ThrottlePerMinute": 12000,
+            "BlockCommonBots": true,
+            "SmartShield": {
+                "Enabled": true
+            }
+        }]
+
+      },
+      "{ServiceName}-db": {
+        "image": "docker.io/bitnami/mariadb:11.1",
+        "container_name": "{ServiceName}-db",
+        "hostname": "{ServiceName}-db",
+        "restart": "unless-stopped",
+        "networks": {
+            "{ServiceName}": {}
+          },
+        "volumes": [
+          {
+            "source": "{ServiceName}-db",
+            "target": "/bitnami/mariadb",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "MARIADB_DATABASE=bitnami_redmine",
+          "MARIADB_USER=bn_redmine",
+          "MARIADB_PASSWORD={Passwords.1}",
+          "MARIADB_ROOT_PASSWORD={Passwords.2}"
+        ],
+        "labels": {
+          "cosmos-persistent-env": "MARIADB_DATABASE, MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
+        }
+      }
+    },
+    "networks": {
+        "{ServiceName}": {}
+      }
+  }

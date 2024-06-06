@@ -24,7 +24,7 @@
         {if Context.downloadsPath}
         {
           "source": "{Context.downloadsPath}",
-          "target": "/data/movies",
+          "target": "/downloads",
           "type": "bind"
         }
         {/if}

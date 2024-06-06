@@ -1,4 +1,6 @@
 const fs = require('fs')
+const { config } = require('process')
+const configFile = require('./config.json')
 
 // list all directories in the directory servapps and compile them in servapps.json
 
@@ -26,12 +28,32 @@ for (const file of servapps) {
   }
 
   servapp.icon = `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/icon.png`
-  servapp.compose = `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/cosmos-compose.json`
+  //Common Format,used by most
+  const YMLComposeSource =  `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/docker-compose.yml`;
+  if(fs.existsSync(`./servapps/${file}/docker-compose.yml`)) {
+    servapp.compose = YMLComposeSource;
+  }
+  //Cosmos Legacy Format
+  const CosmosComposeSource =  `https://azukaar.github.io/cosmos-servapps-official/servapps/${file}/cosmos-compose.json`; 
+  if(fs.existsSync(`./servapps/${file}/cosmos-compose.json`)) {
+    servapp.compose = CosmosComposeSource;
+    }
 
   servappsJSON.push(servapp)
 }
 
+// add showcase
+const _sc = ["Jellyfin", "Home Assistant", "Nextcloud"];
+const showcases = servappsJSON.filter((app) => _sc.includes(app.name));
+
+let apps = {
+  "source": configFile.url,
+  "showcase": showcases,
+  "all": servappsJSON
+}
+
 fs.writeFileSync('./servapps.json', JSON.stringify(servappsJSON, null, 2))
+fs.writeFileSync('./index.json', JSON.stringify(apps, null, 2))
 
 for (const servapp of servappsJSON) {
   servapp.compose = `http://localhost:3000/servapps/${servapp.id}/cosmos-compose.json`
@@ -44,8 +66,4 @@ for (const servapp of servappsJSON) {
   }
 }
 
-fs.writeFileSync('./servapps_test.json', JSON.stringify({
-  source: "",
-  showcase: [],
-  all: servappsJSON,
-}, null, 2))
+fs.writeFileSync('./servapps_test.json', JSON.stringify(apps, null, 2))

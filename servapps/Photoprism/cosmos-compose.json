@@ -45,9 +45,12 @@
         "PHOTOPRISM_ADMIN_PASSWORD={Passwords.2}"
       ],
       "labels": {
+        "cosmos-persistent-env": "PHOTOPRISM_DATABASE_PASSWORD, PHOTOPRISM_DATABASE_USER, PHOTOPRISM_ADMIN_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Photoprism/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Photoprism/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "networks": {
         "{ServiceName}-mariadb": {}
@@ -98,6 +101,11 @@
       ],
       "networks": {
         "{ServiceName}-mariadb": {}
+      },
+      "labels": {
+        "cosmos-persistent-env": "MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD, MARIADB_DATABASE",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
       "volumes": [

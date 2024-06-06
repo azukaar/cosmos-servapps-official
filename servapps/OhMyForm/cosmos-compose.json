@@ -34,8 +34,9 @@
         "ADMIN_USERNAME={Context.ADMIN_USERNAME}",
         "ADMIN_PASSWORD={Context.ADMIN_PASSWORD}",
         "DATABASE_DRIVER=sqlite",
-        "DATABASE_URL=sqlite=//data/data.sqlite",
-        "LOGIN_NOTE="
+        "DATABASE_URL=sqlite:///data/data.sqlite",
+        "LOGIN_NOTE=",
+        "SECRET_KEY={Passwords.0}"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",

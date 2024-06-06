@@ -1,0 +1,9 @@
+{
+  "name": "Blender",
+  "longDescription": "<p>Blender is a powerful open-source tool for 2D and 3D graphics, full-on animations, sculpting, rendering, compositing, motion tracking, and game creation. It stands out for its incredible versatility and comprehensive feature set. Blender is widely used for its advanced capabilities in modeling, texturing, and animation.</p><p>With a user-friendly interface and an extensive range of tools and features, Blender is suitable for both amateurs and professionals. It supports the entirety of the 3D pipeline and is continuously updated by a global community of contributors.</p><p>Blender is cross-platform, functioning seamlessly on Windows, MacOS, and Linux. It is the go-to tool for artists, designers, and animators who require a robust, flexible, and free tool for their creative endeavors.</p>",
+  "description": "Blender is a free and open-source 3D creation suite supporting the entirety of the 3D pipeline—modeling, rigging, animation, simulation, rendering, compositing, and motion tracking. It's versatile and powerful, equipped with a wide range of tools for creative professionals and hobbyists alike. Blender works across various platforms, offering advanced features for 3D graphics, animation, and more.",
+  "tags": ["3d modeling", "animation", "rendering", "open-source", "blender", "windows", "linux", "macos", "game creation", "motion tracking", "compositing", "visual effects"],
+  "repository": "https://github.com/blender/blender",
+  "image": "https://hub.docker.com/r/linuxserver/blender",
+  "supported_architectures": ["amd64", "arm64"]
+}
