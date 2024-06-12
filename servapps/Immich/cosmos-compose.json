@@ -29,7 +29,6 @@
       "container_name": "{ServiceName}",
       "hostname": "{ServiceName}",
       "image": "ghcr.io/immich-app/immich-server:release",
-      "command": "start.sh immich",
       "networks": {
         "{ServiceName}": {}
       },
@@ -84,49 +83,6 @@
             "MaxGlobalSimultaneous": 1000
           }
         }
-      ],
-      "restart": "always"
-    },
-    "microservices": {
-      "container_name": "microservices",
-      "hostname": "microservices",
-      "image": "ghcr.io/immich-app/immich-server:release",
-      "command": "start.sh microservices",
-      "networks": {
-        "{ServiceName}": {}
-      },
-      "volumes": [
-        {
-          "source": "{Context.photoPath}",
-          "target": "/usr/src/app/upload",
-          "type": "bind"
-        },
-        {
-          "source": "/etc/localtime",
-          "target": "/etc/localtime",
-          "type": "bind"
-        }
-      ],
-      "labels": {
-        "cosmos-persistent-env": "UPLOAD_LOCATION, TYPESENSE_API_KEY, DB_PASSWORD, DB_DATABASE_NAME",
-        "cosmos-force-network-secured": "true",
-        "cosmos-auto-update": "false",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Immich/icon.png",
-        "cosmos-stack": "{ServiceName}",
-        "cosmos-stack-main": "{ServiceName}"
-      },
-      "environment": [
-        "UPLOAD_LOCATION=/usr/src/app/upload",
-        "TYPESENSE_API_KEY={Passwords.0}",
-        "DB_PASSWORD={Passwords.1}",
-        "DB_HOSTNAME={ServiceName}-database",
-        "DB_USERNAME=postgres",
-        "DB_DATABASE_NAME=immich",
-        "REDIS_HOSTNAME={ServiceName}-redis"
-      ],
-      "depends_on": [
-        "{ServiceName}-redis",
-        "{ServiceName}-database"
       ],
       "restart": "always"
     },
