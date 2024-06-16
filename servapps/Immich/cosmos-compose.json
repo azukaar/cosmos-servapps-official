@@ -29,7 +29,6 @@
       "container_name": "{ServiceName}",
       "hostname": "{ServiceName}",
       "image": "ghcr.io/immich-app/immich-server:release",
-      "command": "start.sh immich",
       "networks": {
         "{ServiceName}": {}
       },
@@ -91,7 +90,6 @@
       "container_name": "microservices",
       "hostname": "microservices",
       "image": "ghcr.io/immich-app/immich-server:release",
-      "command": "start.sh microservices",
       "networks": {
         "{ServiceName}": {}
       },
