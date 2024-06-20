@@ -33,7 +33,8 @@
         "DB_USER=manyfold",
         "DB_NAME=manyfold",
         "DB_PASS={Passwords.0}",
-        "DB_PORT=5432"
+        "DB_PORT=5432",
+	"DATABASE_URL=postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}?pool=5"
       ],
       "security_opt": [
         "no-new-privileges:true"
