@@ -8,7 +8,8 @@
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
-        "DATABASE_URL=postgres://ryot:{Passwords.0}@{ServiceName}-postgres:5432/ryot"
+        "DATABASE_URL=postgres://ryot:{Passwords.0}@{ServiceName}-postgres:5432/ryot",
+        "SERVER_ADMIN_ACCESS_TOKEN={Passwords.1}"
       ],
       "labels": {
         "cosmos-persistent-env": "DATABASE_URL",
