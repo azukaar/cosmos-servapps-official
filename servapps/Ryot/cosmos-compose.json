@@ -21,13 +21,7 @@
       "networks": {
         "{ServiceName}-postgres": {}
       },
-      "volumes": [
-        {
-          "source": "{ServiceName}-data",
-          "target": "/data",
-          "type": "volume"
-        }
-    ],
+      "volumes": [],
       "routes": [
         {
           "name": "{ServiceName}",
@@ -44,9 +38,9 @@
         }
       ]
     },
-    
+
     "{ServiceName}-postgres": {
-      "image": "postgres:15-alpine",
+      "image": "postgres:16-alpine",
       "container_name": "{ServiceName}-postgres",
       "hostname": "{ServiceName}-postgres",
       "restart": "unless-stopped",
