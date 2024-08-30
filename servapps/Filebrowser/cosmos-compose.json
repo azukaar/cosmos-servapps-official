@@ -31,7 +31,7 @@
   },
   "services": {
     "{ServiceName}": {
-      "image": "filebrowser/filebrowser:s6",
+      "image": "filebrowser/filebrowser",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "tty": true,
