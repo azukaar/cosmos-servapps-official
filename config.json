@@ -1,3 +1,3 @@
 {
-  "url": "https://azukaar.github.io/cosmos-servapps-official/servapps.json"
+    "showcase": ["Jellyfin", "Home Assistant", "Nextcloud"]
 }
