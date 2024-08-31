@@ -1,5 +1,9 @@
 const fs = require('fs');
 
+// Load configuration from config.json
+const { config } = require('process')
+const configFile = require('./config.json')
+
 // Constants
 const GITHUB_PAGES_URL = `https://${process.env.GITHUB_PAGES_URL}`;
 const LOCALHOST_URL = "http://LOCALHOST_URL:3000";
@@ -9,7 +13,7 @@ const OUTPUT_FILES = {
   INDEX_JSON: './index.json',
   SERVAPPS_TEST_JSON: './servapps_test.json',
 };
-const SHOWCASE_APPS = ["Jellyfin", "Home Assistant", "Nextcloud"];
+const SHOWCASE_APPS = configFile.showcase;
 
 // Servapp Class
 class Servapp {
