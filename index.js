@@ -1,70 +1,146 @@
-const fs = require('fs')
-const githubPagesUrl = `https://${process.env.GITHUB_PAGES_URL}`
-const localhost = "http://localhost:3000"
+const fs = require('fs');
 
+// Constants
+const GITHUB_PAGES_URL = `https://${process.env.GITHUB_PAGES_URL}`;
+const LOCALHOST_URL = "http://LOCALHOST_URL:3000";
+const INPUT_SERVAPPS_DIR = './servapps';
+const OUTPUT_FILES = {
+  SERVAPPS_JSON: './servapps.json',
+  INDEX_JSON: './index.json',
+  SERVAPPS_TEST_JSON: './servapps_test.json',
+};
+const SHOWCASE_APPS = ["Jellyfin", "Home Assistant", "Nextcloud"];
 
-// list all directories in the directory servapps and compile them in servapps.json
-
-const servapps = fs.readdirSync('./servapps').filter(file => fs.lstatSync(`./servapps/${file}`).isDirectory())
-
-let servappsJSON = []
-
-for (const file of servapps) {
-  const servapp = require(`./servapps/${file}/description.json`)
-  servapp.id = file
-  servapp.screenshots = [];
-  servapp.artefacts = {};
-
-  // list all screenshots in the directory servapps/${file}/screenshots
-  const screenshots = fs.readdirSync(`./servapps/${file}/screenshots`)
-  for (const screenshot of screenshots) {
-    servapp.screenshots.push(`${githubPagesUrl}/servapps/${file}/screenshots/${screenshot}`)
+// Servapp Class
+class Servapp {
+  constructor(id, baseUrl) {
+    this.id = id;
+    this.baseUrl = baseUrl;
+    this.description = this.loadDescription();
+    this.screenshots = this.loadScreenshots();
+    this.artefacts = this.loadArtefacts();
+    this.icon = this.loadIcon();
+    this.compose = this.loadComposeSource();
   }
 
-  if(fs.existsSync(`./servapps/${file}/artefacts`)) {
-    const artefacts = fs.readdirSync(`./servapps/${file}/artefacts`)
-    for(const artefact of artefacts) {
-      servapp.artefacts[artefact] = (`${githubPagesUrl}/servapps/${file}/artefacts/${artefact}`)
+  loadDescription() {
+    return readJSONFile(`./servapps/${this.id}/description.json`);
+  }
+
+  loadScreenshots() {
+    const screenshotsDir = `./servapps/${this.id}/screenshots`;
+    if (fs.existsSync(screenshotsDir)) {
+      return fs.readdirSync(screenshotsDir).map(screenshot => `${this.baseUrl}/servapps/${this.id}/screenshots/${screenshot}`);
     }
+    return [];
   }
 
-  servapp.icon = `${githubPagesUrl}/servapps/${file}/icon.png`
-  //Common Format,used by most
-  const YMLComposeSource =  `${githubPagesUrl}/servapps/${file}/docker-compose.yml`;
-  if(fs.existsSync(`./servapps/${file}/docker-compose.yml`)) {
-    servapp.compose = YMLComposeSource;
+  loadArtefacts() {
+    const artefactsDir = `./servapps/${this.id}/artefacts`;
+    const artefacts = {};
+    if (fs.existsSync(artefactsDir)) {
+      fs.readdirSync(artefactsDir).forEach(artefact => {
+        artefacts[artefact] = `${this.baseUrl}/servapps/${this.id}/artefacts/${artefact}`;
+      });
+    }
+    return artefacts;
   }
-  //Cosmos Legacy Format
-  const CosmosComposeSource =  `${githubPagesUrl}/servapps/${file}/cosmos-compose.json`; 
-  if(fs.existsSync(`./servapps/${file}/cosmos-compose.json`)) {
-    servapp.compose = CosmosComposeSource;
+
+  loadIcon() {
+    return `${this.baseUrl}/servapps/${this.id}/icon.png`;
+  }
+
+  loadComposeSource() {
+    const dockerComposePath = `${this.baseUrl}/servapps/${this.id}/docker-compose.yml`;
+    const cosmosComposePath = `${this.baseUrl}/servapps/${this.id}/cosmos-compose.json`;
+
+    if (fs.existsSync(`./servapps/${this.id}/docker-compose.yml`)) {
+      return dockerComposePath;
     }
 
-  servappsJSON.push(servapp)
-}
+    if (fs.existsSync(`./servapps/${this.id}/cosmos-compose.json`)) {
+      return cosmosComposePath;
+    }
 
-// add showcase
-const _sc = ["Jellyfin", "Home Assistant", "Nextcloud"];
-const showcases = servappsJSON.filter((app) => _sc.includes(app.name));
-
-let apps = {
-  "source": `${githubPagesUrl}/servapps.json`,
-  "showcase": showcases,
-  "all": servappsJSON
-}
-
-fs.writeFileSync('./servapps.json', JSON.stringify(servappsJSON, null, 2))
-fs.writeFileSync('./index.json', JSON.stringify(apps, null, 2))
-
-for (const servapp of servappsJSON) {
-  servapp.compose = `${localhost}/servapps/${servapp.id}/cosmos-compose.json`
-  servapp.icon = `${localhost}/servapps/${servapp.id}/icon.png`
-  for (let i = 0; i < servapp.screenshots.length; i++) {
-    servapp.screenshots[i] = servapp.screenshots[i].replace('${githubPagesUrl}', '${localhost}')
+    return null;
   }
-  for (const artefact in servapp.artefacts) {
-    servapp.artefacts[artefact] = servapp.artefacts[artefact].replace('${githubPagesUrl}', '${localhost}')
+
+  toJSON() {
+    return {
+      ...this.description,
+      id: this.id,
+      screenshots: this.screenshots,
+      artefacts: this.artefacts,
+      icon: this.icon,
+      compose: this.compose
+    };
   }
 }
 
-fs.writeFileSync('./servapps_test.json', JSON.stringify(apps, null, 2))
+// Funcs Utils
+const getDirectoryContents = (dirPath) => fs.readdirSync(dirPath).filter(file => fs.lstatSync(`${dirPath}/${file}`).isDirectory());
+const readJSONFile = (filePath) => require(filePath);
+const writeJSONFile = (filePath, data) => fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+
+// Main Class
+class ServappManager {
+  constructor(githubPagesUrl, localhostUrl, inputDir, showcaseApps) {
+    this.githubPagesUrl = githubPagesUrl;
+    this.localhostUrl = localhostUrl;
+    this.inputDir = inputDir;
+    this.showcaseApps = showcaseApps;
+
+    this.servapps = this.loadServapps(this.githubPagesUrl);
+    this.servappsLocalhost = this.loadServapps(this.localhostUrl);
+  }
+
+  loadServapps(baseUrl) {
+    const servappsDirs = getDirectoryContents(this.inputDir);
+    return servappsDirs.map(file => new Servapp(file, baseUrl));
+  }
+
+  generateServappsJSON(servapps) {
+    return servapps.map(servapp => servapp.toJSON());
+  }
+
+  filterServapps(servapps, servappsToExclude) {
+    return servapps.filter(servapp => servappsToExclude.includes(servapp.description.name));
+  }
+
+  generateIndexJSON(servapps, baseUrl) {
+    const showcaseAppsJSON = this.filterServapps(servapps, this.showcaseApps);
+
+    return {
+      source: `${baseUrl}/servapps.json`,
+      showcase: this.generateServappsJSON(showcaseAppsJSON),
+      all: this.generateServappsJSON(servapps)
+    };
+  }
+
+  saveJSONFiles(outputFiles) {
+    // Generate JSON data for the GitHub Pages environment
+    const servappsJson = this.generateServappsJSON(this.servapps);
+    const indexJson = this.generateIndexJSON(this.servapps, this.githubPagesUrl);
+
+    // Write the JSON data to the corresponding files
+    writeJSONFile(outputFiles.SERVAPPS_JSON, servappsJson);
+    writeJSONFile(outputFiles.INDEX_JSON, indexJson);
+
+    // Generate JSON data for the localhost environment
+    const servappsLocalhostJson = this.generateServappsJSON(this.servappsLocalhost);
+    const indexLocalhostJson = this.generateIndexJSON(this.servappsLocalhost, this.localhostUrl);
+
+    // Write the localhost JSON data to the test output file
+    writeJSONFile(outputFiles.SERVAPPS_TEST_JSON, servappsLocalhostJson);
+  }
+}
+
+// RUN
+const servappManager = new ServappManager(
+  GITHUB_PAGES_URL,
+  LOCALHOST_URL,
+  INPUT_SERVAPPS_DIR,
+  SHOWCASE_APPS
+);
+
+servappManager.saveJSONFiles(OUTPUT_FILES);
