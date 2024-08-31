@@ -35,8 +35,23 @@ jobs:
         uses: actions/setup-node@v2.5.2
         with:
           node-version: 18.x
+      - name: Set Github Page Url Variable
+        id: get_page_url
+        run: |
+          if [ -f "CNAME" ]; then
+            DOMAIN=$(cat CNAME)
+            echo "Custom domain found: $DOMAIN"
+          else
+            DOMAIN="${{ github.repository_owner }}.github.io"
+            echo "No custom domain found. Using default domain: $DOMAIN"
+          fi
+          REPOSITORY_NAME="${{ github.event.repository.name }}"
+          FULL_URL="$DOMAIN/$REPOSITORY_NAME"
+          echo "::set-output name=url::$FULL_URL"
       - name: Build index
         run: node index.js
+        env:
+          GITHUB_PAGES_URL: ${{ steps.get_page_url.outputs.url }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
