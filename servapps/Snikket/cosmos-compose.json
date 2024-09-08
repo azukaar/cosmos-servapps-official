@@ -1,0 +1,211 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "snikketDomain",
+        "label": "What domain will be used?",
+        "type": "text"
+      },
+      {
+        "name": "adminEmail",
+        "label": "What is the admin email?",
+        "type": "text"
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "snikket/snikket-server:stable",
+      "environment": [
+        "SNIKKET_DOMAIN={Context.snikketDomain}",
+        "SNIKKET_ADMIN_EMAIL={Context.adminEmail}",
+        "SNIKKET_TWEAK_HTTP_PORT=5080",
+        "SNIKKET_TWEAK_HTTPS_PORT=5443",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos.stack": "{ServiceName}",
+        "cosmos.stack.main": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Snikket/icon.png",
+        "org.opencontainers.image.revision": "2a4a1ce1658e5b99a35ac1201ffb826a74701b43",
+        "org.opencontainers.image.source": "https://github.com/snikket-im/snikket-server",
+        "org.snikket.images.build": "snikket-server-x86/131"
+      },
+      "ports": [],
+      "volumes": [
+        {
+          "Type": "volume",
+          "Source": "{ServiceName}_data",
+          "Target": "/snikket"
+        }
+      ],
+      "networks": {
+        "host": {}
+      },
+      "routes": null,
+      "restart": "unless-stopped",
+      "devices": null,
+      "expose": [],
+      "entrypoint": "/bin/entrypoint.sh",
+      "runtime": "runc",
+      "hostname": "house-server",
+      "network_mode": "host",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "/usr/bin/prosodyctl shell \"portcheck ${SNIKKET_TWEAK_INTERNAL_HTTP_INTERFACE:-127.0.0.1}:${SNIKKET_TWEAK_INTERNAL_HTTP_PORT:-5280}\""
+        ],
+        "interval": 0,
+        "timeout": 0,
+        "retries": 0,
+        "start_period": 0
+      }
+    },
+    "{ServiceName}-portal": {
+      "container_name": "{ServiceName}-portal",
+      "image": "snikket/snikket-web-portal:stable",
+      "environment": [
+        "SNIKKET_DOMAIN={Context.snikketDomain}",
+        "SNIKKET_ADMIN_EMAIL={Context.adminEmail}",
+        "SNIKKET_TWEAK_HTTP_PORT=5080",
+        "SNIKKET_TWEAK_HTTPS_PORT=5443",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SNIKKET_WEB_PYENV=/etc/snikket-web-portal/env.py",
+        "SNIKKET_WEB_PROSODY_ENDPOINT=http://127.0.0.1:5280/"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos.stack": "{ServiceName}",
+        "org.opencontainers.image.revision": "bda0f523200e2b1bffa5f0280cf114ff23a00007",
+        "org.opencontainers.image.source": "https://github.com/snikket-im/snikket-web-portal",
+        "org.snikket.images.build": "snikket-web-portal-x86/238"
+      },
+      "ports": [],
+      "volumes": [],
+      "networks": {
+        "host": {}
+      },
+      "routes": null,
+      "restart": "unless-stopped",
+      "devices": null,
+      "expose": [],
+      "entrypoint": "/bin/sh /entrypoint.sh",
+      "runtime": "runc",
+      "working_dir": "/opt/snikket-web-portal",
+      "hostname": "house-server",
+      "network_mode": "host",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "nc -zv ${SNIKKET_TWEAK_PORTAL_INTERNAL_HTTP_INTERFACE:-127.0.0.1} ${SNIKKET_TWEAK_PORTAL_INTERNAL_HTTP_PORT:-5765}"
+        ],
+        "interval": 0,
+        "timeout": 0,
+        "retries": 0,
+        "start_period": 0
+      }
+    },
+    "{ServiceName}-certs": {
+      "container_name": "{ServiceName}-certs",
+      "image": "snikket/snikket-cert-manager:stable",
+      "environment": [
+        "SNIKKET_DOMAIN={Context.snikketDomain}",
+        "SNIKKET_ADMIN_EMAIL={Context.adminEmail}",
+        "SNIKKET_TWEAK_HTTP_PORT=5080",
+        "SNIKKET_TWEAK_HTTPS_PORT=5443",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos.stack": "{ServiceName}",
+        "org.opencontainers.image.revision": "7de6493258ebe917e2cc7b0571f2307c72c2d104",
+        "org.opencontainers.image.source": "https://github.com/snikket-im/snikket-cert-manager",
+        "org.snikket.images.build": "snikket-cert-manager-x86/49"
+      },
+      "ports": [],
+      "volumes": [
+        {
+          "Type": "volume",
+          "Source": "{ServiceName}_data",
+          "Target": "/snikket"
+        },
+        {
+          "Type": "volume",
+          "Source": "{ServiceName}_acme_challenges",
+          "Target": "/var/www/.well-known/acme-challenge"
+        }
+      ],
+      "networks": {
+        "host": {}
+      },
+      "routes": null,
+      "restart": "unless-stopped",
+      "devices": null,
+      "expose": [],
+      "command": "/bin/bash /entrypoint.sh",
+      "entrypoint": "/usr/bin/tini",
+      "runtime": "runc",
+      "hostname": "house-server",
+      "network_mode": "host",
+      "healthcheck": {
+        "test": null,
+        "interval": 0,
+        "timeout": 0,
+        "retries": 0,
+        "start_period": 0
+      }
+    },
+    "{ServiceName}-proxy": {
+      "container_name": "{ServiceName}-proxy",
+      "image": "snikket/snikket-web-proxy:stable",
+      "environment": [
+        "SNIKKET_DOMAIN={Context.snikketDomain}",
+        "SNIKKET_ADMIN_EMAIL={Context.adminEmail}",
+        "SNIKKET_TWEAK_HTTP_PORT=5080",
+        "SNIKKET_TWEAK_HTTPS_PORT=5443",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos.stack": "{ServiceName}",
+        "org.opencontainers.image.revision": "85e7cbb193f4000a43636eaafadedc7fe7416f88",
+        "org.opencontainers.image.source": "https://github.com/snikket-im/snikket-web-proxy",
+        "org.snikket.images.build": "snikket-web-proxy-x86/72"
+      },
+      "ports": [],
+      "volumes": [
+        {
+          "Type": "volume",
+          "Source": "{ServiceName}_data",
+          "Target": "/snikket"
+        },
+        {
+          "Type": "volume",
+          "Source": "{ServiceName}_acme_challenges",
+          "Target": "/var/www/html/.well-known/acme-challenge"
+        }
+      ],
+      "networks": {
+        "host": {}
+      },
+      "routes": null,
+      "restart": "unless-stopped",
+      "devices": null,
+      "expose": [],
+      "command": "/bin/sh /entrypoint.sh",
+      "entrypoint": "/usr/bin/tini",
+      "runtime": "runc",
+      "hostname": "house-server",
+      "network_mode": "host",
+      "healthcheck": {
+        "test": null,
+        "interval": 0,
+        "timeout": 0,
+        "retries": 0,
+        "start_period": 0
+      }
+    }
+  }
+}
