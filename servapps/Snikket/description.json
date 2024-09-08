@@ -1,0 +1,9 @@
+{
+    "name": "Snikket",
+    "longDescription": "<p>An easy-to-use privacy-friendly messaging platform< /p>",
+    "description": "An easy-to-use privacy-friendly messaging platform",
+    "tags": ["Chat", "Snikket", "self-hosted", "open-source"],
+    "repository": "https://github.com/snikket-im/snikket-selfhosted",
+    "image": "https://github.com/snikket-im/snikket-selfhosted",
+    "supported_architectures": ["amd64", "arm64"]
+}
