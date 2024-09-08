@@ -4,6 +4,6 @@
     "description": "An easy-to-use privacy-friendly messaging platform",
     "tags": ["Chat", "Snikket", "self-hosted", "open-source"],
     "repository": "https://github.com/snikket-im/snikket-selfhosted",
-    "image": "https://github.com/snikket-im/snikket-selfhosted",
+    "image": "https://hub.docker.com/r/snikket/snikket-server",
     "supported_architectures": ["amd64", "arm64"]
 }
