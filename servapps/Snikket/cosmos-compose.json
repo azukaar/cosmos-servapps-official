@@ -3,7 +3,7 @@
     "form": [
       {
         "name": "snikketDomain",
-        "label": "What domain will be used?",
+        "label": "What domain will be used? (e.g. chat.yourdomain.com)",
         "type": "text"
       },
       {
