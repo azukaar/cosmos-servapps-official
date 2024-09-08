@@ -50,7 +50,6 @@
       "expose": [],
       "entrypoint": "/bin/entrypoint.sh",
       "runtime": "runc",
-      "hostname": "house-server",
       "network_mode": "host",
       "healthcheck": {
         "test": [
@@ -94,7 +93,6 @@
       "entrypoint": "/bin/sh /entrypoint.sh",
       "runtime": "runc",
       "working_dir": "/opt/snikket-web-portal",
-      "hostname": "house-server",
       "network_mode": "host",
       "healthcheck": {
         "test": [
@@ -147,7 +145,6 @@
       "command": "/bin/bash /entrypoint.sh",
       "entrypoint": "/usr/bin/tini",
       "runtime": "runc",
-      "hostname": "house-server",
       "network_mode": "host",
       "healthcheck": {
         "test": null,
@@ -197,7 +194,6 @@
       "command": "/bin/sh /entrypoint.sh",
       "entrypoint": "/usr/bin/tini",
       "runtime": "runc",
-      "hostname": "house-server",
       "network_mode": "host",
       "healthcheck": {
         "test": null,
