@@ -38,11 +38,9 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
-          },
-          "AuthEnabled": false
+          }
         }
       ],
-      "depends_on": {},
       "volumes": [
         {
           "source": "{ServiceName}",
@@ -54,7 +52,7 @@
         "TZ",
         "dbhost={ServiceName}-db",
         "dbuser=root",
-        "dbpass=gaseous",
+        "dbpass={Passwords.0}",
         "igdbclientid={Context.igclientid}",
         "igdbclientsecret={Context.igclientsecret}"
       ],
@@ -64,7 +62,7 @@
         "cosmos.stack": "{ServiceName}",
         "cosmos.stack.main": "{ServiceName}",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Gaseous/icon.png",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Gaseous/icon.png"
       }
     },
     "{ServiceName}-db": {
@@ -82,9 +80,9 @@
         }
       ],
       "environment": [
-        "MARIADB_ROOT_PASSWORD=gaseous",
+        "MARIADB_ROOT_PASSWORD={Passwords.0}",
         "MARIADB_USER=gaseous",
-        "MARIADB_PASSWORD=gaseous"
+        "MARIADB_PASSWORD={Passwords.1}"
       ],
       "hostname": "{ServiceName}-db",
       "network_mode": "cosmos-{ServiceName}-default",
@@ -96,9 +94,7 @@
     }
   },
   "networks": {
-    "{ServiceName}": {
-      "driver": "bridge"
-    },
+    "{ServiceName}": {},
     "cosmos-{ServiceName}-default": {}
   },
   "volumes": {
