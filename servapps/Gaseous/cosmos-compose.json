@@ -1,0 +1,107 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "igclientid",
+        "label": "What is your internet games client id? See: https://api-docs.igdb.com/#account-creation to set up",
+        "type": "text"
+      },
+      {
+        "name": "igclientsecret",
+        "label": "What is your internet games client secret?",
+        "type": "text"
+      }
+    ]
+  },
+
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "gaseousgames/gaseousserver:latest",
+      "build": {
+        "context": "./",
+        "dockerfile": "./build/Dockerfile"
+      },
+      "restart": "unless-stopped",
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": false
+        }
+      ],
+      "depends_on": {},
+      "volumes": [
+        {
+          "source": "{ServiceName}",
+          "target": "/home/gaseous/.gaseous-server",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "TZ",
+        "dbhost={ServiceName}-db",
+        "dbuser=root",
+        "dbpass=gaseous",
+        "igdbclientid={Context.igclientid}",
+        "igdbclientsecret={Context.igclientsecret}"
+      ],
+      "hostname": "{ServiceName}",
+      "network_mode": "cosmos-{ServiceName}-default",
+      "labels": {
+        "cosmos.stack": "{ServiceName}",
+        "cosmos.stack.main": "{ServiceName}",
+        "cosmos-auto-update": "true"
+      }
+    },
+    "{ServiceName}-db": {
+      "container_name": "{ServiceName}-db",
+      "image": "mariadb",
+      "restart": "unless-stopped",
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-db",
+          "target": "/var/lib/mysql",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "MARIADB_ROOT_PASSWORD=gaseous",
+        "MARIADB_USER=gaseous",
+        "MARIADB_PASSWORD=gaseous"
+      ],
+      "hostname": "{ServiceName}-db",
+      "network_mode": "cosmos-{ServiceName}-default",
+      "labels": {
+        "cosmos.stack": "{ServiceName}",
+        "cosmos.stack.main": "{ServiceName}",
+        "cosmos-auto-update": "true"
+      }
+    }
+  },
+  "networks": {
+    "{ServiceName}": {
+      "driver": "bridge"
+    },
+    "cosmos-{ServiceName}-default": {}
+  },
+  "volumes": {
+    "{ServiceName}": {},
+    "{ServiceName}-db": {}
+  }
+}
