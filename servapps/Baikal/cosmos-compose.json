@@ -44,6 +44,9 @@
           "SmartShield": {
             "Enabled": true
           }
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
         }
       ]
     }
