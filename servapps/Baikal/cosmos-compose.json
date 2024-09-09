@@ -6,7 +6,13 @@
         "label": "Do you want to make this service admin only?",
         "initialValue": false,
         "type": "checkbox"
-      }
+      },
+      {
+        "name": "baikaldata",
+        "label": "Where do you want to store Baikal's data?",
+        "initialValue": "/var/www/baikal/Specific",
+        "type": "text"
+      },
     ]
   },
   "services": {
@@ -21,8 +27,8 @@
         },
         {
           "source": "{ServiceName}-data",
-          "target": "/var/www/baikal/Specific",
-          "type": "volume"
+          "target": "{Context.baikaldata}",
+          "type": "bind"
         }
       ],
       "container_name": "{ServiceName}",
