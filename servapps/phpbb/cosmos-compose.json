@@ -73,9 +73,9 @@
                 }
              }
           ],
-          "depends_on": [
-             "{ServiceName}-mariadb"
-          ]
+          "depends_on": {
+             "{ServiceName}-mariadb": {}
+          }
        }
     },
     "networks": {

@@ -101,9 +101,9 @@
                 "POSTGRES_PASSWORD={Passwords.0}",
                 "DATABASE_HOST={ServiceName}-postgres"
             ],
-            "depends_on": [
-                "{ServiceName}-postgres"
-            ],
+            "depends_on": {
+                "{ServiceName}-postgres": {}
+            },
             "volumes": [
                 {
                     "source": "{ServiceName}-backend",

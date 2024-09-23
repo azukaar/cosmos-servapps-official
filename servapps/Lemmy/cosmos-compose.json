@@ -35,10 +35,10 @@
           "type": "volume"
         }
       ],
-      "depends_on": [
-        "{ServiceName}-postgres",
-        "{ServiceName}-pictrs"
-      ],
+      "depends_on": {
+        "{ServiceName}-postgres": {},
+        "{ServiceName}-pictrs": {}
+      },
       "routes": [
         {
           "name": "{ServiceName}-api-1",
@@ -180,9 +180,9 @@
           "type": "volume"
         }
       ],
-      "depends_on": [
-        "{ServiceName}"
-      ],
+      "depends_on": {
+        "{ServiceName}": {}
+      },
       "restart": "always"
     },
     "{ServiceName}-pictrs": {

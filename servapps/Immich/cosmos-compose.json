@@ -61,10 +61,10 @@
         "DB_DATABASE_NAME=immich",
         "REDIS_HOSTNAME={ServiceName}-redis"
       ],
-      "depends_on": [
-        "{ServiceName}-redis",
-        "{ServiceName}-database"
-      ],
+      "depends_on": {
+        "{ServiceName}-redis": {},
+        "{ServiceName}-database": {}
+      },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -204,9 +204,9 @@
         "PUID=1000",
         "PGID=1000"
       ],
-      "depends_on": [
-        "{ServiceName}-database"
-      ]
+      "depends_on": {
+        "{ServiceName}-database": {}
+      }
     }
     {/if}
   },

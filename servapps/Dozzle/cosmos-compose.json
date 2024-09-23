@@ -118,9 +118,9 @@
           "TASKS=0", 
           "VOLUMES=0"
         ],
-        "depends_on": [
-          "{ServiceName}"
-        ],
+        "depends_on": {
+          "{ServiceName}" : {}
+        },
         "links": [
           "{ServiceName}"
         ]

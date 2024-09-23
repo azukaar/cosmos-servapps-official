@@ -80,9 +80,9 @@
              "cosmos-stack": "{ServiceName}",
              "cosmos-stack-main": "{ServiceName}"
           },
-          "depends_on": [
-             "{ServiceName}-mariadb"
-          ]
+          "depends_on": {
+             "{ServiceName}-mariadb" : {}
+          }
        },
        "{ServiceName}-mariadb": {
           "hostname": "{ServiceName}-mariadb",

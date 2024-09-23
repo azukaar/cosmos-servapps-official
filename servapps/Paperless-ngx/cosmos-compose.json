@@ -94,12 +94,12 @@
     "{ServiceName}": {
       "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
       "restart": "unless-stopped",
-      "depends_on": [
-        "{ServiceName}-db",
-        "{ServiceName}-broker",
-        "{ServiceName}-gotenberg",
-        "{ServiceName}-tika"
-      ],
+      "depends_on": {
+        "{ServiceName}-db": {},
+        "{ServiceName}-broker": {},
+        "{ServiceName}-gotenberg": {},
+        "{ServiceName}-tika": {}
+      },
       "volumes": [
         {
           "source": "{ServiceName}-data",
