@@ -10,6 +10,7 @@
     "services": {
     	"{ServiceName}": {
           "image": "passbolt/passbolt:latest-ce",
+          "restart": "unless-stopped",
           "container_name": "{ServiceName}",
           "networks": {
              "{ServiceName}-net": {}
@@ -62,6 +63,7 @@
        },
        "{ServiceName}-db": {
           "image": "mariadb:10.11",
+          "restart": "unless-stopped",
           "container_name": "{ServiceName}-db",
           "networks": {
              "{ServiceName}-net": {}
