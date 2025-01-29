@@ -7,10 +7,10 @@
       }
     ]
   },
-  "minVersion": "9.0.0",
+  "minVersion": "10.0.0",
   "services": {
     "{ServiceName}": {
-      "image": "codeberg.org/forgejo/forgejo:9",
+      "image": "codeberg.org/forgejo/forgejo:10",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
