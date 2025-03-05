@@ -1,4 +1,4 @@
-  {
+{
   "cosmos-installer": {
     "form": [
       {
@@ -70,7 +70,7 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:3001",
+          "target": "http://{ServiceName}:2283",
           "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
@@ -139,7 +139,7 @@
     "{ServiceName}-database": {
       "container_name": "{ServiceName}-database",
       "hostname": "{ServiceName}-database",
-      "image": "tensorchord/pgvecto-rs:pg14-v0.2.0",
+      "image": "docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0",
       "user": "postgres",
       "networks": {
         "{ServiceName}": {}
