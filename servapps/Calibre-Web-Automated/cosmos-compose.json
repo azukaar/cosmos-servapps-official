@@ -1,0 +1,77 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "bookPath",
+        "label": "What is the path to your books?? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/books",
+        "type": "text"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Please read the Post-Install-Tasks at https://github.com/crocodilestick/Calibre-Web-Automated#post-install-tasks."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "crocodilestick/calibre-web-automated:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto",
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://dokupendium.github.io/cosmos-servapps-official/servapps/Calibre-Web-Automated/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {
+          "source": "{ServiceName}-cwa-book-ingest",
+          "target": "/cwa-book-ingest",
+          "type": "volume"
+        }
+        {
+          "source": "{ServiceName}-calibre-library",
+          "target": "/calibre-library",
+          "type": "volume"
+        }
+        {if Context.bookPath}
+        , {
+          "source": "{Context.bookPath}",
+          "target": "/books",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8083",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}

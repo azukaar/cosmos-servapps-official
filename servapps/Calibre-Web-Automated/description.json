@@ -1,0 +1,9 @@
+{
+  "name": "Calibre-Web-Automated",
+  "longDescription": "<p>Calibre, while a fantastic tool for its age, has several problems when containerised, including its reliance on a KasmVNC server instance for the UI, which is near impossible to use on mobile and is relatively resource-heavy if you're running a small, lower power server like I am.</p><p>For many, Calibre-Web has really swooped in to save the day, offering an alternative to a containerised Calibre instance that's resource-light and with a much more modern UI to boot.</p><p>However, when compared to full-fat Calibre, it unfortunately lacks a few core features leading many to run both services in parallel, each serving to fill in where the other lacks, resulting in an often clunky, imperfect solution.</p>",
+  "description": "Calibre-Web Automated aims to be an all-in-one solution, combining the modern lightweight web UI from Calibre-Web with the robust, versatile feature set of Calibre, with a slew of extra features and automations thrown in on top.! Fully automate and simplify your eBook set up! Making Calibre-Web your dream, all-in-one self-hosted digital library solution.",
+  "tags": ["e-book", "library", "reader", "web interface", "management", "calibre-web", "docker", "reading", "goodreads", "kindle", "automation", "conversion", "selfhosted", "epub", "import", "calibre", "ebooks", "kabo", "kepub"],
+  "repository": "https://github.com/crocodilestick/Calibre-Web-Automated",
+  "image": "https://hub.docker.com/r/crocodilestick/calibre-web-automated",
+  "supported_architectures": ["amd64", "arm64"]
+}
