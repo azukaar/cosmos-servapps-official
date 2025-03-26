@@ -1,9 +1,0 @@
-{
-    "name": "Zipline",
-    "longDescription": "<p>A ShareX/file upload server that is easy to use, packed with features, and with an easy setup!</p>",
-    "description": "The next generation ShareX / File upload server",
-    "tags": ["file-server", "file-sharing", "file-upload", "file-uploader", "sharex", "sharex-server", "sharex-uploader", "zipline", "docker"],
-    "repository": "https://github.com/diced/zipline",
-    "image": "ghcr.io/diced/zipline",
-    "supported_architectures": ["amd64", "arm64"]
-  }
