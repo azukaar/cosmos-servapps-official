@@ -1,0 +1,10 @@
+{
+    "name": "Miniflux",
+    "longDescription": "<p>Miniflux is a minimalist software. The purpose of this application is to read feeds. Nothing else.</p>",
+    "description": "Minimalist and opinionated feed reader",
+    "tags": ["rss", "feeds", "feed-reader", "minimalist"],
+    "repository": "https://github.com/miniflux/v2",
+    "image": "https://ghcr.io/miniflux/miniflux",
+    "supported_architectures": ["amd64", "arm64", "arm/v7", "arm/v6"]
+  }
+  
