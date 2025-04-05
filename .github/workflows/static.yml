@@ -3,8 +3,9 @@ name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
+  # TODO: Consider changing 'master' to 'main' if that's your default branch!
   push:
-    branches: ["master"]
+    branches: ["master"] 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -12,8 +13,8 @@ on:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
+  pages: write      # Needed to deploy to GitHub Pages
+  id-token: write   # Needed for OIDC token authentication
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -26,24 +27,35 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }} # URL of the deployed site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated to v4
+
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.5.2
+        uses: actions/setup-node@v4 # Updated to v4
         with:
-          node-version: 18.x
-      - name: Build index
-        run: node index.js
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+          node-version: '18' # Using '18' is slightly cleaner than '18.x'
+          # Optional: Add caching if your 'node index.js' uses npm/yarn dependencies
+          # cache: 'npm' 
+
+      - name: Build static files (if needed)
+        # This step assumes 'node index.js' generates the necessary static files
+        # Ensure it outputs files to the directory specified in 'Upload artifact' path below
+        run: node index.js 
+
+      # No longer strictly necessary for basic deployments with upload-pages-artifact/deploy-pages
+      # - name: Setup Pages 
+      #   uses: actions/configure-pages@v5 # Updated to v5
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # IMPORTANT: Ensure this path points to the directory containing your static files
+          # If 'node index.js' outputs to a 'dist' or 'build' folder, change '.' to './dist' or './build'
+          path: '.' 
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4 # *** Updated to v4 ***
