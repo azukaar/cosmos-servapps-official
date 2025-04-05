@@ -1,0 +1,129 @@
+{
+    "cosmos-installer": {
+      "form": [
+        {
+          "name": "adminUsername",
+          "label": "Admin username",
+          "initialValue": "admin",
+          "type": "text"
+        },
+        {
+          "name": "adminPassword",
+          "label": "Admin password",
+          "initialValue": "{Passwords.1}",
+          "type": "text"
+        },
+        {
+          "name": "adminOnly",
+          "label": "Make this service admin only",
+          "initialValue": false,
+          "type": "checkbox"
+        }
+      ],
+      "post-install": [
+        {
+          "type": "success",
+          "label": "Miniflux is now installed and running. You can access it at {Hostnames.{StaticServiceName}.{StaticServiceName}.host} and your credentials are user: {Context.adminUsername} / password: {Context.adminPassword}"
+        }
+      ]
+    },
+    "services": {
+      "{ServiceName}": {
+        "container_name": "{ServiceName}",
+        "image": "ghcr.io/miniflux/miniflux:latest",
+        "environment": [
+          "CREATE_ADMIN=1",
+          "ADMIN_USERNAME={Context.adminUsername}",
+          "ADMIN_PASSWORD={Context.adminPassword}",
+          "DATABASE_URL=postgres://miniflux:{Passwords.0}@{ServiceName}-postgres:5432/miniflux?sslmode=disable",
+          "RUN_MIGRATIONS=1",
+          "BASE_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+        ],
+        "labels": {
+          "cosmos-force-network-secured": "true",
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Miniflux/icon.png",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
+        },
+        "depends_on": {
+          "{ServiceName}-postgres": {
+              "condition": "service_healthy"
+          }
+        },
+        "networks": {
+          "{ServiceName}-data": {}
+        },
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/usr/bin/miniflux",
+            "-healthcheck",
+            "auto"
+          ]
+        },
+        "routes": [
+          {
+            "name": "{ServiceName}",
+            "description": "Expose {ServiceName} to the web",
+            "useHost": true,
+            "target": "http://{ServiceName}:8080",
+            "mode": "SERVAPP",
+            "Timeout": 14400000,
+            "ThrottlePerMinute": 12000,
+            "BlockCommonBots": true,
+            "SmartShield": {
+              "Enabled": true
+            }
+            {if Context.adminOnly}
+             , "AuthAdmin": true
+            {/if}
+          }
+        ]
+      },
+      "{ServiceName}-postgres": {
+        "image": "postgres:17-alpine",
+        "container_name": "{ServiceName}-postgres",
+        "hostname": "{ServiceName}-postgres",
+        "restart": "unless-stopped",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "pg_isready",
+            "-U",
+            "miniflux"
+          ],
+          "interval": 10,
+          "start_period": 30
+        },
+        "networks": {
+          "{ServiceName}-data": {}
+        },
+        "labels": {
+          "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+          "cosmos-force-network-secured": "true",
+          "cosmos-auto-update": "true",
+          "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Miniflux/icon.png",
+          "cosmos-stack": "{ServiceName}",
+          "cosmos-stack-main": "{ServiceName}"
+        },
+        "volumes": [
+          {
+            "source": "{ServiceName}-postgres-data",
+            "target": "/var/lib/postgresql/data",
+            "type": "volume"
+          }
+        ],
+        "environment": [
+          "POSTGRES_DB=miniflux",
+          "POSTGRES_USER=miniflux",
+          "POSTGRES_PASSWORD={Passwords.0}"
+        ]
+      }
+    },
+  
+    "networks": {
+      "{ServiceName}-data": {
+      }
+    }
+  }
