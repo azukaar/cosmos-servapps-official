@@ -1,0 +1,10 @@
+{
+    "name": "OmniTools",
+    "longDescription": "<p>Welcome to OmniTools, a self-hosted web app offering a variety of online tools to simplify everyday tasks. Whether you are coding, manipulating images/videos, PDFs or crunching numbers, OmniTools has you covered.</p>",
+    "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!",
+    "tags": ["tools", "open-source", "self-hosted", "web application", "browser", "image", "video", "coding", "date", "time", "math", "json", "pdf", "csv"],
+    "repository": "https://github.com/iib0011/omni-tools",
+    "image": "https://hub.docker.com/r/iib0011/omni-tools",
+    "supported_architectures": ["amd64", "arm64"]
+  }
+  
