@@ -1,0 +1,97 @@
+{
+    "cosmos-installer": {
+       "post-install": [
+          {
+             "type": "info",
+             "label": "MariaDB Host and Name = {ServiceName}-mariadb\n || MariaDB User = {ServiceName}\n || MariaDB Database = {ServiceName}\n || MariaDB Password = {Passwords.0}\n || MariaDB Root Password = {Passwords.0}\n"
+          }
+       ]
+    },
+    "services": {
+    	"{ServiceName}": {
+          "image": "passbolt/passbolt:latest-ce",
+          "restart": "unless-stopped",
+          "container_name": "{ServiceName}",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "environment": [
+             "APP_FULL_BASE_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+             "DATASOURCES_DEFAULT_HOST={ServiceName}-db",
+             "DATASOURCES_DEFAULT_USERNAME={ServiceName}",
+             "DATASOURCES_DEFAULT_PASSWORD={Passwords.0}",
+             "DATASOURCES_DEFAULT_DATABASE={ServiceName}"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-gpg",
+                "target": "/etc/passbolt/gpg",
+                "type": "volume"
+             },
+             {
+                "source": "{ServiceName}-jwt",
+                "target": "/etc/passbolt/jwt",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Passbolt/icon.png",
+             "cosmos-persistent-env": "APP_FULL_BASE_URL, DATASOURCES_DEFAULT_HOST, DATASOURCES_DEFAULT_USERNAME, DATASOURCES_DEFAULT_PASSWORD, DATASOURCES_DEFAULT_DATABASE",
+             "cosmos-stack": "{ServiceName}",
+             "cosmos-stack-main": "{ServiceName}"
+          },
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:80",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "depends_on": {
+             "{ServiceName}-db": {}
+          }
+       },
+       "{ServiceName}-db": {
+          "image": "mariadb:10.11",
+          "restart": "unless-stopped",
+          "container_name": "{ServiceName}-db",
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "hostname": "{ServiceName}-mariadb",
+          "environment": [
+             "MARIADB_PASSWORD={Passwords.0}",
+             "MARIADB_ROOT_PASSWORD={Passwords.0}",
+             "MARIADB_USER={ServiceName}",
+             "MARIADB_DATABASE={ServiceName}"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-mariadb_data",
+                "target": "/var/lib/mysql",
+                "type": "volume"
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-persistent-env": "MARIADB_PASSWORD, MARIADB_USER, MARIADB_DATABASE, MARIADB_ROOT_PASSWORD",
+             "cosmos-stack": "{ServiceName}",
+             "cosmos-stack-main": "{ServiceName}"
+          }
+       }
+    },
+    "networks": {
+       "{ServiceName}-net": {}
+    }
+ }
