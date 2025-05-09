@@ -1,0 +1,53 @@
+{
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "info",
+        "label": "The SSH port for this container is 222"
+      }
+    ]
+  },
+  "minVersion": "11.0.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "codeberg.org/forgejo/forgejo:11",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TZ=auto",
+        "USER_UID=1000",
+        "USER_GID=1000"
+      ],
+      "ports": [
+        "222:22"
+      ],
+      "labels": {
+        "cosmos-network-name": "AUTO",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Forgejo/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
