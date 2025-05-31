@@ -40,7 +40,7 @@
   "minVersion": "0.9.16",
   "services": {
     "{ServiceName}-broker": {
-      "image": "docker.io/library/redis:7",
+      "image": "docker.io/library/redis:8",
       "container_name": "{ServiceName}-broker",
       "restart": "unless-stopped",
       "volumes": [
@@ -63,7 +63,7 @@
     },
 
     "{ServiceName}-db": {
-      "image": "docker.io/library/postgres:15",
+      "image": "docker.io/library/postgres:17",
       "container_name": "{ServiceName}-db",
       "restart": "unless-stopped",
       "volumes": [
@@ -169,7 +169,7 @@
     },
 
     "{ServiceName}-gotenberg": {
-      "image": "docker.io/gotenberg/gotenberg:7.8",
+      "image": "docker.io/gotenberg/gotenberg:8.2",
       "container_name": "{ServiceName}-gotenberg",
       "restart": "unless-stopped",
       "labels": {
