@@ -4,6 +4,6 @@
     "description": "Empower development teams with a code quality, security and static analysis solution that deeply integrates into your enterprise environment.",
     "tags": ["development", "repository management", "code collaboration", "issue tracking", "self-hosted"],
     "repository": "https://github.com/bitnami/containers/",
-    "image": "https://hub.docker.com/r/bitnami/Odoo",
+    "image": "https://hub.docker.com/r/bitnami/sonarqube",
     "supported_architectures": ["amd64", "arm64"]
 }
