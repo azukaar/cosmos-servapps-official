@@ -28,7 +28,9 @@
         "PGID=1000",
         "TZ=auto",
         "PROXY_DOMAIN={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-        "DEFAULT_WORKSPACE=/workspace"
+        "DEFAULT_WORKSPACE=/workspace",
+        "SUDO_PASSWORD={password}",
+        "VSCODE_PROXY_URI=./proxy/{{port}}"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
