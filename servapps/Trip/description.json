@@ -1,0 +1,9 @@
+{
+    "name": "Trip",
+    "description": "Minimalist Map Tracker and Trip Planner",
+    "longDescription": "<p>Self-hostable minimalist Map tracker and Trip planner to visualize your points of interest (POI) and organize your next adventure details</p>",
+    "tags": ["travel", "trip planner", "trip", "map", "point-of-interest"],
+    "repository": "https://github.com/itskovacs/trip",
+    "image": "ghcr.io/itskovacs/trip:1",
+    "supported_architectures": ["amd64", "arm64"]
+}
