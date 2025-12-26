@@ -20,6 +20,12 @@
         "initialValue": false,
         "type": "password"
       },
+    {
+      "name": "Postgres password",
+      "label": "Your postgres admin password",
+      "initialValue": "admin",
+      "type": "text"
+    },
       {
         "name": "adminOnly",
         "label": "Do you want to make this service admin only?",
@@ -30,7 +36,21 @@
   },
   "minVersion": "0.9.6",
   "services": {
-    "couchdb": {
+    "{ServiceName}-postgres": {
+      "image": "postgres:17",
+      "restart": "always",
+      "environment": [
+        "POSTGRES_USER=oboku"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ]
+    },
+    "{seviceName}-couchdb": {
       "image": "mbret/oboku-couchdb",
       "restart": "always",
       "ports": ["5984:5984", "5985:5984", "5986:5984", "5987:5984"],
@@ -41,7 +61,7 @@
       ],
       "volumes": [
         {
-          "source": "./secrets",
+          "source": "{seviceName}-couchdb/secrets",
           "target": "/secrets",
           "type": "volume"
         }
