@@ -61,7 +61,7 @@
         }
       ]
     },
-    "{seviceName}-couchdb": {
+    "{ServiceName}-couchdb": {
       "image": "mbret/oboku-couchdb",
       "restart": "always",
       "environment": [
@@ -71,7 +71,7 @@
       ],
       "volumes": [
         {
-          "source": "{seviceName}-couchdb/secrets",
+          "source": "{ServiceName}-couchdb/secrets",
           "target": "/secrets",
           "type": "volume"
         }
