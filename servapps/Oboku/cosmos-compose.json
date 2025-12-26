@@ -60,8 +60,8 @@
       "restart": "always",
       "environment": [
         "COUCHDB_USER=admin",
-        "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
-        "JWT_PUBLIC_KEY_FILE=/secrets/jwt_public_key.pem"
+        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
+        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}"
       ],
       "volumes": [
         {
@@ -128,9 +128,9 @@
       "environment": [
         "COUCHDB_URL=http://{ServiceName}-couchdb:5984",
         "POSTGRES_URL=http://{ServiceName}-postgres:5432",
-        "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
-        "JWT_PUBLIC_KEY_FILE=/secrets/jwt_public_key.pem",
-        "COUCH_DB_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}"
+        "COUCH_DB_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
+        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}" 
       ],
       "volumes": [
         {
