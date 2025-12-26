@@ -38,6 +38,12 @@
         "initialValue": false,
         "type": "checkbox"
       }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "As it is impossible to include all the configuration options in the installer, you can check the docs for more information on how to configure your server: https://docs.oboku.me/self-hosting/configuration"
+      }
     ]
   },
   "services": {
