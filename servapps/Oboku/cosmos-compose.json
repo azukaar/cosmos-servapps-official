@@ -18,6 +18,18 @@
   },
   "minVersion": "0.9.6",
   "services": {
+    "couchdb": {
+      "image": "mbret/oboku-couchdb",
+      "restart": "always",
+      "ports": ["5984:5984", "5985:5984", "5986:5984", "5987:5984"],
+      "volumes": [
+        {
+          "source": "./secrets",
+          "target": "/secrets",
+          "type": "volume"
+        }
+      ]
+    },
     "{ServiceName}": {
       "image": "ghcr.io/advplyr/audiobookshelf:latest",
       "container_name": "{ServiceName}",
