@@ -53,7 +53,7 @@
     "{seviceName}-couchdb": {
       "image": "mbret/oboku-couchdb",
       "restart": "always",
-      "ports": ["5984:5984", "5985:5984", "5986:5984", "5987:5984"],
+      "ports": ["5984:5984"],
       "environment": [
         "COUCHDB_USER=admin",
         "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
@@ -65,6 +65,26 @@
           "target": "/secrets",
           "type": "volume"
         }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-couchdb",
+          "description": "Expose {ServiceName}-couchdb to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5984",
+          "mode": "SERVAPP",
+          "CORSOrigin": "*",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
       ]
     },
     "{ServiceName}-web": {
@@ -72,6 +92,26 @@
       "restart": "always",
       "ports": [
         "80:80"
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-web",
+          "description": "Expose {ServiceName}-web to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "CORSOrigin": "*",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
       ]
     },
     "{ServiceName}-api": {
@@ -97,40 +137,13 @@
           "target": "/secrets",
           "type": "volume"
         }
-      ]
-    },
-    "{ServiceName}": {
-      "image": "ghcr.io/advplyr/audiobookshelf:latest",
-      "container_name": "{ServiceName}",
-      "restart": "unless-stopped",
-      "labels": {
-        "cosmos-force-network-secured": "true",
-        "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png"
-      },
-      "volumes": [
-        {
-          "source": "{ServiceName}-config",
-          "target": "/config",
-          "type": "volume"
-        },
-        {
-          "source": "{ServiceName}-metadata",
-          "target": "/metadata",
-          "type": "volume"
-        },
-        {
-          "source": "{Context.audiobooks}",
-          "target": "/audiobooks",
-          "type": "bind"
-        }
       ],
       "routes": [
         {
-          "name": "{ServiceName}",
-          "description": "Expose {ServiceName} to the web",
+          "name": "{ServiceName}-api",
+          "description": "Expose {ServiceName}-api to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:80",
+          "target": "http://{ServiceName}:3000",
           "mode": "SERVAPP",
           "CORSOrigin": "*",
           "Timeout": 14400000,
