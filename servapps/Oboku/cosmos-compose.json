@@ -71,7 +71,7 @@
       ],
       "volumes": [
         {
-          "source": "{ServiceName}-couchdb/secrets",
+          "source": "{ServiceName}-couchdb-secrets",
           "target": "/secrets",
           "type": "volume"
         }
