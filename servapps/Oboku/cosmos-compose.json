@@ -3,28 +3,34 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "oboku",
-        "label": "Where do you store your audiobooks?",
-        "initialValue": "{DefaultDataPath}/audiobooks",
-        "type": "text"
-      },
-      {
-        "name": "Couchdb secret",
+        "name": "COUCHDB_SECRET",
         "label": "This secret will be used to encrypt the JWT tokens and users passwords",
         "initialValue": false,
         "type": "password"
       },
       {
-        "name": "Couchdb password",
+        "name": "COUCHDB_PASSWORD",
         "label": "Your couchdb admin password",
         "initialValue": false,
         "type": "password"
       },
     {
-      "name": "Postgres password",
+      "name": "POSTGRES_PASSWORD",
       "label": "Your postgres admin password",
       "initialValue": "admin",
       "type": "text"
+    },
+    {
+      "name": "JWT_PUBLIC_KEY",
+      "label": "Your JWT public key as base64 encoded string",
+      "initialValue": false,
+      "type": "password"
+    },
+    {
+      "name": "JWT_PRIVATE_KEY",
+      "label": "Your JWT private key as base64 encoded string",
+      "initialValue": false,
+      "type": "password"
     },
       {
         "name": "adminOnly",
