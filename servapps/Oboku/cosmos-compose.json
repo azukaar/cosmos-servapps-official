@@ -9,6 +9,18 @@
         "type": "text"
       },
       {
+        "name": "Couchdb secret",
+        "label": "This secret will be used to encrypt the JWT tokens and users passwords",
+        "initialValue": false,
+        "type": "password"
+      },
+      {
+        "name": "Couchdb password",
+        "label": "Your couchdb admin password",
+        "initialValue": false,
+        "type": "password"
+      },
+      {
         "name": "adminOnly",
         "label": "Do you want to make this service admin only?",
         "initialValue": false,
