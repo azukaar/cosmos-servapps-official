@@ -40,7 +40,6 @@
       }
     ]
   },
-  "minVersion": "0.9.6",
   "services": {
     "{ServiceName}-postgres": {
       "image": "postgres:17",
@@ -136,11 +135,6 @@
         {
           "source": "{ServiceName}-api-data",
           "target": "/var/lib/oboku/data",
-          "type": "volume"
-        },
-        {
-          "source": "{ServiceName}-api/secrets",
-          "target": "/secrets",
           "type": "volume"
         }
       ],
