@@ -58,7 +58,6 @@
     "{seviceName}-couchdb": {
       "image": "mbret/oboku-couchdb",
       "restart": "always",
-      "ports": ["5984:5984"],
       "environment": [
         "COUCHDB_USER=admin",
         "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
@@ -95,8 +94,12 @@
     "{ServiceName}-web": {
       "image": "mbret/oboku-web",
       "restart": "always",
-      "ports": [
-        "80:80"
+      "environment": [
+        "VITE_API_URL=https://{Hostnames.{StaticServiceName}-api.{StaticServiceName}-api.host}",
+        "VITE_COUCH_DB_PUBLIC_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "VITE_COUCH_DB_PUBLIC_URL_2=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "VITE_COUCH_DB_PUBLIC_URL_3=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "VITE_COUCH_DB_PUBLIC_URL_4=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}"
       ],
       "routes": [
         {
@@ -122,14 +125,12 @@
     "{ServiceName}-api": {
       "image": "mbret/oboku-api",
       "restart": "always",
-      "ports": [
-        "3000:3000"
-      ],
       "environment": [
         "COUCHDB_URL=http://{ServiceName}-couchdb:5984",
         "POSTGRES_URL=http://{ServiceName}-postgres:5432",
         "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
-        "JWT_PUBLIC_KEY_FILE=/secrets/jwt_public_key.pem"
+        "JWT_PUBLIC_KEY_FILE=/secrets/jwt_public_key.pem",
+        "COUCH_DB_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}"
       ],
       "volumes": [
         {
