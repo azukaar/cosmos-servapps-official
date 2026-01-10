@@ -3,7 +3,7 @@
     "longDescription": "<p>Odoo is a suite of web based open source business apps. The main Odoo Apps include an Open Source CRM, Website Builder, eCommerce, Warehouse Management.</p>",
     "description": "Odoo is a suite of open source business apps that cover all your company needs: CRM, eCommerce, accounting, inventory, ...",
     "tags": ["CRM", "Website Builder", "eCommerce", "self-hosted"],
-    "repository": "https://github.com/bitnami/containers/",
-    "image": "https://hub.docker.com/r/bitnami/Odoo",
+    "repository": "https://github.com/odoo/odoo",
+    "image": "https://hub.docker.com/_/odoo",
     "supported_architectures": ["amd64", "arm64"]
 }
