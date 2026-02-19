@@ -1,36 +1,7 @@
 {
     "cosmos-installer": null,
+    "minVersion": "0.21.0",
     "services": {
-       "{ServiceName}-redis": {
-          "container_name": "{ServiceName}-redis",
-          "hostname": "{ServiceName}-redis",
-          "image": "redis:alpine",
-          "command": "redis-server --save \"\" --appendonly no",
-          "networks": {
-             "{ServiceName}-net": {}
-          },
-          "tmpfs": [
-             {
-                "source": "{ServiceName}-redistemp",
-                "target": "/var/lib/redis",
-                "type": "volume"
-             }
-          ],
-          "cap_drop": [
-             "ALL"
-          ],
-          "cap_add": [
-             "SETGID",
-             "SETUID",
-             "DAC_OVERRIDE"
-          ],
-          "labels": {
-             "cosmos-force-network-secured": "true",
-             "cosmos-auto-update": "true",
-             "cosmos-stack": "{ServiceName}",
-             "cosmos-stack-main": "{ServiceName}"
-          }
-       },
        "{ServiceName}": {
           "container_name": "{ServiceName}",
           "image": "searxng/searxng:latest",
@@ -41,6 +12,11 @@
              {
                 "source": "{ServiceName}-data",
                 "target": "/etc/searxng",
+                "type": "volume"
+             },
+             {
+                "source": "{ServiceName}-cache",
+                "target": "/var/cache/searxng",
                 "type": "volume"
              }
           ],
@@ -80,6 +56,42 @@
                 "max-size": "1m",
                 "max-file": "1"
              }
+          }
+       },
+       "{ServiceName}-redis": {
+          "container_name": "{ServiceName}-redis",
+          "hostname": "{ServiceName}-redis",
+          "image": "redis:alpine",
+          "command": [
+            "redis-server",
+            "--save",
+            "\"\"",
+            "--appendonly",
+            "no"
+         ],
+          "networks": {
+             "{ServiceName}-net": {}
+          },
+          "tmpfs": [
+             {
+                "source": "{ServiceName}-redistemp",
+                "target": "/var/lib/redis",
+                "type": "volume"
+             }
+          ],
+          "cap_drop": [
+             "ALL"
+          ],
+          "cap_add": [
+             "SETGID",
+             "SETUID",
+             "DAC_OVERRIDE"
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "true",
+             "cosmos-auto-update": "true",
+             "cosmos-stack": "{ServiceName}",
+             "cosmos-stack-main": "{ServiceName}"
           }
        }
     },
