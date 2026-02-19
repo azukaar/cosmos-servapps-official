@@ -1,0 +1,170 @@
+
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "COUCHDB_SECRET",
+        "label": "This secret will be used to encrypt the JWT tokens and users passwords",
+        "initialValue": false,
+        "type": "password"
+      },
+      {
+        "name": "COUCHDB_PASSWORD",
+        "label": "Your couchdb admin password",
+        "initialValue": false,
+        "type": "password"
+      },
+    {
+      "name": "POSTGRES_PASSWORD",
+      "label": "Your postgres admin password",
+      "initialValue": "admin",
+      "type": "text"
+    },
+    {
+      "name": "JWT_PUBLIC_KEY",
+      "label": "Your JWT public key as base64 encoded string",
+      "initialValue": false,
+      "type": "password"
+    },
+    {
+      "name": "JWT_PRIVATE_KEY",
+      "label": "Your JWT private key as base64 encoded string",
+      "initialValue": false,
+      "type": "password"
+    },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "As it is impossible to include all the configuration options in the installer, you can check the docs for more information on how to configure your server: https://docs.oboku.me/self-hosting/configuration"
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}-postgres": {
+      "image": "postgres:17",
+      "restart": "always",
+      "environment": [
+        "POSTGRES_USER=oboku"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ]
+    },
+    "{ServiceName}-couchdb": {
+      "image": "mbret/oboku-couchdb",
+      "restart": "always",
+      "environment": [
+        "COUCHDB_USER=admin",
+        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
+        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-couchdb-secrets",
+          "target": "/secrets",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-couchdb",
+          "description": "Expose {ServiceName}-couchdb to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5984",
+          "mode": "SERVAPP",
+          "CORSOrigin": "*",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    },
+    "{ServiceName}-web": {
+      "image": "mbret/oboku-web",
+      "restart": "always",
+      "environment": [
+        "VITE_API_URL=https://{Hostnames.{StaticServiceName}-api.{StaticServiceName}-api.host}",
+        "VITE_COUCH_DB_PUBLIC_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "VITE_COUCH_DB_PUBLIC_URL_2=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "VITE_COUCH_DB_PUBLIC_URL_3=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "VITE_COUCH_DB_PUBLIC_URL_4=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}"
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-web",
+          "description": "Expose {ServiceName}-web to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "CORSOrigin": "*",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    },
+    "{ServiceName}-api": {
+      "image": "mbret/oboku-api",
+      "restart": "always",
+      "environment": [
+        "COUCHDB_URL=http://{ServiceName}-couchdb:5984",
+        "POSTGRES_URL=http://{ServiceName}-postgres:5432",
+        "COUCH_DB_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
+        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
+        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}" 
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-api-data",
+          "target": "/var/lib/oboku/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-api",
+          "description": "Expose {ServiceName}-api to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "CORSOrigin": "*",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
