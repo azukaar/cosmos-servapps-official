@@ -24,7 +24,7 @@
   "minVersion": "0.9.16",
   "services": {
     "{ServiceName}": {
-      "image": "frooodle/s-pdf",
+      "image": "stirlingtools/stirling-pdf",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
@@ -41,7 +41,7 @@
         },
         {
           "source": "{ServiceName}-ocr",
-          "target": "/usr/share/tesseract-ocr/4.00/tessdata",
+          "target": "/usr/share/tessdata",
           "type": "volume"
         }
       ],
