@@ -15,7 +15,7 @@
       }
     ]
   },
-  "minVersion": "0.9.0",
+  "minVersion": "0.21.0",
   "services": {
     "{ServiceName}": {
       "image": "bitnami/discourse:latest",
@@ -74,7 +74,9 @@
       "container_name": "{ServiceName}-sidekiq",
       "hostname": "{ServiceName}-sidekiq",
       "restart": "unless-stopped",
-      "command": "/opt/bitnami/scripts/discourse-sidekiq/run.sh",
+      "command": [
+        "/opt/bitnami/scripts/discourse-sidekiq/run.sh"
+      ],
       "environment": [
         "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "DISCOURSE_PASSWORD={Context.DISCOURSE_PASSWORD}",
