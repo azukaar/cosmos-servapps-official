@@ -1,0 +1,98 @@
+{
+   "cosmos-installer": {
+      "form": [
+         {
+            "name": "name",
+            "label": "What do you want to call this server?",
+            "initialValue": "Palworld-Server",
+            "type": "text"
+         },
+         {
+            "name": "password",
+            "label": "What Password do you want for the server?",
+            "initialValue": "Password",
+            "type": "password"
+         },
+         {
+            "name": "adminpassword",
+            "label": "What Password do you want for the admin?",
+            "initialValue": "Password",
+            "type": "password"
+         },
+         {
+            "name": "community",
+            "label": "Public Server? (true,false)",
+            "initialValue": false,
+            "type": "checkbox"
+         },
+         {
+            "name": "players",
+            "label": "How many people can join this server? (Max 32)",
+            "initialValue": 16,
+            "type": "text"
+         },
+         {
+            "name": "description",
+            "label": "How would you describe the server?",
+            "initialValue": "MOHAWK DINOSAUR",
+            "type": "text"
+         },
+         
+         {
+            "name": "gamePort",
+            "label": "You must open a udp game port for this service",
+            "initialValue": 27015,
+            "type": "text"
+         },
+
+         {
+            "name": "communityPort",
+            "label": "You must open a udp community port toshoe up in the server tab",
+            "initialValue": 8211,
+            "type": "text"
+         },
+
+         {
+            "type": "warning",
+            "label": "As it is impossible to include all the configuration options in the installer, you can check the docs for more information on how toconfigure your server https://github.com/thijsvanloef/palworld-server-docker"
+         }
+      ]
+   },
+   "services": {
+      "{ServiceName}": {
+         "image": "thijsvanloef/palworld-server-docker:latest",
+         "restart": "unless-stopped",
+         "container_name": "{ServiceName}",
+         "hostname": "{ServiceName}",
+         "stop_grace_period": "30s",
+         "ports": [
+            "{Context.gamePort}:8211/udp",
+            "{Context.communityPort}:27015/udp"
+         ],
+         "environment": [
+            "PORT=8211",
+            "PLAYERS={Context.players}",
+            "SERVER_PASSWORD={Context.password}",
+            "MULTITHREADING=true",
+            "RCON_ENABLED=true",
+            "RCON_PORT=25575",
+            "TZ=Auto",
+            "ADMIN_PASSWORD={Context.adminpassword}",
+            "COMMUNITY={Context.community}",
+            "SERVER_NAME={Context.name}",
+            "SERVER_DESCRIPTION={Context.description}"
+         ],
+         "volumes": [
+            {
+               "type": "volume",
+               "source": "{ServiceName}-data",
+               "target": "/palworld/"
+            }
+         ],
+         "labels": {
+            "cosmos-auto-update": true,
+            "cosmos-icon": "https://lilkidsuave.github.io/asteroidsinthecosmos/Palworld-Server/icon.png"
+         }
+      }
+   }
+}
