@@ -2,6 +2,20 @@
     "name": "SearXNG",
     "longDescription": "SearXNG is a privacy-respecting, open-source metasearch engine that aggregates results from various search engines while respecting user privacy. It allows users to search without being tracked and provides customizable search preferences. SearXNG can be self-hosted or used on public instances, giving users control over their search experience.",
     "description": "SearXNG is an open-source metasearch engine focused on privacy and user control.",
+  "translation": {
+    "de": {
+      "description": "SearXNG ist eine Open-Source-Metasuchmaschine, deren Schwerpunkt auf Datenschutz und Benutzerkontrolle liegt.",
+      "longDescription": "SearXNG ist eine datenschutzkonforme Open-Source-Metasuchmaschine, die Ergebnisse aus verschiedenen Suchmaschinen aggregiert und dabei die Privatsphäre der Nutzer respektiert. Sie ermöglicht es Nutzern, ohne Nachverfolgung zu suchen, und bietet anpassbare Sucheinstellungen. SearXNG kann selbst gehostet oder auf öffentlichen Instanzen genutzt werden, sodass Nutzer die Kontrolle über ihre Sucherfahrung behalten."
+    },
+    "fr": {
+      "longDescription": "SearXNG est un métamoteur de recherche open source respectueux de la vie privée qui agrège les résultats de divers moteurs de recherche tout en respectant la confidentialité des utilisateurs. Il permet aux utilisateurs d'effectuer des recherches sans être suivis et offre des préférences de recherche personnalisables. SearXNG peut être auto-hébergé ou utilisé sur des instances publiques, ce qui permet aux utilisateurs de contrôler leur expérience de recherche.",
+      "description": "SearXNG est un métamoteur de recherche open source axé sur la confidentialité et le contrôle par l'utilisateur."
+    },
+    "it": {
+      "longDescription": "SearXNG è un motore di metasearch open source che rispetta la privacy e aggrega i risultati di vari motori di ricerca nel rispetto della privacy degli utenti. Consente agli utenti di effettuare ricerche senza essere tracciati e offre preferenze di ricerca personalizzabili. SearXNG può essere ospitato autonomamente o utilizzato su istanze pubbliche, offrendo agli utenti il controllo sulla propria esperienza di ricerca.",
+      "description": "SearXNG è un motore di metasearch open source incentrato sulla privacy e sul controllo da parte dell'utente."
+    }
+  },
     "tags": ["search engine", "privacy", "open-source", "metasearch"],
     "repository": "https://github.com/searxng/searxng",
     "image": "https://hub.docker.com/r/searxng/searxng",
