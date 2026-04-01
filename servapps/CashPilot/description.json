@@ -1,0 +1,9 @@
+{
+  "name": "CashPilot",
+  "longDescription": "<p>CashPilot is a self-hosted dashboard for monitoring and managing bandwidth-sharing applications like EarnApp, Honeygain, IPRoyal, Peer2Profit, and more.</p><p>It provides a unified interface to track earnings, container status, and performance across all your bandwidth-sharing services. CashPilot supports 10+ applications and aggregates earnings data in a single view.</p><p>The architecture consists of a web UI container and a worker container that communicates with the Docker daemon to monitor your bandwidth-sharing containers. No database required — just deploy and start tracking.</p>",
+  "description": "Self-hosted dashboard for monitoring and managing bandwidth-sharing applications. Track earnings, container status, and performance across EarnApp, Honeygain, IPRoyal, Peer2Profit, and 6+ more services in a single interface.",
+  "tags": ["monitoring", "dashboard", "bandwidth", "passive income", "docker", "self-hosted"],
+  "repository": "https://github.com/GeiserX/m4b-dashboard",
+  "image": "https://hub.docker.com/r/drumsergio/cashpilot",
+  "supported_architectures": ["amd64", "arm64"]
+}
