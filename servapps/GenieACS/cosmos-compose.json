@@ -2,7 +2,7 @@
   "minVersion": "0.13.0",
   "services": {
     "{ServiceName}": {
-      "image": "drumsergio/genieacs:1.2.16.0",
+      "image": "drumsergio/genieacs:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
