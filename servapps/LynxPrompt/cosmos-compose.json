@@ -12,7 +12,7 @@
   "minVersion": "0.13.0",
   "services": {
     "{ServiceName}": {
-      "image": "drumsergio/lynxprompt:2.0.75",
+      "image": "drumsergio/lynxprompt:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [

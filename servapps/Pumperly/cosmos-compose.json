@@ -12,7 +12,7 @@
   "minVersion": "0.13.0",
   "services": {
     "{ServiceName}": {
-      "image": "drumsergio/pumperly:1.2.0",
+      "image": "drumsergio/pumperly:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [

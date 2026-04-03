@@ -2,7 +2,7 @@
   "minVersion": "0.13.0",
   "services": {
     "{ServiceName}": {
-      "image": "drumsergio/cashpilot:0.2.53",
+      "image": "drumsergio/cashpilot:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
@@ -39,7 +39,7 @@
       ]
     },
     "{ServiceName}-worker": {
-      "image": "drumsergio/cashpilot-worker:0.2.53",
+      "image": "drumsergio/cashpilot-worker:latest",
       "container_name": "{ServiceName}-worker",
       "restart": "unless-stopped",
       "environment": [
