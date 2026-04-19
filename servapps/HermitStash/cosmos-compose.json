@@ -2,11 +2,35 @@
   "cosmos-installer": {},
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/dotcoocoo/hermitstash:latest",
+      "image": "ghcr.io/dotcoocoo/hermitstash:1",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "init": true,
       "shm_size": "256m",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "SETUID",
+        "SETGID",
+        "DAC_OVERRIDE"
+      ],
+      "healthcheck": {
+        "test": ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health',function(r){process.exit(r.statusCode===200?0:1)}).on('error',function(){process.exit(1)})"],
+        "interval": "30s",
+        "timeout": "5s",
+        "start_period": "30s",
+        "retries": 3
+      },
       "environment": [
+        "PUID=99",
+        "PGID=100",
+        "UMASK=022",
+        "TZ=Etc/UTC",
         "NODE_ENV=production",
         "TRUST_PROXY=true"
       ],
