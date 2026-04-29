@@ -4,31 +4,31 @@
       {
         "name": "REDMINE_USERNAME",
         "label": "What Redmine username do you want to use?",
-        "initialValue": "user",
+        "initialValue": "",
         "type": "text"
       },
       {
         "name": "REDMINE_PASSWORD",
         "label": "What Redmine password does it use?",
-        "initialValue": "bitnami1",
+        "initialValue": "",
         "type": "password"
       },
       {
         "name": "REDMINE_EMAIL",
         "label": "What is your Redmine email login?",
-        "initialValue": "user@example.com",
+        "initialValue": "",
         "type": "text"
       },
       {
         "name": "REDMINE_FIRST_NAME",
         "label": "What is your Redmine first name?",
-        "initialValue": "UserName",
+        "initialValue": "",
         "type": "text"
       },
       {
         "name": "REDMINE_LAST_NAME",
         "label": "What is your Redmine LastName?",
-        "initialValue": "LastName",
+        "initialValue": "",
         "type": "text"
       }
     ]
@@ -36,7 +36,7 @@
     "minVersion": "0.8.0",
     "services": {
       "{ServiceName}": {
-        "image": "docker.io/bitnami/redmine:5",
+        "image": "redmine:5.1.2-alpine",
         "container_name": "{ServiceName}",
         "hostname": "{ServiceName}",
         "volumes": [
@@ -85,7 +85,7 @@
 
       },
       "{ServiceName}-db": {
-        "image": "docker.io/bitnami/mariadb:11.1",
+        "image": "mariadb:11.1",
         "container_name": "{ServiceName}-db",
         "hostname": "{ServiceName}-db",
         "restart": "unless-stopped",
