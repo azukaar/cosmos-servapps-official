@@ -4,13 +4,13 @@
       {
         "name": "DISCOURSE_USERNAME",
         "label": "What is your discourse user login?",
-        "initialValue": "Tinyactive",
+        "initialValue": "",
         "type": "text"
       },
       {
         "name": "DISCOURSE_PASSWORD",
         "label": "What discourse password does it use?",
-        "initialValue": "fd4y3Sb4VnUbegrD",
+        "initialValue": "",
         "type": "password"
       }
     ]
@@ -18,7 +18,7 @@
   "minVersion": "0.9.0",
   "services": {
     "{ServiceName}": {
-      "image": "bitnami/discourse:latest",
+      "image": "discourse/discourse:latest",
       "container_name": "{ServiceName}",
       "hostname": "{ServiceName}",
       "restart": "unless-stopped",
@@ -70,7 +70,7 @@
       ]
     },
     "{ServiceName}-sidekiq": {
-      "image": "bitnami/discourse:latest",
+      "image": "discourse/discourse:latest",
       "container_name": "{ServiceName}-sidekiq",
       "hostname": "{ServiceName}-sidekiq",
       "restart": "unless-stopped",
@@ -139,7 +139,7 @@
       ]
     },
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:7.0",
+      "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
