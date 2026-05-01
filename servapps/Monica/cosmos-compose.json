@@ -14,7 +14,7 @@
           }
         ],
         "environment": [
-          "APP_KEY=base64:7ZCNatgavRKG9zh67rc2JP+PAUewZA5UABnMgpGSieA=",
+          "APP_KEY={Passwords.0}",
           "DB_PASSWORD={Passwords.1}",
           "DB_HOST={ServiceName}-db",
           "DB_PORT=3306",
@@ -51,7 +51,7 @@
 
       },
       "{ServiceName}-db": {
-        "image": "docker.io/bitnami/mariadb:11.1",
+        "image": "mariadb:11.1",
         "container_name": "{ServiceName}-db",
         "hostname": "{ServiceName}-db",
         "restart": "unless-stopped",
@@ -61,7 +61,7 @@
         "volumes": [
           {
             "source": "{ServiceName}-db",
-            "target": "/bitnami/mariadb",
+            "target": "/var/lib/mysql",
             "type": "volume"
           }
         ],
