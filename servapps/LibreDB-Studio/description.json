@@ -1,0 +1,9 @@
+{
+    "name": "LibreDB Studio",
+    "longDescription": "<p>LibreDB Studio is the modern, AI-powered open-source SQL IDE. Connect to and query PostgreSQL, MySQL, Oracle, SQL Server, SQLite, MongoDB and Redis directly from your browser, with an optional AI assistant to help write and explain queries. It ships as a single container, stores its data in a local SQLite file by default, and creates an initial admin and user account on first start. MIT licensed and fully self-hostable.</p>",
+    "description": "Modern, AI-powered open-source SQL IDE for PostgreSQL, MySQL, Oracle, SQL Server, SQLite, MongoDB and Redis. Browser-based, mobile-ready and MIT licensed.",
+    "tags": ["database", "sql", "developer-tools", "self-hosted"],
+    "repository": "https://github.com/libredb/libredb-studio/",
+    "image": "https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio",
+    "supported_architectures": ["amd64"]
+}
