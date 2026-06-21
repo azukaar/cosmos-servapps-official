@@ -1,0 +1,43 @@
+{
+    "cosmos-installer": {},
+    "minVersion": "0.9.0",
+    "services": {
+        "{ServiceName}": {
+            "image": "ghcr.io/libredb/libredb-studio:v0.9.13",
+            "container_name": "{ServiceName}",
+            "restart": "unless-stopped",
+            "environment": [
+                "ADMIN_EMAIL=admin@libredb.org",
+                "ADMIN_PASSWORD={Password}",
+                "USER_EMAIL=user@libredb.org",
+                "USER_PASSWORD={Password}",
+                "JWT_SECRET={Password}",
+                "STORAGE_PROVIDER=sqlite",
+                "STORAGE_SQLITE_PATH=/app/data/libredb-storage.db"
+            ],
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/servapps/LibreDB-Studio/icon.png"
+            },
+            "volumes": [{
+                "source": "{ServiceName}-libredb-data",
+                "target": "/app/data",
+                "type": "volume"
+            }],
+            "routes": [{
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "http://{ServiceName}:3000",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                    "Enabled": true
+                }
+            }]
+        }
+    }
+}
