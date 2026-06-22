@@ -49,7 +49,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-discourse_data",
-          "target": "/bitnami/discourse",
+          "target": "/var/www/discourse/public/uploads",
           "type": "volume"
         }
     ],
@@ -74,7 +74,8 @@
       "container_name": "{ServiceName}-sidekiq",
       "hostname": "{ServiceName}-sidekiq",
       "restart": "unless-stopped",
-      "command": "/opt/bitnami/scripts/discourse-sidekiq/run.sh",
+      "working_dir": "/var/www/discourse",
+      "command": "bundle exec sidekiq",
       "environment": [
         "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "DISCOURSE_PASSWORD={Context.DISCOURSE_PASSWORD}",
@@ -102,7 +103,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-sidekiq_data",
-          "target": "/bitnami/discourse",
+          "target": "/var/www/discourse/public/uploads",
           "type": "volume"
         }
     ]
@@ -149,7 +150,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-redis",
-          "target": "/bitnami/redis",
+          "target": "/data",
           "type": "volume"
         }
       ],
@@ -158,9 +159,8 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "environment": [
-        "REDIS_PASSWORD={Passwords.1}"
-      ]
+      "command": "redis-server --requirepass {Passwords.1} --appendonly yes",
+      "environment": []
     }
   },
   "networks": {
