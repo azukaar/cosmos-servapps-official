@@ -3,7 +3,7 @@
     "minVersion": "0.9.0",
     "services": {
         "{ServiceName}": {
-            "image": "ghcr.io/libredb/libredb-studio:v0.9.27",
+            "image": "ghcr.io/libredb/libredb-studio:0.9.27",
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",
             "environment": [
