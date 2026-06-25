@@ -1,0 +1,9 @@
+{
+    "name": "Gaseous-server",
+    "longDescription": "<p>A game ROM manager, with a built in web based emulator using multiple sources to identify and provide metadata < /p>",
+    "description": "A game ROM manager, with a built in web based emulator using multiple sources to identify and provide metadata ",
+    "tags": ["emulation", "games", "self-hosted", "open-source", "Gaseous"],
+    "repository": "https://github.com/gaseous-project/gaseous-server",
+    "image": "https://hub.docker.com/r/gaseousgames/gaseousserver",
+    "supported_architectures": ["amd64", "arm64"]
+}

@@ -1,0 +1,67 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "baikaldata",
+        "label": "Where do you want to store Baikal's data?",
+        "initialValue": "/var/www/baikal/Specific",
+        "type": "text"
+      },
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "ckulka/baikal:nginx",
+      "restart": "always",
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/var/www/baikal/config",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-data",
+          "target": "{Context.baikaldata}",
+          "type": "bind"
+        }
+      ],
+      "container_name": "{ServiceName}",
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Baikal/icon.png"
+      },
+      "network_mode": "cosmos-{ServiceName}-default",
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  },
+  "volumes": {
+    "{ServiceName}-config": {},
+    "{ServiceName}-data": {}
+  },
+  "networks": {
+    "cosmos-{ServiceName}-default": {}
+  }
+}
