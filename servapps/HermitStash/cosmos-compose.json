@@ -1,0 +1,71 @@
+{
+  "cosmos-installer": {},
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/dotcoocoo/hermitstash:1",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "init": true,
+      "shm_size": "256m",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "SETUID",
+        "SETGID",
+        "DAC_OVERRIDE"
+      ],
+      "healthcheck": {
+        "test": ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health',function(r){process.exit(r.statusCode===200?0:1)}).on('error',function(){process.exit(1)})"],
+        "interval": "30s",
+        "timeout": "5s",
+        "start_period": "30s",
+        "retries": 3
+      },
+      "environment": [
+        "PUID=99",
+        "PGID=100",
+        "UMASK=022",
+        "TZ=Etc/UTC",
+        "NODE_ENV=production",
+        "TRUST_PROXY=true"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/servapps/HermitStash/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/app/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-uploads",
+          "target": "/app/uploads",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "GenieACS",
+  "longDescription": "<p>GenieACS is an open-source TR-069 remote management solution for CPE (Customer Premises Equipment) such as routers, modems, and set-top boxes.</p><p>It implements the TR-069 (CWMP) protocol to enable mass provisioning, firmware management, and remote diagnostics of network devices. GenieACS features a modern web UI for device management, a powerful provisioning engine with scripting support, and comprehensive device monitoring.</p><p>This deployment includes GenieACS with MongoDB for data storage. The CWMP port (7547) and file server port (7557) are exposed for device communication. Configure your CPE devices to point their ACS URL to port 7547.</p>",
+  "description": "Open-source TR-069 (CWMP) remote management platform for routers, modems, and network devices. Features mass provisioning, firmware management, remote diagnostics, and a modern web interface.",
+  "tags": ["network", "tr-069", "cwmp", "router management", "provisioning", "iot", "self-hosted"],
+  "repository": "https://github.com/GeiserX/genieacs-docker",
+  "image": "https://hub.docker.com/r/drumsergio/genieacs",
+  "supported_architectures": ["amd64", "arm64"]
+}

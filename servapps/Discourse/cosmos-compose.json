@@ -4,13 +4,13 @@
       {
         "name": "DISCOURSE_USERNAME",
         "label": "What is your discourse user login?",
-        "initialValue": "Tinyactive",
+        "initialValue": "",
         "type": "text"
       },
       {
         "name": "DISCOURSE_PASSWORD",
         "label": "What discourse password does it use?",
-        "initialValue": "fd4y3Sb4VnUbegrD",
+        "initialValue": "",
         "type": "password"
       }
     ]
@@ -18,7 +18,7 @@
   "minVersion": "0.21.0",
   "services": {
     "{ServiceName}": {
-      "image": "bitnami/discourse:latest",
+      "image": "discourse/discourse:latest",
       "container_name": "{ServiceName}",
       "hostname": "{ServiceName}",
       "restart": "unless-stopped",
@@ -49,7 +49,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-discourse_data",
-          "target": "/bitnami/discourse",
+          "target": "/var/www/discourse/public/uploads",
           "type": "volume"
         }
     ],
@@ -70,13 +70,12 @@
       ]
     },
     "{ServiceName}-sidekiq": {
-      "image": "bitnami/discourse:latest",
+      "image": "discourse/discourse:latest",
       "container_name": "{ServiceName}-sidekiq",
       "hostname": "{ServiceName}-sidekiq",
       "restart": "unless-stopped",
-      "command": [
-        "/opt/bitnami/scripts/discourse-sidekiq/run.sh"
-      ],
+      "working_dir": "/var/www/discourse",
+      "command": "bundle exec sidekiq",
       "environment": [
         "DISCOURSE_HOST={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "DISCOURSE_PASSWORD={Context.DISCOURSE_PASSWORD}",
@@ -104,7 +103,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-sidekiq_data",
-          "target": "/bitnami/discourse",
+          "target": "/var/www/discourse/public/uploads",
           "type": "volume"
         }
     ]
@@ -141,7 +140,7 @@
       ]
     },
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:7.0",
+      "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
@@ -151,7 +150,7 @@
       "volumes": [
         {
           "source": "{ServiceName}-redis",
-          "target": "/bitnami/redis",
+          "target": "/data",
           "type": "volume"
         }
       ],
@@ -160,9 +159,8 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "environment": [
-        "REDIS_PASSWORD={Passwords.1}"
-      ]
+      "command": "redis-server --requirepass {Passwords.1} --appendonly yes",
+      "environment": []
     }
   },
   "networks": {

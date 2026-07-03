@@ -1,0 +1,23 @@
+{
+    "name": "Plurality",
+    "longDescription": "<p>Plurality is a free, self-hosted AI assistant you can see in action, steer in real time, and easily debug. Spawn a plain conversation for a quick answer, or hand an agent a goal and let it keep working after you walk away — for minutes, hours, or days — calling tools, monitoring things, and spawning parallel sub-agents.</p><p>Where other platforms only let an agent text you updates, Plurality shows every inference the agent made as a conversation you can open at any moment to watch, stop, steer, or debug. Tool calls render inline with their arguments, file edits show as git-style diffs, long jobs show a live checklist, and even sub-agents appear as nested sub-conversations under the agent that spawned them. Every message carries its token counts and dollar cost.</p><p>It runs (almost) any model from (almost) any provider through a local LiteLLM proxy (OpenAI, Anthropic, Gemini, Fireworks, OpenRouter and more) from a single YAML file, with keys staying on your box. Agents are sandboxed with full control over their virtual environment, support tool calls, MCP, shell execution, image generation, skills and a custom harness with per-tool approval (Off / Ask / On). Attach a folder to any conversation to code in it, draft documents, or organize files. Other features include a CRON scheduler, signed webhook triggers, multimodal support (vision, image generation/editing, speech-to-text, TTS), reusable preset mini-apps, hybrid full-text + semantic search, and local accounts or OpenID/OIDC single sign-on. A single Flutter client runs on web, desktop and mobile. Self-contained per-user SQLite, no external database. MIT licensed.</p>",
+    "description": "Free, self-hosted AI assistant you can see and steer in real time. Run quick conversations or long-running agents that spawn parallel sub-agents — every tool call, edit and sub-agent shown inline as a conversation. Any model via LiteLLM, sandboxed agents, MCP, image generation, CRON, webhooks and per-tool approval. One Flutter app on web, desktop and mobile. Self-contained SQLite. MIT.",
+    "tags": [
+        "AI",
+        "assistant",
+        "chatbot",
+        "LLM",
+        "OpenRouter",
+        "self-hosted",
+        "multi-user",
+        "privacy-focused",
+        "open-source",
+        "Docker"
+    ],
+    "repository": "https://github.com/azukaar/plurality",
+    "image": "https://hub.docker.com/r/azukaar/plurality",
+    "supported_architectures": [
+        "amd64",
+        "arm64"
+    ]
+}

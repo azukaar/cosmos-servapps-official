@@ -1,0 +1,98 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "WF_SECRET_KEY",
+        "label": "Secret Key which is used to encrypt sensitive data stored in the volume. INSECURE, CANNOT BE CHANGED: read below",
+        "initialValue": "zzzzzzzzzzzzzzzzzzz{Passwords.0}=",
+        "type": "text"
+      },
+      {
+        "name": "insecureWarning",
+        "type": "warning",
+        "label": "The Secret Key generated per default is INSECURE, Create a secure one with following Command in the Terminal:"
+      },
+      {
+        "name": "createBase64Secret",
+        "type": "info",
+        "label": "openssl rand -base64 32"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
+    "translation": {
+      "de": {
+        "form.WF_SECRET_KEY.label": "Geheimer Schlüssel, der zur Verschlüsselung der auf dem Datenträger gespeicherten sensiblen Daten verwendet wird. UNSICHER, KANN NICHT GEÄNDERT WERDEN: siehe unten",
+        "form.insecureWarning.label": "Der standardmäßig generierte geheime Schlüssel ist UNSICHER. Erstellen Sie mit dem folgenden Befehl im Terminal einen sicheren Schlüssel:",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.WF_SECRET_KEY.label": "Clé secrète utilisée pour chiffrer les données sensibles stockées sur le volume. NON SÉCURISÉE, NE PEUT ÊTRE MODIFIÉE : voir ci-dessous",
+        "form.insecureWarning.label": "La clé secrète générée par défaut n'est PAS SÉCURISÉE. Créez-en une sécurisée à l'aide de la commande suivante dans le terminal :",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.WF_SECRET_KEY.label": "Chiave segreta utilizzata per crittografare i dati sensibili memorizzati nel volume. NON SICURA, NON MODIFICABILE: leggere di seguito",
+        "form.insecureWarning.label": "La chiave segreta generata di default NON È SICURA. Creane una sicura utilizzando il seguente comando nel Terminale:",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
+  },
+  "minVersion": "0.22.18",
+  "services": {
+    "{ServiceName}": {
+      "image": "wealthfolio/wealthfolio:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "user": "1000:1000",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "WF_LISTEN_ADDR=0.0.0.0:8080",
+        "WF_DB_PATH=/data/wealthfolio.db",
+        "WF_SECRET_KEY={Context.WF_SECRET_KEY}",
+        "WF_AUTH_REQUIRED=false",
+        "WF_REQUEST_TIMEOUT_MS=30000",
+        "WF_CORS_ALLOW_ORIGINS=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "WF_AUTH_PASSWORD_HASH="
+      ],
+      "labels": {
+        "cosmos-persistent-env": "WF_SECRET_KEY",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Wealthfolio/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
