@@ -25,7 +25,7 @@
         "OPENROUTER_API_KEY={Context.OPENROUTER_API_KEY}",
         "OPENID_ISSUER={RootProtocol}://{RootHostname}",
         "OPENID_NAME=Cosmos",
-        "OPENID_CLIENT_ID=plurality2",
+        "OPENID_CLIENT_ID={ServiceName}",
         "OPENID_BTN_COLOR=#FFFFFF",
         "OPENID_BTN_BG1=#FF64C8",
         "OPENID_BTN_BG2=#C864FF",
