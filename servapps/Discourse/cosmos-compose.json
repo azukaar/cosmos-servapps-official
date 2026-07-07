@@ -15,7 +15,7 @@
       }
     ]
   },
-  "minVersion": "0.9.0",
+  "minVersion": "0.21.0",
   "services": {
     "{ServiceName}": {
       "image": "discourse/discourse:latest",
