@@ -1,0 +1,19 @@
+{
+  "name": "Nora",
+  "longDescription": "<p>Nora is a self-hosted control plane for deploying and operating OpenClaw and Hermes agent fleets on infrastructure you control.</p><p>The Cosmos package installs Nora's operator dashboard, admin dashboard, backend API, provisioning and backup workers, PostgreSQL, Redis, and the reverse proxy as one stack. It enables the Docker execution backend, so Nora can launch isolated agent containers on the same host. The built-in deterministic demo provider lets you validate deployment and chat without an external API key.</p><p>Nora includes agent lifecycle controls, logs, terminal access, file management, monitoring, budgets, scheduled runs, encrypted secrets, managed backups, integrations, templates, workspaces, RBAC, a REST API, CLI, and MCP server.</p><p>Host access notice: Nora's backend and workers mount the Docker socket because creating and operating agent containers is the product's core function. This grants those services host-level Docker control. On the first OpenClaw deployment, allow several minutes for the public Node base image to install the runtime.</p>",
+  "description": "Self-hosted operations platform for OpenClaw and Hermes agent fleets",
+  "tags": [
+    "ai",
+    "agents",
+    "openclaw",
+    "hermes",
+    "automation",
+    "operations",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/solomon2773/nora",
+  "image": "https://github.com/solomon2773/nora/pkgs/container/nora-backend-api",
+  "supported_architectures": [
+    "amd64"
+  ]
+}
