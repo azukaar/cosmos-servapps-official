@@ -15,7 +15,7 @@
       }
     ]
   },
-  "minVersion": "0.22.23",
+  "minVersion": "0.22.28",
   "services": {
     "{ServiceName}": {
       "image": "azukaar/plurality",
@@ -25,7 +25,7 @@
         "OPENROUTER_API_KEY={Context.OPENROUTER_API_KEY}",
         "OPENID_ISSUER={RootProtocol}://{RootHostname}",
         "OPENID_NAME=Cosmos",
-        "OPENID_CLIENT_ID={ServiceName}",
+        "OPENID_CLIENT_ID=__route_{ServiceName}",
         "OPENID_BTN_COLOR=#FFFFFF",
         "OPENID_BTN_BG1=#FF64C8",
         "OPENID_BTN_BG2=#C864FF",
