@@ -12,7 +12,7 @@
   "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
-      "image": "nextcloud",
+      "image": "nextcloud:production",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
