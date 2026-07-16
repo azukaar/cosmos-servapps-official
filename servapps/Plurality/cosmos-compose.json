@@ -15,7 +15,7 @@
       }
     ]
   },
-  "minVersion": "0.22.28",
+  "minVersion": "0.22.29",
   "services": {
     "{ServiceName}": {
       "image": "azukaar/plurality",
@@ -61,6 +61,7 @@
         {
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
+          "publicOpenIDName": "__route_{ServiceName}",
           "useHost": true,
           "target": "http://{ServiceName}:8090",
           "mode": "SERVAPP",
