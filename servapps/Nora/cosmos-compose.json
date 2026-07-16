@@ -179,8 +179,22 @@
         }
       },
       "restart": "unless-stopped",
+      "user": "0:0",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
       "entrypoint": "/bin/sh -c",
-      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');node$IFS'-e'$IFS'const{Pool}=require(\"pg\"),fs=require(\"fs\"),p=new/**/Pool({host:process.env.DB_HOST,port:Number(process.env.DB_PORT),user:process.env.DB_USER,password:process.env.DB_PASSWORD,database:process.env.DB_NAME});(async()=>{for(;;){try{await/**/p.query(fs.readFileSync(\"/app/db_schema.sql\",\"utf8\"));await/**/p.end();break}catch(e){console.error(\"waiting_for_database:\",e.message);await/**/new/**/Promise(r=>setTimeout(r,2000))}}})().catch(e=>{console.error(e);process.exit(1)})';exec$IFS'npm'$IFS'start'",
+      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');node$IFS'-e'$IFS'const{Pool}=require(\"pg\"),fs=require(\"fs\"),p=new/**/Pool({host:process.env.DB_HOST,port:Number(process.env.DB_PORT),user:process.env.DB_USER,password:process.env.DB_PASSWORD,database:process.env.DB_NAME});(async()=>{for(;;){try{await/**/p.query(fs.readFileSync(\"/app/db_schema.sql\",\"utf8\"));await/**/p.end();break}catch(e){console.error(\"waiting_for_database:\",e.message);await/**/new/**/Promise(r=>setTimeout(r,2000))}}})().catch(e=>{console.error(e);process.exit(1)})';exec$IFS'/usr/local/bin/nora-container-entrypoint'$IFS'npm'$IFS'start'",
       "environment": [
         "NODE_ENV=production",
         "PLATFORM_MODE=selfhosted",
@@ -266,8 +280,22 @@
         }
       },
       "restart": "unless-stopped",
+      "user": "0:0",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
       "entrypoint": "/bin/sh -c",
-      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');exec$IFS'npm'$IFS'start'",
+      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');exec$IFS'/usr/local/bin/nora-container-entrypoint'$IFS'npm'$IFS'start'",
       "environment": [
         "NODE_ENV=production",
         "PLATFORM_MODE=selfhosted",
@@ -342,8 +370,22 @@
         }
       },
       "restart": "unless-stopped",
+      "user": "0:0",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
       "entrypoint": "/bin/sh -c",
-      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');exec$IFS'npm'$IFS'start'",
+      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');exec$IFS'/usr/local/bin/nora-container-entrypoint'$IFS'npm'$IFS'start'",
       "environment": [
         "NODE_ENV=production",
         "PLATFORM_MODE=selfhosted",
