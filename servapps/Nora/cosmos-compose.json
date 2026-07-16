@@ -62,7 +62,7 @@
       ]
     },
     "{ServiceName}-frontend-marketing": {
-      "image": "ghcr.io/solomon2773/nora-frontend-marketing:v1.15.0@sha256:688f2fe9eb34b4474ba57a74b021625e9c7d53d07ae50d2bb81ed710b655b45a",
+      "image": "ghcr.io/solomon2773/nora-frontend-marketing:v1.16.4@sha256:0e09112822fb9c5dbeae9fff33a2c81548817195fe762e1a0870f7426e1e917b",
       "container_name": "{ServiceName}-frontend-marketing",
       "hostname": "{ServiceName}-frontend-marketing",
       "networks": {
@@ -98,7 +98,7 @@
       }
     },
     "{ServiceName}-frontend-dashboard": {
-      "image": "ghcr.io/solomon2773/nora-frontend-dashboard:v1.15.0@sha256:84b866e1c71103c3def7d689987dc4d662eab9a55b2377a6ce35ec7c19f7f3e0",
+      "image": "ghcr.io/solomon2773/nora-frontend-dashboard:v1.16.4@sha256:d03ad06a1ea5c329fbec97e87150b04bec8ae8fa905e33a099da798db9f05fc9",
       "container_name": "{ServiceName}-frontend-dashboard",
       "hostname": "{ServiceName}-frontend-dashboard",
       "networks": {
@@ -133,7 +133,7 @@
       }
     },
     "{ServiceName}-admin-dashboard": {
-      "image": "ghcr.io/solomon2773/nora-admin-dashboard:v1.15.0@sha256:cec4912741a61c535e78656745421cff9554f70887021090af09034e954966ac",
+      "image": "ghcr.io/solomon2773/nora-admin-dashboard:v1.16.4@sha256:745bec0aef3ee04a9978de2dd99e812b26272c48f5a5b97841b791a4c29d5f92",
       "container_name": "{ServiceName}-admin-dashboard",
       "hostname": "{ServiceName}-admin-dashboard",
       "networks": {
@@ -168,7 +168,7 @@
       }
     },
     "{ServiceName}-backend-api": {
-      "image": "ghcr.io/solomon2773/nora-backend-api:v1.15.0@sha256:cff8af667cee92a221bfe151873fca7f28b56d33ee45cda014c299f03a2ca896",
+      "image": "ghcr.io/solomon2773/nora-backend-api:v1.16.4@sha256:26dd38a4448a2335025157034489e0b11f904c85715743d755d9be15ff862196",
       "container_name": "{ServiceName}-backend-api",
       "hostname": "{ServiceName}-backend-api",
       "networks": {
@@ -203,7 +203,7 @@
         "NORA_ENCRYPTION_SEED={Passwords.1}{Passwords.2}",
         "NORA_BACKUP_SEED={Passwords.2}{Passwords.3}",
         "NORA_INSTALL_METHOD=docker_image",
-        "NORA_CURRENT_VERSION=v1.15.0",
+        "NORA_CURRENT_VERSION=v1.16.4",
         "NORA_GITHUB_REPO=solomon2773/nora",
         "NORA_AUTO_UPGRADE_ENABLED=false",
         "NORA_BACKUP_STORAGE=local",
@@ -255,7 +255,7 @@
       }
     },
     "{ServiceName}-worker-provisioner": {
-      "image": "ghcr.io/solomon2773/nora-worker-provisioner:v1.15.0@sha256:163500508bc3cb53d5ac5e03dd5f54dae3168c9965e89894d4869743d01af763",
+      "image": "ghcr.io/solomon2773/nora-worker-provisioner:v1.16.4@sha256:6c3d3c19b5b15991867f4cfcf694f74539ffc9b37daf3d32e5a016ae711008a4",
       "container_name": "{ServiceName}-worker-provisioner",
       "hostname": "{ServiceName}-worker-provisioner",
       "networks": {
@@ -290,7 +290,7 @@
         "NORA_ENCRYPTION_SEED={Passwords.1}{Passwords.2}",
         "NORA_BACKUP_SEED={Passwords.2}{Passwords.3}",
         "NORA_INSTALL_METHOD=docker_image",
-        "NORA_CURRENT_VERSION=v1.15.0",
+        "NORA_CURRENT_VERSION=v1.16.4",
         "NORA_GITHUB_REPO=solomon2773/nora",
         "NORA_AUTO_UPGRADE_ENABLED=false",
         "NORA_BACKUP_STORAGE=local",
@@ -331,7 +331,7 @@
       }
     },
     "{ServiceName}-worker-backup": {
-      "image": "ghcr.io/solomon2773/nora-worker-backup:v1.15.0@sha256:60c35d6932f5d08e461750142ff5c4211a0be9aa29dbc5172a28ba55cbee6222",
+      "image": "ghcr.io/solomon2773/nora-worker-backup:v1.16.4@sha256:f4fd540bf6f66eabe7bf03a0e3c9832fe3434728b6cf7c6e1bb0bc845149de19",
       "container_name": "{ServiceName}-worker-backup",
       "hostname": "{ServiceName}-worker-backup",
       "networks": {
@@ -366,7 +366,7 @@
         "NORA_ENCRYPTION_SEED={Passwords.1}{Passwords.2}",
         "NORA_BACKUP_SEED={Passwords.2}{Passwords.3}",
         "NORA_INSTALL_METHOD=docker_image",
-        "NORA_CURRENT_VERSION=v1.15.0",
+        "NORA_CURRENT_VERSION=v1.16.4",
         "NORA_GITHUB_REPO=solomon2773/nora",
         "NORA_AUTO_UPGRADE_ENABLED=false",
         "NORA_BACKUP_STORAGE=local",
