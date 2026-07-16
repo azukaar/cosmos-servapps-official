@@ -3,7 +3,7 @@
   "longDescription": "<p>This is a locally hosted web application that allows you to perform various operations on PDF files, such as splitting and adding images.</p>",
   "description": "This is a locally hosted web application that allows you to perform various operations on PDF files, such as splitting and adding images.",
   "tags": ["document", "management", "organization", "archive", "collection", "web interface", "paper", "docker"],
-  "repository": "https://github.com/Frooodle/Stirling-PDF",
-  "image": "https://hub.docker.com/r/frooodle/s-pdf",
+  "repository": "https://github.com/Stirling-Tools/Stirling-PDF",
+  "image": "https://hub.docker.com/r/stirlingtools/stirling-pdf",
   "supported_architectures": ["amd64", "arm64"]
 }
