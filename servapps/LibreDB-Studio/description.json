@@ -5,5 +5,5 @@
     "tags": ["database", "sql", "developer-tools", "self-hosted"],
     "repository": "https://github.com/libredb/libredb-studio/",
     "image": "https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio",
-    "supported_architectures": ["amd64"]
+    "supported_architectures": ["amd64", "arm64"]
 }
