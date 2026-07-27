@@ -1,0 +1,106 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "advanced",
+        "label": "copyparty exposes host files ( / + /opt/docker/volumes ) to admins. Do you want to change this behaviour?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+      {if Context.advanced}
+      , {
+        "name": "mountPointRoot",
+        "label": "What folder do you want to have available in copyparty? (Default: /)",
+        "initialValue": "/",
+        "type": "text"
+      },
+      {
+        "name": "mountPointVolumes",
+        "label": "What folder do you want to have available in copyparty? (Default: /opt/docker/volumes)",
+        "initialValue": "/opt/docker/volumes",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    {/if}
+    ],
+    "translation": {
+      "de": {
+        "form.advanced.label": "copyparty macht das Host-Dateisystem ( / + /opt/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
+        "form.mountPointRoot.label": "Welchen Ordner möchten Sie in copyparty zur Verfügung haben? (Standard: /)",
+        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie in copyparty zur Verfügung haben? (Standard: /opt/docker/volumes)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.advanced.label": "copyparty rend les fichiers de l'hôte ( / + /opt/docker/volumes ) accessibles aux administrateurs. Souhaitez-vous modifier ce comportement ?",
+        "form.mountPointRoot.label": "Quel dossier souhaitez-vous rendre accessible dans copyparty ? (Par défaut : /)",
+        "form.mountPointVolumes.label": "Quel dossier souhaitez-vous rendre accessible dans copyparty ? (Par défaut : /opt/docker/volumes)",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.advanced.label": "copyparty rende visibili agli amministratori i file dell'host ( / + /opt/docker/volumes ). Vuoi modificare questo comportamento?",
+        "form.mountPointRoot.label": "Quale cartella desideri rendere disponibile in copyparty? (Impostazione predefinita: /)",
+        "form.mountPointVolumes.label": "Quale cartella desideri rendere disponibile in copyparty? (Impostazione predefinita: /opt/docker/volumes)",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
+  },
+  "minVersion": "0.22.4",
+  "services": {
+    "{ServiceName}": {
+      "image": "copyparty/ac:latest",
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/copyparty/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/cfg",
+          "type": "volume"
+        },
+        {
+          "type": "bind",
+          "source": "/var/lib/docker/volumes",
+          "target": "/docker-volumes"
+        },
+        {
+          "type": "bind",
+          "source": "/",
+          "target": "/host"
+        }
+      ],
+      "environment": [
+        "LD_PRELOAD=/usr/lib/libmimalloc-secure.so.NOPE",
+        "PYTHONUNBUFFERED=1"
+      ],
+      "restart": "unless-stopped",
+      "command": "-v /host:/host:A -v /docker-volumes:/docker-volumes:A --rproxy 1 --xff-src 172.16.0.0/16 --xff-hdr x-forwarded-for --idp-h-usr x-cosmos-user",
+      "container_name": "{ServiceName}",
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3923",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
