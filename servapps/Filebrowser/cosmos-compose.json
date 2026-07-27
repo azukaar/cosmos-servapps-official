@@ -2,9 +2,22 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "mountPoint",
-        "label": "What folder do you want to have available in Filebrowser?",
+        "name": "advanced",
+        "label": "Filebrowser exposes host files ( / + /opt/docker/volumes ) to admins. Do you want to change this behaviour?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+      {if Context.advanced}
+      , {
+        "name": "mountPointRoot",
+        "label": "What folder do you want to have available in Filebrowser? (Default: /)",
         "initialValue": "/",
+        "type": "text"
+      },
+      {
+        "name": "mountPointVolumes",
+        "label": "What folder do you want to have available in Filebrowser? (Default: /opt/docker/volumes)",
+        "initialValue": "/opt/docker/volumes",
         "type": "text"
       },
       {
@@ -14,42 +27,57 @@
         "type": "checkbox"
       },
       {
-        "name": "noAuth",
-        "label": "Uncheck to enable Filebrowser authentication (defaults to using Cosmos authentication)",
-        "initialValue": true,
+        "name": "Auth",
+        "label": "Check to enable Filebrowser authentication (defaults to using Cosmos authentication)",
+        "initialValue": false,
         "type": "checkbox"
       }
-    ]
-    {if not Context.noAuth}
-    , "post-install": [
+    {/if}
+    ],
+    {if Context.Auth}
+    "post-install": [
       {
         "type": "warning",
-        "label": "A default account has been created with admin / admin as credentials. Please change them"
+        "label": "A default account has been created with admin / {Passwords.0} as credentials"
       }
-    ]
+    ],
     {/if}
+    "translation": {
+      "de": {
+        "form.advanced.label": "Filebrowser macht das Host-Dateisystem ( / + /opt/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
+        "form.mountPointRoot.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /)",
+        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /opt/docker/volumes)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
+        "form.Auth.label": "Deaktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmäßig wird Cosmos zur Authentifizierung verwendet)",
+        "post-install.warning": "Es wurde ein Standardkonto mit admin / admin als Anmeldeinformationen erstellt. Bitte ändern Sie dies"
+      },
+      "de-CH": {
+        "form.Auth.label": "Deaktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmässig wird Cosmos zur Authentifizierung verwendet)"
+      }
+    }
   },
+  "minVersion": "0.16.0",
   "services": {
     "{ServiceName}": {
-      "image": "filebrowser/filebrowser",
+      "image": "filebrowser/filebrowser:s6",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "tty": true,
       "stdin_open": true,
-      "UID": 1000,
-      "GID": 1000,
       "environment": [
-        "PUID=1000",
-        "PGID=1000",
+        "PUID=0",
+        "PGID=0",
         "TZ=auto"
-        {if Context.noAuth}
+        {if not Context.Auth}
         , "FB_NOAUTH=true"
         {/if}
       ],
+      {if Context.Auth}
       "post_install": [
-        "filebrowser config init",
-        "filebrowser users add admin admin"
+        "filebrowser config init --viewMode \"list\"",
+        "filebrowser users add admin {Passwords.0}"
       ],
+      {/if}
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
@@ -57,10 +85,43 @@
       },
       "volumes": [
         {
-          "source": "{Context.mountPoint}",
+          "source": "{ServiceName}-mount",
           "target": "/srv",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-database",
+          "target": "/database",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {if not Context.advanced}
+        {
+          "source": "/",
+          "target": "/srv/host",
+          "type": "bind"
+        },
+        {
+          "source": "/opt/docker/volumes",
+          "target": "/srv/volumes",
           "type": "bind"
         }
+        {else}
+        {
+          "source": "{Context.mountPointRoot}",
+          "target": "/srv/host",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.mountPointVolumes}",
+          "target": "/srv/volumes",
+          "type": "bind"
+        }
+        {/if}
       ],
       "routes": [
         {
