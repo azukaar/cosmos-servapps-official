@@ -1,0 +1,92 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "translation": {
+      "de": {
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "openhab/openhab:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "USER_ID=1000",
+        "GROUP_ID=1000",
+        "CRYPTO_POLICY=unlimited"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/OpenHAB/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "/etc/localtime",
+          "target": "/etc/localtime",
+          "type": "bind",
+          "mode": "ro"
+        },
+        {
+          "source": "/etc/timezone",
+          "target": "/etc/timezone",
+          "type": "bind",
+          "mode": "ro"
+        },
+        {
+          "source": "{ServiceName}-addons",
+          "target": "/openhab/addons",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-conf",
+          "target": "/openhab/conf",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-userdate",
+          "target": "/openhab/userdata",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "{ServiceName} im Netzwerk veröffentlichen",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
