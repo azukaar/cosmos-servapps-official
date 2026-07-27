@@ -39,61 +39,12 @@
   },
   "minVersion": "0.9.16",
   "services": {
-    "{ServiceName}-broker": {
-      "image": "docker.io/library/redis:7",
-      "container_name": "{ServiceName}-broker",
-      "restart": "unless-stopped",
-      "volumes": [
-        {
-          "source": "{ServiceName}-redisdata",
-          "target": "/data",
-          "type": "volume"
-        }
-      ],
-      "labels": {
-        "cosmos-force-network-secured": "true",
-        "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Paperless-ngx/icon.png",
-        "cosmos-stack": "{ServiceName}",
-        "cosmos-stack-main": "{ServiceName}"
-      },
-      "networks": {
-        "{ServiceName}-network": {}
-      }
-    },
-
-    "{ServiceName}-db": {
-      "image": "docker.io/library/postgres:15",
-      "container_name": "{ServiceName}-db",
-      "restart": "unless-stopped",
-      "volumes": [
-        {
-          "source": "{ServiceName}-pgdata",
-          "target": "/var/lib/postgresql/data",
-          "type": "volume"
-        }
-      ],
-      "environment": [
-        "POSTGRES_DB=paperless",
-        "POSTGRES_USER=paperless",
-        "POSTGRES_PASSWORD={Passwords.0}"
-      ],
-      "labels": {        
-        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
-        "cosmos-force-network-secured": "true",
-        "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Paperless-ngx/icon.png",
-        "cosmos-stack": "{ServiceName}",
-        "cosmos-stack-main": "{ServiceName}"
-      },
-      "networks": {
-        "{ServiceName}-network": {}
-      }
-    },
-    
     "{ServiceName}": {
-      "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
+      "image": "ghcr.io/paperless-ngx/paperless-ngx:2.20",
       "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
       "depends_on": {
         "{ServiceName}-db": {},
         "{ServiceName}-broker": {},
@@ -144,9 +95,6 @@
         "cosmos-stack-main": "{ServiceName}"
       },
       "container_name": "{ServiceName}",
-      "networks": {
-        "{ServiceName}-network": {}
-      },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -168,10 +116,20 @@
       ]
     },
 
-    "{ServiceName}-gotenberg": {
-      "image": "docker.io/gotenberg/gotenberg:7.8",
-      "container_name": "{ServiceName}-gotenberg",
+    "{ServiceName}-broker": {
+      "image": "docker.io/library/redis:7",
+      "container_name": "{ServiceName}-broker",
       "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-redisdata",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
@@ -179,8 +137,51 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-network": {}
+      "command": "redis-server --ignore-warnings ARM64-COW-BUG"
+    },
+
+    "{ServiceName}-db": {
+      "image": "docker.io/library/postgres:15",
+      "container_name": "{ServiceName}-db",
+      "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-pgdata",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ],
+      "environment": [
+        "POSTGRES_DB=paperless",
+        "POSTGRES_USER=paperless",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {        
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Paperless-ngx/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
+    },
+
+    "{ServiceName}-gotenberg": {
+      "image": "docker.io/gotenberg/gotenberg:7.8",
+      "container_name": "{ServiceName}-gotenberg",
+      "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Paperless-ngx/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       }
     },
 
@@ -188,21 +189,16 @@
       "image": "docker.io/apache/tika:latest",
       "container_name": "{ServiceName}-tika",
       "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Paperless-ngx/icon.png",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
-      },
-      "networks": {
-        "{ServiceName}-network": {}
       }
-    }
-  },
-  
-  "networks": {
-    "{ServiceName}-network": {
     }
   }
 }
