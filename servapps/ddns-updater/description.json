@@ -1,0 +1,26 @@
+{
+  "name": "ddns-updater",
+  "description": "Lightweight universal DDNS Updater program",
+  "longDescription": "Program to keep DNS A and/or AAAA records updated for multiple DNS providers",
+  "translation": {
+    "de": {
+      "description": "Leichtgewichtiges Programm zum Aktualisieren von DDNS-Einstellungen",
+      "longDescription": "Programm zur Aktualisierung von DNS-A- und/oder AAAA-Einträgen für mehrere DNS-Anbieter"
+    },
+    "fr": {
+      "description": "Programme léger et polyvalent de mise à jour DDNS",
+      "longDescription": "Programme permettant de maintenir à jour les enregistrements DNS de type A et/ou AAAA pour plusieurs fournisseurs DNS"
+    },
+    "it": {
+      "description": "Programma leggero e universale per l'aggiornamento DDNS",
+      "longDescription": "Programma per mantenere aggiornati i record DNS A e/o AAAA per più provider DNS"
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services","Developer"],
+  "repository": "https://github.com/qdm12/ddns-updater",
+  "image": "https://ghcr.io/qdm12/ddns-updater",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
