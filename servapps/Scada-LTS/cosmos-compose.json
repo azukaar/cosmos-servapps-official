@@ -1,0 +1,103 @@
+{ 
+  "cosmos-installer": {
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "scadalts/scadalts:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "privileged": true,
+      "command": "/usr/bin/wait-for-it --host=database --port=3306 --timeout=30 --strict -- /usr/local/tomcat/bin/catalina.sh run",
+      "depends_on": {
+        "{ServiceName}-db": {
+          "condition": "service_healthy"
+        }
+      },
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "CATALINA_OPTS=-Xmx2G -Xms2G"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Scada-LTS/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "{ServiceName} im Netzwerk veröffentlichen",
+          "useHost": true,
+          "usePathPrefix": true,
+          "PathPrefix": "/Scada-LTS/",
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+        }
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-tomcat-logs",
+          "target": "/usr/local/tomcat/logs",
+          "type": "volume"
+        }
+      ]
+    },
+    "{ServiceName}-db": {
+      "image": "mysql/mysql-server:8.0.32",
+      "container_name": "{ServiceName}-db",
+      "hostname": "database",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "MYSQL_ROOT_PASSWORD=root",
+        "MYSQL_USER=root",
+        "MYSQL_PASSWORD=root",
+        "MYSQL_DATABASE=scadalts"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-db_data",
+          "target": "/var/lib/mysql",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-db_conf",
+          "target": "/etc/mysql",
+          "type": "volume"
+        }
+      ],
+      "links": [
+        "{ServiceName}"
+      ],
+      "command": "--log_bin_trust_function_creators=1",
+      "healthcheck": {
+        "test": ["CMD", "mysqladmin" ,"ping", "-h", "localhost"],
+        "timeout": 20,
+        "retries": 10
+      }
+    }
+  }
+}
