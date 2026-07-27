@@ -1,0 +1,26 @@
+{
+  "name": "mbusd",
+  "description": "ModbusTCP-Server and Gateway ModbusRTU (RS-232/485)",
+  "longDescription": "mbusd is open-source Modbus TCP to Modbus RTU (RS-232/485) gateway. It presents a network of RTU slaves as single TCP slave.<br />That is a TCP-Slave (or server) which acts as a RTU-master to get data from Modbus RTU-slave devices.<ul><li>Small footprint - suitable to run on embedded devices and SBCs like Raspberry Pi</li><li>Multi-master - multiple TCP masters can access slave devices in RTU network using same gateway</li><li>Robustness - can retry requests with mismatched response CRC</li><li>Flexible RTU modes - speed/parity/stop-bits/timeouts can be configured for RTU network</li><li>Support for both of automatic and manual (using RTS bit) direction control types for RS-485 transceivers</li></ul>",
+  "translation": {
+    "de": {
+      "description": "ModbusTCP-Server und Gateway auf ModbusRTU (RS-232/485)",
+      "longDescription": "mbusd ist ein Open-Source Modbus TCP zu Modbus RTU (RS-232/485) Gateway. Es stellt ein Netzwerk von RTU-Slaves als einzelnen TCP-Slave dar.<br />Das ist ein TCP-Slave (oder Server), der als RTU-Master agiert, um Daten von Modbus RTU-Slave-Geräten zu erhalten.<ul><li>Geringer Platzbedarf - geeignet für den Betrieb auf eingebetteten Geräten und SBCs wie Raspberry Pi</li><li>Multi-Master - mehrere TCP-Master können über dasselbe Gateway auf Slave-Geräte im RTU-Netzwerk zugreifen</li><li>Robustheit - kann Anfragen mit nicht übereinstimmender Antwort CRC wiederholen</li><li>Flexible RTU-Modi - Geschwindigkeit/Parität/Stop-Bits/Timeouts können für das RTU-Netzwerk konfiguriert werden</li><li>KNX-Eigenschaftszugang</li><li>Unterstützung von automatischen und manuellen (mit RTS-Bit) Richtungssteuerungsarten für RS-485-Transceiver</li></ul>"
+    },
+    "fr": {
+      "longDescription": "mbusd est une passerelle open source Modbus TCP vers Modbus RTU (RS-232/485). Elle présente un réseau d'esclaves RTU comme un seul esclave TCP. Il s'agit d'un esclave TCP (ou serveur) qui agit comme un maître RTU pour obtenir des données à partir de dispositifs esclaves Modbus RTU. <ul><li>Faible encombrement - convient pour fonctionner sur des appareils embarqués et des SBC tels que Raspberry Pi</li><li>Multi-maître - plusieurs maîtres TCP peuvent accéder aux appareils esclaves du réseau RTU en utilisant la même passerelle</li><li>Robustesse - peut réessayer les requêtes avec une réponse CRC non correspondante</li><li>Modes RTU flexibles - la vitesse/parité/ bits d'arrêt/délais d'attente peuvent être configurés pour le réseau RTU</li><li>Prise en charge des types de contrôle de direction automatique et manuel (à l'aide du bit RTS) pour les émetteurs-récepteurs RS-485</li></ul>",
+      "description": "Serveur ModbusTCP et passerelle ModbusRTU (RS-232/485)"
+    },
+    "it": {
+      "longDescription": "mbusd è un gateway open source da Modbus TCP a Modbus RTU (RS-232/485). Presenta una rete di slave RTU come singolo slave TCP. Si tratta di uno slave TCP (o server) che funge da master RTU per ottenere dati dai dispositivi slave Modbus RTU. <ul><li>Ingombro ridotto: adatto per l'esecuzione su dispositivi embedded e SBC come Raspberry Pi</li><li>Multi-master: più master TCP possono accedere ai dispositivi slave nella rete RTU utilizzando lo stesso gateway</li><li>Robustezza: può riprovare le richieste con CRC di risposta non corrispondente</li><li>Modalità RTU flessibili: velocità/parità/ stop bit/timeout configurabili per la rete RTU</li><li>Supporto per tipi di controllo della direzione sia automatico che manuale (utilizzando il bit RTS) per ricetrasmettitori RS-485</li></ul>",
+      "description": "Server ModbusTCP e gateway ModbusRTU (RS-232/485)"
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services","Developer"],
+  "repository": "https://github.com/3cky/mbusd",
+  "image": "https://hub.docker.com/r/3cky/mbusd",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
