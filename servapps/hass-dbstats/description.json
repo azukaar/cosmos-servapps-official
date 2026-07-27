@@ -1,0 +1,23 @@
+{
+  "name": "HA DBStats",
+  "description": "Visualize Home Assistant Database Usage",
+  "longDescription": "HA DBStats is a small Webapp to check the Home Assistant database usage of Sensors and Statistics data.",
+  "translation": {
+    "de": {
+      "description": "Visualisierung der Datenbanknutzung von Home Assistant",
+      "longDescription": "HA DBStats ist eine kleine Webanwendung zur Überprüfung der Datenbanknutzung von Sensoren und Statistikdaten in Home Assistant."
+    },
+    "fr": {
+      "longDescription": "HA DBStats est une petite application Web permettant de consulter l'utilisation de la base de données Home Assistant pour les données relatives aux capteurs et aux statistiques.",
+      "description": "Visualiser l'utilisation de la base de données Home Assistant"
+    },
+    "it": {
+      "longDescription": "HA DBStats è una piccola applicazione web che consente di verificare l'utilizzo del database di Home Assistant per quanto riguarda i dati relativi a sensori e statistiche.",
+      "description": "Visualizza l'utilizzo del database di Home Assistant"
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
+  "repository": "https://github.com/jehy/hass-dbstats",
+  "image": "https://ghcr.io/jehy/hass-dbstats",
+  "supported_architectures": ["amd64", "arm64"]
+}
