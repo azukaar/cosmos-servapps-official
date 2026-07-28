@@ -2,8 +2,15 @@
   "cosmos-installer": {
     "form": [
       {
-        "type": "info",
-        "label": "PostgreSQL is used as the database server. Apache Tika and Gotenberg servers are started with paperless and paperless is configured to use these services. These provide support for consuming Office documents (Word, Excel, Power Point and their LibreOffice counterparts."
+        "name": "usergroup",
+        "label": "Please specify the name for the default usergroup which get's added to Cosmos' users.",
+        "initialValue": "Cosmos",
+        "type": "text"
+      },
+      {
+        "name": "usergroupWarning",
+        "type": "warning",
+        "label": "The paperless admin need's to create this group and set the neeeded Permissions. Otherwise Cosmos' users have NO permissions in Paperless-ngx."
       },
       {
         "name": "username",
@@ -13,9 +20,9 @@
       }, 
       {
         "name": "password",
-        "label": "Would you like to change the admin password? (Default: password)",
-        "initialValue": "password",
-        "type": "password"
+        "label": "Would you like to change the admin password? (Default: random)",
+        "initialValue": "{Passwords.0}",
+        "type": "text"
       },
       {
         "name": "exportDirectory",
@@ -35,12 +42,41 @@
         "initialValue": false,
         "type": "checkbox"
       }
-    ]
+    ],
+    "translation": {
+      "de": {
+        "form.usergroup.label": "Cosmos-Benutzer werden in Paperless-ngx beim ersten Aufruf automatisch angelegt. Bitte geben Sie den Namen für die Benutzergruppe an, die zu den Benutzern von Cosmos hinzugefügt wird.",
+        "form.usergroupWarning.label": "Vorab muss der Admin-Benutzer diese Benutzergruppe manuell anlegen und die erforderlichen Berechtigungen festlegen. Andernfalls haben Cosmos-Benutzer KEINE Berechtigungen in Paperless-ngx.",
+        "form.username.label": "Möchten Sie den Benutzernamen des Administrators ändern? (Standard: admin)",
+        "form.password.label": "Möchten Sie das Administrator-Passwort ändern? (Standard: zufällig generiert)",
+        "form.exportDirectory.label": "Wie lautet der Pfad um Dateien zu exportieren?",
+        "form.consumeDirectory.label": "Wie lautet der Pfad um Dateien zu importieren?",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.usergroup.label": "Veuillez indiquer le nom du groupe d'utilisateurs qui sera ajouté aux utilisateurs de Cosmos.",
+        "form.usergroupWarning.label": "L'administrateur doit d'abord créer manuellement ce groupe d'utilisateurs et définir les autorisations nécessaires. Sinon, les utilisateurs Cosmos n'auront AUCUNE autorisation dans Paperless-ngx.",
+        "form.username.label": "Souhaitez-vous modifier le nom d'utilisateur de l'administrateur ? (Par défaut : admin)",
+        "form.password.label": "Souhaitez-vous modifier le mot de passe administrateur ? (Par défaut : généré aléatoirement)",
+        "form.exportDirectory.label": "Quel est le chemin d'accès permettant d'exporter des fichiers ?",
+        "form.consumeDirectory.label": "Quel est le chemin d'accès pour importer des fichiers ?",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.usergroup.label": "Si prega di specificare il nome del gruppo di utenti da aggiungere agli utenti di Cosmos.",
+        "form.usergroupWarning.label": "In primo luogo, l'utente amministratore deve creare manualmente questo gruppo di utenti e impostare le autorizzazioni necessarie. In caso contrario, gli utenti Cosmos NON avranno alcuna autorizzazione in Paperless-ngx.",
+        "form.username.label": "Desidera modificare il nome utente dell'amministratore? (Predefinito: admin)",
+        "form.password.label": "Desidera modificare la password dell'amministratore? (Impostazione predefinita: generata casualmente)",
+        "form.exportDirectory.label": "Qual è il percorso per esportare i file?",
+        "form.consumeDirectory.label": "Qual è il percorso per importare i file?",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
   },
-  "minVersion": "0.9.16",
+  "minVersion": "0.22.30",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/paperless-ngx/paperless-ngx:2.20",
+      "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
       "restart": "unless-stopped",
       "security_opt": [
         "no-new-privileges:true"
@@ -74,9 +110,10 @@
         }
       ],
       "environment": [
+        "PAPERLESS_SECRET_KEY={Passwords.3}{Passwords.2}{Passwords.1}",
         "PAPERLESS_REDIS=redis://{ServiceName}-broker:6379",
         "PAPERLESS_DBHOST={ServiceName}-db",
-        "PAPERLESS_DBPASS={Passwords.0}",
+        "PAPERLESS_DBPASS={Passwords.1}",
         "PAPERLESS_TIKA_ENABLED=1",
         "PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://{ServiceName}-gotenberg:3000",
         "PAPERLESS_TIKA_ENDPOINT=http://{ServiceName}-tika:9998",
@@ -84,10 +121,18 @@
         "USERMAP_GID=1000",
         "PAPERLESS_ADMIN_USER={Context.username}",
         "PAPERLESS_ADMIN_PASSWORD={Context.password}",
-        "PAPERLESS_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+        "PAPERLESS_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "PAPERLESS_SOCIAL_ACCOUNT_DEFAULT_GROUPS={Context.usergroup}",
+        "PAPERLESS_SOCIAL_AUTO_SIGNUP=true",
+        "PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS=true",
+        "PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS=false",
+        "PAPERLESS_DISABLE_REGULAR_LOGIN=false",
+        "PAPERLESS_REDIRECT_LOGIN_TO_SSO=false",
+        "PAPERLESS_APPS=allauth.socialaccount.providers.openid_connect",
+        "PAPERLESS_SOCIALACCOUNT_PROVIDERS={\"openid_connect\":{\"OAUTH_PKCE_ENABLED\":true,\"APPS\":[{\"provider_id\":\"cosmos\",\"name\":\"Cosmos Cloud\",\"client_id\":\"__route_{ServiceName}\",\"settings\":{\"server_url\":\"{RootProtocol}://{RootHostname}/.well-known/openid-configuration\",\"fetch_userinfo\":true,\"uid_field\":\"sub\"}}],\"SCOPE\":[\"openid\",\"profile\"]}}"
       ],
       "labels": {
-        "cosmos-persistent-env": "PAPERLESS_ADMIN_PASSWORD, PAPERLESS_ADMIN_USER, PAPERLESS_DBPASS",
+        "cosmos-persistent-env": "PAPERLESS_ADMIN_PASSWORD, PAPERLESS_ADMIN_USER, PAPERLESS_DBPASS, PAPERLESS_SECRET_KEY",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Paperless-ngx/icon.png",
@@ -108,10 +153,30 @@
           "SmartShield": {
             "Enabled": true
           },
-          "AuthEnabled": true
+          "AuthEnabled": true,
           {if Context.adminOnly}
-           , "AuthAdmin": true
+          "AuthAdmin": true,
           {/if}
+          "PublicOpenIDName": "__route_{ServiceName}",
+          "PublicOpenIDRedirectURIs": "{RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/accounts/oidc/cosmos/login/callback/"
+        },
+        {
+          "name": "{ServiceName}-admin",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8000",
+          "UsePathPrefix": true,
+          "PathPrefix": "/admin/",
+          "HideFromDashboard": true,
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true,
+          "AuthAdmin": true
         }
       ]
     },
