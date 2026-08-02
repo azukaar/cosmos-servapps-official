@@ -46,7 +46,7 @@
   "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/blizzhacker/romarr:0.6.1",
+      "image": "ghcr.io/blizzhacker/romarr:0.7.0",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,
@@ -88,7 +88,7 @@
           "name": "{ServiceName}",
           "description": "Expose ROMarr to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:7878",
+          "target": "http://{ServiceName}:6868",
           "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
