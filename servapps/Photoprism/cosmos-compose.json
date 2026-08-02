@@ -21,7 +21,7 @@
       }
     ]
   },
-  "minVersion": "0.7.6",
+  "minVersion": "0.21.0",
   "services": {
     "{ServiceName}": {
       "image": "photoprism/photoprism",
@@ -107,7 +107,16 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
+      "command": [
+        "mariadbd",
+        "--innodb-buffer-pool-size=512M",
+        "--transaction-isolation=READ-COMMITTED",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--max-connections=512",
+        "--innodb-rollback-on-timeout=OFF",
+        "--innodb-lock-wait-timeout=120"
+      ],
       "volumes": [
         {
           "source": "{ServiceName}-mariadb-data",
