@@ -1,0 +1,30 @@
+{
+  "name": "InfluxDB",
+  "description": "The leading open source time series database for metrics, events, and real-time analytics.",
+  "longDescription": "InfluxDB is the time series data platform designed to handle high write and query workloads. Using InfluxDB, you can collect, store, and process large amounts of timestamped data, including metrics and events for use cases such as DevOps monitoring, application metrics, IoT sensors, and event monitoring.",
+  "translation": {
+    "de": {
+      "description": "Die führende Open-Source-Zeitreihendatenbank, die für Echtzeit-Analyseaufgaben entwickelt wurde.",
+      "longDescription": "InfluxDB ist die Plattform für Zeitreihendaten, die für hohe Schreib- und Abfragelasten ausgelegt ist. Mit InfluxDB können Sie große Mengen an Zeitstempeldaten sammeln, speichern und verarbeiten, einschließlich Metriken und Ereignisse für Anwendungsfälle wie DevOps-Überwachung, Anwendungsmetriken, IoT-Sensoren und Ereignisüberwachung."
+    },
+    "de-CH": {
+      "description": "Die führende Open-Source-Zeitreihendatenbank, die für Echtzeit-Analyseaufgaben entwickelt wurde.",
+      "longDescription": "InfluxDB ist die Plattform für Zeitreihendaten, die für hohe Schreib- und Abfragelasten ausgelegt ist. Mit InfluxDB können Sie grosse Mengen an Zeitstempeldaten sammeln, speichern und verarbeiten, einschliesslich Metriken und Ereignisse für Anwendungsfälle wie DevOps-Überwachung, Anwendungsmetriken, IoT-Sensoren und Ereignisüberwachung."
+    },
+    "fr": {
+      "longDescription": "InfluxDB est une plateforme de données chronologiques conçue pour gérer des charges de travail élevées en matière d'écriture et de requêtes. Grâce à InfluxDB, vous pouvez collecter, stocker et traiter de grandes quantités de données horodatées, notamment des métriques et des événements destinés à des cas d'utilisation tels que la surveillance DevOps, les métriques d'application, les capteurs IoT et la surveillance d'événements.",
+      "description": "La principale base de données open source de séries chronologiques pour les métriques, les événements et les analyses en temps réel."
+    },
+    "it": {
+      "longDescription": "InfluxDB è la piattaforma di dati temporali progettata per gestire carichi di lavoro elevati di scrittura e query. Utilizzando InfluxDB, è possibile raccogliere, archiviare ed elaborare grandi quantità di dati con timestamp, inclusi metriche ed eventi per casi d'uso quali monitoraggio DevOps, metriche delle applicazioni, sensori IoT e monitoraggio degli eventi.",
+      "description": "Il database open source leader nel settore delle serie temporali per metriche, eventi e analisi in tempo reale."
+    }
+  },
+  "tags": ["Network"],
+  "repository": "https://github.com/influxdata/influxdb",
+  "image": "https://hub.docker.com/_/influxdb",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}

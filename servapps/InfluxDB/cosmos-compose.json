@@ -1,0 +1,226 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "v3",
+        "label": "install new Version InfluxDB 3 Core? If unchecked, install lInfluxDB OSS v2",
+        "initialValue": true,
+        "type": "checkbox"
+      },
+      {if Context.v3}
+      {
+        "name": "dbName",
+        "label": "Choose the name of your initial Database",
+        "initialValue": "default",
+        "type": "text"
+      },
+      {/if}
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {if Context.v3}
+      {
+        "type": "warning",
+        "name": "apikey",
+        "label": "Please store your Admin API-Token somewhere safe. It won't be shown again."
+      }
+      {/if}
+    ],
+    "translation": {
+      "de": {
+        "form.v3.label": "Neue Version InfluxDB 3 Core installieren? Wenn das Kontrollkästchen deaktiviert ist, wird InfluxDB OSS v2 installiert",
+        "form.dbName.label": "Wählen Sie den Namen Ihrer ersten Datenbank",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
+        "post-install.apikey.label": "Bitte bewahren Sie Ihren Admin-API-Token an einem sicheren Ort auf. Er wird nicht erneut angezeigt."
+      },
+      "fr": {
+        "form.v3.label": "Installer la nouvelle version InfluxDB 3 Core ? Si cette case n'est pas cochée, installer InfluxDB OSS v2",
+        "form.dbName.label": "Choisissez le nom de votre base de données initiale",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?",
+        "post-install.apikey.label": "Veuillez conserver votre jeton API d'administration en lieu sûr. Il ne s'affichera plus par la suite."
+      },
+      "it": {
+        "form.v3.label": "Installare la nuova versione InfluxDB 3 Core? Se l'opzione non è selezionata, installare InfluxDB OSS v2",
+        "form.dbName.label": "Scegli il nome del tuo database iniziale",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?",
+        "post-install.apikey.label": "Conserva il tuo token API di amministrazione in un luogo sicuro. Non verrà più visualizzato."
+      }
+    }
+  },
+  "minVersion": "0.22.4",
+  "services": {
+    {if Context.v3}
+    "{ServiceName}": {
+      "image": "influxdb:3-core",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "INFLUXDB3_NODE_IDENTIFIER_PREFIX=node0",
+        "INFLUXDB3_OBJECT_STORE=file",
+        "INFLUXDB3_DB_DIR=/var/lib/influxdb3/data",
+        "INFLUXDB3_PLUGIN_DIR=/var/lib/influxdb3/plugins"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/icon.png",
+        "cosmos-stack": "influxdb",
+        "cosmos-stack-main": "influxdb"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/var/lib/influxdb3",
+          "type": "volume"
+        }
+      ],
+      "post_install": [
+        "influxdb3 create token --admin | grep Token | sed 's/.*apiv3/apiv3/g' > /var/lib/influxdb3/token && influxdb3 create database --retention-period 30d --token \"$(cat /var/lib/influxdb3/token)\" {Context.dbName}"
+      ]
+    },
+    "{ServiceName}-explorer": {
+      "image": "influxdata/influxdb3-ui:latest",
+      "container_name": "{ServiceName}-explorer",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "depends_on": {
+        "InfluxDB": {}
+      },
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "PUID=1000",
+        "PGID=1000"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/icon.png",
+        "cosmos-stack": "influxdb",
+        "cosmos-stack-main": "influxdb"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-explorer-db",
+          "target": "/db",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-explorer-config",
+          "target": "/app-root/config",
+          "type": "volume"
+        },
+        {
+          "type": "volume",
+          "source": "{ServiceName}-explorer-ssl",
+          "target": "/etc/nginx/ssl"
+        },
+        {
+          "type": "volume",
+          "source": "{ServiceName}-explorer-admininstructions",
+          "target": "/app-root/admin-instructions"
+        },
+        {
+          "type": "volume",
+          "source": "{ServiceName}-explorer-cacerts",
+          "target": "/ca-certs"
+        },
+        {
+          "source": "{ServiceName}-data",
+          "target": "/var/lib/influxdb3",
+          "type": "volume"
+        }
+      ],
+      "command": "--mode=admin",
+      "post_install": [
+        "wget -O config/config.json https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/artefacts/config.json && apk update && apk add yq && TOKEN=$(cat /var/lib/influxdb3/token) yq -i '.DEFAULT_API_TOKEN = env(TOKEN)' config/config.json",
+        "printf \"\\n \\n \\nADMIN API TOKEN:\\n$(cat /var/lib/influxdb3/token)\\n \\n \\n\""
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "{ServiceName} im Netzwerk veröffentlichen",
+          "useHost": true,
+          "target": "http://{ServiceName}-explorer:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+    {else}
+    "{ServiceName}": {
+      "image": "influxdb:2",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "PUID=1000",
+        "PGID=1000"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/etc/influxdb2",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-data",
+          "target": "/var/lib/influxdb2",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "{ServiceName} im Netzwerk veröffentlichen",
+          "useHost": true,
+          "target": "http://{ServiceName}:8086",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+    {/if}
+  }
+}
