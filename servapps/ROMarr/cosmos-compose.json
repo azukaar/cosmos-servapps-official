@@ -1,0 +1,106 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "romPath",
+        "label": "What is the path to your ROM library? (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/roms",
+        "type": "text"
+      },
+      {
+        "name": "downloadPath",
+        "label": "What is the path to download to? This must match the path your download client reports, character for character. (leave empty to not mount anything)",
+        "initialValue": "{DefaultDataPath}/downloads",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "downloader",
+        "name-container": "downloader-name",
+        "label": "What downloader do you want to use?",
+        "type": "container"
+      },
+      {
+        "type": "warning",
+        "label": "ROMarr reads its environment once, on first start, and its own stored settings win afterwards. Finish setup on the Settings page inside ROMarr rather than by editing this configuration later."
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "Open ROMarr and set your Prowlarr URL and API key, your download client, and your game library on the Settings page. At least one download client is required: a release found with no client that speaks its protocol is ranked and then refused."
+      }
+      {if Context.downloader}
+      , {
+        "type": "warning",
+        "label": "Connect ROMarr to your downloader using the URL: {Context.downloader}"
+      }
+      {/if}
+    ]
+  },
+  "minVersion": "0.7.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/blizzhacker/romarr:0.6.1",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto",
+        "LIBRARY_KIND=romm",
+        "LIBRARY_PATH=/roms"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+        {if Context.romPath}
+        , {
+          "source": "{Context.romPath}",
+          "target": "/roms",
+          "type": "bind"
+        }
+        {/if}
+        {if Context.downloadPath}
+        , {
+          "source": "{Context.downloadPath}",
+          "target": "/downloads",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose ROMarr to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:7878",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true,
+            "PolicyStrictness": 2
+          },
+          "AuthEnabled": "{Context.adminOnly}",
+          "AdminOnly": "{Context.adminOnly}"
+        }
+      ]
+    }
+  }
+}
