@@ -1,0 +1,23 @@
+{
+  "name": "HA-enoceanmqtt",
+  "description": "This is a Home Assistant overlay for enoceanmqtt.",
+  "longDescription": "<p>It allows to easily have access to EnOcean devices in Home Assistant through MQTT.<br/>It is based on MQTT discovery from the Home Assistant MQTT integration.</p>",
+  "translation": {
+    "de": {
+      "description": "Dies ist ein Home Assistant Overlay für enoceanmqtt.",
+      "longDescription": "<p>Es ermöglicht den einfachen Zugriff auf EnOcean-Geräte im Home Assistant über MQTT.<br/>Es basiert auf der MQTT-Erkennung der Home Assistant MQTT-Integration.</p>"
+    },
+    "fr": {
+      "longDescription": "<p>Il permet d'accéder facilement aux appareils EnOcean dans Home Assistant via MQTT.<br/>Il est basé sur la découverte MQTT à partir de l'intégration MQTT de Home Assistant.</p>",
+      "description": "Il s'agit d'une superposition Home Assistant pour enoceanmqtt."
+    },
+    "it": {
+      "longDescription": "<p>Consente di accedere facilmente ai dispositivi EnOcean in Home Assistant tramite MQTT.<br/>Si basa sul rilevamento MQTT dall'integrazione MQTT di Home Assistant.</p>",
+      "description": "Si tratta di un overlay Home Assistant per enoceanmqtt."
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
+  "repository": "https://github.com/aseracorp/HA_enoceanmqtt/",
+  "image": "https://ghcr.io/aseracorp/ha_enoceanmqtt",
+  "supported_architectures": ["amd64", "arm64"]
+}
