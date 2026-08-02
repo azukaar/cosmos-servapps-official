@@ -1,0 +1,72 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "interval",
+        "label": "How often should the network be scanned?",
+        "initialValue": "5m",
+        "type": "select",
+        "options": [
+          ["1m", "every minute"],
+          ["5m", "every 5 minutes"],
+          ["15m", "every 15 minutes"],
+          ["1h", "hourly"]
+        ]
+      },
+      {
+        "name": "portscan",
+        "label": "Scan open ports on discovered devices?",
+        "initialValue": "true",
+        "type": "select",
+        "options": [
+          ["true", "true"],
+          ["false", "false"]
+        ]
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "DeviceShelf runs on the host network, so it is not reachable under its container name. Open http://<ip-of-cosmos-server>:8088 instead. The server mints an access token on first start; read it with: docker exec {ServiceName} deviceshelf-server -token"
+      }
+    ]
+  },
+  "minVersion": "0.9.0",
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "ghcr.io/wealthwallet/deviceshelf-server:1.7.8",
+      "NetworkMode": "host",
+      "CapAdd": [
+        "NET_RAW",
+        "NET_BIND_SERVICE"
+      ],
+      "restart": "unless-stopped",
+      "environment": [
+        "DEVICESHELF_API_PORT=8088",
+        "DEVICESHELF_INTERVAL={Context.interval}",
+        "DEVICESHELF_PORTSCAN={Context.portscan}",
+        "TZ=auto"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://deviceshelf.app/assets/img/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
+          "source": "/etc/localtime",
+          "target": "/etc/localtime",
+          "type": "bind",
+          "mode": "ro"
+        }
+      ]
+    }
+  }
+}
