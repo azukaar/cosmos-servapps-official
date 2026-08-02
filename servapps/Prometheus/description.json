@@ -1,0 +1,26 @@
+{
+  "name": "Prometheus",
+  "description": "Prometheus is an open-source monitoring and alerting toolkit designed for time-series data.",
+  "longDescription": "<h2>What is Prometheus?</h2><p>Observability focuses on understanding the internal state of your systems based on the data they produce, which helps determine if your infrastructure is healthy. Prometheus is a core technology for monitoring and observability of systems, but the term “Prometheus” can be confusing because it is used in different contexts. Understanding Prometheus basics, why it’s valuable for system observability, and how users use it in practice will both help you better understand it and help you use Grafana.</p><p>Prometheus began in 2012 at SoundCloud because existing technologies were insufficient for their observability needs. Prometheus offers both a robust data model and a query language. Prometheus is also simple and scalable. In 2018, Prometheus graduated from Cloud Native Computing Foundation (CNCF) incubation, and today has a thriving community.</p>",
+  "translation": {
+    "de": {
+      "description": "Prometheus ist ein Open-Source-Toolkit für die Überwachung und Alarmierung, das speziell für Zeitreihendaten entwickelt wurde.",
+      "longDescription": "<h2>Was ist Prometheus?</h2><p>Bei der Observability geht es darum, den internen Zustand Ihrer Systeme anhand der von ihnen erzeugten Daten zu verstehen, um festzustellen, ob Ihre Infrastruktur einwandfrei funktioniert. Prometheus ist eine Kerntechnologie für die Überwachung und Observability von Systemen, doch der Begriff „Prometheus“ kann verwirrend sein, da er in verschiedenen Kontexten verwendet wird. Das Verständnis der Grundlagen von Prometheus, warum es für die System-Observability wertvoll ist und wie Nutzer es in der Praxis einsetzen, wird Ihnen helfen, es besser zu verstehen und Grafana zu nutzen. </p><p>Prometheus entstand 2012 bei SoundCloud, da die vorhandenen Technologien für deren Anforderungen an die Observability nicht ausreichten. Prometheus bietet sowohl ein robustes Datenmodell als auch eine Abfragesprache. Prometheus ist zudem einfach und skalierbar. Im Jahr 2018 schloss Prometheus die Inkubationsphase der Cloud Native Computing Foundation (CNCF) ab und verfügt heute über eine florierende Community.</p>"
+    },
+    "fr": {
+      "longDescription": "<h2>Qu'est-ce que Prometheus ?</h2><p>L'observabilité vise à comprendre l'état interne de vos systèmes à partir des données qu'ils produisent, ce qui permet de déterminer si votre infrastructure est en bon état de fonctionnement. Prometheus est une technologie clé pour la surveillance et l'observabilité des systèmes, mais le terme « Prometheus » peut prêter à confusion car il est utilisé dans différents contextes. Comprendre les bases de Prometheus, pourquoi il est utile pour l'observabilité des systèmes et comment les utilisateurs l'utilisent dans la pratique vous aidera à mieux le comprendre et à utiliser Grafana. </p><p>Prometheus a vu le jour en 2012 chez SoundCloud, car les technologies existantes ne répondaient pas à leurs besoins en matière d'observabilité. Prometheus offre à la fois un modèle de données robuste et un langage de requête. Prometheus est également simple et évolutif. En 2018, Prometheus est sorti de l'incubation de la Cloud Native Computing Foundation (CNCF) et dispose aujourd'hui d'une communauté florissante.</p>",
+      "description": "Prometheus est une suite d'outils open source de surveillance et d'alerte conçue pour les données chronologiques."
+    },
+    "it": {
+      "longDescription": "<h2>Che cos'è Prometheus?</h2><p>L'osservabilità si concentra sulla comprensione dello stato interno dei sistemi sulla base dei dati che producono, il che aiuta a determinare se l'infrastruttura è in buono stato. Prometheus è una tecnologia fondamentale per il monitoraggio e l'osservabilità dei sistemi, ma il termine “Prometheus” può creare confusione perché viene utilizzato in contesti diversi. Comprendere le basi di Prometheus, perché è prezioso per l'osservabilità dei sistemi e come gli utenti lo utilizzano nella pratica vi aiuterà sia a comprenderlo meglio sia a utilizzare Grafana. </p><p>Prometheus è nato nel 2012 presso SoundCloud perché le tecnologie esistenti erano insufficienti per le loro esigenze di osservabilità. Prometheus offre sia un modello di dati robusto che un linguaggio di query. Prometheus è anche semplice e scalabile. Nel 2018, Prometheus ha completato il programma di incubazione della Cloud Native Computing Foundation (CNCF) e oggi vanta una fiorente comunità.</p>",
+      "description": "Prometheus è un toolkit open source per il monitoraggio e la generazione di avvisi, progettato per i dati di serie temporali."
+    }
+  },
+  "tags": ["Network"],
+  "repository": "https://github.com/prometheus/prometheus",
+  "image": "https://hub.docker.com/r/prom/prometheus",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
