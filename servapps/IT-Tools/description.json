@@ -2,6 +2,20 @@
   "name": "IT-Tools",
   "description": "Collection of handy online tools for developers, with great UX.",
   "longDescription": "<p>IT Tools is a free and open-source collection of handy online tools for developers & people working in IT. It includes a token generator, case converter, base converter QR code generator, Git cheatsheet, lorem ipsum generator,.. and many more !</p>",
+  "translation": {
+    "de": {
+      "description": "Sammlung praktischer Online-Tools für Entwickler mit hervorragender Benutzererfahrung.",
+      "longDescription": "<p>IT Tools ist eine kostenlose und quelloffene Sammlung praktischer Online-Tools für Entwickler und IT-Fachleute. Sie umfasst einen Token-Generator, einen Groß-/Kleinschreibungsumwandler, einen Basisumwandler, einen QR-Code-Generator, ein Git-Cheatsheet, einen Lorem-Ipsum-Generator und vieles mehr!</p>"
+    },
+    "fr": {
+      "longDescription": "<p>IT Tools est une collection gratuite et open source d'outils en ligne pratiques pour les développeurs et les professionnels de l'informatique. Elle comprend un générateur de jetons, un convertisseur de casse, un générateur de codes QR, une fiche de référence Git, un générateur de lorem ipsum, et bien plus encore !</p>",
+      "description": "Collection d'outils en ligne pratiques pour les développeurs, avec une excellente expérience utilisateur."
+    },
+    "it": {
+      "longDescription": "<p>IT Tools è una raccolta gratuita e open source di pratici strumenti online per sviluppatori e professionisti del settore IT. Include un generatore di token, un convertitore di maiuscole/minuscole, un convertitore di base, un generatore di codici QR, una cheat sheet Git, un generatore di lorem ipsum e molto altro ancora!</p>",
+      "description": "Raccolta di pratici strumenti online per sviluppatori, con un'ottima esperienza utente."
+    }
+  },
   "tags": ["productivity", "tools", "developer-tools", "it", "collection"],
   "repository": "https://github.com/CorentinTh/it-tools",
   "image": "https://hub.docker.com/r/corentinth/it-tools",
