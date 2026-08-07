@@ -39,7 +39,7 @@
           "type": "volume"
         }
       ],
-      "shm_size": "1gb",
+      "shm_size": 1073741824,
       "routes": [
         {
           "name": "{ServiceName}",
