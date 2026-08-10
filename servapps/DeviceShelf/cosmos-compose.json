@@ -35,7 +35,7 @@
   "services": {
     "{ServiceName}": {
       "container_name": "{ServiceName}",
-      "image": "ghcr.io/wealthwallet/deviceshelf-server:1.9.5",
+      "image": "ghcr.io/wealthwallet/deviceshelf-server:1.9.6",
       "NetworkMode": "host",
       "CapAdd": [
         "NET_RAW",
