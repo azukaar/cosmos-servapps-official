@@ -3,7 +3,7 @@
     "minVersion": "0.9.0",
     "services": {
         "{ServiceName}": {
-            "image": "ghcr.io/libredb/libredb-studio:0.9.27",
+            "image": "ghcr.io/libredb/libredb-studio:0.9.59",
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",
             "environment": [
@@ -11,7 +11,7 @@
                 "ADMIN_PASSWORD={Password}",
                 "USER_EMAIL=user@libredb.org",
                 "USER_PASSWORD={Password}",
-                "JWT_SECRET={Password}",
+                "JWT_SECRET={Passwords.0}{Passwords.1}",
                 "STORAGE_PROVIDER=sqlite",
                 "STORAGE_SQLITE_PATH=/app/data/libredb-storage.db"
             ],
