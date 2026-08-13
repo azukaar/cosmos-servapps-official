@@ -1,0 +1,112 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminUsername",
+        "label": "Initial administrator username",
+        "initialValue": "admin",
+        "type": "text"
+      },
+      {
+        "name": "adminPassword",
+        "label": "Initial administrator password (uppercase, lowercase, numeric, and special characters required)",
+        "initialValue": "",
+        "type": "password"
+      },
+      {
+        "name": "agentPort",
+        "label": "Host port for agent mTLS connections",
+        "initialValue": "9443",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Restrict the web route to Cosmos administrators?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "LogForge has writable Docker socket access. This grants host-level Docker control for terminals, file access, and automations."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "logforge/unicron:3.0.0",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 0,
+      "GID": 0,
+      "read_only": true,
+      "cap_drop": ["ALL"],
+      "cap_add": ["CHOWN", "DAC_OVERRIDE", "FOWNER", "KILL", "SETGID", "SETUID", "NET_BIND_SERVICE"],
+      "security_opt": ["no-new-privileges:true"],
+      "environment": [
+        "TMPDIR=/run/pyinstaller",
+        "UNICRON_APPLIANCE_CONTAINER_NAME={ServiceName}",
+        "UNICRON_CENTRAL_FQDN=localhost",
+        "UNICRON_CENTRAL_PORT=443",
+        "UNICRON_PUBLIC_CENTRAL_PORT=443",
+        "UNICRON_CENTRAL_MTLS_PORT=8443",
+        "UNICRON_PUBLIC_CENTRAL_MTLS_PORT={Context.agentPort}",
+        "UNICRON_DATA_DIR=/var/lib/unicron",
+        "LOCAL_AGENT_CENTRAL_URL=https://unicron.central/unicron",
+        "LOCAL_AGENT_DOCKER_NETWORK={ServiceName}-default",
+        "CENTRAL_ADMIN_USERNAME={Context.adminUsername}",
+        "CENTRAL_ADMIN_PASSWORD={Context.adminPassword}",
+        "CENTRAL_ADMIN_RECOVERY_OVERRIDE=false"
+      ],
+      "extra_hosts": [
+        "unicron-stepca:127.0.0.1",
+        "unicron-stepca-ra:127.0.0.1",
+        "unicron.central:127.0.0.1"
+      ],
+      "ports": ["{Context.agentPort}:8443"],
+      "tmpfs": [
+        "/tmp:rw,nosuid,nodev,mode=1777,size=256m",
+        "/run:rw,nosuid,nodev,mode=755,size=64m",
+        "/run/pyinstaller:rw,nosuid,nodev,exec,mode=1777,size=256m"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/var/lib/unicron",
+          "type": "volume"
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        }
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/LogForge-Unicron/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose LogForge Unicron to the web",
+          "useHost": true,
+          "target": "https://{ServiceName}:443",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {"Enabled": true},
+          "AcceptInsecureHTTPSTarget": true,
+          "AuthEnabled": true
+          {if Context.adminOnly}
+            , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
