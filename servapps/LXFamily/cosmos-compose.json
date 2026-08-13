@@ -1,0 +1,103 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "timeZone",
+        "label": "Time zone (IANA name, for example Europe/Berlin)",
+        "initialValue": "Europe/Berlin",
+        "type": "text"
+      },
+      {
+        "name": "language",
+        "label": "Default interface language (de, en, fr, es, it, nl or pl)",
+        "initialValue": "en",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "0.18.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/laxxx-lab/lx-family-planner:1.18.3",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "NODE_ENV=production",
+        "PORT=3001",
+        "TZ={Context.timeZone}",
+        "APP_LANGUAGE={Context.language}",
+        "APP_SECRET={Passwords.0}",
+        "SESSION_COOKIE_SECURE=auto",
+        "TRUST_PROXY=1",
+        "REGISTRATION_MODE=first-family",
+        "DATABASE_FILE=/app/data/family_planner.sqlite",
+        "LEGACY_DATABASE_FILE=/app/data/family_db.json"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "APP_SECRET",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "false",
+        "cosmos-icon": "https://azukaar.github.io/Cosmos-Servapps-official/servapps/LXFamily/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/app/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-backups",
+          "target": "/app/backups",
+          "type": "volume"
+        }
+      ],
+      "read_only": true,
+      "tmpfs": [
+        "/tmp:size=64m,mode=1777"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:3001/api/health').then(response => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))\""
+        ],
+        "interval": "30s",
+        "timeout": "5s",
+        "start_period": "20s",
+        "retries": 3
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Open LX Family",
+          "useHost": true,
+          "target": "http://{ServiceName}:3001",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": false
+        }
+      ]
+    }
+  },
+  "volumes": {
+    "{ServiceName}-data": {},
+    "{ServiceName}-backups": {}
+  }
+}
