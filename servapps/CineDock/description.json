@@ -1,0 +1,9 @@
+{
+  "name": "CineDock",
+  "longDescription": "<p><strong>Rediscover your library.</strong></p><p>CineDock gives Plex, Emby or Jellyfin an enhanced browsing experience on the NVIDIA Shield TV, on an Amazon Fire TV Stick, or in a browser on your computer or tablet.</p>",
+  "description": "CineDock gives Plex, Emby or Jellyfin an enhanced browsing experience on the NVIDIA Shield TV, on an Amazon Fire TV Stick, or in a browser on your computer or tablet.",
+  "tags": ["media", "library", "plex", "emby", "jellyfin", "nvidia-shield", "fire-tv", "browser"],
+  "repository": "https://github.com/cinedock/cinedock",
+  "image": "ghcr.io/cinedock/cinedock:4.1.6",
+  "supported_architectures": ["amd64", "arm64"]
+}
