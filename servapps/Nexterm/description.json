@@ -1,0 +1,9 @@
+{
+  "name": "Nexterm",
+  "description": "Connect to your servers via SSH, VNC & RDP. Manage files, deploy containers, and monitor your infrastructure - all from one place.",
+  "longDescription": "<p>Nexterm is an open-source server management software that allows you to:<br/><ul><li>Connect remotely via SSH, VNC and RDP</li><li>Manage files through SFTP</li><li>Deploy applications via Docker</li><li>Manage Proxmox LXC and QEMU containers</li><li>Secure access with two-factor authentication and OIDC SSO</li><li>Separate users and servers into Organizations</ul></p>",
+  "tags": ["productivity", "tools", "developer-tools", "it", "collection"],
+  "repository": "https://github.com/gnmyt/Nexterm",
+  "image": "https://hub.docker.com/r/nexterm/aio",
+  "supported_architectures": ["amd64", "arm64"]
+}
