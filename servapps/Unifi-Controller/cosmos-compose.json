@@ -1,0 +1,61 @@
+{
+    "cosmos-installer": {
+       "post-install": [
+          {
+             "type": "warning",
+             "label": "Read the GitHub Page for info about adopting devices and other stuff: https://github.com/jacobalberty/unifi-docker/#adopting-access-points-and-unifi-devices."
+          }
+        ]
+    },
+    "services": {
+       "{ServiceName}": {
+          "image": "jacobalberty/unifi",
+          "container_name": "{ServiceName}",
+          "restart": "unless-stopped",
+          "ports": [
+             "3478:3478/udp",
+             "6789:6789",
+             "8443:8443",
+             "8080:8080",
+             "8880:8880",
+             "8843:8843",
+             "10001:10001/udp"
+              
+          ],
+          "environment": [
+             "TZ=auto"
+          ],
+          "volumes": [
+             {
+                "source": "{ServiceName}-unifi",
+                "target": "/unifi",
+                "type": "volume"
+             }
+          ],
+          "user": "unifi",
+          "init": true,
+          "routes": [
+             {
+                "name": "{ServiceName}",
+                "description": "Expose {ServiceName} to the web",
+                "useHost": true,
+                "target": "https://{ServiceName}:8443",
+                "mode": "SERVAPP",
+                "Timeout": 14400000,
+                "ThrottlePerMinute": 12000,
+                "AcceptInsecureHTTPSTarget": true,
+                "BlockCommonBots": true,
+                "SmartShield": {
+                   "Enabled": true
+                }
+             }
+          ],
+          "labels": {
+             "cosmos-force-network-secured": "false",
+             "cosmos-auto-update": "true",
+             "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Unify-Controller/icon.png",
+             "cosmos-persistent-env": "TZ"
+          }
+       }
+    }
+ }
