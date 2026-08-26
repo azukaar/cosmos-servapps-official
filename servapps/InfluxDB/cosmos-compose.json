@@ -75,7 +75,7 @@
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/icon.png",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/InfluxDB/icon.png",
         "cosmos-stack": "influxdb",
         "cosmos-stack-main": "influxdb"
       },
@@ -109,7 +109,7 @@
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/icon.png",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/InfluxDB/icon.png",
         "cosmos-stack": "influxdb",
         "cosmos-stack-main": "influxdb"
       },
@@ -147,7 +147,7 @@
       ],
       "command": "--mode=admin",
       "post_install": [
-        "wget -O config/config.json https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/artefacts/config.json && apk update && apk add yq && TOKEN=$(cat /var/lib/influxdb3/token) yq -i '.DEFAULT_API_TOKEN = env(TOKEN)' config/config.json",
+        "wget -O config/config.json https://azukaar.github.io/cosmos-servapps-official/servapps/InfluxDB/artefacts/config.json && apk update && apk add yq && TOKEN=$(cat /var/lib/influxdb3/token) yq -i '.DEFAULT_API_TOKEN = env(TOKEN)' config/config.json",
         "printf \"\\n \\n \\nADMIN API TOKEN:\\n$(cat /var/lib/influxdb3/token)\\n \\n \\n\""
       ],
       "routes": [
@@ -187,7 +187,7 @@
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://aseracorp.github.io/resiSTORE/servapps/InfluxDB/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/InfluxDB/icon.png"
       },
       "volumes": [
         {
