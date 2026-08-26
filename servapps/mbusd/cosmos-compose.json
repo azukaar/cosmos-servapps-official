@@ -77,7 +77,7 @@
   "minVersion": "0.16.0",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/aseracorp/mbusd:latest",
+      "image": "3cky/mbusd",
       "container_name": "{ServiceName}-{Context.serialPort}",
       "restart": "unless-stopped",
       "UID": 1000,
