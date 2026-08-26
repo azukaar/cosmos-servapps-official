@@ -1,0 +1,47 @@
+{
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Your first visit to Keeyo creates the admin account — there are no default credentials."
+      }
+    ]
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/ans-ib/keeyo:1.6.1",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TRUST_PROXY=1"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Keeyo/icon.png"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5390",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
