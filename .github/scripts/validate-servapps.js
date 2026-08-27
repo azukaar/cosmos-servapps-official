@@ -8,9 +8,11 @@
  *     whiskers template engine + JSON parsing that Cosmos itself uses at
  *     install time (see client/src/pages/servapps/containers/docker-compose.jsx).
  *  3. Both files are free of "other store" copy-paste mistakes:
- *     - icon / artifact URLs pointing at another Cosmos store (e.g. a
- *       github-pages icon path) instead of this official one
+ *     - icon / artifact URLs pointing at another Cosmos store
  *     - references to other stores (resiSTORE, cosmos-servapps-unofficial)
+ *     URLs under THIS repository's own Pages base
+ *     (https://<owner>.github.io/<repo>/servapps/...) are treated as
+ *     legitimate and not flagged.
  *  4. A structural check that a compose file exists for each servapp.
  *
  * Exit code is non-zero if any check fails.
@@ -20,6 +22,51 @@
 const fs = require('fs');
 const path = require('path');
 const whiskers = require('whiskers');
+
+// ---------------------------------------------------------------------------
+// Determine the "own store" base URL - i.e. this repository's own GitHub
+// Pages URL (e.g. https://<owner>.github.io/<repo>/servapps/...). URLs under
+// this base are considered legitimate (they reference this repo's own store)
+// and are NOT flagged as copy-pasted from another store.
+//
+// In CI, GITHUB_REPOSITORY is set to "owner/repo". Locally we fall back to the
+// git remote. If we can't determine it, we return null.
+// ---------------------------------------------------------------------------
+
+function detectOwnStoreBase() {
+  try {
+    let owner = null;
+    let repo = null;
+
+    if (process.env.GITHUB_REPOSITORY) {
+      const parts = process.env.GITHUB_REPOSITORY.split('/');
+      owner = parts[0];
+      repo = parts[1];
+    } else {
+      const remote = require('child_process')
+        .execSync('git config --get remote.origin.url || true', { encoding: 'utf8' })
+        .trim();
+      const m = remote.match(/(?:github\.com[/:])([^/]+)\/([^./]+?)(?:\.git)?$/);
+      if (m) {
+        owner = m[1];
+        repo = m[2];
+      }
+    }
+
+    if (owner && repo) {
+      return 'https://' + owner.toLowerCase() + '.github.io/' + repo.toLowerCase() + '/servapps/';
+    }
+  } catch (e) {
+    // ignore
+  }
+  return null;
+}
+
+const OWN_STORE_BASE = detectOwnStoreBase();
+
+// ---------------------------------------------------------------------------
+// Configuration
+// ---------------------------------------------------------------------------
 
 // Other-store path markers - these indicate a different Cosmos store was
 // copy-pasted from.
@@ -56,13 +103,21 @@ function eachApp() {
     .filter((name) => fs.lstatSync(path.join(dir, name)).isDirectory());
 }
 
+function isOwnStoreUrl(lower) {
+  if (OWN_STORE_BASE && lower.startsWith(OWN_STORE_BASE)) return true;
+  // Also treat the canonical official cosmos-servapps-official base as
+  // legitimate, since this repo descends from it.
+  if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/servapps/')) return true;
+  return false;
+}
+
 function checkStoreUrls(app, file, text) {
   const urls = text.match(/https?:\/\/[^\s"'`<>\\]+/g) || [];
   for (const u of urls) {
     const lower = u.toLowerCase();
+    if (isOwnStoreUrl(lower)) continue;
     for (const marker of OTHER_STORE_MARKERS) {
       if (marker.test(lower)) {
-        if (lower.includes('azukaar.github.io/cosmos-servapps-official')) continue;
         err(app, file, 'URL looks copy-pasted from another store: ' + u);
         break;
       }
