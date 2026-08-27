@@ -59,8 +59,10 @@ jobs:
         id: changed
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE="${{ github.event.pull_request.base.sha }}"
             HEAD="${{ github.event.pull_request.head.sha }}"
+            # Diff against the merge-base, not the live base tip, so we only
+            # validate the PR's own changes (not apps added to base after the PR branched).
+            BASE="$(git merge-base "$HEAD" "${{ github.event.pull_request.base.sha }}")"
           elif [ "${{ github.event_name }}" = "push" ]; then
             BASE="$(git rev-parse HEAD~1 2>/dev/null || echo '${{ github.sha }}')"
             HEAD="${{ github.sha }}"
