@@ -68,9 +68,9 @@ const OWN_STORE_BASE = detectOwnStoreBase();
 // Configuration
 // ---------------------------------------------------------------------------
 
-// No blacklist here by design: we whitelist the URL bases this repository
-// legitimately ships icons/artefacts from (see isAllowedIconUrl below). Any
-// icon/artefact URL that is not under one of those whitelisted bases is
+// No blacklist here by design. We whitelist the URL base this repository
+// ships its icons (and any store-hosted artefact files) from, via
+// isAllowedIconUrl below. Any icon URL not under that whitelisted base is
 // treated as copy-pasted from another store and flagged.
 
 // ---------------------------------------------------------------------------
@@ -90,11 +90,11 @@ function eachApp() {
     .filter((name) => fs.lstatSync(path.join(dir, name)).isDirectory());
 }
 
-// Whitelist of URL bases this repository legitimately ships icons/artefacts
-// from. Anything not under one of these bases is treated as a copy-paste from
-// another store and flagged.
+// Whitelist of URL bases this repository legitimately ships icons from
+// (store-hosted artefact files fall under the same base). Anything else is
+// treated as a copy-paste from another store and flagged.
 function isAllowedIconUrl(lower) {
-  // Only the canonical, actually-served icon/artefact bases are whitelisted.
+  // Only the canonical, actually-served icon bases are whitelisted.
   // (All other forms, e.g. a bare apps/<app>/icon.png under the repo root,
   //  resolve to 404 and must be fixed, not allowed.)
   // 1. This repository's own GitHub Pages store base (e.g. .../servapps/).
@@ -108,15 +108,15 @@ function isAllowedIconUrl(lower) {
   return false;
 }
 
-// Check a single icon/artefact URL. URLs are only validated when they are the
-// store-provided icon/artefact reference (cosmos-icon); all other URLs in an
-// app (repository, image hints, homepages, config defaults) are intentionally
-// skipped and never validated here.
+// Check a single store-served URL (an icon or a store-hosted artefact file).
+// Only these are validated; every other URL in an app (repository, image
+// hints, homepages, config defaults) is intentionally skipped and never
+// checked.
 function checkIconUrl(app, file, url) {
   const lower = (url || '').toLowerCase().trim();
   if (!lower) return;
   if (isAllowedIconUrl(lower)) return;
-  err(app, file, 'icon/artefact URL is not served by this store (copy-paste?): ' + url);
+  err(app, file, 'store icon URL is not served by this store (copy-paste?): ' + url);
 }
 
 // ---------------------------------------------------------------------------
@@ -139,7 +139,7 @@ function checkApp(app) {
       });
       if (Array.isArray(d.tags) && d.tags.length === 0) warn(app, 'description.json', 'tags is empty');
       // NB: description.json URLs (repository / image hints) are intentionally
-      // NOT validated here - only the store-provided icon/artefact URL in the
+      // NOT validated here - only the store-provided icon URL (and store-hosted artefact files) in the
       // compose file is checked (see checkIconUrl below).
     }
   } else {
@@ -180,7 +180,7 @@ function checkApp(app) {
           err(app, 'cosmos-compose.json', 'rendered output is not valid JSON: ' + String(e.message).split('\n')[0]);
         }
       }
-      // Only icon/artefact URLs are validated against the whitelist; every
+      // Only store-served icon URLs and store-hosted artefact URLs are validated against the whitelist; every
       // other URL in the compose file (homepages, config defaults, app 3rd
       // -party sources) is intentionally skipped.
       // 1) cosmos-icon references.
