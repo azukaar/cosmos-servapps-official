@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ["master"] 
+    branches: ["master", "unstable"] 
 
   workflow_dispatch:
 
@@ -25,13 +25,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Checkout unstable
+        uses: actions/checkout@v6
+        with:
+          ref: unstable
+          path: unstable
+          clean: false
+
+      - name: Remove .git from unstable
+        run: rm -rf unstable/.git
+
+      - name: Find and Replace unstable base URL
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          include: "unstable/**"
+          find: "https://azukaar.github.io/cosmos-servapps-official/"
+          replace: "https://azukaar.github.io/cosmos-servapps-official/unstable/"
+          regex: false
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v6
         with:
           node-version: '24'
 
-      - name: Build static files (if needed)
-        run: node index.js
+      - name: Build static files
+        run: node index.js && cd unstable && node index.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
