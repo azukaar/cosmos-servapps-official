@@ -66,9 +66,9 @@
         "no-new-privileges:true"
       ],
       "environment": [
-        "MYSQL_ROOT_PASSWORD=root",
+        "MYSQL_ROOT_PASSWORD={Password.0}",
         "MYSQL_USER=root",
-        "MYSQL_PASSWORD=root",
+        "MYSQL_PASSWORD={Password.1}",
         "MYSQL_DATABASE=scadalts"
       ],
       "labels": {
