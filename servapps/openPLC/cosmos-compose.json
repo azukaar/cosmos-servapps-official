@@ -1,0 +1,34 @@
+{ 
+  "cosmos-installer": {
+  },
+  "minVersion": "0.22.4",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/autonomy-logic/openplc-runtime:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "SYS_NICE",
+        "SYS_RESOURCE"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/openPLC/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/var/run/runtime",
+          "type": "volume"
+        }
+      ],
+      "ports": [
+        "8443:8443"
+      ]
+    }
+  }
+}
