@@ -94,14 +94,15 @@ function eachApp() {
 // from. Anything not under one of these bases is treated as a copy-paste from
 // another store and flagged.
 function isAllowedIconUrl(lower) {
+  // Only the canonical, actually-served icon/artefact bases are whitelisted.
+  // (All other forms, e.g. a bare apps/<app>/icon.png under the repo root,
+  //  resolve to 404 and must be fixed, not allowed.)
   // 1. This repository's own GitHub Pages store base (e.g. .../servapps/).
   if (OWN_STORE_BASE && lower.startsWith(OWN_STORE_BASE)) return true;
-  // 2. The canonical official cosmos-servapps-official Pages base. Accept both
-  //    the "/servapps/" form and the legacy "<app>/icon.png" form that some
-  //    apps historically used directly under the repo base.
-  if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/')) return true;
+  // 2. The canonical official cosmos-servapps-official Pages base (/servapps/).
+  if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/servapps/')) return true;
   // 3. Official raw.githubusercontent.com artefact base (master branch).
-  if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/')) return true;
+  if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/servapps/')) return true;
   return false;
 }
 
