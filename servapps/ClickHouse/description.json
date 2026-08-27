@@ -1,0 +1,26 @@
+{
+  "name": "ClickHouse",
+  "description": "ClickHouse is a fast open-source column-oriented database management system that allows generating analytical data reports in real-time using SQL queries.",
+  "longDescription": "ClickHouse is an open-source column-oriented DBMS (columnar database management system) for online analytical processing (OLAP) that allows users to generate analytical reports using SQL queries in real-time.",
+  "translation": {
+    "de": {
+      "description": "ClickHouse ist ein schnelles, spaltenorientiertes Open-Source-Datenbankmanagementsystem, mit dem sich mithilfe von SQL-Abfragen Analyseberichte in Echtzeit erstellen lassen.",
+      "longDescription": "ClickHouse ist ein quelloffenes, spaltenorientiertes DBMS (spaltenorientiertes Datenbankmanagementsystem) für die Online-Analytik (OLAP), mit dem Benutzer mithilfe von SQL-Abfragen in Echtzeit Analyseberichte erstellen können."
+    },
+    "fr": {
+      "longDescription": "ClickHouse est un SGBD (système de gestion de bases de données) open source orienté colonnes, destiné au traitement analytique en ligne (OLAP), qui permet aux utilisateurs de générer des rapports analytiques en temps réel à l'aide de requêtes SQL.",
+      "description": "ClickHouse est un système de gestion de bases de données open source rapide, orienté colonnes, qui permet de générer des rapports analytiques en temps réel à l'aide de requêtes SQL."
+    },
+    "it": {
+      "longDescription": "ClickHouse è un DBMS (sistema di gestione di database) open source orientato alle colonne per l'elaborazione analitica online (OLAP) che consente agli utenti di generare report analitici in tempo reale tramite query SQL.",
+      "description": "ClickHouse è un sistema di gestione di database open source veloce e orientato alle colonne che consente di generare report analitici in tempo reale tramite query SQL."
+    }
+  },
+  "tags": ["Network"],
+  "repository": "https://github.com/ClickHouse/ClickHouse",
+  "image": "https://hub.docker.com/r/clickhouse/clickhouse-server",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
