@@ -1,0 +1,23 @@
+{
+  "name": "Mosquitto",
+  "description": "Open source implementation of a server for the MQTT protocol (MQTT-Broker).",
+  "longDescription": "Eclipse Mosquitto is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.<br />The MQTT protocol provides a lightweight method of carrying out messaging using a publish/subscribe model. This makes it suitable for Internet of Things messaging such as with low power sensors or mobile devices such as phones, embedded computers or microcontrollers.<br />The Mosquitto project also provides a C library for implementing MQTT clients, and the very popular mosquitto_pub and mosquitto_sub command line MQTT clients.<br /> Mosquitto is part of the Eclipse Foundation, and is an iot.eclipse.org project. The development is driven by Cedalo.",
+  "translation": {
+    "de": {
+      "description": "Open-Source Implementation eines Servers für das MQTT-Protokoll (MQTT-Broker).",
+      "longDescription": "Eclipse Mosquitto ist ein quelloffener (EPL/EDL lizenzierter) Message Broker, der die MQTT-Protokollversionen 5.0, 3.1.1 und 3.1 implementiert. Mosquitto ist leichtgewichtig und eignet sich für den Einsatz auf allen Geräten, von stromsparenden Einplatinencomputern bis hin zu kompletten Servern.<br />Das MQTT-Protokoll bietet eine leichtgewichtige Methode zur Durchführung von Nachrichtenübermittlung unter Verwendung eines Publish/Subscribe-Modells. Dadurch eignet es sich für die Nachrichtenübermittlung im Internet der Dinge, z. B. für Sensoren mit geringem Stromverbrauch oder mobile Geräte wie Telefone, eingebettete Computer oder Mikrocontroller.<br />Das Mosquitto-Projekt bietet auch eine C-Bibliothek zur Implementierung von MQTT-Clients und die sehr beliebten mosquitto_pub und mosquitto_sub MQTT-Clients für die Kommandozeile.<br />Mosquitto ist Teil der Eclipse Foundation und ein iot.eclipse.org-Projekt. Die Entwicklung wird von Cedalo vorangetrieben."
+    },
+    "fr": {
+      "longDescription": "Eclipse Mosquitto est un courtier de messages open source (sous licence EPL/EDL) qui implémente les versions 5.0, 3.1.1 et 3.1 du protocole MQTT. Mosquitto est léger et convient à tous les appareils, des ordinateurs monocarte à faible consommation aux serveurs complets. Le protocole MQTT offre une méthode légère pour envoyer des messages à l'aide d'un modèle de publication/abonnement. Il est donc adapté à la messagerie de l'Internet des objets, par exemple avec des capteurs à faible consommation ou des appareils mobiles tels que des téléphones, des ordinateurs embarqués ou des microcontrôleurs. Le projet Mosquitto fournit également une bibliothèque C pour la mise en œuvre de clients MQTT, ainsi que les clients MQTT en ligne de commande très populaires mosquitto_pub et mosquitto_sub.<br />Mosquitto fait partie de la Fondation Eclipse et est un projet iot.eclipse.org. Son développement est piloté par Cedalo.",
+      "description": "Implémentation open source d'un serveur pour le protocole MQTT (MQTT-Broker)."
+    },
+    "it": {
+      "longDescription": "Eclipse Mosquitto è un broker di messaggi open source (con licenza EPL/EDL) che implementa le versioni 5.0, 3.1.1 e 3.1 del protocollo MQTT. Mosquitto è leggero e adatto all'uso su tutti i dispositivi, dai computer a scheda singola a bassa potenza ai server completi. Il protocollo MQTT fornisce un metodo leggero per eseguire la messaggistica utilizzando un modello di pubblicazione/sottoscrizione. Questo lo rende adatto alla messaggistica Internet of Things, ad esempio con sensori a bassa potenza o dispositivi mobili come telefoni, computer integrati o microcontrollori. Il progetto Mosquitto fornisce anche una libreria C per l'implementazione di client MQTT e i popolarissimi client MQTT da riga di comando mosquitto_pub e mosquitto_sub. <br />Mosquitto fa parte della Eclipse Foundation ed è un progetto iot.eclipse.org. Lo sviluppo è guidato da Cedalo.",
+      "description": "Implementazione open source di un server per il protocollo MQTT (MQTT-Broker)."
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
+  "repository": "https://github.com/eclipse/mosquitto",
+  "image": "https://hub.docker.com/_/eclipse-mosquitto",
+  "supported_architectures": ["amd64", "arm64"]
+}
