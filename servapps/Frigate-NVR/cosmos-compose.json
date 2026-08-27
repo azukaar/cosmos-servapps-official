@@ -39,7 +39,9 @@
           "privileged": true,
           "restart": "unless-stopped",
           "image": "ghcr.io/blakeblackshear/frigate:stable",
-          "shm_size": {Context.sharedMemory},
+          "shm_size": {
+             "Context.sharedMemory": null
+          },
           "devices": [
              "/dev/bus/usb:/dev/bus/usb",
              "/dev/apex_0:/dev/apex_0",
