@@ -3,7 +3,7 @@
     "form": [
       {
         "name": "advanced",
-        "label": "copyparty exposes host files ( / + /opt/docker/volumes ) to admins. Do you want to change this behaviour?",
+        "label": "copyparty exposes host files ( / + /var/lib/docker/volumes ) to admins. Do you want to change this behaviour?",
         "initialValue": false,
         "type": "checkbox"
       }
@@ -16,8 +16,8 @@
       },
       {
         "name": "mountPointVolumes",
-        "label": "What folder do you want to have available in copyparty? (Default: /opt/docker/volumes)",
-        "initialValue": "/opt/docker/volumes",
+        "label": "What folder do you want to have available in copyparty? (Default: /var/lib/docker/volumes)",
+        "initialValue": "/var/lib/docker/volumes",
         "type": "text"
       },
       {
@@ -30,21 +30,21 @@
     ],
     "translation": {
       "de": {
-        "form.advanced.label": "copyparty macht das Host-Dateisystem ( / + /opt/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
+        "form.advanced.label": "copyparty macht das Host-Dateisystem ( / + /var/lib/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
         "form.mountPointRoot.label": "Welchen Ordner möchten Sie in copyparty zur Verfügung haben? (Standard: /)",
-        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie in copyparty zur Verfügung haben? (Standard: /opt/docker/volumes)",
+        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie in copyparty zur Verfügung haben? (Standard: /var/lib/docker/volumes)",
         "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
       },
       "fr": {
-        "form.advanced.label": "copyparty rend les fichiers de l'hôte ( / + /opt/docker/volumes ) accessibles aux administrateurs. Souhaitez-vous modifier ce comportement ?",
+        "form.advanced.label": "copyparty rend les fichiers de l'hôte ( / + /var/lib/docker/volumes ) accessibles aux administrateurs. Souhaitez-vous modifier ce comportement ?",
         "form.mountPointRoot.label": "Quel dossier souhaitez-vous rendre accessible dans copyparty ? (Par défaut : /)",
-        "form.mountPointVolumes.label": "Quel dossier souhaitez-vous rendre accessible dans copyparty ? (Par défaut : /opt/docker/volumes)",
+        "form.mountPointVolumes.label": "Quel dossier souhaitez-vous rendre accessible dans copyparty ? (Par défaut : /var/lib/docker/volumes)",
         "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
       },
       "it": {
-        "form.advanced.label": "copyparty rende visibili agli amministratori i file dell'host ( / + /opt/docker/volumes ). Vuoi modificare questo comportamento?",
+        "form.advanced.label": "copyparty rende visibili agli amministratori i file dell'host ( / + /var/lib/docker/volumes ). Vuoi modificare questo comportamento?",
         "form.mountPointRoot.label": "Quale cartella desideri rendere disponibile in copyparty? (Impostazione predefinita: /)",
-        "form.mountPointVolumes.label": "Quale cartella desideri rendere disponibile in copyparty? (Impostazione predefinita: /opt/docker/volumes)",
+        "form.mountPointVolumes.label": "Quale cartella desideri rendere disponibile in copyparty? (Impostazione predefinita: /var/lib/docker/volumes)",
         "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
       }
     }
