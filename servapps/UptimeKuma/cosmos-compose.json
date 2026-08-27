@@ -4,7 +4,7 @@
       {
         "name": "adminOnly",
         "label": "Do you want to make this service admin only?",
-        "initialValue": false,
+        "initialValue": true,
         "type": "checkbox"
       },
       { 
@@ -16,19 +16,41 @@
       {if Context.useSocketProxy}
         , 
         {
+          "name": "SocketProxy",
           "type": "warning",
           "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
         }
       {/if}
-    ]
+    ],
     {if Context.useSocketProxy}
-      , "post-install": [
-        {
-          "type": "warning",
-          "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
-        }
-      ]
+    "post-install": [
+      {
+        "name": "SocketProxy",
+        "type": "warning",
+        "label": "Remember to edit the Docker Host inside Uptime-Kuma settings to attach the {ServiceName}-socket container. Use tcp://{ServiceName}-socket:2375"
+      }
+    ],
     {/if}
+    "translation": {
+      "de": {
+        "form.useSocketProxy.label": "Möchten Sie einen Socket-Proxy für mehr Sicherheit verwenden? (d. h. einen Socket-Proxy-Container erstellen, anstatt docker.sock offen zugänglich zu machen)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
+        "form.SocketProxy.label": "Denken Sie daran, den Docker-Host in den Uptime-Kuma-Einstellungen zu bearbeiten, um den Container {ServiceName}-socket anzubinden. Verwenden Sie dazu tcp://{ServiceName}-socket:2375",
+        "post-install.SocketProxy.label": "Denken Sie daran, den Docker-Host in den Uptime-Kuma-Einstellungen zu bearbeiten, um den Container {ServiceName}-socket anzubinden. Verwenden Sie dazu tcp://{ServiceName}-socket:2375"
+      },
+      "fr": {
+        "form.useSocketProxy.label": "Souhaitez-vous utiliser un proxy de sockets pour renforcer la sécurité ? (c'est-à-dire créer un conteneur de proxy de sockets au lieu d'exposer le fichier docker.sock)",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?",
+        "form.SocketProxy.label": "N'oubliez pas de modifier l'hôte Docker dans les paramètres d'Uptime-Kuma pour y associer le conteneur {ServiceName}-socket. Utilisez tcp://{ServiceName}-socket:2375",
+        "post-install.SocketProxy.label": "N'oubliez pas de modifier l'hôte Docker dans les paramètres d'Uptime-Kuma pour y associer le conteneur {ServiceName}-socket. Utilisez tcp://{ServiceName}-socket:2375"
+      },
+      "it": {
+        "form.useSocketProxy.label": "Vuoi utilizzare un proxy socket per garantire una maggiore sicurezza? (ovvero, creare un container proxy socket invece di esporre docker.sock)",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?",
+        "form.SocketProxy.label": "Ricordati di modificare l'host Docker nelle impostazioni di Uptime-Kuma per collegare il container {ServiceName}-socket. Usa tcp://{ServiceName}-socket:2375",
+        "post-install.SocketProxy.label": "Ricordati di modificare l'host Docker nelle impostazioni di Uptime-Kuma per collegare il container {ServiceName}-socket. Usa tcp://{ServiceName}-socket:2375"
+      }
+    }
   },
   "minVersion": "0.8.0",
   "services": {
@@ -82,9 +104,6 @@
         "restart": "unless-stopped",
         "security_opt": [
           "no-new-privileges:true"
-        ],
-        "ports": [
-          "2375:2375"
         ],
         "labels": {
           "cosmos-force-network-secured": "true",
