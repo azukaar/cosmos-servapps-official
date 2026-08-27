@@ -101,8 +101,10 @@ function isAllowedIconUrl(lower) {
   if (OWN_STORE_BASE && lower.startsWith(OWN_STORE_BASE)) return true;
   // 2. The canonical official cosmos-servapps-official Pages base (/servapps/).
   if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/servapps/')) return true;
-  // 3. Official raw.githubusercontent.com artefact base (master branch).
+  // 3. Official raw.githubusercontent.com artefact base. Both master and
+  //    unstable branches are valid (an unstable branch is planned).
   if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/servapps/')) return true;
+  if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/unstable/servapps/')) return true;
   return false;
 }
 
@@ -178,12 +180,21 @@ function checkApp(app) {
           err(app, 'cosmos-compose.json', 'rendered output is not valid JSON: ' + String(e.message).split('\n')[0]);
         }
       }
-      // Only icon/artefact URLs (cosmos-icon) are validated against the
-      // whitelist; every other URL in the compose file is intentionally skipped.
+      // Only icon/artefact URLs are validated against the whitelist; every
+      // other URL in the compose file (homepages, config defaults, app 3rd
+      // -party sources) is intentionally skipped.
+      // 1) cosmos-icon references.
       const iconRe = /"cosmos-icon"\s*:\s*"([^"]+)"/g;
       let im;
       while ((im = iconRe.exec(raw)) !== null) {
         checkIconUrl(app, 'cosmos-compose.json', im[1]);
+      }
+      // 2) Store-hosted artefact URLs (usually wget'd in post-install steps,
+      //    e.g. .../servapps/<App>/artefacts/<file>).
+      const artefactRe = /https?:\/\/[^\s"'`<>\\]*(?:\/artefact|\/artifact)[^\s"'`<>\\]*/gi;
+      let am;
+      while ((am = artefactRe.exec(raw)) !== null) {
+        checkIconUrl(app, 'cosmos-compose.json', am[0]);
       }
     }
   } else {
