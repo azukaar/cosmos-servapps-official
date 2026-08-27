@@ -16,7 +16,7 @@
       "description": "A complete observability stack that allows you to monitor and analyze metrics, logs and traces. It allows you to query, visualize, alert on and understand your data no matter where it is stored."
     }
   },
-  "tags": ["Network"],
+  "tags": ["Network", "monitoring", "dashboard"],
   "repository": "https://github.com/grafana/grafana",
   "image": "https://hub.docker.com/r/grafana/grafana",
   "supported_architectures": [
