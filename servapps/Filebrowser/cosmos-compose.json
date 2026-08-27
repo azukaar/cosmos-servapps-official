@@ -3,7 +3,7 @@
     "form": [
       {
         "name": "advanced",
-        "label": "Filebrowser exposes host files ( / + /opt/docker/volumes ) to admins. Do you want to change this behaviour?",
+        "label": "Filebrowser exposes host files ( / + /var/lib/docker/volumes ) to admins. Do you want to change this behaviour?",
         "initialValue": false,
         "type": "checkbox"
       }
@@ -16,8 +16,8 @@
       },
       {
         "name": "mountPointVolumes",
-        "label": "What folder do you want to have available in Filebrowser? (Default: /opt/docker/volumes)",
-        "initialValue": "/opt/docker/volumes",
+        "label": "What folder do you want to have available in Filebrowser? (Default: /var/lib/docker/volumes)",
+        "initialValue": "/var/lib/docker/volumes",
         "type": "text"
       },
       {
@@ -44,9 +44,9 @@
     {/if}
     "translation": {
       "de": {
-        "form.advanced.label": "Filebrowser macht das Host-Dateisystem ( / + /opt/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
+        "form.advanced.label": "Filebrowser macht das Host-Dateisystem ( / + /var/lib/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
         "form.mountPointRoot.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /)",
-        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /opt/docker/volumes)",
+        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /var/lib/docker/volumes)",
         "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
         "form.Auth.label": "Deaktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmäßig wird Cosmos zur Authentifizierung verwendet)",
         "post-install.warning": "Es wurde ein Standardkonto mit admin / admin als Anmeldeinformationen erstellt. Bitte ändern Sie dies"
@@ -106,7 +106,7 @@
           "type": "bind"
         },
         {
-          "source": "/opt/docker/volumes",
+          "source": "/var/lib/docker/volumes",
           "target": "/srv/volumes",
           "type": "bind"
         }
