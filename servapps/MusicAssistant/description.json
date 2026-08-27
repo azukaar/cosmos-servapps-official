@@ -1,0 +1,23 @@
+{
+  "name": "Music Assistant",
+  "description": "Platform independent, Open Source Music Server",
+  "longDescription": "<p>Music Assistant is a music library manager for your offline and online music sources which can easily stream your favourite music to a wide range of supported players and be combined with the power of Home Assistant!</p>",
+  "translation": {
+    "de": {
+      "description": "Plattformunabhängiger, Open-Source Musikserver",
+      "longDescription": "<p>Music Assistant ist ein Musikbibliotheksmanager für Ihre Offline- und Online-Musikquellen, der Ihre Lieblingsmusik einfach auf eine Vielzahl von unterstützten Playern streamen und mit der Leistung von Home Assistant kombiniert werden kann!</p>"
+    },
+    "fr": {
+      "longDescription": "<p>Music Assistant est un gestionnaire de bibliothèque musicale pour vos sources musicales hors ligne et en ligne qui peut facilement diffuser votre musique préférée sur une large gamme de lecteurs pris en charge et être combiné avec la puissance de Home Assistant !</p>",
+      "description": "Serveur musical open source indépendant de toute plateforme"
+    },
+    "it": {
+      "longDescription": "<p>Music Assistant è un gestore di librerie musicali per le tue fonti musicali offline e online che può facilmente riprodurre in streaming la tua musica preferita su un'ampia gamma di lettori supportati e può essere combinato con la potenza di Home Assistant!</p>",
+      "description": "Server musicale open source indipendente dalla piattaforma"
+    }
+  },
+  "tags": ["audio", "multiroom-audio", "smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
+  "repository": "https://github.com/music-assistant/server",
+  "image": "ghcr.io/music-assistant/server",
+  "supported_architectures": ["amd64", "arm64"]
+}
