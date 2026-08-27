@@ -48,11 +48,11 @@
         "form.mountPointRoot.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /)",
         "form.mountPointVolumes.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /var/lib/docker/volumes)",
         "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
-        "form.Auth.label": "Deaktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmäßig wird Cosmos zur Authentifizierung verwendet)",
-        "post-install.warning": "Es wurde ein Standardkonto mit admin / admin als Anmeldeinformationen erstellt. Bitte ändern Sie dies"
+        "form.Auth.label": "Aktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmäßig wird Cosmos zur Authentifizierung verwendet)",
+        "post-install.warning": "Es wurde ein Standardkonto mit admin / {Passwords.0} als Anmeldeinformationen erstellt. Bitte ändern Sie dies"
       },
       "de-CH": {
-        "form.Auth.label": "Deaktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmässig wird Cosmos zur Authentifizierung verwendet)"
+        "form.Auth.label": "Aktivieren Sie diese Option, um die Filebrowser-Authentifizierung zu aktivieren (standardmässig wird Cosmos zur Authentifizierung verwendet)"
       }
     }
   },
