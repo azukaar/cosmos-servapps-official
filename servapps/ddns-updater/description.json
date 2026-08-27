@@ -20,7 +20,6 @@
   "repository": "https://github.com/qdm12/ddns-updater",
   "image": "https://ghcr.io/qdm12/ddns-updater",
   "supported_architectures": [
-    "amd64",
-    "arm64"
+    "amd64", "arm64", "386", "arm/v6", "arm/v7", "ppc64le", "riscv64", "s390x"
   ]
 }
