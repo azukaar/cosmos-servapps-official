@@ -1,7 +1,7 @@
 {
   "name": "ESPHome",
-  "description": "<p>Powerfull Firmware and OTA-Flasher with simple YAML-Configuration for ESP-based Devices",
-  "longDescription": "ESPhome is a platform for creating custom firmware for ESP8266 and ESP32 chips using YAML configuration files. It converts these definitions into C++ firmware for easy integration of various smart devices.</p><p>ESPhome is seamlessly integrated with Home Assistant, an open source platform for home automation. Through this integration, devices configured via ESPhome are automatically recognised and added to Home Assistant setups.</p><p>The platform has a solid community and extensive documentation. Together with features such as over-the-air (OTA) updates, this makes ESPhome a favourite among smart home enthusiasts.</p>",
+  "description": "Powerfull Firmware and OTA-Flasher with simple YAML-Configuration for ESP-based Devices",
+  "longDescription": "<p>ESPhome is a platform for creating custom firmware for ESP8266 and ESP32 chips using YAML configuration files. It converts these definitions into C++ firmware for easy integration of various smart devices.</p><p>ESPhome is seamlessly integrated with Home Assistant, an open source platform for home automation. Through this integration, devices configured via ESPhome are automatically recognised and added to Home Assistant setups.</p><p>The platform has a solid community and extensive documentation. Together with features such as over-the-air (OTA) updates, this makes ESPhome a favourite among smart home enthusiasts.</p>",
   "translation": {
     "de": {
       "description": "Leistungsstarke Firmware und OTA-Flasher mit einfacher YAML-Konfiguration für ESP-basierte Geräte",
