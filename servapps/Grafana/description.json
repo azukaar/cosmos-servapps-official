@@ -20,7 +20,6 @@
   "repository": "https://github.com/grafana/grafana",
   "image": "https://hub.docker.com/r/grafana/grafana",
   "supported_architectures": [
-    "amd64",
-    "arm64"
+    "amd64", "arm64", "arm/v7"
   ]
 }
