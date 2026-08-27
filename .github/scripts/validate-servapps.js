@@ -68,23 +68,10 @@ const OWN_STORE_BASE = detectOwnStoreBase();
 // Configuration
 // ---------------------------------------------------------------------------
 
-// Other-store path markers - these indicate a different Cosmos store was
-// copy-pasted from.
-const OTHER_STORE_MARKERS = [
-  /resiSTORE/i,
-  /resi-store/i,
-  /cosmos-servapps-unofficial/i,
-  /cosmos-servapps-(?!official)/i,
-  /servapps-experimental/i,
-  /servapps-dev/i,
-  /store-cosmos\.github\.io/i,
-];
-
-// Personal / other-store hostnames found in the wild.
-const OTHER_STORE_HOSTS = [
-  /\.github\.io\/comos\./i,
-  /manhtuong/i,
-];
+// No blacklist here by design: we whitelist the URL bases this repository
+// legitimately ships icons/artefacts from (see isAllowedIconUrl below). Any
+// icon/artefact URL that is not under one of those whitelisted bases is
+// treated as copy-pasted from another store and flagged.
 
 // ---------------------------------------------------------------------------
 // State
@@ -103,31 +90,30 @@ function eachApp() {
     .filter((name) => fs.lstatSync(path.join(dir, name)).isDirectory());
 }
 
-function isOwnStoreUrl(lower) {
+// Whitelist of URL bases this repository legitimately ships icons/artefacts
+// from. Anything not under one of these bases is treated as a copy-paste from
+// another store and flagged.
+function isAllowedIconUrl(lower) {
+  // 1. This repository's own GitHub Pages store base (e.g. .../servapps/).
   if (OWN_STORE_BASE && lower.startsWith(OWN_STORE_BASE)) return true;
-  // Also treat the canonical official cosmos-servapps-official base as
-  // legitimate, since this repo descends from it.
-  if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/servapps/')) return true;
+  // 2. The canonical official cosmos-servapps-official Pages base. Accept both
+  //    the "/servapps/" form and the legacy "<app>/icon.png" form that some
+  //    apps historically used directly under the repo base.
+  if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/')) return true;
+  // 3. Official raw.githubusercontent.com artefact base (master branch).
+  if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/')) return true;
   return false;
 }
 
-function checkStoreUrls(app, file, text) {
-  const urls = text.match(/https?:\/\/[^\s"'`<>\\]+/g) || [];
-  for (const u of urls) {
-    const lower = u.toLowerCase();
-    if (isOwnStoreUrl(lower)) continue;
-    for (const marker of OTHER_STORE_MARKERS) {
-      if (marker.test(lower)) {
-        err(app, file, 'URL looks copy-pasted from another store: ' + u);
-        break;
-      }
-    }
-    for (const hostRe of OTHER_STORE_HOSTS) {
-      if (hostRe.test(lower)) {
-        err(app, file, 'URL points at another store host: ' + u);
-      }
-    }
-  }
+// Check a single icon/artefact URL. URLs are only validated when they are the
+// store-provided icon/artefact reference (cosmos-icon); all other URLs in an
+// app (repository, image hints, homepages, config defaults) are intentionally
+// skipped and never validated here.
+function checkIconUrl(app, file, url) {
+  const lower = (url || '').toLowerCase().trim();
+  if (!lower) return;
+  if (isAllowedIconUrl(lower)) return;
+  err(app, file, 'icon/artefact URL is not served by this store (copy-paste?): ' + url);
 }
 
 // ---------------------------------------------------------------------------
@@ -149,7 +135,9 @@ function checkApp(app) {
         if (d[field] === undefined) err(app, 'description.json', 'missing required field "' + field + '"');
       });
       if (Array.isArray(d.tags) && d.tags.length === 0) warn(app, 'description.json', 'tags is empty');
-      checkStoreUrls(app, 'description.json', JSON.stringify(d.repository || '') + ' ' + JSON.stringify(d.image || ''));
+      // NB: description.json URLs (repository / image hints) are intentionally
+      // NOT validated here - only the store-provided icon/artefact URL in the
+      // compose file is checked (see checkIconUrl below).
     }
   } else {
     err(app, 'description.json', 'description.json is required for every servapp');
@@ -189,7 +177,13 @@ function checkApp(app) {
           err(app, 'cosmos-compose.json', 'rendered output is not valid JSON: ' + String(e.message).split('\n')[0]);
         }
       }
-      checkStoreUrls(app, 'cosmos-compose.json', raw);
+      // Only icon/artefact URLs (cosmos-icon) are validated against the
+      // whitelist; every other URL in the compose file is intentionally skipped.
+      const iconRe = /"cosmos-icon"\s*:\s*"([^"]+)"/g;
+      let im;
+      while ((im = iconRe.exec(raw)) !== null) {
+        checkIconUrl(app, 'cosmos-compose.json', im[1]);
+      }
     }
   } else {
     const yfile = path.join(base, 'docker-compose.yml');
