@@ -167,7 +167,7 @@
     },
 
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:latest",
+      "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
@@ -187,15 +187,12 @@
       "volumes": [
         {
           "source": "{ServiceName}-redis-data",
-          "target": "/bitnami/redis",
+          "target": "/data",
           "type": "volume"
         }
       ],
-      "environment": [
-        "ALLOW_EMPTY_PASSWORD=no",
-        "REDIS_PASSWORD={Passwords.2}",
-        "REDIS_EXTRA_FLAGS=--auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb"
-      ]
+      "command": "redis-server --requirepass {Passwords.2} --appendonly yes --auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb",
+      "environment": []
     }
   },
 
