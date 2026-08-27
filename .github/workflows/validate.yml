@@ -20,10 +20,14 @@ on:
     branches:
       - master
       - unstable
+    paths:
+      - 'servapps/**'
   push:
     branches:
       - master
       - unstable
+    paths:
+      - 'servapps/**'
   workflow_dispatch:
 
 concurrency:
