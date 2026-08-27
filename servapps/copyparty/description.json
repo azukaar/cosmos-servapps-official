@@ -16,7 +16,7 @@
       "description": "File server portatile con caricamenti riprendibili accelerati, deduplicazione, WebDAV, SFTP, FTP, TFTP, zeroconf, indicizzatore multimediale, miniature++: tutto in un unico file"
     }
   },
-  "tags": ["filebrowser", "open-source", "self-hosted", "file management", "custom commands", "permissions management", "shareable links", "text editor", "media previews", "go", "linux", "windows", "macos", "docker"],
+  "tags": ["webdav", "ftp", "sftp", "open-source", "self-hosted", "file management", "custom commands", "permissions management", "shareable links", "text editor", "media previews", "go", "linux", "windows", "macos", "docker"],
   "repository": "https://github.com/9001/copyparty",
   "image": "https://hub.docker.com/r/copyparty/ac",
   "supported_architectures": ["amd64", "arm64"]
