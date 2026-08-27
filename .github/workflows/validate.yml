@@ -1,25 +1,33 @@
 name: Validate Servapps
 
-# Runs the servapp validation suite on pull requests and pushes to master.
+# Runs the servapp validation suite on pull requests and pushes to the
+# main branches (master and unstable).
 #
 # What it checks (see .github/scripts/validate-servapps.js):
 #   1. description.json is valid JSON and has all required fields.
 #   2. cosmos-compose.json renders with the same whiskers engine + JSON
 #      parsing that Cosmos uses at install time.
-#   3. No copy-pasted URLs from other stores (resiSTORE, unofficial, etc).
+#   3. No copy-pasted URLs from other stores (e.g. a different Cosmos store
+#      like resiSTORE, "cosmos-servapps-unofficial", etc).
 #   4. A compose file exists for every servapp.
 #
-# By default only servapp directories changed in the diff are validated, so
-# pre-existing issues in unrelated apps do not block PRs. A manual run
+# By default only the servapp directories changed in the diff are validated,
+# so pre-existing issues in unrelated apps do not block PRs. A manual run
 # (workflow_dispatch) validates the entire repository.
 
 on:
   pull_request:
-    branches: ["master"]
-    paths: ["servapps/**"]
+    branches:
+      - master
+      - unstable
+    paths:
+      - 'servapps/**'
   push:
-    branches: ["master"]
-    paths: ["servapps/**"]
+    branches:
+      - master
+      - unstable
+    paths:
+      - 'servapps/**'
   workflow_dispatch:
 
 concurrency:
