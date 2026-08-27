@@ -19,5 +19,5 @@
   "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
   "repository": "https://github.com/modbus2mqtt/modbus2mqtt",
   "image": "https://ghcr.io/modbus2mqtt/modbus2mqtt",
-  "supported_architectures": ["arm64"]
+  "supported_architectures": ["arm64, amd64"]
 }
