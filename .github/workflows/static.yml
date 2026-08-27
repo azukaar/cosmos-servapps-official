@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Checkout unstable
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: unstable
           path: unstable
@@ -50,6 +50,9 @@ jobs:
 
       - name: Build static files
         run: node index.js && cd unstable && node index.js
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
