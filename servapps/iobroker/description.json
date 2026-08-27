@@ -1,0 +1,23 @@
+{
+  "name": "ioBroker",
+  "description": "open server program for home automation with over 600 integrations",
+  "longDescription": "<ul><li>ioBroker is an IoT platform (Fog computing).</li><li>It has ability to manage your IoT system as one intelligent, robust project.</li<>li>Unique graphics and beautiful interfaces for you.</li><li>Use one of the best open source products for managing your automation system on premise.</li><li>Comprehensive smart home support </li></ul>",
+  "translation": {
+    "de": {
+      "description": "offenes Serverprogramm für die Hausautomation mit über 600 Integrationen",
+      "longDescription": "<ul><li>ioBroker ist eine IoT-Plattform (Fog Computing).</li><li>Sie ermöglicht es Ihnen, Ihr IoT-System als ein einziges intelligentes, robustes Projekt zu verwalten.</li<>li>Einzigartige Grafiken und ansprechende Benutzeroberflächen für Sie.</li><li>Nutzen Sie eines der besten Open-Source-Produkte für die Verwaltung Ihres Automatisierungssystems vor Ort.</li><li>Umfassende Smart-Home-Unterstützung </li></ul>"
+    },
+    "fr": {
+      "longDescription": "<ul><li>ioBroker est une plateforme IoT (Fog computing).</li><li>Elle permet de gérer votre système IoT comme un projet unique, intelligent et robuste.</li<>li>Des graphismes originaux et de superbes interfaces à votre disposition.</li><li>Optez pour l'un des meilleurs produits open source pour gérer votre système d'automatisation sur site.</li><li>Prise en charge complète de la maison connectée </li></ul>",
+      "description": "logiciel de serveur ouvert pour la domotique, avec plus de 600 intégrations"
+    },
+    "it": {
+      "longDescription": "<ul><li>ioBroker è una piattaforma IoT (Fog computing).</li><li>Consente di gestire il vostro sistema IoT come un unico progetto intelligente e solido.</li<>li>Grafica esclusiva e interfacce accattivanti a vostra disposizione.</li><li>Utilizzate uno dei migliori prodotti open source per gestire il vostro sistema di automazione in locale.</li><li>Supporto completo per la casa intelligente </li></ul>",
+      "description": "programma server open source per la domotica con oltre 600 integrazioni"
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services"],
+  "repository": "https://github.com/ioBroker/ioBroker",
+  "image": "https://ghcr.io/buanet/iobroker",
+  "supported_architectures": ["amd64", "arm64"]
+}
