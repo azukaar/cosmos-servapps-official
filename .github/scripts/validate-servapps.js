@@ -13,11 +13,12 @@
  *     URLs under THIS repository's own Pages base
  *     (https://<owner>.github.io/<repo>/servapps/...) are treated as
  *     legitimate and not flagged.
- *  4. A structural check that a compose file exists for each servapp.
- *  5. A structural check that each servapp has the file layout the Pages
- *     builder (index.js) and the store require so the deployment does not
- *     crash: an icon.png and a screenshots/ directory. Missing screenshots/
- *     (as happened with ROMarr) is a hard error because index.js scans it.
+ *  4. A structural check that each servapp has the complete required file
+ *     layout so the store renders and the Pages deployment does not crash:
+ *       - description.json
+ *       - cosmos-compose.json (or docker-compose.yml)
+ *       - icon.png
+ *       - screenshots/  (missing this crashes index.js, e.g. ROMarr)
  *
  * Exit code is non-zero if any check fails.
  */
@@ -130,8 +131,57 @@ function checkIconUrl(app, file, url) {
 function checkApp(app) {
   const base = path.join('servapps', app);
 
-  // ---------- description.json ----------
+  // ---------------------------------------------------------------------------
+  // Required store file structure
+  // ---------------------------------------------------------------------------
+  // Every servapp must have the exact layout the Pages builder (index.js) and
+  // the store require. The builder hardcodes these paths for every servapp:
+  //   servapps/<App>/description.json
+  //   servapps/<App>/cosmos-compose.json  (or docker-compose.yml)
+  //   servapps/<App>/icon.png
+  //   servapps/<App>/screenshots/
+  // A missing screenshots/ directory crashes the deploy build outright (as
+  // happened with ROMarr: ENOENT scandir './servapps/ROMarr/screenshots').
+  // All four are required; missing any of them is a hard error.
+  // ---------------------------------------------------------------------------
+
+  // 1) description.json
   const dfile = path.join(base, 'description.json');
+  if (!fs.existsSync(dfile)) {
+    err(app, 'description.json', 'description.json is required for every servapp');
+  }
+
+  // 2) compose file - cosmos-compose.json OR docker-compose.yml
+  const cfile = path.join(base, 'cosmos-compose.json');
+  const yfile = path.join(base, 'docker-compose.yml');
+  if (!fs.existsSync(cfile) && !fs.existsSync(yfile)) {
+    err(app, 'cosmos-compose.json / docker-compose.yml',
+        'a compose file (cosmos-compose.json or docker-compose.yml) is required for every servapp');
+  }
+
+  // 3) icon.png
+  const iconFile = path.join(base, 'icon.png');
+  if (!fs.existsSync(iconFile)) {
+    err(app, 'icon.png', 'icon.png is required for every servapp (index.js hardcodes it)');
+  }
+
+  // 4) screenshots/ directory
+  const shotsDir = path.join(base, 'screenshots');
+  if (!fs.existsSync(shotsDir) || !fs.lstatSync(shotsDir).isDirectory()) {
+    err(app, 'screenshots/', 'screenshots/ directory is required for every servapp (index.js scans it)');
+  } else {
+    // Warn if screenshots/ contains no real image files (e.g. only a .keep
+    // placeholder) - the app will just render with no screenshots, which is
+    // valid, but is usually a sign one was forgotten.
+    const shots = fs.readdirSync(shotsDir).filter((f) => f !== '.keep' && f !== '.gitkeep');
+    if (shots.length === 0) {
+      warn(app, 'screenshots/', 'screenshots/ has no images (only a placeholder)');
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // description.json content validation
+  // ---------------------------------------------------------------------------
   if (fs.existsSync(dfile)) {
     let d = null;
     try { d = JSON.parse(fs.readFileSync(dfile, 'utf8')); }
@@ -146,35 +196,11 @@ function checkApp(app) {
       // NOT validated here - only the store-provided icon URL (and store-hosted artefact files) in the
       // compose file is checked (see checkIconUrl below).
     }
-  } else {
-    err(app, 'description.json', 'description.json is required for every servapp');
   }
 
-  // ---------- Required store file structure ----------
-  // The Pages builder (index.js) hardcodes these paths for every servapp, so
-  // a missing one breaks the deployment (a missing screenshots/ dir crashes
-  // the build outright, as happened with ROMarr).
-  const iconFile = path.join(base, 'icon.png');
-  if (!fs.existsSync(iconFile)) {
-    err(app, 'icon.png', 'icon.png is required for every servapp (index.js hardcodes it)');
-  }
-
-  const shotsDir = path.join(base, 'screenshots');
-  if (!fs.existsSync(shotsDir) || !fs.lstatSync(shotsDir).isDirectory()) {
-    err(app, 'screenshots/', 'screenshots/ directory is required for every servapp (index.js scans it)');
-  } else {
-    // Warn if screenshots/ contains no real image files (e.g. only a .keep
-    // placeholder) - the app will just render with no screenshots, which is
-    // valid, but is usually a sign one was forgotten.
-    const shots = fs.readdirSync(shotsDir).filter((f) => f !== '.keep' && f !== '.gitkeep');
-    if (shots.length === 0) {
-      warn(app, 'screenshots/', 'screenshots/ has no images (only a placeholder)');
-    }
-  }
-
-  // ---------- cosmos-compose.json ----------
-  const cfile = path.join(base, 'cosmos-compose.json');
-
+  // ---------------------------------------------------------------------------
+  // cosmos-compose.json content validation
+  // ---------------------------------------------------------------------------
   if (fs.existsSync(cfile)) {
     const raw = fs.readFileSync(cfile, 'utf8');
     const trimmed = raw.trim();
@@ -223,11 +249,6 @@ function checkApp(app) {
       while ((am = artefactRe.exec(raw)) !== null) {
         checkIconUrl(app, 'cosmos-compose.json', am[0]);
       }
-    }
-  } else {
-    const yfile = path.join(base, 'docker-compose.yml');
-    if (!fs.existsSync(yfile)) {
-      err(app, 'cosmos-compose.json / docker-compose.yml', 'a compose file is required for every servapp');
     }
   }
 }
