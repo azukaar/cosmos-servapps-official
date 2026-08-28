@@ -1,57 +1,180 @@
-
-{ 
+{
   "cosmos-installer": {
     "form": [
       {
-        "name": "COUCHDB_SECRET",
-        "label": "This secret will be used to encrypt the JWT tokens and users passwords",
+        "name": "jwtKeysWarning",
+        "type": "warning",
+        "label": "oboku signs its sessions with an RSA key pair that you provide. Generate one on any machine with: openssl genrsa -out jwt_private_key.pem 4096 && openssl rsa -in jwt_private_key.pem -pubout -outform PEM -out jwt_public_key.pem, then paste each file base64-encoded (base64 -w0 jwt_private_key.pem) in the two fields below. Keep them safe: losing them signs every user out."
+      },
+      {
+        "name": "JWT_PRIVATE_KEY",
+        "label": "JWT private key, base64 encoded",
         "initialValue": false,
         "type": "password"
       },
       {
-        "name": "COUCHDB_PASSWORD",
-        "label": "Your couchdb admin password",
+        "name": "JWT_PUBLIC_KEY",
+        "label": "JWT public key, base64 encoded",
         "initialValue": false,
         "type": "password"
       },
-    {
-      "name": "POSTGRES_PASSWORD",
-      "label": "Your postgres admin password",
-      "initialValue": "admin",
-      "type": "text"
-    },
-    {
-      "name": "JWT_PUBLIC_KEY",
-      "label": "Your JWT public key as base64 encoded string",
-      "initialValue": false,
-      "type": "password"
-    },
-    {
-      "name": "JWT_PRIVATE_KEY",
-      "label": "Your JWT private key as base64 encoded string",
-      "initialValue": false,
-      "type": "password"
-    },
       {
-        "name": "adminOnly",
-        "label": "Do you want to make this service admin only?",
-        "initialValue": false,
-        "type": "checkbox"
+        "name": "adminLogin",
+        "label": "Login for the oboku admin panel",
+        "initialValue": "admin",
+        "type": "text"
+      },
+      {
+        "name": "adminPassword",
+        "label": "Password for the oboku admin panel",
+        "initialValue": "{Passwords.2}",
+        "type": "password"
       }
     ],
     "post-install": [
       {
         "type": "warning",
-        "label": "As it is impossible to include all the configuration options in the installer, you can check the docs for more information on how to configure your server: https://docs.oboku.me/self-hosting/configuration"
+        "label": "oboku only exposes the options its installer needs. Email sign-up, cloud sync providers (Dropbox, Google Drive, OneDrive) and the performance settings are configured through extra environment variables: https://docs.oboku.me/self-hosting/configuration"
       }
     ]
   },
+  "minVersion": "0.16.0",
   "services": {
+    "{ServiceName}": {
+      "image": "mbret/oboku-web",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "depends_on": {
+        "{ServiceName}-api": {}
+      },
+      "environment": [
+        "VITE_API_URL=https://{Hostnames.{StaticServiceName}-api.{StaticServiceName}-api.host}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": false
+        }
+      ]
+    },
+
+    "{ServiceName}-api": {
+      "image": "mbret/oboku-api",
+      "container_name": "{ServiceName}-api",
+      "restart": "unless-stopped",
+      "depends_on": {
+        "{ServiceName}-couchdb": {},
+        "{ServiceName}-postgres": {}
+      },
+      "environment": [
+        "NODE_ENV=production",
+        "APP_PUBLIC_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "COUCH_DB_URL=http://{ServiceName}-couchdb:5984",
+        "POSTGRES_HOST={ServiceName}-postgres",
+        "POSTGRES_DB=oboku",
+        "POSTGRES_USER=oboku",
+        "POSTGRES_PASSWORD={Passwords.0}",
+        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}",
+        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
+        "ADMIN_LOGIN={Context.adminLogin}",
+        "ADMIN_PASSWORD={Context.adminPassword}",
+        "API_DATA_DIR=/var/lib/oboku/data",
+        "API_CONFIG_DIR=/var/lib/oboku/config"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-api-data",
+          "target": "/var/lib/oboku/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-api-config",
+          "target": "/var/lib/oboku/config",
+          "type": "volume"
+        }
+      ],
+      "labels": {
+        "cosmos-persistent-env": "ADMIN_LOGIN, ADMIN_PASSWORD, JWT_PRIVATE_KEY, JWT_PUBLIC_KEY, POSTGRES_PASSWORD",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}-api",
+          "description": "Expose {ServiceName}-api to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}-api:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": false
+        }
+      ]
+    },
+
+    "{ServiceName}-couchdb": {
+      "image": "mbret/oboku-couchdb",
+      "container_name": "{ServiceName}-couchdb",
+      "restart": "unless-stopped",
+      "environment": [
+        "COUCHDB_USER=admin",
+        "COUCHDB_PASSWORD={Passwords.1}",
+        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-couchdb-data",
+          "target": "/opt/couchdb/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-couchdb-config",
+          "target": "/opt/couchdb/etc/local.d",
+          "type": "volume"
+        }
+      ],
+      "labels": {
+        "cosmos-persistent-env": "COUCHDB_PASSWORD, COUCHDB_USER, JWT_PUBLIC_KEY",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
+    },
+
     "{ServiceName}-postgres": {
       "image": "postgres:17",
-      "restart": "always",
+      "container_name": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
       "environment": [
-        "POSTGRES_USER=oboku"
+        "POSTGRES_DB=oboku",
+        "POSTGRES_USER=oboku",
+        "POSTGRES_PASSWORD={Passwords.0}"
       ],
       "volumes": [
         {
@@ -59,112 +182,15 @@
           "target": "/var/lib/postgresql/data",
           "type": "volume"
         }
-      ]
-    },
-    "{ServiceName}-couchdb": {
-      "image": "mbret/oboku-couchdb",
-      "restart": "always",
-      "environment": [
-        "COUCHDB_USER=admin",
-        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
-        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}"
       ],
-      "volumes": [
-        {
-          "source": "{ServiceName}-couchdb-secrets",
-          "target": "/secrets",
-          "type": "volume"
-        }
-      ],
-      "routes": [
-        {
-          "name": "{ServiceName}-couchdb",
-          "description": "Expose {ServiceName}-couchdb to the web",
-          "useHost": true,
-          "target": "http://{ServiceName}:5984",
-          "mode": "SERVAPP",
-          "CORSOrigin": "*",
-          "Timeout": 14400000,
-          "ThrottlePerMinute": 12000,
-          "BlockCommonBots": true,
-          "SmartShield": {
-            "Enabled": true
-          },
-          "AuthEnabled": true
-          {if Context.adminOnly}
-           , "AuthAdmin": true
-          {/if}
-        }
-      ]
-    },
-    "{ServiceName}-web": {
-      "image": "mbret/oboku-web",
-      "restart": "always",
-      "environment": [
-        "VITE_API_URL=https://{Hostnames.{StaticServiceName}-api.{StaticServiceName}-api.host}",
-        "VITE_COUCH_DB_PUBLIC_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
-        "VITE_COUCH_DB_PUBLIC_URL_2=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
-        "VITE_COUCH_DB_PUBLIC_URL_3=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
-        "VITE_COUCH_DB_PUBLIC_URL_4=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}"
-      ],
-      "routes": [
-        {
-          "name": "{ServiceName}-web",
-          "description": "Expose {ServiceName}-web to the web",
-          "useHost": true,
-          "target": "http://{ServiceName}:80",
-          "mode": "SERVAPP",
-          "CORSOrigin": "*",
-          "Timeout": 14400000,
-          "ThrottlePerMinute": 12000,
-          "BlockCommonBots": true,
-          "SmartShield": {
-            "Enabled": true
-          },
-          "AuthEnabled": true
-          {if Context.adminOnly}
-           , "AuthAdmin": true
-          {/if}
-        }
-      ]
-    },
-    "{ServiceName}-api": {
-      "image": "mbret/oboku-api",
-      "restart": "always",
-      "environment": [
-        "COUCHDB_URL=http://{ServiceName}-couchdb:5984",
-        "POSTGRES_URL=http://{ServiceName}-postgres:5432",
-        "COUCH_DB_URL=https://{Hostnames.{StaticServiceName}-couchdb.{StaticServiceName}-couchdb.host}",
-        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
-        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}" 
-      ],
-      "volumes": [
-        {
-          "source": "{ServiceName}-api-data",
-          "target": "/var/lib/oboku/data",
-          "type": "volume"
-        }
-      ],
-      "routes": [
-        {
-          "name": "{ServiceName}-api",
-          "description": "Expose {ServiceName}-api to the web",
-          "useHost": true,
-          "target": "http://{ServiceName}:3000",
-          "mode": "SERVAPP",
-          "CORSOrigin": "*",
-          "Timeout": 14400000,
-          "ThrottlePerMinute": 12000,
-          "BlockCommonBots": true,
-          "SmartShield": {
-            "Enabled": true
-          },
-          "AuthEnabled": true
-          {if Context.adminOnly}
-           , "AuthAdmin": true
-          {/if}
-        }
-      ]
+      "labels": {
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
     }
   }
 }
