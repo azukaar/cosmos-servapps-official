@@ -14,6 +14,10 @@
  *     (https://<owner>.github.io/<repo>/servapps/...) are treated as
  *     legitimate and not flagged.
  *  4. A structural check that a compose file exists for each servapp.
+ *  5. A structural check that each servapp has the file layout the Pages
+ *     builder (index.js) and the store require so the deployment does not
+ *     crash: an icon.png and a screenshots/ directory. Missing screenshots/
+ *     (as happened with ROMarr) is a hard error because index.js scans it.
  *
  * Exit code is non-zero if any check fails.
  */
@@ -146,8 +150,31 @@ function checkApp(app) {
     err(app, 'description.json', 'description.json is required for every servapp');
   }
 
+  // ---------- Required store file structure ----------
+  // The Pages builder (index.js) hardcodes these paths for every servapp, so
+  // a missing one breaks the deployment (a missing screenshots/ dir crashes
+  // the build outright, as happened with ROMarr).
+  const iconFile = path.join(base, 'icon.png');
+  if (!fs.existsSync(iconFile)) {
+    err(app, 'icon.png', 'icon.png is required for every servapp (index.js hardcodes it)');
+  }
+
+  const shotsDir = path.join(base, 'screenshots');
+  if (!fs.existsSync(shotsDir) || !fs.lstatSync(shotsDir).isDirectory()) {
+    err(app, 'screenshots/', 'screenshots/ directory is required for every servapp (index.js scans it)');
+  } else {
+    // Warn if screenshots/ contains no real image files (e.g. only a .keep
+    // placeholder) - the app will just render with no screenshots, which is
+    // valid, but is usually a sign one was forgotten.
+    const shots = fs.readdirSync(shotsDir).filter((f) => f !== '.keep' && f !== '.gitkeep');
+    if (shots.length === 0) {
+      warn(app, 'screenshots/', 'screenshots/ has no images (only a placeholder)');
+    }
+  }
+
   // ---------- cosmos-compose.json ----------
   const cfile = path.join(base, 'cosmos-compose.json');
+
   if (fs.existsSync(cfile)) {
     const raw = fs.readFileSync(cfile, 'utf8');
     const trimmed = raw.trim();
