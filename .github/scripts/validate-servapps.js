@@ -140,6 +140,55 @@ function checkIconUrl(app, file, url) {
   err(app, file, 'store icon URL is not served by this store (copy-paste?): ' + url);
 }
 
+
+// List the non-mandatory files inside a servapp folder: anything that is not
+// part of the required store structure (description.json, compose file,
+// icon.png) and not under screenshots/. These can carry executable code or
+// structured data, so we flag them with a warning unless they are referenced
+// by the app's cosmos-compose.json (and are not executable).
+function extraFiles(base) {
+  const out = [];
+  if (!fs.existsSync(base)) return out;
+  const walk = (dir, rel) => {
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return; }
+    for (const e of entries) {
+      const r = rel ? rel + '/' + e.name : e.name;
+      if (e.isDirectory()) {
+        // screenshots/ is required + expected; everything else stays fair game
+        if (r === 'screenshots') continue;
+        walk(dir + '/' + e.name, r);
+      } else if (e.isFile()) {
+        const top = r.split('/')[0];
+        if (['description.json', 'cosmos-compose.json', 'docker-compose.yml', 'icon.png'].includes(top)) continue;
+        out.push(r);
+      }
+    }
+  };
+  walk(base, '');
+  return out;
+}
+
+// Is this file referenced (by name or path) inside the compose file text?
+function composeReferences(composeRaw, fileRel) {
+  if (!composeRaw) return false;
+  const needle = fileRel.split('/').pop(); // bare filename
+  return composeRaw.includes(fileRel) || composeRaw.includes(needle);
+}
+
+// Best-effort "executable" detection. On real git checkouts the executable
+// bit is the authoritative signal; when unavailable, we fall back to a
+// conservative extension-based guess for obvious script formats.
+function isExecutableFile(base, rel) {
+  const full = path.join(base, rel);
+  try {
+    const st = fs.statSync(full);
+    if (st.isFile() && (st.mode & 0o111) !== 0) return true;
+  } catch (e) { /* ignore */ }
+  return /\.[a-z0-9]+$/i.test(rel) && /\.[^.]+$/.test(rel) &&
+    /\.(sh|bash|zsh|fish|py|pl|rb|php|js|ts)$/i.test(rel);
+}
+
 // ---------------------------------------------------------------------------
 // Per-app checks
 // ---------------------------------------------------------------------------
@@ -193,6 +242,28 @@ function checkApp(app) {
     if (shots.length === 0) {
       warn(app, 'screenshots/', 'screenshots/ has no images (only a placeholder)');
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Non-mandatory files (potential executable / structured data)
+  // ---------------------------------------------------------------------------
+  // Anything in a servapp folder that is NOT part of the required structure
+  // (description.json, compose file, icon.png, screenshots/*) can carry
+  // executable code or structured data. We flag it with a warning so
+  // maintainers review it. Exception: a file that is NOT executable AND is
+  // referenced in the app's cosmos-compose.json is intentionally used by the
+  // app (e.g. an artefacts/config.yaml fetched via wget in post_install) and
+  // does NOT warn.
+  const composeRaw = fs.existsSync(cfile) ? fs.readFileSync(cfile, 'utf8') : '';
+  for (const extra of extraFiles(base)) {
+    const referenced = composeReferences(composeRaw, extra);
+    const executable = isExecutableFile(base, extra);
+    if (!executable && referenced) continue; // intentional, referenced artefact
+    warn(app, extra,
+      'non-mandatory file (not part of the required structure) can contain ' +
+      (executable ? 'executable code' : 'structured data') +
+      (referenced ? '' : ' and is not referenced in cosmos-compose.json') +
+      (executable ? '; review this file' : '; reference it in cosmos-compose.json or remove it'));
   }
 
   // ---------------------------------------------------------------------------
