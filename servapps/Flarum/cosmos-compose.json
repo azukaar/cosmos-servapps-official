@@ -1,5 +1,6 @@
 {
-    "cosmos-installer": {
+    "minVersion": "0.13.0",
+  "cosmos-installer": {
        "form": [
           {
              "name": "extensionPath",
