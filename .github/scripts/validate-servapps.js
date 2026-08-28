@@ -628,14 +628,14 @@ async function checkComposeImages(app, rendered, isYaml, composeFileLabel) {
 // Schema checks - mandatory / optional / allowed fields for description.json
 // and the compose files.
 //
-// The mandatory and known field sets are derived from the fields actually used
-// by the apps in this repository (description.json is 100% consistent; the
-// compose top level is services + cosmos-installer + minVersion, service level
-// is image + container_name + labels, both universal across all services).
-//
-// Optional fields are a curated list of the fields that appear in at least one
-// existing app. Any other field (never seen in the store) is rejected as
-// undocumented.
+// Mandatory fields are derived from the fields present in (essentially) every
+// existing app. The allowed (optional) field vocabulary is the set of fields
+// Cosmos-Server actually supports when creating a service (the struct in
+// src/docker/api_blueprint.go: ContainerCreateRequestContainer and
+// DockerServiceCreateRequest), plus a few fields existing apps legitimately
+// use. Matching is case-insensitive because Go's encoding/json accepts struct
+// fields by name regardless of the case of the compose keys. A field that is
+// not in the supported vocabulary is rejected as undocumented.
 // ---------------------------------------------------------------------------
 
 const DESC_MANDATORY = [
@@ -651,15 +651,34 @@ const COMPOSE_TOP_OPTIONAL = ['networks', 'version', 'volumes'];
 const COMPOSE_TOP_KNOWN = new Set([...COMPOSE_TOP_MANDATORY, ...COMPOSE_TOP_OPTIONAL]);
 
 const COMPOSE_SERVICE_MANDATORY = ['image', 'container_name', 'labels'];
+
+// Canonical service fields supported by Cosmos-Server (json tags of
+// ContainerCreateRequestContainer in src/docker/api_blueprint.go) plus fields
+// already used by existing apps that Cosmos's types do not (yet) declare.
 const COMPOSE_SERVICE_OPTIONAL = [
-  'environment', 'volumes', 'restart', 'routes', 'UID', 'GID', 'user', 'depends_on',
-  'ports', 'expose', 'command', 'entrypoint', 'healthcheck', 'networks', 'cap_add',
-  'cap_drop', 'devices', 'device', 'extra_hosts', 'hostname', 'init', 'links',
-  'logging', 'network_mode', 'post_install', 'privileged', 'read_only',
-  'security_opt', 'shm_size', 'stdin_open', 'stop_grace_period', 'tmpfs', 'tty',
-  'working_dir', 'group_add', 'deploy'
+  // Cosmos-Server ContainerCreateRequestContainer fields
+  'environment', 'labels', 'ports', 'volumes', 'networks', 'routes', 'links',
+  'restart', 'devices', 'expose', 'depends_on', 'tty', 'stdin_open', 'command',
+  'entrypoint', 'runtime', 'working_dir', 'user', 'uid', 'gid', 'hostname',
+  'domainname', 'mac_address', 'privileged', 'network_mode', 'stop_signal',
+  'stop_grace_period', 'healthcheck', 'dns', 'dns_search', 'extra_hosts',
+  'security_opt', 'storage_opt', 'sysctls', 'isolation', 'cap_add', 'cap_drop',
+  'mem_limit', 'mem_reservation', 'cpus', 'cpu_shares', 'cpuset_cpus',
+  'post_install',
+  // fields used by existing apps but not (yet) in Cosmos-Server's struct
+  'init', 'logging', 'shm_size', 'group_add', 'deploy'
 ];
-const COMPOSE_SERVICE_KNOWN = new Set([...COMPOSE_SERVICE_MANDATORY, ...COMPOSE_SERVICE_OPTIONAL]);
+
+// Normalize a field name for case-insensitive, separator-insensitive matching
+// (Go's encoding/json matches struct fields case-insensitively, so compose keys
+// like CapAdd / cap_add / CAPADD are all honored).
+function normalizeFieldKey(k) {
+  return String(k || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+const COMPOSE_SERVICE_SUPPORTED = new Map();
+for (const f of COMPOSE_SERVICE_OPTIONAL) COMPOSE_SERVICE_SUPPORTED.set(normalizeFieldKey(f), f);
+for (const f of COMPOSE_SERVICE_MANDATORY) COMPOSE_SERVICE_SUPPORTED.set(normalizeFieldKey(f), f);
 
 function checkMissing(app, file, which, present) {
   for (const f of [...which].sort()) {
@@ -704,9 +723,17 @@ function checkComposeSchema(app, rendered, isYaml, composeFileLabel) {
       for (const f of COMPOSE_SERVICE_MANDATORY) {
         if (!keys.has(f)) err(app, composeFileLabel, prefix + ': missing mandatory field "' + f + '"');
       }
-      // report undocumented per-service fields
+      // report unsupported per-service fields (case-insensitive against the
+      // Cosmos-Server supported vocabulary)
+      const ACCEPTED_CASINGS = new Set(['UID', 'GID']); // long-standing store convention
       for (const k of Object.keys(conf)) {
-        if (!COMPOSE_SERVICE_KNOWN.has(k)) err(app, composeFileLabel, prefix + ': field "' + k + '" is not documented (not present in any existing app)');
+        const nk = normalizeFieldKey(k);
+        const canonical = COMPOSE_SERVICE_SUPPORTED.get(nk);
+        if (!canonical) {
+          err(app, composeFileLabel, prefix + ': field "' + k + '" is not supported by Cosmos-Server (not in the supported compose vocabulary)');
+        } else if (!ACCEPTED_CASINGS.has(k) && canonical !== k) {
+          warn(app, composeFileLabel, prefix + ': field "' + k + '" should be spelled "' + canonical + '" (canonical Cosmos field name)');
+        }
       }
     }
   }
