@@ -22,7 +22,6 @@
   "repository": "https://github.com/Threadfin/Threadfin",
   "image": "https://hub.docker.com/r/fyb3roptik/threadfin",
   "supported_architectures": [
-    "amd64",
-    "arm64"
+    "amd64"
   ]
 }

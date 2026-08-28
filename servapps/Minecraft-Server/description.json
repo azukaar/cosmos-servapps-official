@@ -24,9 +24,7 @@
   "repository": "https://www.minecraft.net/",
   "image": "itzg/minecraft-server:latest",
   "supported_architectures": [
-    "x86",
     "amd64",
-    "arm",
     "arm64"
   ]
 }
