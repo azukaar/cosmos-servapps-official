@@ -13,7 +13,12 @@
  *     URLs under THIS repository's own Pages base
  *     (https://<owner>.github.io/<repo>/servapps/...) are treated as
  *     legitimate and not flagged.
- *  4. A structural check that a compose file exists for each servapp.
+ *  4. A structural check that each servapp has the complete required file
+ *     layout so the store renders and the Pages deployment does not crash:
+ *       - description.json
+ *       - cosmos-compose.json (or docker-compose.yml)
+ *       - icon.png
+ *       - screenshots/  (missing this crashes index.js, e.g. ROMarr)
  *
  * Exit code is non-zero if any check fails.
  */
@@ -80,8 +85,24 @@ const OWN_STORE_BASE = detectOwnStoreBase();
 const errors = [];
 const warnings = [];
 
-function err(app, file, msg) { errors.push('[' + app + '] ' + file + ': ' + msg); }
-function warn(app, file, msg) { warnings.push('[' + app + '] ' + file + ': ' + msg); }
+// Emit a GitHub Actions workflow command annotation (renders as a warning /
+// error callout on the PR / check run) when running under CI. No-op locally.
+// See https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions
+function ghAnnotation(level, app, file, msg) {
+  if (process.env.GITHUB_ACTIONS !== 'true') return;
+  const safe = String(msg).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+  const relPath = 'servapps/' + app + '/' + file;
+  process.stdout.write(`::${level} file=${relPath}::${safe}\n`);
+}
+
+function err(app, file, msg) {
+  errors.push('[' + app + '] ' + file + ': ' + msg);
+  ghAnnotation('error', app, file, msg);
+}
+function warn(app, file, msg) {
+  warnings.push('[' + app + '] ' + file + ': ' + msg);
+  ghAnnotation('warning', app, file, msg);
+}
 
 function eachApp() {
   const dir = 'servapps';
@@ -119,6 +140,55 @@ function checkIconUrl(app, file, url) {
   err(app, file, 'store icon URL is not served by this store (copy-paste?): ' + url);
 }
 
+
+// List the non-mandatory files inside a servapp folder: anything that is not
+// part of the required store structure (description.json, compose file,
+// icon.png) and not under screenshots/. These can carry executable code or
+// structured data, so we flag them with a warning unless they are referenced
+// by the app's cosmos-compose.json (and are not executable).
+function extraFiles(base) {
+  const out = [];
+  if (!fs.existsSync(base)) return out;
+  const walk = (dir, rel) => {
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return; }
+    for (const e of entries) {
+      const r = rel ? rel + '/' + e.name : e.name;
+      if (e.isDirectory()) {
+        // screenshots/ is required + expected; everything else stays fair game
+        if (r === 'screenshots') continue;
+        walk(dir + '/' + e.name, r);
+      } else if (e.isFile()) {
+        const top = r.split('/')[0];
+        if (['description.json', 'cosmos-compose.json', 'docker-compose.yml', 'icon.png'].includes(top)) continue;
+        out.push(r);
+      }
+    }
+  };
+  walk(base, '');
+  return out;
+}
+
+// Is this file referenced (by name or path) inside the compose file text?
+function composeReferences(composeRaw, fileRel) {
+  if (!composeRaw) return false;
+  const needle = fileRel.split('/').pop(); // bare filename
+  return composeRaw.includes(fileRel) || composeRaw.includes(needle);
+}
+
+// Best-effort "executable" detection. On real git checkouts the executable
+// bit is the authoritative signal; when unavailable, we fall back to a
+// conservative extension-based guess for obvious script formats.
+function isExecutableFile(base, rel) {
+  const full = path.join(base, rel);
+  try {
+    const st = fs.statSync(full);
+    if (st.isFile() && (st.mode & 0o111) !== 0) return true;
+  } catch (e) { /* ignore */ }
+  return /\.[a-z0-9]+$/i.test(rel) && /\.[^.]+$/.test(rel) &&
+    /\.(sh|bash|zsh|fish|py|pl|rb|php|js|ts)$/i.test(rel);
+}
+
 // ---------------------------------------------------------------------------
 // Per-app checks
 // ---------------------------------------------------------------------------
@@ -126,8 +196,79 @@ function checkIconUrl(app, file, url) {
 function checkApp(app) {
   const base = path.join('servapps', app);
 
-  // ---------- description.json ----------
+  // ---------------------------------------------------------------------------
+  // Required store file structure
+  // ---------------------------------------------------------------------------
+  // Every servapp must have the exact layout the Pages builder (index.js) and
+  // the store require. The builder hardcodes these paths for every servapp:
+  //   servapps/<App>/description.json
+  //   servapps/<App>/cosmos-compose.json  (or docker-compose.yml)
+  //   servapps/<App>/icon.png
+  //   servapps/<App>/screenshots/
+  // A missing screenshots/ directory crashes the deploy build outright (as
+  // happened with ROMarr: ENOENT scandir './servapps/ROMarr/screenshots').
+  // All four are required; missing any of them is a hard error.
+  // ---------------------------------------------------------------------------
+
+  // 1) description.json
   const dfile = path.join(base, 'description.json');
+  if (!fs.existsSync(dfile)) {
+    err(app, 'description.json', 'description.json is required for every servapp');
+  }
+
+  // 2) compose file - cosmos-compose.json OR docker-compose.yml
+  const cfile = path.join(base, 'cosmos-compose.json');
+  const yfile = path.join(base, 'docker-compose.yml');
+  if (!fs.existsSync(cfile) && !fs.existsSync(yfile)) {
+    err(app, 'cosmos-compose.json / docker-compose.yml',
+        'a compose file (cosmos-compose.json or docker-compose.yml) is required for every servapp');
+  }
+
+  // 3) icon.png
+  const iconFile = path.join(base, 'icon.png');
+  if (!fs.existsSync(iconFile)) {
+    err(app, 'icon.png', 'icon.png is required for every servapp (index.js hardcodes it)');
+  }
+
+  // 4) screenshots/ directory
+  const shotsDir = path.join(base, 'screenshots');
+  if (!fs.existsSync(shotsDir) || !fs.lstatSync(shotsDir).isDirectory()) {
+    err(app, 'screenshots/', 'screenshots/ directory is required for every servapp (index.js scans it)');
+  } else {
+    // Warn if screenshots/ contains no real image files (e.g. only a .keep
+    // placeholder) - the app will just render with no screenshots, which is
+    // valid, but is usually a sign one was forgotten.
+    const shots = fs.readdirSync(shotsDir).filter((f) => f !== '.keep' && f !== '.gitkeep');
+    if (shots.length === 0) {
+      warn(app, 'screenshots/', 'screenshots/ has no images (only a placeholder)');
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Non-mandatory files (potential executable / structured data)
+  // ---------------------------------------------------------------------------
+  // Anything in a servapp folder that is NOT part of the required structure
+  // (description.json, compose file, icon.png, screenshots/*) can carry
+  // executable code or structured data. We flag it with a warning so
+  // maintainers review it. Exception: a file that is NOT executable AND is
+  // referenced in the app's cosmos-compose.json is intentionally used by the
+  // app (e.g. an artefacts/config.yaml fetched via wget in post_install) and
+  // does NOT warn.
+  const composeRaw = fs.existsSync(cfile) ? fs.readFileSync(cfile, 'utf8') : '';
+  for (const extra of extraFiles(base)) {
+    const referenced = composeReferences(composeRaw, extra);
+    const executable = isExecutableFile(base, extra);
+    if (!executable && referenced) continue; // intentional, referenced artefact
+    warn(app, extra,
+      'non-mandatory file (not part of the required structure) can contain ' +
+      (executable ? 'executable code' : 'structured data') +
+      (referenced ? '' : ' and is not referenced in cosmos-compose.json') +
+      (executable ? '; review this file' : '; reference it in cosmos-compose.json or remove it'));
+  }
+
+  // ---------------------------------------------------------------------------
+  // description.json content validation
+  // ---------------------------------------------------------------------------
   if (fs.existsSync(dfile)) {
     let d = null;
     try { d = JSON.parse(fs.readFileSync(dfile, 'utf8')); }
@@ -142,12 +283,11 @@ function checkApp(app) {
       // NOT validated here - only the store-provided icon URL (and store-hosted artefact files) in the
       // compose file is checked (see checkIconUrl below).
     }
-  } else {
-    err(app, 'description.json', 'description.json is required for every servapp');
   }
 
-  // ---------- cosmos-compose.json ----------
-  const cfile = path.join(base, 'cosmos-compose.json');
+  // ---------------------------------------------------------------------------
+  // cosmos-compose.json content validation
+  // ---------------------------------------------------------------------------
   if (fs.existsSync(cfile)) {
     const raw = fs.readFileSync(cfile, 'utf8');
     const trimmed = raw.trim();
@@ -196,11 +336,6 @@ function checkApp(app) {
       while ((am = artefactRe.exec(raw)) !== null) {
         checkIconUrl(app, 'cosmos-compose.json', am[0]);
       }
-    }
-  } else {
-    const yfile = path.join(base, 'docker-compose.yml');
-    if (!fs.existsSync(yfile)) {
-      err(app, 'cosmos-compose.json / docker-compose.yml', 'a compose file is required for every servapp');
     }
   }
 }
