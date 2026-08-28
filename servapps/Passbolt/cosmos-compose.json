@@ -1,5 +1,5 @@
 {
-    "minVersion": "0.13.0",
+    "minVersion": "0.18.4",
   "cosmos-installer": {
        "post-install": [
           {

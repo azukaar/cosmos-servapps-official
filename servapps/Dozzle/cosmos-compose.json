@@ -1,6 +1,6 @@
 {
  
-  "minVersion": "0.13.0",
+  "minVersion": "0.9.13",
   "cosmos-installer": {
     "form": [
       {
