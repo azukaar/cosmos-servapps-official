@@ -85,8 +85,24 @@ const OWN_STORE_BASE = detectOwnStoreBase();
 const errors = [];
 const warnings = [];
 
-function err(app, file, msg) { errors.push('[' + app + '] ' + file + ': ' + msg); }
-function warn(app, file, msg) { warnings.push('[' + app + '] ' + file + ': ' + msg); }
+// Emit a GitHub Actions workflow command annotation (renders as a warning /
+// error callout on the PR / check run) when running under CI. No-op locally.
+// See https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions
+function ghAnnotation(level, app, file, msg) {
+  if (process.env.GITHUB_ACTIONS !== 'true') return;
+  const safe = String(msg).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+  const relPath = 'servapps/' + app + '/' + file;
+  process.stdout.write(`::${level} file=${relPath}::${safe}\n`);
+}
+
+function err(app, file, msg) {
+  errors.push('[' + app + '] ' + file + ': ' + msg);
+  ghAnnotation('error', app, file, msg);
+}
+function warn(app, file, msg) {
+  warnings.push('[' + app + '] ' + file + ': ' + msg);
+  ghAnnotation('warning', app, file, msg);
+}
 
 function eachApp() {
   const dir = 'servapps';
