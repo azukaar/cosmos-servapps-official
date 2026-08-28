@@ -39,7 +39,7 @@
         "cosmos-persistent-env": "DISCOURSE_DATABASE_HOST, DISCOURSE_DATABASE_NAME, DISCOURSE_DATABASE_PASSWORD, DISCOURSE_REDIS_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Odoo/icon.png",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Discourse/icon.png",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
@@ -93,7 +93,7 @@
         "cosmos-persistent-env": "DISCOURSE_DATABASE_HOST, DISCOURSE_DATABASE_NAME, DISCOURSE_DATABASE_PASSWORD, DISCOURSE_REDIS_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Odoo/icon.png",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Discourse/icon.png",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
