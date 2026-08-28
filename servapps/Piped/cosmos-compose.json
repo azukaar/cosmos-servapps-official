@@ -1,5 +1,6 @@
 {
-    "cosmos-installer": {
+    "minVersion": "0.12.2",
+  "cosmos-installer": {
         "post-install": [
           {
             "type": "warning",

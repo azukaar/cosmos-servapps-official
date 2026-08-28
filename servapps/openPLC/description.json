@@ -16,10 +16,24 @@
       "description": "openPLC Runtime v4: una suite di controllori logici programmabili multi-hardware basata su Beremiz IDE"
     }
   },
-  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services","Developer"],
+  "tags": [
+    "smart home",
+    "home automation",
+    "IoT",
+    "Raspberry Pi",
+    "local server",
+    "privacy",
+    "control",
+    "automation",
+    "devices",
+    "services",
+    "Developer"
+  ],
   "repository": "https://github.com/Autonomy-Logic/openplc-runtime",
-  "image": "ghcr.io/autonomy-logic/openplc-runtime",
+  "image": "https://ghcr.io/autonomy-logic/openplc-runtime",
   "supported_architectures": [
-    "amd64", "arm64", "arm/v7"
+    "amd64",
+    "arm64",
+    "arm/v7"
   ]
 }
