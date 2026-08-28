@@ -724,14 +724,15 @@ function checkComposeSchema(app, rendered, isYaml, composeFileLabel) {
         if (!keys.has(f)) err(app, composeFileLabel, prefix + ': missing mandatory field "' + f + '"');
       }
       // report unsupported per-service fields (case-insensitive against the
-      // Cosmos-Server supported vocabulary)
-      const ACCEPTED_CASINGS = new Set(['UID', 'GID']); // long-standing store convention
+      // Cosmos-Server supported vocabulary). Non-canonical casing is always
+      // flagged as a warning - Cosmos's encoding/json binds by field name
+      // regardless of case, but the store's canonical spelling is lowercase.
       for (const k of Object.keys(conf)) {
         const nk = normalizeFieldKey(k);
         const canonical = COMPOSE_SERVICE_SUPPORTED.get(nk);
         if (!canonical) {
           err(app, composeFileLabel, prefix + ': field "' + k + '" is not supported by Cosmos-Server (not in the supported compose vocabulary)');
-        } else if (!ACCEPTED_CASINGS.has(k) && canonical !== k) {
+        } else if (canonical !== k) {
           warn(app, composeFileLabel, prefix + ': field "' + k + '" should be spelled "' + canonical + '" (canonical Cosmos field name)');
         }
       }
