@@ -1,0 +1,22 @@
+{
+    "name": "Hivekeep",
+    "longDescription": "<p>Hivekeep is a self-hosted platform for running a team of autonomous, persistent personal AI agents on your own server.</p><p>Instead of a single chatbot, you run a team of specialized agents, each with its own identity, expertise, memory and tools. Agents collaborate with each other, remember everything across one continuous session, and extend the platform themselves by writing custom tools, mini-apps and NPM plugins. They are reachable over Telegram, WhatsApp, Slack, Discord, Signal and Matrix.</p><p>It runs as a single container (Bun + SQLite, no external database), secrets are stored in an AES-256-GCM encrypted vault and never sent to the LLM provider, and you bring your own provider keys (Anthropic, OpenAI, Gemini, OpenRouter, or any OpenAI-compatible endpoint such as llama.cpp / LM Studio / vLLM). The web UI renders tool calls visually, ships an embedded mini-app system, a kanban for projects, image generation and TTS/STT. A built-in setup agent walks you through the first run. MIT licensed and actively maintained.</p>",
+    "description": "Self-hosted platform to run a team of specialized, persistent AI agents with a web UI. Agents collaborate, remember across sessions, and build their own tools, mini-apps and plugins. Reachable over Telegram, Slack, Discord and Matrix. Single container, encrypted vault, bring your own keys. MIT.",
+    "tags": [
+        "AI",
+        "AI agents",
+        "assistant",
+        "chatbot",
+        "LLM",
+        "self-hosted",
+        "automation",
+        "privacy-focused",
+        "open-source",
+        "Docker"
+    ],
+    "repository": "https://github.com/MarlBurroW/hivekeep",
+    "image": "https://github.com/MarlBurroW/hivekeep/pkgs/container/hivekeep",
+    "supported_architectures": [
+        "amd64"
+    ]
+}

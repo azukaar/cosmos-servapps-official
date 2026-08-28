@@ -1,11 +1,34 @@
 {
   "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
     "post-install": [
       {
+        "name": "defaultLogin",
         "type": "info",
         "label": "The default username is admin and the default password is public. You can change these in the admin panel of the application."
       }
-    ]
+    ],
+    "translation": {
+      "de": {
+        "post-install.defaultLogin.label": "Der Standard-Benutzername lautet „admin“ und das Standard-Passwort „public“. Sie können diese Angaben im Admin-Bereich der Anwendung ändern.",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "post-install.defaultLogin.label": "Le nom d'utilisateur par défaut est « admin » et le mot de passe par défaut est « public ». Vous pouvez les modifier dans le panneau d'administration de l'application.",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "post-install.defaultLogin.label": "Il nome utente predefinito è admin e la password predefinita è public. È possibile modificarli dal pannello di amministrazione dell'applicazione.",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
   },
   "minVersion": "0.7.6",
   "services": {
@@ -13,13 +36,9 @@
       "image": "emqx/emqx:5.3.1",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "UID": 1000,
-      "GID": 1000,
-      "ports": [
-        "8883:8883/tcp",
-        "8084:8084/tcp",
-        "8083:8083/tcp",
-        "1883:1883/tcp"
+      "user": "1000:1000",
+      "security_opt": [
+        "no-new-privileges:true"
       ],
       "labels": {
         "cosmos-auto-update": "true",
@@ -49,7 +68,11 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
-          }
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
         }
       ]
     }

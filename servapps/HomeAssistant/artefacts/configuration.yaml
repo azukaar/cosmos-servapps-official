@@ -1,8 +1,0 @@
-
-# Loads default set of integrations. Do not remove.
-default_config:
-
-http:
-  use_x_forwarded_for: True
-  trusted_proxies:
-    - !env_var PROXY_HOSTNAME

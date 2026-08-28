@@ -1,0 +1,78 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "translation": {
+      "de": {
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/music-assistant/server:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=auto",
+        "PROXY_HOSTNAME=0.0.0.0/0"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/MusicAssistant/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-cache",
+          "target": "/cache",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8095",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}

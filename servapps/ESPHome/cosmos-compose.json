@@ -2,52 +2,70 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "storagePath",
-        "label": "Where do you want to store the data ?",
-        "initialValue": "{DefaultDataPath}",
-        "type": "text"
-      },
-      {
         "name": "useping",
-        "label": "Do you want to use ping instead of mDNS ?",
+        "label": "Do you want to use ping instead of mDNS?",
         "initialValue": "false",
-        "type": "select",
-        "options": [
-          ["true", "true"],
-          ["false", "false"]
-        ]
+        "type": "checkbox"
       },
       {
         "name": "username",
-        "label": "What should be the username? ",
+        "label": "What should be the username?",
         "initialValue": "admin",
         "type": "text"
       },
       {
         "name": "password",
-        "label": "What should be the password? ",
+        "label": "What should be the password?",
         "initialValue": "admin",
         "type": "text"
+      },
+      {
+        "name": "needUSBAccess",
+        "label": "Do you need access to USB-Devices? (Runs container in privileged-mode)",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
       }
     ],
-    "post-install": [
-      {
-        "type": "warning",
-        "label": "As it is impossible to include all the configuration options in the installer, After install edit the URL  ESP Home and update http://esphome:6052 to http://<ip-of-cosmos-server>:6052"
+    "translation": {
+      "de": {
+        "form.useping.label": "Möchten Sie ping anstelle von mDNS verwenden?",
+        "form.username.label": "Wie soll der Benutzername lauten?",
+        "form.password.label": "Wie sollte das Passwort lauten?",
+        "form.needUSBAccess.label": "Benötigen Sie Zugriff auf USB-Geräte? (Der Container wird im privilegierten Modus ausgeführt)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.useping.label": "Souhaitez-vous utiliser ping à la place de mDNS ?",
+        "form.username.label": "Quel nom d'utilisateur souhaitez-vous choisir ?",
+        "form.password.label": "Quel devrait être le mot de passe ?",
+        "form.needUSBAccess.label": "Avez-vous besoin d'accéder à des périphériques USB ? (Le conteneur s'exécute en mode privilégié)",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.useping.label": "Preferisce utilizzare ping al posto di mDNS?",
+        "form.username.label": "Quel nom d'utilisateur souhaitez-vous choisir ?",
+        "form.password.label": "Quale dovrebbe essere la password?",
+        "form.needUSBAccess.label": "Hai bisogno di accedere a dispositivi USB? (Esegue il container in modalità privilegiata)",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
       }
-    ]
+    }
   },
-  "minVersion": "0.9.0",
+  "minVersion": "0.16.0",
   "services": {
     "{ServiceName}": {
       "container_name": "{ServiceName}",
       "image": "ghcr.io/esphome/esphome",
-      "NetworkMode": "host",
       "volumes": [
         {
-          "source": "{Context.storagePath}/{ServiceName}",
+          "source": "{ServiceName}-config",
           "target": "/config",
-          "type": "bind"
+          "type": "volume"
         },
         {
           "source": "/etc/localtime",
@@ -57,12 +75,20 @@
         }
       ],
       "restart": "always",
+      {if not Context.needUSBAccess}
+      "user": "1000:1000",
+      {else}
       "privileged": true,
+      {/if}
       "network_mode": "host",
       "environment": [
         "USERNAME={Context.username}",
         "PASSWORD={Context.password}",
         "ESPHOME_DASHBOARD_USE_PING={Context.useping}"
+        {if not Context.needUSBAccess}
+        , "PLATFORMIO_CORE_DIR=.plattformio",
+        "PLATFORMIO_GLOBALLIB_DIR=.plattformioLibs"
+        {/if}
       ],
       "labels": {
         "cosmos-force-network-secured": "false",
@@ -71,18 +97,21 @@
       },
       "routes": [
         {
-          "name": "ESP Home",
-          "description": "ESP Home Web UI",
+          "name": "{ServiceName}",
+          "description": "{ServiceName} Web UI",
           "useHost": true,
           "target": "http://{ServiceName}:6052",
-          "mode": "PROXY",
+          "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
           },
-          "AuthEnabled": false
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
         }
       ]
     }

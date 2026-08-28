@@ -1,0 +1,9 @@
+{
+  "name": "LynxPrompt",
+  "longDescription": "<p>LynxPrompt is a self-hosted platform for managing AI IDE rules and commands. It provides a universal configuration hub for tools like Cursor, Claude Code, GitHub Copilot, Windsurf, Aider, and 20+ other AI coding assistants.</p><p>Create, share, and discover configuration blueprints through a web interface or CLI. Features include template variables for dynamic configurations, a blueprint marketplace, and instant project bootstrapping.</p><p>Self-host your own instance to keep your AI configurations private and under your control. The admin email provided during installation will be auto-promoted to superadmin on first login.</p>",
+  "description": "Self-hosted AI IDE configuration hub for Cursor, Claude Code, GitHub Copilot, Windsurf, and 20+ AI coding assistants. Create, share, and discover configuration blueprints with template variables and a marketplace.",
+  "tags": ["development", "ai", "ide", "configuration", "cursor", "copilot", "self-hosted"],
+  "repository": "https://github.com/GeiserX/LynxPrompt",
+  "image": "https://hub.docker.com/r/drumsergio/lynxprompt",
+  "supported_architectures": ["amd64", "arm64"]
+}

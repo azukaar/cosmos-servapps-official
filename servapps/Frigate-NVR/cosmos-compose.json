@@ -20,10 +20,10 @@
              "type": "password"
           },
           {
-             "name": "sharedMemory",
-             "label": "How much shared memory in megabytes do you want?",
-             "initialValue": "64mb",
-             "type": "text"
+            "name": "sharedMemory",
+            "label": "How much shared memory in bytes do you want (default is 268435456 = 256MB)?",
+            "initialValue": "268435456",
+            "type": "text"
           },
           {
              "name": "cache",

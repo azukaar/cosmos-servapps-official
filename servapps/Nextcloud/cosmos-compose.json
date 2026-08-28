@@ -9,10 +9,10 @@
       }
     ]
   },
-  "minVersion": "0.7.6",
+  "minVersion": "0.21.0",
   "services": {
     "{ServiceName}": {
-      "image": "nextcloud",
+      "image": "nextcloud:production",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
@@ -67,6 +67,7 @@
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
           "CORSOrigin": "",
+          "HideFromDashboard": true,
           "StripPathPrefix": false,
           "MaxBandwith": 0,
           "AuthEnabled": false,
@@ -91,6 +92,7 @@
           "ThrottlePerMinute": 12000,
           "CORSOrigin": "",
           "StripPathPrefix": false,
+          "HideFromDashboard": true,
           "MaxBandwith": 0,
           "AuthEnabled": false,
           "AdminOnly": false,
@@ -132,7 +134,16 @@
       "networks": {
         "{ServiceName}-databases": {}
       },
-      "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
+      "command": [
+        "mariadbd",
+        "--innodb-buffer-pool-size=512M",
+        "--transaction-isolation=READ-COMMITTED",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--max-connections=512",
+        "--innodb-rollback-on-timeout=OFF",
+        "--innodb-lock-wait-timeout=120"
+      ],
       "volumes": [
         {
           "source": "{ServiceName}-mariadb-data",
@@ -156,7 +167,7 @@
     },
 
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:latest",
+      "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
@@ -176,15 +187,12 @@
       "volumes": [
         {
           "source": "{ServiceName}-redis-data",
-          "target": "/bitnami/redis",
+          "target": "/data",
           "type": "volume"
         }
       ],
-      "environment": [
-        "ALLOW_EMPTY_PASSWORD=no",
-        "REDIS_PASSWORD={Passwords.2}",
-        "REDIS_EXTRA_FLAGS=--auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb"
-      ]
+      "command": "redis-server --requirepass {Passwords.2} --appendonly yes --auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb",
+      "environment": []
     }
   },
 

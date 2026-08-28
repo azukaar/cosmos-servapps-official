@@ -1,0 +1,9 @@
+{
+  "name": "Pumperly",
+  "longDescription": "<p>Pumperly combines route planning with real-time fuel prices and EV charging station data across 36 countries. No other open-source tool does this.</p><p>Plan a route from A to B, see every fuel station and EV charger along the corridor, and filter by cheapest within N minutes detour. Covers Europe, Latin America, and Oceania with 16 languages and multi-currency support.</p><p>This deployment includes the app and PostGIS database. Fuel prices are scraped from government APIs on startup. For full route planning, you can optionally add Valhalla and Photon as separate containers.</p>",
+  "description": "Open-source fuel price and EV charging route planner covering 36 countries. Compare real-time prices, plan routes with cheapest fuel stops, and find EV chargers along the way.",
+  "tags": ["utilities", "maps", "fuel prices", "ev charging", "route planning", "self-hosted"],
+  "repository": "https://github.com/GeiserX/pumperly",
+  "image": "https://hub.docker.com/r/drumsergio/pumperly",
+  "supported_architectures": ["amd64", "arm64"]
+}
