@@ -623,6 +623,94 @@ async function checkComposeImages(app, rendered, isYaml, composeFileLabel) {
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// Schema checks - mandatory / optional / allowed fields for description.json
+// and the compose files.
+//
+// The mandatory and known field sets are derived from the fields actually used
+// by the apps in this repository (description.json is 100% consistent; the
+// compose top level is services + cosmos-installer + minVersion, service level
+// is image + container_name + labels, both universal across all services).
+//
+// Optional fields are a curated list of the fields that appear in at least one
+// existing app. Any other field (never seen in the store) is rejected as
+// undocumented.
+// ---------------------------------------------------------------------------
+
+const DESC_MANDATORY = [
+  'name', 'description', 'longDescription', 'repository', 'image', 'tags', 'supported_architectures'
+];
+const DESC_OPTIONAL = ['translation'];
+// Known = mandatory + optional (the full documented vocabulary). Any key
+// outside this set has never been seen in an existing app and is rejected.
+const DESC_KNOWN = new Set([...DESC_MANDATORY, ...DESC_OPTIONAL]);
+
+const COMPOSE_TOP_MANDATORY = ['services', 'cosmos-installer', 'minVersion'];
+const COMPOSE_TOP_OPTIONAL = ['networks', 'version', 'volumes'];
+const COMPOSE_TOP_KNOWN = new Set([...COMPOSE_TOP_MANDATORY, ...COMPOSE_TOP_OPTIONAL]);
+
+const COMPOSE_SERVICE_MANDATORY = ['image', 'container_name', 'labels'];
+const COMPOSE_SERVICE_OPTIONAL = [
+  'environment', 'volumes', 'restart', 'routes', 'UID', 'GID', 'user', 'depends_on',
+  'ports', 'expose', 'command', 'entrypoint', 'healthcheck', 'networks', 'cap_add',
+  'cap_drop', 'devices', 'device', 'extra_hosts', 'hostname', 'init', 'links',
+  'logging', 'network_mode', 'post_install', 'privileged', 'read_only',
+  'security_opt', 'shm_size', 'stdin_open', 'stop_grace_period', 'tmpfs', 'tty',
+  'working_dir', 'group_add', 'deploy'
+];
+const COMPOSE_SERVICE_KNOWN = new Set([...COMPOSE_SERVICE_MANDATORY, ...COMPOSE_SERVICE_OPTIONAL]);
+
+function checkMissing(app, file, which, present) {
+  for (const f of [...which].sort()) {
+    if (!present.has(f)) err(app, file, 'missing mandatory field "' + f + '"');
+  }
+}
+
+function checkUndocumented(app, file, which, keys) {
+  for (const k of keys) {
+    if (!which.has(k)) err(app, file, 'field "' + k + '" is not documented (not present in any existing app)');
+  }
+}
+
+// description.json top-level schema
+function checkDescriptionSchema(app, d) {
+  if (!d || typeof d !== 'object') return;
+  const keys = new Set(Object.keys(d));
+  checkMissing(app, 'description.json', DESC_MANDATORY, keys);
+  checkUndocumented(app, 'description.json', DESC_KNOWN, Object.keys(d));
+}
+
+// cosmos-compose.json / docker-compose.yml schema.
+// rendered = the whiskers-rendered compose object (JSON form) or raw string for YAML.
+function checkComposeSchema(app, rendered, isYaml, composeFileLabel) {
+  let doc = rendered;
+  if (typeof doc === 'string') {
+    try { doc = JSON.parse(doc); } catch (e) { return; }
+  }
+  if (!doc || typeof doc !== 'object') return;
+
+  const topKeys = new Set(Object.keys(doc));
+  checkMissing(app, composeFileLabel, COMPOSE_TOP_MANDATORY, topKeys);
+  checkUndocumented(app, composeFileLabel, COMPOSE_TOP_KNOWN, Object.keys(doc));
+
+  const services = doc.services;
+  if (services && typeof services === 'object') {
+    for (const [name, conf] of Object.entries(services)) {
+      if (!conf || typeof conf !== 'object') continue;
+      const prefix = 'services.' + name;
+      const keys = new Set(Object.keys(conf));
+      // report missing mandatory per-service fields
+      for (const f of COMPOSE_SERVICE_MANDATORY) {
+        if (!keys.has(f)) err(app, composeFileLabel, prefix + ': missing mandatory field "' + f + '"');
+      }
+      // report undocumented per-service fields
+      for (const k of Object.keys(conf)) {
+        if (!COMPOSE_SERVICE_KNOWN.has(k)) err(app, composeFileLabel, prefix + ': field "' + k + '" is not documented (not present in any existing app)');
+      }
+    }
+  }
+}
 // ---------------------------------------------------------------------------
 // Per-app checks
 // ---------------------------------------------------------------------------
@@ -725,7 +813,10 @@ async function checkApp(app) {
   if (fs.existsSync(dfile)) {
     let dd = null;
     try { dd = JSON.parse(fs.readFileSync(dfile, 'utf8')); } catch (e) { /* already reported */ }
-    if (dd) await checkRepositoryAndImage(app, dd);
+    if (dd) {
+      await checkRepositoryAndImage(app, dd);
+      checkDescriptionSchema(app, dd);
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -766,6 +857,7 @@ async function checkApp(app) {
       // Validate every services.*.image in the rendered compose and cross-check
       // description.image against the primary ({ServiceName}) service image.
       await checkComposeImages(app, rendered, !isJson, cfile.split('/').pop());
+      checkComposeSchema(app, rendered, !isJson, cfile.split('/').pop());
       // Only store-served icon URLs and store-hosted artifact URLs are referenced against the whitelist; every
       // other URL in the compose file (homepages, config defaults, app 3rd
       // -party sources) is intentionally skipped.
