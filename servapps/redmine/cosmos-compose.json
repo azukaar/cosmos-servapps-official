@@ -66,7 +66,7 @@
             "cosmos-persistent-env": "REDMINE_DB_PASSWORD, REDMINE_DB_MYSQL, REDMINE_DB_USERNAME, REDMINE_DB_DATABASE, REDMINE_DB_PORT, SECRET_KEY_BASE",
             "cosmos-force-network-secured": "true",
             "cosmos-auto-update": "true",
-            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/Redmine/icon.png",
+            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/redmine/icon.png",
             "cosmos-stack": "{ServiceName}",
             "cosmos-stack-main": "{ServiceName}"
           },
