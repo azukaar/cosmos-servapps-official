@@ -308,8 +308,9 @@ function parseImageRef(str) {
         return { registry: 'registry-1.docker.io', repository: name, tag: 'latest' };
       }
       // github pkgs page: github.com/owner/repo/pkgs/container/name
+      // The ghcr image is <owner>/<package> (package is usually the repo name).
       if (host === 'github.com' && p.includes('/pkgs/container/')) {
-        const m = p.match(/^([^/]+\/[^/]+)\/pkgs\/container\/([^/]+)/);
+        const m = p.match(/^([^/]+)\/[^/]+\/pkgs\/container\/([^/]+)/);
         if (m) {
           return { registry: 'ghcr.io', repository: m[1].toLowerCase() + '/' + m[2].toLowerCase(), tag: 'latest' };
         }
@@ -503,6 +504,125 @@ async function checkRepositoryAndImage(app, d) {
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// Compose services[*].image validation + description/compose image cross-check
+// ---------------------------------------------------------------------------
+
+// Normalize an image reference to a comparable {repo, tag} for the
+// description-vs-compose cross-check. Docker Hub and linuxserver's mirror
+// (lscr.io) are folded together; tag defaults to "latest".
+function imageIdentity(str) {
+  const p = parseImageRef(str);
+  if (!p) return null;
+  let registry = p.registry;
+  let repo = p.repository.replace(/\/$/, '');
+  // fold docker hub registries + lscr.io (linuxserver's dockerhub mirror)
+  if (['registry-1.docker.io', 'docker.io', 'index.docker.io'].includes(registry)) registry = 'docker.io';
+  if (registry === 'lscr.io') registry = 'docker.io';
+  let tag = (p.tag || 'latest').toLowerCase();
+  return { registry, repo: repo.toLowerCase(), tag };
+}
+
+function imagesMatch(a, b) {
+  if (!a || !b) return false;
+  if (a.registry !== b.registry) return false;
+  // repository must agree (ignore a trailing ":tag" mismatch caused by
+  // docker.io official images vs the slash form)
+  const aRepo = a.repo.replace(/^library\//, '');
+  const bRepo = b.repo.replace(/^library\//, '');
+  if (aRepo !== bRepo) return false;
+  // tag comparison: latest/tag is acceptable against any specific tag, and
+  // a missing tag (default latest) against any tag
+  if (a.tag === 'latest' || b.tag === 'latest') return true;
+  return a.tag === b.tag;
+}
+
+// Extract {name,image}[] for every service in a rendered compose document.
+// Handles both the JSON object form (cosmos-compose.json) and a plain
+// docker-compose.yml YAML doc (regex-based, best effort).
+function composeServiceImages(rendered, isYaml) {
+  const out = [];
+  if (!rendered) return out;
+  if (isYaml) {
+    // minimal YAML: look for "    <name>:" under a "services:" block followed
+    // by an "image:" line. Handles the common indentation.
+    const rx = /(?:^|\n)\s{2}(\S[^:]*):\s*(?:\n|$)([\s\S]*?)(?=\n\s,{1,2}\S|\n\s{0,2}\w)/g;
+    // Simpler: split services block
+    const servicesBlock = rendered.match(/(?:^|\n)services:\s*\n([\s\S]*)/);
+    if (servicesBlock) {
+      const block = servicesBlock[1];
+      const lines = block.split('\n');
+      let curName = null;
+      for (const line of lines) {
+        const svc = line.match(/^(\s{2,4})?([A-Za-z0-9_.-]+):\s*$/);
+        const img = line.match(/image:\s*['"]?([^\s'"]+)['"]?\s*$/);
+        if (svc && !line.startsWith('    ')) { curName = svc[2]; }
+        else if (img && curName) { out.push({ name: curName, image: img[1] }); }
+      }
+    }
+    return out;
+  }
+  // JSON form: rendered is a parsed object (we parse before calling) OR string
+  let doc = rendered;
+  if (typeof rendered === 'string') { try { doc = JSON.parse(rendered); } catch (e) { return out; } }
+  const services = doc && doc.services;
+  if (services && typeof services === 'object') {
+    for (const [name, conf] of Object.entries(services)) {
+      if (conf && typeof conf === 'object' && conf.image) {
+        out.push({ name, image: String(conf.image) });
+      }
+    }
+  }
+  return out;
+}
+
+// Check every compose service image is a valid, existing docker image and
+// that description.image matches the primary service ({ServiceName}) image.
+async function checkComposeImages(app, rendered, isYaml, composeFileLabel) {
+  const services = composeServiceImages(rendered, isYaml);
+  if (!services.length) return;
+
+  // primary service is the one named {ServiceName} -> after render, matches
+  // the value used in the render context ("TestSvc"); if present, the service
+  // key equals TestSvc, otherwise fall back to the first service.
+  let primary = services.find((s) => s.name === 'TestSvc') || services[0];
+
+  // ---- 1) each service image must be a valid docker image ----
+  // Dedupe image refs within an app to limit registry calls.
+  const seen = new Set();
+  for (const svc of services) {
+    if (!svc.image) { err(app, composeFileLabel, 'services.' + svc.name + '.image is missing'); continue; }
+    const ref = parseImageRef(svc.image);
+    if (!ref) { err(app, composeFileLabel, 'services.' + svc.name + '.image is not a valid docker image reference: ' + svc.image); continue; }
+    const key = (ref.registry || '') + '/' + ref.repository + ':' + (ref.tag || 'latest');
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const archs = await imageArchs(svc.image); // reuse: 404 => not found
+    if (archs.status === 'not-found') {
+      err(app, composeFileLabel, 'services.' + svc.name + '.image does not exist (registry 404): ' + svc.image);
+    }
+    // non-404 / non-ok statuses (network etc.) are ignored here; the primary
+    // existence/arch check is authoritative.
+  }
+
+  // ---- cross-check description.image vs primary service image ----
+  const dfile = path.join('servapps', app, 'description.json');
+  if (primary && fs.existsSync(dfile)) {
+    let desc = null;
+    try { desc = JSON.parse(fs.readFileSync(dfile, 'utf8')); } catch (e) {}
+    if (desc && desc.image) {
+      const compId = imageIdentity(primary.image);
+      const descId = imageIdentity(desc.image);
+      if (compId && descId && !imagesMatch(compId, descId)) {
+        warn(app, composeFileLabel,
+          'description.image (' + desc.image + ') does not match the primary service image (' +
+          primary.image + ') in services.' + primary.name + '.image');
+      }
+    }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Per-app checks
 // ---------------------------------------------------------------------------
@@ -643,7 +763,10 @@ async function checkApp(app) {
           err(app, 'cosmos-compose.json', 'rendered output is not valid JSON: ' + String(e.message).split('\n')[0]);
         }
       }
-      // Only store-served icon URLs and store-hosted artefact URLs are validated against the whitelist; every
+      // Validate every services.*.image in the rendered compose and cross-check
+      // description.image against the primary ({ServiceName}) service image.
+      await checkComposeImages(app, rendered, !isJson, cfile.split('/').pop());
+      // Only store-served icon URLs and store-hosted artifact URLs are referenced against the whitelist; every
       // other URL in the compose file (homepages, config defaults, app 3rd
       // -party sources) is intentionally skipped.
       // 1) cosmos-icon references.
