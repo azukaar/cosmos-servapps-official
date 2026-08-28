@@ -17,7 +17,7 @@
     "docker"
   ],
   "repository": "https://github.com/Readarr/Readarr",
-  "image": "linuxserver/readarr:develop",
+  "image": "https://registry-1.docker.io/linuxserver/readarr:develop",
   "supported_architectures": [
     "amd64",
     "arm64"

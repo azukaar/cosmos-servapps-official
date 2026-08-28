@@ -10,7 +10,7 @@
     "moderation"
   ],
   "repository": "https://github.com/phpbb/phpbb",
-  "image": "selim13/phpbb:3.3",
+  "image": "https://hub.docker.com/r/selim13/phpbb",
   "supported_architectures": [
     "amd64",
     "arm64"

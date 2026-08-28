@@ -10,7 +10,7 @@
     "self-hosted"
   ],
   "repository": "https://github.com/bitnami/containers/",
-  "image": "sonarqube:community",
+  "image": "https://registry-1.docker.io/library/sonarqube:community",
   "supported_architectures": [
     "amd64",
     "arm64"

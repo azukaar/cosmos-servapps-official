@@ -7,7 +7,7 @@
     "self-hosted"
   ],
   "repository": "https://github.com/bitnami/containers/",
-  "image": "guerchele/suitecrm:8-latest",
+  "image": "https://hub.docker.com/r/guerchele/suitecrm",
   "supported_architectures": [
     "amd64",
     "arm64"

@@ -8,7 +8,7 @@
     "self-hosted"
   ],
   "repository": "https://github.com/bitnami/containers/",
-  "image": "lscr.io/linuxserver/dokuwiki:latest",
+  "image": "https://lscr.io/linuxserver/dokuwiki",
   "supported_architectures": [
     "amd64",
     "arm64"

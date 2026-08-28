@@ -19,7 +19,7 @@
     "docker"
   ],
   "repository": "https://github.com/LemmyNet/lemmy",
-  "image": "dessalines/lemmy:0.19.6",
+  "image": "https://registry-1.docker.io/dessalines/lemmy:0.19.6",
   "supported_architectures": [
     "amd64",
     "arm64"

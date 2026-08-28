@@ -9,7 +9,7 @@
     "management"
   ],
   "repository": "https://github.com/bitnami/containers/",
-  "image": "vimagick/opencart:latest",
+  "image": "https://hub.docker.com/r/vimagick/opencart",
   "supported_architectures": [
     "amd64"
   ]

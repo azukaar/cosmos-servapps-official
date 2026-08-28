@@ -10,7 +10,7 @@
     "self-hosted"
   ],
   "repository": "https://github.com/bitnami/containers/",
-  "image": "redmine:5.1.2-alpine",
+  "image": "https://hub.docker.com/_/redmine",
   "supported_architectures": [
     "amd64",
     "arm64"

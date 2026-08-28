@@ -7,7 +7,7 @@
     "self-hosted"
   ],
   "repository": "https://github.com/bitnami/containers",
-  "image": "ghost:5-alpine",
+  "image": "https://hub.docker.com/_/ghost",
   "supported_architectures": [
     "amd64",
     "arm64"

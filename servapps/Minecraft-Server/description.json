@@ -22,7 +22,7 @@
     "mobile"
   ],
   "repository": "https://www.minecraft.net/",
-  "image": "itzg/minecraft-server:latest",
+  "image": "https://hub.docker.com/r/itzg/minecraft-server",
   "supported_architectures": [
     "amd64",
     "arm64"

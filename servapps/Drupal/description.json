@@ -9,7 +9,7 @@
     "self - hosted "
   ],
   "repository": "https://github.com/bitnami/containers/",
-  "image": "drupal:10-apache",
+  "image": "https://hub.docker.com/_/drupal",
   "supported_architectures": [
     "amd64",
     "arm64"

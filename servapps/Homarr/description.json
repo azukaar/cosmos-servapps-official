@@ -18,7 +18,7 @@
     "docker"
   ],
   "repository": "https://github.com/ajnart/homarr",
-  "image": "ghcr.io/ajnart/homarr:latest",
+  "image": "https://ghcr.io/ajnart/homarr",
   "supported_architectures": [
     "amd64",
     "arm64"

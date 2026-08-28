@@ -10,7 +10,7 @@
     "self-hosted"
   ],
   "repository": "https://github.com/bitnami/containers",
-  "image": "erseco/alpine-moodle:latest",
+  "image": "https://hub.docker.com/r/erseco/alpine-moodle",
   "supported_architectures": [
     "amd64",
     "arm64"

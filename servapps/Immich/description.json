@@ -17,7 +17,7 @@
     "Immich"
   ],
   "repository": "https://github.com/immich-app/immich",
-  "image": "ghcr.io/immich-app/immich-server:release",
+  "image": "https://ghcr.io/immich-app/immich-server:release",
   "supported_architectures": [
     "amd64",
     "arm64"

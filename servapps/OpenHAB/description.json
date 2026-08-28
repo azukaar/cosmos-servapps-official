@@ -29,7 +29,7 @@
     "services"
   ],
   "repository": "https://github.com/openhab",
-  "image": "openhab/openhab",
+  "image": "https://hub.docker.com/r/openhab/openhab",
   "supported_architectures": [
     "amd64",
     "arm64"
