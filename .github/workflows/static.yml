@@ -22,8 +22,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      # Always check out master at the root. Without an explicit ref, the
+      # checkout follows the branch that triggered the workflow (GITHUB_REF),
+      # so a push to "unstable" would deploy unstable's apps at the site root
+      # (the master path). Pinning the root to master keeps the two stores
+      # separated: master at "/" and unstable under "/unstable/".
+      - name: Checkout master
         uses: actions/checkout@v7
+        with:
+          ref: master
 
       - name: Checkout unstable
         uses: actions/checkout@v7
