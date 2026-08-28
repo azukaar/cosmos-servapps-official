@@ -731,7 +731,15 @@ function checkComposeSchema(app, rendered, isYaml, composeFileLabel) {
         const nk = normalizeFieldKey(k);
         const canonical = COMPOSE_SERVICE_SUPPORTED.get(nk);
         if (!canonical) {
-          err(app, composeFileLabel, prefix + ': field "' + k + '" is not supported by Cosmos-Server (not in the supported compose vocabulary)');
+          const low = k.toLowerCase();
+          if (low === 'tmpfs' || low === 'read_only' || low === 'readonly') {
+            // tmpfs/read_only have no service-level field in Cosmos-Server's
+            // ContainerCreateRequestContainer (Go silently ignores them), but
+            // tmpfs IS supported as a volume mount type (mount.TypeTmpfs).
+            err(app, composeFileLabel, prefix + ': field "' + k + '" is NOT honored by Cosmos-Server at the service level; express ' + low + ' as a volume mount instead, e.g. volumes: [{ "type": "' + (low === 'tmpfs' ? 'tmpfs' : 'bind') + '", "target": "<path>" }] (only supported via the volumes mount list)');
+          } else {
+            err(app, composeFileLabel, prefix + ': field "' + k + '" is not supported by Cosmos-Server (not in the supported compose vocabulary)');
+          }
         } else if (canonical !== k) {
           warn(app, composeFileLabel, prefix + ': field "' + k + '" should be spelled "' + canonical + '" (canonical Cosmos field name)');
         }
