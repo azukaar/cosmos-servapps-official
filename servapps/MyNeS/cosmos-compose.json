@@ -1,0 +1,65 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "MYNES_MQTT_HOST",
+        "label": "MQTT broker host (optional)",
+        "initialValue": "",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "MYNES_HA_URL",
+        "label": "Home Assistant URL (optional)",
+        "initialValue": "",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "MYNES_HA_TOKEN",
+        "label": "Home Assistant long-lived token (optional)",
+        "initialValue": "",
+        "type": "password",
+        "required": false
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "MyNeS runs on the host network so it can send raw ARP frames and hear mDNS/SSDP. Open http://<ip-of-cosmos-server>:5883 to start your first scan. Only scan networks you own."
+      }
+    ]
+  },
+  "minVersion": "0.9.0",
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "fxerkan/my_network_scanner:1.3.0",
+      "restart": "unless-stopped",
+      "network_mode": "host",
+      "capabilities": ["NET_ADMIN", "NET_RAW"],
+      "environment": [
+        "MYNES_PORT=5883",
+        "MYNES_MQTT_HOST={MYNES_MQTT_HOST}",
+        "MYNES_HA_URL={MYNES_HA_URL}",
+        "MYNES_HA_TOKEN={MYNES_HA_TOKEN}"
+      ],
+      "volumes": [
+        {
+          "source": "{Context.storagePath}/{ServiceName}/data",
+          "target": "/app/data",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.storagePath}/{ServiceName}/config",
+          "target": "/app/config",
+          "type": "bind"
+        }
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "false",
+        "cosmos-icon": "https://raw.githubusercontent.com/fxerkan/my_network_scanner/main/assets/logo.svg"
+      }
+    }
+  }
+}
