@@ -1,5 +1,8 @@
 {
+  "cosmos-installer": {},
+
   "minVersion": "0.13.0",
+  
   "services": {
     "{ServiceName}": {
       "image": "drumsergio/genieacs:latest",

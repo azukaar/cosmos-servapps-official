@@ -16,8 +16,25 @@
       "description": "Server musicale open source indipendente dalla piattaforma"
     }
   },
-  "tags": ["audio", "multiroom-audio", "smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
+  "tags": [
+    "audio",
+    "multiroom-audio",
+    "smart home",
+    "home automation",
+    "IoT",
+    "Raspberry Pi",
+    "local server",
+    "privacy",
+    "control",
+    "automation",
+    "devices",
+    "services",
+    "home assistant"
+  ],
   "repository": "https://github.com/music-assistant/server",
-  "image": "ghcr.io/music-assistant/server",
-  "supported_architectures": ["amd64", "arm64"]
+  "image": "https://ghcr.io/music-assistant/server",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
 }

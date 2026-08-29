@@ -16,12 +16,22 @@
       "description": "un software di automazione open source indipendente dal fornitore e dalla tecnologia per la tua casa"
     }
   },
-  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services"],
+  "tags": [
+    "smart home",
+    "home automation",
+    "IoT",
+    "Raspberry Pi",
+    "local server",
+    "privacy",
+    "control",
+    "automation",
+    "devices",
+    "services"
+  ],
   "repository": "https://github.com/openhab",
-  "image": "openhab/openhab",
+  "image": "https://hub.docker.com/r/openhab/openhab",
   "supported_architectures": [
     "amd64",
-    "arm64",
-    "arm"
+    "arm64"
   ]
 }
