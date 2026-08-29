@@ -1,11 +1,17 @@
-{ 
+{
   "cosmos-installer": {
     "form": [
       {
-        "name": "icons",
-        "label": "Where do you want to store your icons?",
-        "initialValue": "{DefaultDataPath}/homarr-icons",
+        "name": "appdata",
+        "label": "Where do you want to store Homarr's data (config, database, icons)?",
+        "initialValue": "{DefaultDataPath}/homarr",
         "type": "text"
+      },
+      {
+        "name": "dockerIntegration",
+        "label": "Enable Docker integration? (Mounts the Docker socket so Homarr can manage containers - WARNING: grants Homarr control over Docker)",
+        "initialValue": false,
+        "type": "checkbox"
       },
       {
         "name": "adminOnly",
@@ -18,12 +24,11 @@
   "minVersion": "0.8.0",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/ajnart/homarr:latest",
+      "image": "ghcr.io/homarr-labs/homarr:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "UID": 1000,
-      "GID": 1000,
       "environment": [
+        "SECRET_ENCRYPTION_KEY={Secrets.0}",
         "PUID=1000",
         "PGID=1000",
         "TZ=auto"
@@ -31,24 +36,23 @@
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "SECRET_ENCRYPTION_KEY",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Homarr/icon.png"
       },
       "volumes": [
         {
-          "source": "{ServiceName}-config",
-          "target": "/app/data/configs",
-          "type": "volume"
-        },
-        {
-          "source": "{ServiceName}-data",
-          "target": "/data",
-          "type": "volume"
-        },
-        {
-          "source": "{Context.icons}",
-          "target": "/app/public/icons",
+          "source": "{Context.appdata}",
+          "target": "/appdata",
           "type": "bind"
         }
+        {if Context.dockerIntegration}
+        ,
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        }
+        {/if}
       ],
       "routes": [
         {
@@ -65,7 +69,7 @@
           },
           "AuthEnabled": true
           {if Context.adminOnly}
-           , "AuthAdmin": true
+          , "AuthAdmin": true
           {/if}
         }
       ]
