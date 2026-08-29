@@ -1,7 +1,7 @@
 {
   "name": "Homarr",
-  "longDescription": "<p>Homarr is an open-source, self-hosted dashboard software that allows you to organize and access your web-based applications and services all in one place. It's designed to provide a central hub to simplify your web environment.</p><p>Key features of Homarr include the ability to add applications via a built-in library or by creating custom application definitions, custom themes, and the capacity to run on a desktop or mobile browser. It supports multiple users and each user can have their own personalized set of applications.</p><p>Homarr is compatible with various platforms, including Windows, Linux, MacOS, and it supports Docker, making it a highly versatile tool for various environments.</p>",
-  "description": "Homarr is an open-source, self-hosted dashboard software that provides a central hub for web-based applications and services. Features include a built-in application library, custom themes, multi-user support, and compatibility with desktop and mobile browsers. Homarr is compatible with Windows, Linux, MacOS, and Docker.",
+  "longDescription": "<p>Homarr is an open-source, self-hosted dashboard software that allows you to organize and access your web-based applications and services all in one place. It provides a central hub to simplify your web environment, with a drag-and-drop grid, built-in integrations, and authentication out of the box.</p><p>Key features include the ability to add apps via a built-in library or custom definitions, custom themes, multi-user support, and a responsive desktop/mobile interface. Homarr v1+ is maintained at homarr-labs/homarr and is the successor to the original Homarr project.</p><p>Homarr is compatible with Windows, Linux, MacOS, and Docker, making it a highly versatile tool for various environments.</p>",
+  "description": "Homarr is a sleek, modern dashboard that puts all of your apps and services at your fingertips. Built-in integrations, drag-and-drop layout, authentication out of the box, and no YAML. The successor to the original Homarr (ajnart/homarr), now maintained at homarr-labs/homarr.",
   "tags": [
     "dashboard",
     "home",
@@ -17,8 +17,8 @@
     "macos",
     "docker"
   ],
-  "repository": "https://github.com/ajnart/homarr",
-  "image": "https://ghcr.io/ajnart/homarr",
+  "repository": "https://github.com/homarr-labs/homarr",
+  "image": "https://ghcr.io/homarr-labs/homarr:latest",
   "supported_architectures": [
     "amd64",
     "arm64"
