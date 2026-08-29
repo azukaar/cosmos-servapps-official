@@ -1,13 +1,11 @@
 {
   "cosmos-installer": {},
-  "minVersion": "0.21.0",
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "binwiederhier/ntfy",
       "container_name": "{ServiceName}",
-      "command": [
-        "serve"
-      ],
+      "command": "serve",
       "restart": "unless-stopped",
       "environment": [
         "TZ=auto",

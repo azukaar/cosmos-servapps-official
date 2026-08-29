@@ -1,6 +1,6 @@
 {
   "cosmos-installer": {},
-  "minVersion": "0.21.0",
+  "minVersion": "0.13.0",
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/itskovacs/trip:1",
@@ -33,13 +33,7 @@
               }
           }
       ],
-      "command": [
-        "fastapi",
-        "run",
-        "/app/trip/main.py",
-        "--host",
-        "0.0.0.0"
-      ]
+      "command": "fastapi run /app/trip/main.py --host 0.0.0.0"
     }
   }
 }
