@@ -1,0 +1,18 @@
+{
+  "name": "HermitStash",
+  "description": "Post-quantum encrypted self-hosted file sharing with ML-KEM-1024 and XChaCha20-Poly1305.",
+  "longDescription": "<p>HermitStash is a self-hosted file upload server with post-quantum encryption. Files are sealed with ML-KEM-1024, XChaCha20-Poly1305, and Argon2id before touching disk.</p><p>Features include shareable download links with expiry and download limits, WebAuthn passkey authentication, S3-compatible storage backends, and an admin panel for managing users, uploads, and server settings. The TLS layer negotiates X25519MLKEM768 for quantum-resistant key exchange on supported browsers.</p>",
+  "tags": [
+    "file-sharing",
+    "encryption",
+    "post-quantum",
+    "self-hosted",
+    "privacy"
+  ],
+  "repository": "https://github.com/dotCooCoo/hermitstash",
+  "image": "https://ghcr.io/dotcoocoo/hermitstash",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}

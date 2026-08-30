@@ -1,8 +1,22 @@
 {
   "name": "ESPHome",
-  "longDescription": "<p>ESPhome is a platform for creating custom firmware for ESP8266 and ESP32 chips using YAML configuration files. It turns these definitions into C++ firmware for easy integration of various smart devices.</p><p>ESPhome is seamlessly integrated with Home Assistant, an open-source home automation platform. With this integration, devices configured via ESPhome are automatically discovered and added to Home Assistant setups.</p><p>The platform boasts a robust community and extensive documentation. This, along with features like Over-The-Air (OTA) updates, makes ESPhome a favorite among smart home enthusiasts.</p>",
-  "description": "ESPHome is a system to control your microcontrollers by simple yet powerful configuration files and control them remotely through Home Automation systems.",
-  "tags": ["development", "open-source", "cross-platform", "ESPHome", "Home Assistant","windows", "linux", "macos", "docker","automation"],
+  "description": "Powerfull Firmware and OTA-Flasher with simple YAML-Configuration for ESP-based Devices",
+  "longDescription": "<p>ESPhome is a platform for creating custom firmware for ESP8266 and ESP32 chips using YAML configuration files. It converts these definitions into C++ firmware for easy integration of various smart devices.</p><p>ESPhome is seamlessly integrated with Home Assistant, an open source platform for home automation. Through this integration, devices configured via ESPhome are automatically recognised and added to Home Assistant setups.</p><p>The platform has a solid community and extensive documentation. Together with features such as over-the-air (OTA) updates, this makes ESPhome a favourite among smart home enthusiasts.</p>",
+  "translation": {
+    "de": {
+      "description": "Leistungsstarke Firmware und OTA-Flasher mit einfacher YAML-Konfiguration für ESP-basierte Geräte",
+      "longDescription": "<p>ESPhome ist eine Plattform zur Erstellung benutzerdefinierter Firmware für ESP8266- und ESP32-Chips mithilfe von YAML-Konfigurationsdateien. Es wandelt diese Definitionen in C++-Firmware für die einfache Integration von verschiedenen intelligenten Geräten um.</p><p>ESPhome ist nahtlos in Home Assistant integriert, einer Open-Source-Plattform für Hausautomatisierung. Durch diese Integration werden Geräte, die über ESPhome konfiguriert wurden, automatisch erkannt und zu Home Assistant-Setups hinzugefügt.</p><p>Die Plattform verfügt über eine solide Community und eine umfangreiche Dokumentation. Zusammen mit Funktionen wie Over-The-Air (OTA)-Updates macht dies ESPhome zu einem Favoriten unter Smart Home-Enthusiasten.</p>"
+    },
+    "fr": {
+      "longDescription": "<p>ESPhome est une plateforme permettant de créer des micrologiciels personnalisés pour les puces ESP8266 et ESP32 à l'aide de fichiers de configuration YAML. Elle convertit ces définitions en micrologiciels C++ afin de faciliter l'intégration de divers appareils intelligents. </p><p>ESPhome s'intègre parfaitement à Home Assistant, une plateforme open source dédiée à la domotique. Grâce à cette intégration, les appareils configurés via ESPhome sont automatiquement reconnus et ajoutés aux configurations Home Assistant. </p><p>La plateforme dispose d'une communauté solide et d'une documentation complète. Associé à des fonctionnalités telles que les mises à jour OTA (Over-The-Air), cela fait d'ESPhome l'un des favoris des amateurs de maisons intelligentes.</p>",
+      "description": "Micrologiciel puissant et flasheur OTA avec configuration YAML simple pour les appareils basés sur ESP"
+    },
+    "it": {
+      "longDescription": "<p>ESPhome è una piattaforma per la creazione di firmware personalizzati per chip ESP8266 ed ESP32 utilizzando file di configurazione YAML. Converte queste definizioni in firmware C++ per una facile integrazione di vari dispositivi intelligenti. ESPhome è perfettamente integrato con Home Assistant, una piattaforma open source per la domotica. Grazie a questa integrazione, i dispositivi configurati tramite ESPhome vengono automaticamente riconosciuti e aggiunti alle impostazioni di Home Assistant. </p><p>La piattaforma ha una solida comunità e una documentazione completa. Insieme a funzionalità come gli aggiornamenti over-the-air (OTA), questo rende ESPhome uno dei preferiti dagli appassionati di domotica.</p>",
+      "description": "Potente firmware e OTA-Flasher con semplice configurazione YAML per dispositivi basati su ESP"
+    }
+  },
+ "tags": ["development", "open-source", "cross-platform", "ESPHome", "Home Assistant","windows", "linux", "macos", "docker","automation"],
   "repository": "https://github.com/esphome/esphome",
   "image": "https://github.com/esphome/esphome/pkgs/container/esphome",
   "supported_architectures": ["amd64", "arm64"]

@@ -1,0 +1,23 @@
+{
+  "name": "modbus2mqtt",
+  "description": "Gateway Modbus to MQTT with Home Assistant Discovery Support",
+  "longDescription": "<p>This is a Framework which acts as a Gateway between Modbus-Protocol to MQTT including automatic Discovery into Home Assistant. Compared to the native Home Assistant Modbus Implementation with a minimal 1s polling frequency, this Tool offers much less latency down to a couple of ms. The integrated WebUI offers the possibility to store several Templates for pre-defined Modbus-Devices.</p>",
+  "translation": {
+    "de": {
+      "description": "Gateway Modbus zu MQTT mit Home Assistant Discovery-Unterstützung",
+      "longDescription": "<p>Dies ist ein Framework, das als Gateway zwischen dem Modbus-Protokoll und MQTT fungiert, einschließlich automatischer Erkennung in Home Assistant. Im Vergleich zur nativen Modbus-Implementierung von Home Assistant mit einer minimalen Abfragefrequenz von 1 Sekunde bietet dieses Tool eine deutlich geringere Latenz von nur wenigen Millisekunden. Die integrierte WebUI bietet die Möglichkeit, mehrere Vorlagen für vordefinierte Modbus-Geräte zu speichern."
+    },
+    "fr": {
+      "longDescription": "<p>Il s'agit d'un framework qui sert de passerelle entre le protocole Modbus et MQTT, y compris la découverte automatique dans Home Assistant. Comparé à l'implémentation Modbus native de Home Assistant avec une fréquence d'interrogation minimale de 1 seconde, cet outil offre une latence beaucoup plus faible, de l'ordre de quelques millisecondes. L'interface utilisateur web intégrée offre la possibilité de stocker plusieurs modèles pour des appareils Modbus prédéfinis.",
+      "description": "Passerelle Modbus vers MQTT avec prise en charge de Home Assistant Discovery"
+    },
+    "it": {
+      "longDescription": "<p>Si tratta di un framework che funge da gateway tra il protocollo Modbus e MQTT, inclusa la scoperta automatica in Home Assistant. Rispetto all'implementazione Modbus nativa di Home Assistant con una frequenza di polling minima di 1 secondo, questo strumento offre una latenza molto inferiore, fino a un paio di millisecondi. L'interfaccia utente web integrata offre la possibilità di memorizzare diversi modelli per dispositivi Modbus predefiniti.</p>",
+      "description": "Gateway Modbus a MQTT con supporto Home Assistant Discovery"
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services", "home assistant"],
+  "repository": "https://github.com/modbus2mqtt/modbus2mqtt",
+  "image": "https://ghcr.io/modbus2mqtt/modbus2mqtt",
+  "supported_architectures": ["arm64, amd64"]
+}

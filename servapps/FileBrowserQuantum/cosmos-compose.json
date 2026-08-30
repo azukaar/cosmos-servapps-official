@@ -1,0 +1,140 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "advanced",
+        "label": "Quantum exposes host files ( / + /var/lib/docker/volumes ) to admins. Do you want to change this behaviour?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+      {if Context.advanced}
+      , {
+        "name": "mountPointRoot",
+        "label": "What folder do you want to have available in Quantum? (Default: /)",
+        "initialValue": "/",
+        "type": "text"
+      },
+      {
+        "name": "mountPointVolumes",
+        "label": "What folder do you want to have available in Quantum? (Default: /var/lib/docker/volumes)",
+        "initialValue": "/var/lib/docker/volumes",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    {/if}
+    ],
+    "translation": {
+      "de": {
+        "form.advanced.label": "Quantum macht das Host-Dateisystem ( / + /var/lib/docker/volumes ) für Administratoren sichtbar. Möchten Sie dieses Verhalten ändern?",
+        "form.mountPointRoot.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /)",
+        "form.mountPointVolumes.label": "Welchen Ordner möchten Sie im Dateiexplorer zur Verfügung haben? (Standard: /var/lib/docker/volumes)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.advanced.label": "Quantum rend le système de fichiers hôte ( / + /var/lib/docker/volumes ) visible pour les administrateurs. Souhaitez-vous modifier ce comportement ?",
+        "form.mountPointRoot.label": "Quel dossier souhaitez-vous avoir à disposition dans l'explorateur de fichiers ? (Par défaut : /)",
+        "form.mountPointVolumes.label": "Quel dossier souhaitez-vous avoir à disposition dans l'explorateur de fichiers ? (Par défaut : /var/lib/docker/volumes)",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.advanced.label": "Quantum rende visibile agli amministratori il file system host ( / + /var/lib/docker/volumes ). Desiderate modificare questo comportamento?",
+        "form.mountPointRoot.label": "Quale cartella desideri avere a disposizione nell'esploratore di file? (Impostazione predefinita: /)",
+        "form.mountPointVolumes.label": "Quale cartella desideri avere a disposizione nell'esploratore di file? (Impostazione predefinita: /var/lib/docker/volumes)",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
+  },
+  "minVersion": "0.21.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "gtstef/filebrowser:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "tty": true,
+      "stdin_open": true,
+      "user": "root",
+      "environment": [
+        "FILEBROWSER_DATABASE=data/database.db",
+        "FILEBROWSER_CONFIG=data/config.yaml",
+        "FILEBROWSER_ADMIN_PASSWORD={Passwords.0}"
+      ],
+      "post_install": [
+        "wget -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/home/filebrowser/data",
+          "type": "volume"
+        },
+        {if not Context.advanced}
+        {
+          "source": "/",
+          "target": "/host",
+          "type": "bind"
+        },
+        {
+          "source": "/var/lib/docker/volumes",
+          "target": "/volumes",
+          "type": "bind"
+        }
+        {else}
+        {
+          "source": "{Context.mountPointRoot}",
+          "target": "/host",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.mountPointVolumes}",
+          "target": "/volumes",
+          "type": "bind"
+        }
+        {/if}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if not Context.advanced}
+           , "AuthAdmin": true
+          {/if}
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "curl -Is http://localhost:80/health | head -n 1"
+        ],
+        "interval": 30,
+        "timeout": 3,
+        "retries": 3,
+        "start_period": 10
+      }
+    }
+  }
+}

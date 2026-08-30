@@ -1,0 +1,37 @@
+{
+  "name": "OpenHAB",
+  "description": "a vendor and technology agnostic open source automation software for your home",
+  "longDescription": "The open Home Automation Bus (openHAB, pronounced ˈəʊpənˈhæb) is an open source, technology agnostic home automation platform which runs as the center of your smart home! Its ability to integrate a multitude of other devices and systems. openHAB includes other home automation systems, (smart) devices and other technologies into a single solution. To provide a uniform user interface and a common approach to automation rules across the entire system, regardless of the number of manufacturers and sub-systems involved. Giving you the most flexible tool available to make almost any home automation wish come true; if you can think it, odds are that you can implement it with openHAB.",
+  "translation": {
+    "de": {
+      "description": "Eine hersteller- und technologieunabhängige Open-Source-Automatisierungssoftware für Ihr Zuhause",
+      "longDescription": "Der open Home Automation Bus (openHAB, ausgesprochen ˈəʊpənˈhæb) ist eine quelloffene, technologieunabhängige Heimautomatisierungsplattform, die als Zentrum Ihres intelligenten Hauses läuft! Sie ist in der Lage, eine Vielzahl von anderen Geräten und Systemen zu integrieren. openHAB bindet andere Hausautomationssysteme, (intelligente) Geräte und andere Technologien in eine einzige Lösung ein. Es bietet eine einheitliche Benutzeroberfläche und einen gemeinsamen Ansatz für Automatisierungsregeln über das gesamte System hinweg, unabhängig von der Anzahl der beteiligten Hersteller und Subsysteme. Ihnen das flexibelste Werkzeug zu geben, das es gibt, um fast jeden Wunsch in der Hausautomation zu verwirklichen; wenn Sie es sich vorstellen können, stehen die Chancen gut, dass Sie es mit openHAB umsetzen können."
+    },
+    "fr": {
+      "longDescription": "Le bus domotique ouvert (openHAB, prononcé ˈəʊpənˈhæb) est une plateforme domotique open source et indépendante de toute technologie qui fonctionne comme le centre névralgique de votre maison intelligente ! Sa capacité à intégrer une multitude d'autres appareils et systèmes. openHAB regroupe d'autres systèmes domotiques, des appareils (intelligents) et d'autres technologies en une seule solution. Il offre une interface utilisateur uniforme et une approche commune des règles d'automatisation pour l'ensemble du système, quel que soit le nombre de fabricants et de sous-systèmes impliqués. Il vous offre l'outil le plus flexible qui soit pour réaliser presque tous vos souhaits en matière de domotique ; si vous pouvez l'imaginer, il y a de fortes chances que vous puissiez le mettre en œuvre avec openHAB.",
+      "description": "un logiciel d'automatisation open source indépendant des fournisseurs et des technologies pour votre maison"
+    },
+    "it": {
+      "longDescription": "L'open Home Automation Bus (openHAB, pronunciato ˈəʊpənˈhæb) è una piattaforma di automazione domestica open source e indipendente dalla tecnologia che funge da centro della tua casa intelligente! La sua capacità di integrare una moltitudine di altri dispositivi e sistemi. openHAB include altri sistemi di automazione domestica, dispositivi (intelligenti) e altre tecnologie in un'unica soluzione. Per fornire un'interfaccia utente uniforme e un approccio comune alle regole di automazione in tutto il sistema, indipendentemente dal numero di produttori e sottosistemi coinvolti. Offrendoti lo strumento più flessibile disponibile per realizzare quasi tutti i desideri di automazione domestica; se riesci a immaginarlo, è probabile che tu possa implementarlo con openHAB.",
+      "description": "un software di automazione open source indipendente dal fornitore e dalla tecnologia per la tua casa"
+    }
+  },
+  "tags": [
+    "smart home",
+    "home automation",
+    "IoT",
+    "Raspberry Pi",
+    "local server",
+    "privacy",
+    "control",
+    "automation",
+    "devices",
+    "services"
+  ],
+  "repository": "https://github.com/openhab",
+  "image": "https://hub.docker.com/r/openhab/openhab",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}

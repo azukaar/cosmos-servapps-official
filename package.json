@@ -1,0 +1,12 @@
+{
+  "name": "cosmos-servapps-official",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official Cosmos servapp repository",
+  "scripts": {
+    "validate": "node .github/scripts/validate-servapps.js"
+  },
+  "devDependencies": {
+    "whiskers": "^0.4.0"
+  }
+}

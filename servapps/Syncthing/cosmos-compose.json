@@ -1,5 +1,7 @@
-{   
-   "cosmos-installer": {
+{
+   
+   "minVersion": "0.11.1",
+  "cosmos-installer": {
     "form": [
         {
             "name": "hostPath",

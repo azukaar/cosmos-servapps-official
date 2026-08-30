@@ -1,0 +1,134 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "customSetup",
+        "label": "Default setup is user \"default\" and database \"default\", no password. Want to change that?",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {if Context.customSetup}
+      {
+        "name": "dbName",
+        "label": "Database-Name",
+        "initialValue": "database",
+        "type": "text"
+      },
+      {
+        "name": "username",
+        "label": "Username (for DB-access)",
+        "initialValue": "user",
+        "type": "text"
+      },
+      {
+        "name": "password",
+        "label": "Password (for DB-access)",
+        "initialValue": "{Passwords.0}",
+        "type": "text"
+      },
+      {/if}
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
+    {if Context.customSetup}
+    "post-install": [
+
+      {
+        "type": "warning",
+        "name": "accessData",
+        "label": "Your Database is now available on host \" {ServiceName} \", DB-Name is \" {Context.dbName} \". You can access it via user: \" {Context.username} \" and following Password: \" {Context.password} \""
+      }
+    ],
+    {/if}
+    "translation": {
+      "de": {
+        "form.customSetup.label": "Die Standardeinstellung lautet: Benutzer „default“ und Datenbank „default“, ohne Passwort. Möchten Sie das ändern?",
+        "form.dbName.label": "Datenbank-Name",
+        "form.username.label": "Benutzername (für den Datenbankzugriff)",
+        "form.password.label": "Passwort (für den Datenbankzugriff)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
+        "post-install.accessData.label": "Ihre Datenbank ist nun auf dem Host „{ServiceName}“ verfügbar. Der Name der Datenbank lautet „{Context.dbName}“. Sie können über den Benutzer „{Context.username}“ und das folgende Passwort „{Context.password}“ darauf zugreifen."
+      },
+      "fr": {
+        "form.customSetup.label": "La configuration par défaut est l'utilisateur « default » et la base de données « default », sans mot de passe. Souhaitez-vous modifier ces paramètres ?",
+        "form.dbName.label": "Nom de la base de données",
+        "form.username.label": "Nom d'utilisateur (pour l'accès à la base de données)",
+        "form.password.label": "Mot de passe (pour accéder à la base de données)",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?",
+        "post-install.accessData.label": "Votre base de données est désormais disponible sur l'hôte « {ServiceName} », son nom est « {Context.dbName} ». Vous pouvez y accéder en utilisant l'identifiant « {Context.username} » et le mot de passe « {Context.password} »."
+      },
+      "it": {
+        "form.customSetup.label": "L'impostazione predefinita è l'utente “default” e il database “default”, senza password. Vuoi modificarla?",
+        "form.dbName.label": "Nome del database",
+        "form.username.label": "Nome utente (per l'accesso al database)",
+        "form.password.label": "Password (per l'accesso al database)",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?",
+        "post-install.accessData.label": "Il tuo database è ora disponibile sull'host “{ServiceName}”; il nome del database è “{Context.dbName}”. Puoi accedervi utilizzando l'utente: “{Context.username}” e la seguente password: “{Context.password}”"
+      }
+    }
+  },
+  "minVersion": "0.22.4",
+  "services": {
+    "{ServiceName}": {
+      "image": "clickhouse/clickhouse-server:latest",
+      "user": "1000:1000",
+      "environment": [
+        {if Context.customSetup}
+        "CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1",
+        "CLICKHOUSE_DB={Context.dbName}",
+        "CLICKHOUSE_USER={Context.username}",
+        "CLICKHOUSE_PASSWORD={Context.password}"
+        {else}
+        "CLICKHOUSE_SKIP_USER_SETUP=1"
+        {/if}
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/var/lib/clickhouse",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-logs",
+          "target": "/var/log/clickhouse-server",
+          "type": "volume"
+        }
+      ],
+      "cap_add": [
+        "SYS_NICE",
+        "NET_ADMIN",
+        "IPC_LOCK"
+      ],
+      "restart": "unless-stopped",
+      "container_name": "{ServiceName}",
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/ClickHouse/icon.png"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "{ServiceName} im Netzwerk veröffentlichen",
+          "useHost": true,
+          "target": "http://{ServiceName}:8123",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}

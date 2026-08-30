@@ -1,0 +1,120 @@
+name: Validate Servapps
+
+# Runs the servapp validation suite on pull requests and pushes to the
+# main branches (master and unstable).
+#
+# What it checks (see .github/scripts/validate-servapps.js):
+#   1. description.json is valid JSON and has all required fields.
+#   2. cosmos-compose.json renders with the same whiskers engine + JSON
+#      parsing that Cosmos uses at install time.
+#   3. No copy-pasted URLs from other stores (e.g. a different Cosmos store
+#      like resiSTORE, "cosmos-servapps-unofficial", etc).
+#   4. A compose file exists for every servapp.
+#
+# By default only the servapp directories changed in the diff are validated,
+# so pre-existing issues in unrelated apps do not block PRs. A manual run
+# (workflow_dispatch) validates the entire repository.
+
+on:
+  pull_request:
+    branches:
+      - master
+      - unstable
+    paths:
+      - 'servapps/**'
+  push:
+    branches:
+      - master
+      - unstable
+    paths:
+      - 'servapps/**'
+  workflow_dispatch:
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Fetch all history so we can diff against the base for PRs.
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Determine changed servapp directories
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            HEAD="${{ github.event.pull_request.head.sha }}"
+            # Diff against the merge-base, not the live base tip, so we only
+            # validate the PR's own changes (not apps added to base after the PR branched).
+            BASE="$(git merge-base "$HEAD" "${{ github.event.pull_request.base.sha }}")"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            BASE="$(git rev-parse HEAD~1 2>/dev/null || echo '${{ github.sha }}')"
+            HEAD="${{ github.sha }}"
+          else
+            # workflow_dispatch: full repository
+            echo "changed=ALL" >> "$GITHUB_OUTPUT"
+            echo "Manual full-repo validation requested."
+            exit 0
+          fi
+
+          CHANGED=$(git diff --name-only "$BASE" "$HEAD" -- servapps/ \
+            | sed -E 's#^servapps/([^/]+)/.*#\1#' | sort -u)
+
+          if [ -z "$CHANGED" ]; then
+            echo "No servapp directories changed."
+            echo "changed=" >> "$GITHUB_OUTPUT"
+          else
+            LIST=""
+            for d in $CHANGED; do
+              case " $LIST " in
+                *" $d "*) ;;
+                *) LIST="$LIST $d" ;;
+              esac
+            done
+            echo "changed=${LIST## }" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate changed servapps
+        run: |
+          CHANGED="${{ steps.changed.outputs.changed }}"
+          if [ "$CHANGED" = "ALL" ]; then
+            echo "== Validating entire repository =="
+            node .github/scripts/validate-servapps.js \
+              || { echo "::error::Servapp validation failed. See the report above."; exit 1; }
+            exit 0
+          fi
+          if [ -z "$CHANGED" ]; then
+            echo "No servapp changes to validate."
+            exit 0
+          fi
+          FAIL=0
+          for d in $CHANGED; do
+            if [ ! -d "servapps/$d" ]; then
+              echo "::warning::servapps/$d was deleted in this PR; skipping."
+              continue
+            fi
+            echo "== Validating servapps/$d =="
+            if ! node .github/scripts/validate-servapps.js "$d"; then
+              FAIL=1
+              echo "::error file=servapps/$d::Validation failed for servapps/$d"
+            fi
+          done
+          if [ "$FAIL" = "1" ]; then
+            exit 1
+          fi

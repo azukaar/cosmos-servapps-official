@@ -7,7 +7,7 @@
     "3d printing"
   ],
   "repository": "https://github.com/manyfold3d/manyfold",
-  "image": "ghcr.io/manyfold3d/manyfold",
+  "image": "https://ghcr.io/manyfold3d/manyfold",
   "supported_architectures": [
     "amd64",
     "arm64"
