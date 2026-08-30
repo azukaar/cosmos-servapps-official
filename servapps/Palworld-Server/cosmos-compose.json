@@ -58,6 +58,7 @@
          }
       ]
    },
+   "minVersion": "0.9.0",
    "services": {
       "{ServiceName}": {
          "image": "thijsvanloef/palworld-server-docker:latest",
