@@ -1,0 +1,113 @@
+{
+   "minVersion": "0.10.4",
+   "cosmos-installer": {
+      "form": [
+         {
+            "name": "intro",
+            "type": "info",
+            "label": "Select the features you would like to enable for AdGuard Home below. The number in parentheses indicates the open port required for each feature. Admin Panel is on port 3000 by default, copy on setup page"
+         },
+         {
+            "name": "plainDNS",
+            "label": "Plain DNS? (53/both)",
+            "initialValue": true,
+            "type": "checkbox"
+         },
+         {
+            "name": "DHCP",
+            "label": "DHCP? (67/udp, 68/both)",
+            "initialValue": false,
+            "type": "checkbox"
+         },
+         {
+            "name": "DnsOverHttps",
+            "label": "DnsOverHttps? (443/both, 80/tcp)",
+            "initialValue": false,
+            "type": "checkbox"
+         },
+         {
+            "name": "DnsOverTls",
+            "label": "DnsOverTls? (853/tcp)",
+            "initialValue": false,
+            "type": "checkbox"
+         },
+         {
+            "name": "DnsOverQuic",
+            "label": "DnsOverQuic? (853/udp, 784/udp, 8853/udp)",
+            "initialValue": false,
+            "type": "checkbox"
+         },
+         {
+            "name": "DnsCrypt",
+            "label": "DnsCrypt? (5443/both)",
+            "initialValue": false,
+            "type": "checkbox"
+         }
+      ]
+   },
+   "services": {
+      "{ServiceName}": {
+         "image": "adguard/adguardhome",
+         "container_name": "{ServiceName}",
+         "volumes": [
+            {
+               "source": "{ServiceName}-adguardhome-conf",
+               "target": "/opt/adguardhome/conf",
+               "type": "volume"
+            },
+            {
+               "source": "{ServiceName}-adguardhome-work",
+               "target": "/opt/adguardhome/work",
+               "type": "volume"
+            }
+         ],
+         "routes": [
+            {
+               "name": "{ServiceName}",
+               "description": "Expose {ServiceName} to the web",
+               "useHost": true,
+               "target": "http://{ServiceName}:3000",
+               "mode": "SERVAPP",
+               "Timeout": 14400000,
+               "ThrottlePerMinute": 12000,
+               "BlockCommonBots": true,
+               "SmartShield": {
+                  "Enabled": true
+               }
+            }
+         ],
+         "labels": {
+           "cosmos-auto-update": "true",
+           "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/AdGuardHome/icon.png"
+      },
+         "ports": [
+            {if Context.plainDNS}
+                "53:53/tcp",
+                "53:53/udp"
+            {/if}
+            {if Context.DHCP}
+                ,"67:67/udp",
+                "68:68/tcp",
+                "68:68/udp"
+            {/if}
+            {if Context.DnsOverHttps}
+                ,"80:80/tcp",
+                "443:443/tcp"
+                "443:443/udp"
+            {/if}
+            {if Context.DnsOverTls}
+                ,"853:853/tcp"
+            {/if}
+            {if Context.DnsOverQuic}
+                ,"853:853/udp",
+                "784:784/udp",
+                "8853:8853/udp"
+            {/if}
+            {if Context.DnsCrypt}
+                ,"5443:5443/tcp",
+                "5443:5443/udp"    
+            {/if}
+         ]
+      }
+   }
+}
