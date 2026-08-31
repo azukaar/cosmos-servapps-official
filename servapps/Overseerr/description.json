@@ -1,9 +1,0 @@
-{
-  "name": "Overseerr",
-  "longDescription": "<p>Overseerr is a free and open source software application for managing requests for your media library. It integrates with your existing services, such as Sonarr, Radarr, and Plex.</p><p>Overseerr helps you find media you want to watch. With inline recommendations and suggestions, you will find yourself deeper and deeper in a rabbit hole of content you never knew you just had to have.</p><p>Overseerr presents you and your users with a request interface that is incredibly easy to understand and use. Users can select the exact seasons they want to watch. Advanced users can use the “Advanced Requests” options to change destination folders and quality profiles.</p><p>Overseerr aims to make you and your user's lives more effortless than ever before.</p>",
-  "description": "Overseerr is a request management and media discovery tool built to work with your existing Plex ecosystem.",
-  "tags": ["media", "request", "library", "open-source", "self-hosted", "web application", "plex", "request system", "media content", "windows", "linux", "macos", "docker", "radarr", "sonarr"],
-  "repository": "https://github.com/sct/overseerr",
-  "image": "https://hub.docker.com/r/linuxserver/overseerr",
-  "supported_architectures": ["amd64", "arm64"]
-}

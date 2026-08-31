@@ -1,13 +1,31 @@
 { 
   "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "translation": {
+      "de": {
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
   },
+  "minVersion": "0.22.30",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/homeassistant:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "UID": 1000,
-      "GID": 1000,
       "security_opt": [
         "no-new-privileges:true"
       ],
@@ -15,12 +33,27 @@
         "PUID=1000",
         "PGID=1000",
         "TZ=auto",
-        "PROXY_HOSTNAME=0.0.0.0/0"
+        "PROXY_HOSTNAME=['0.0.0.0/0','::/0']",
+        "DOCKER_MODS=linuxserver/mods:homeassistant-hacs|aseracorp/docker-mods:homeassistant-trustedproxy|aseracorp/docker-mods:homeassistant-oidc",
+        "OIDC_CLIENT_ID=__route_{ServiceName}",
+        "OIDC_CLIENT_NAME=Cosmos-Login",
+        "OIDC_DISCOVERY_URL={RootProtocol}://{RootHostname}/.well-known/openid-configuration",
+        "OIDC_VALIDATE_TLS=false",
+        "OIDC_LINK_USER=true",
+        "OIDC_CREATE_USER=true",
+        "OIDC_BLOCK_LOGIN=false",
+        "OIDC_USERNAME_FIELD=sub",
+        "OIDC_DISPLAYNAME_FIELD=sub",
+        "OIDC_GROUPS_FIELD=roles",
+        "OIDC_GROUPS_SCOPE=roles",
+        "OIDC_ADMIN_NAME=admin"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/HomeAssistant/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/HomeAssistant/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
       },
       "volumes": [
         {
@@ -28,9 +61,6 @@
           "target": "/config",
           "type": "volume"
         }
-      ],
-      "post_install": [
-        "wget -O /config/configuration.yaml http://azukaar.github.io/cosmos-servapps-official/servapps/HomeAssistant/artefacts/configuration.yaml"
       ],
       "routes": [
         {
@@ -44,7 +74,13 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
-          }
+          },
+          "AuthEnabled": false,
+          {if Context.adminOnly}
+          "AuthAdmin": true,
+          {/if}
+          "PublicOpenIDName": "__route_{ServiceName}",
+          "PublicOpenIDRedirectURIs": "{RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/auth/oidc/callback"
         }
       ]
     }

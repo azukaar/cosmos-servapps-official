@@ -1,0 +1,39 @@
+{
+  "cosmos-installer": {},
+  "minVersion": "0.13.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/itskovacs/trip:1",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Trip/icon.png",
+        "cosmos-stack": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-storage",
+          "target": "/app/storage",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+          {
+              "name": "{ServiceName}",
+              "description": "Expose {ServiceName} to the web",
+              "useHost": true,
+              "target": "http://{ServiceName}:8000",
+              "mode": "SERVAPP",
+              "Timeout": 14400000,
+              "ThrottlePerMinute": 12000,
+              "BlockCommonBots": true,
+              "SmartShield": {
+                  "Enabled": true
+              }
+          }
+      ],
+      "command": "fastapi run /app/trip/main.py --host 0.0.0.0"
+    }
+  }
+}

@@ -6,9 +6,9 @@
             "image": "tombursch/kitchenowl-web",
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",
-            "depends_on": [
-                "{ServiceName}-backend"
-            ],
+            "depends_on": {
+                "{ServiceName}-backend": {}
+            },
             "labels": {
                 "cosmos-force-network-secured": "true",
                 "cosmos-auto-update": "true",

@@ -42,7 +42,7 @@
   "minVersion": "0.8.4",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/mealie-recipes/mealie:v1.0.0-RC2",
+      "image": "ghcr.io/mealie-recipes/mealie:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [

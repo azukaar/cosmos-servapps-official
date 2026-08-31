@@ -1,0 +1,10 @@
+{
+    "name": "Passbolt",
+    "longDescription": "<p>Passbolt is the open source password manager designed for security-conscious organisations to centralise, organise and securely share credentials. Security is at the very core of everything passbolt does. Top penetration testers regularly evaluate the platform and the results are made public. Even in the most complex scenarios, its security model supports user-owned secret keys and end-to-end encryption. Passbolt provides unrivalled granularity for both access control and encrypted data. The company is headquartered in the EU, specifically in Luxembourg, where data privacy is not only a top priority, it's guaranteed by law. Passbolt is completely open source, even in its paid versions, allowing full transparency and code review.</p>",
+    "description": "Passbolt is the open source password manager for organisations. With a focus on collaboration, it enables teams to seamlessly share credential while protecting their sensitive information. Security and privacy is in passbolts DNA.",
+    "tags": ["productivity", "password-manager", "password manager", "credentials", "teams", "passbolt", "collaboration", "sensitive data", "synchronization", "docker"],
+    "repository": "https://github.com/passbolt/passbolt_docker",
+    "image": "https://hub.docker.com/r/passbolt/passbolt",
+    "supported_architectures": ["amd64", "arm64/v8", "arm/v5", "arm/v7"]
+  }
+  

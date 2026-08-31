@@ -1,4 +1,5 @@
 {
+  "minVersion": "0.10.4",
   "cosmos-installer": {
     "form": [
       {
@@ -38,7 +39,7 @@
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
           "useHost": true,
-          "target": "http://{ServiceName}:80",
+          "target": "http://{ServiceName}:8080",
           "mode": "SERVAPP",
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,

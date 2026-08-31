@@ -1,0 +1,9 @@
+{
+  "name": "Seerr",
+  "longDescription": "<p>Seerr is a free and open source software application for managing requests for your media library. It is the unified successor to Overseerr and Jellyseerr.</p><p>Seerr integrates with the media server of your choice: Jellyfin, Plex, and Emby. In addition, it integrates with your existing services, such as Sonarr and Radarr.</p><p>Seerr helps you find media you want to watch. With inline recommendations and suggestions, you will find yourself deeper and deeper in a rabbit hole of content you never knew you just had to have.</p><p>It presents you and your users with a request interface that is incredibly easy to understand and use. Users can select the exact seasons they want to watch. Advanced users can use the &quot;Advanced Requests&quot; options to change destination folders and quality profiles.</p><p>Seerr also supports PostgreSQL and SQLite databases, granular permission systems, watchlisting, and more.</p>",
+  "description": "Seerr is a request management and media discovery tool that works with Plex, Jellyfin and Emby. The unified successor to Overseerr and Jellyseerr.",
+  "tags": ["media", "request", "library", "open-source", "self-hosted", "web application", "plex", "jellyfin", "emby", "request system", "media content", "windows", "linux", "macos", "docker", "radarr", "sonarr"],
+  "repository": "https://github.com/seerr-team/seerr",
+  "image": "https://hub.docker.com/r/seerr/seerr",
+  "supported_architectures": ["amd64", "arm64"]
+}

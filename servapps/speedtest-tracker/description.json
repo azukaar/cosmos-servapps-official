@@ -1,0 +1,9 @@
+{
+    "name": "Speedtest Tracker",
+    "longDescription": "<p>Speedtest Tracker is a self-hosted internet performance tracking application that runs speedtest checks against Ookla's Speedtest service. It allows you to monitor your network's speed and performance over time, building a history of your internet's performance so that you can be informed when you're not receiving your ISP's advertised rates.<br>The default credentials are:<br>Email: admin@example.com<br>Password: password</p>",
+    "description": "Speedtest Tracker is a self-hosted internet performance tracking application that runs speedtest checks against Ookla's Speedtest service.",
+    "tags": ["speedtest", "network", "monitoring"],
+    "repository": "https://github.com/alexjustesen/speedtest-tracker",
+    "image": "https://hub.docker.com/r/linuxserver/speedtest-tracker",
+    "supported_architectures": ["amd64", "arm64"]
+}

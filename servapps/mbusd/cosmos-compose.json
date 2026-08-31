@@ -1,0 +1,111 @@
+{
+  "cosmos-installer": {
+    "form": [ 
+    {
+      "name": "serialPort",
+      "label": "serial Port",
+      "initialValue": "ttyACM2",
+      "type": "select",
+      "options": [
+        ["ttyACM0", "/dev/ttyACM0 -> Serialport 0 -> Coprocessor"],
+        ["ttyACM1", "/dev/ttyACM1 -> Serialport 1 -> KNX, RS485 or RS232"],
+        ["ttyACM2", "/dev/ttyACM2 -> Serialport 2 -> RS485 or RS232"],
+        ["ttyACM3", "/dev/ttyACM3 -> Serialport 3 -> RS485 or RS232"]
+      ]
+    },
+    {
+        "name": "baudrate",
+        "label": "Baudrate",
+        "initialValue": "9600",
+        "type": "select",
+        "options": [
+          ["9600", "9600"],
+          ["19200", "19200"],
+          ["38400", "38400"],
+          ["57600", "57600"],
+          ["76800", "76800"],
+          ["115200", "115200"]
+        ]
+      },
+      {
+        "name": "mode",
+        "label": "Mode",
+        "initialValue": "8N1",
+        "type": "select",
+        "options": [
+          ["8N1", "8N1: 8 databits, no parity, 1 stoppbit"],
+          ["8E1", "8E1: 8 databits, even parity, 1 stoppbit"],
+          ["8O1", "8O1: 8 databits, odd parity, 1 stoppbit"],
+          ["8N2", "8N2: 8 databits, no parity, 2 stoppbit"]
+        ]
+      },
+      {
+        "name": "exposePort",
+        "label": "expose Modbus-Server to local network? (insecure)",
+        "initialValue": false,
+        "type": "checkbox"
+      }{if Context.exposePort}
+      , {
+        "name": "exposedPort",
+        "label": "Which Port would you like to expose to the local network? (May NOT be used by another Service)",
+        "initialValue": "502",
+        "type": "text"
+      }
+      {/if}
+    ],
+    "translation": {
+      "de": {
+        "form.mode.label": "Modus",
+        "form.mode.options": [
+          ["8N1", "8N1: 8 Datenbits, keine Parität, 1 Stoppbit"],
+          ["8E1", "8E1: 8 Datenbits, gerade Parität, 1 Stoppbit"],
+          ["8O1", "8O1: 8 Datenbits, ungerade Parität, 1 Stoppbit"],
+          ["8N2", "8N2: 8 Datenbits, keine Parität, 2 Stoppbit"]
+        ],
+        "form.serialPort.label": "serieller Anschluss",
+        "form.serialPort.options": [
+          ["ttyACM0", "/dev/ttyACM0 -> Serieller Anschluss 0 -> Koprocessor"],
+          ["ttyACM1", "/dev/ttyACM1 -> Serieller Anschluss 1 -> KNX, RS485 oder RS232"],
+          ["ttyACM2", "/dev/ttyACM2 -> Serieller Anschluss 2 -> RS485 oder RS232"],
+          ["ttyACM3", "/dev/ttyACM3 -> Serieller Anschluss 3 -> RS485 oder RS232"]
+        ],
+        "form.exposePort.label": "Modbus-Server im lokalen Netzwerk veröffentlichen? (unsicher)",
+        "form.exposedPort.label": "Welchen Port möchten Sie für das lokale Netzwerk freigeben? (Darf NICHT von einem anderen Dienst verwendet werden)"
+      }
+    }
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "3cky/mbusd",
+      "container_name": "{ServiceName}-{Context.serialPort}",
+      "restart": "unless-stopped",
+      "UID": 1000,
+      "GID": 1000,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/mbusd/icon.png"
+      },
+      "command": "-d -L - -p /dev/ttyModbus -s {Context.baudrate} -m {Context.mode}",
+      "devices": [
+        "/dev/{Context.serialPort}:/dev/ttyModbus:rwm"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-app",
+          "target": "/usr/app",
+          "type": "volume"
+        }
+      ]
+      {if Context.exposePort}
+      , "ports": [
+        "{Context.exposedPort}:502"
+      ]
+      {/if}
+    }
+  }
+}

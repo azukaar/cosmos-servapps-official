@@ -1,0 +1,23 @@
+{
+  "name": "FileBrowser Quantum",
+  "longDescription": "FileBrowser Quantum provides an easy way to access and manage your files from the web. It has a modern responsive interface that has many advanced features to manage users, access, sharing, and file preview and editing.<br/>This version is called \"Quantum\" because it packs tons of advanced features into a tiny easy to run file. Unlike the majority of alternative options, FileBrowser Quantum is simple to install and easy to configure.<br />The goal for this repo is to become the best open-source self-hosted file browsing application that exists -- all for free. This repo will always be free and open-source.",
+  "description": "The best free self-hosted web-based file manager with multiple sources, OIDC authentication, and real-time indexing.",
+  "translation": {
+    "de": {
+      "description": "Der beste kostenlose, selbst gehostete, webbasierte Dateimanager mit mehreren Quellen, OIDC-Authentifizierung und Echtzeit-Indizierung.",
+      "longDescription": "FileBrowser Quantum bietet eine einfache Möglichkeit, über das Internet auf Ihre Dateien zuzugreifen und diese zu verwalten. Es verfügt über eine moderne, reaktionsschnelle Benutzeroberfläche mit vielen erweiterten Funktionen zur Verwaltung von Benutzern, Zugriff, Freigabe sowie Dateivorschau und -bearbeitung. <br/>Diese Version heißt \"Quantum\", weil sie unzählige erweiterte Funktionen in einer kleinen, einfach zu ausführenden Datei vereint. Im Gegensatz zu den meisten Alternativen ist FileBrowser Quantum einfach zu installieren und zu konfigurieren. <br />Das Ziel dieses Repositorys ist es, die beste Open-Source-Anwendung für die selbst gehostete Datei-Browsing zu werden, die es gibt – und das alles kostenlos. Dieses Repository wird immer kostenlos und Open-Source bleiben."
+    },
+    "fr": {
+      "description": "Le meilleur gestionnaire de fichiers web gratuit et auto-hébergé, avec plusieurs sources, authentification OIDC et indexation en temps réel.",
+      "longDescription": "FileBrowser Quantum offre un moyen simple d'accéder à vos fichiers et de les gérer depuis le Web. Il dispose d'une interface moderne et réactive qui offre de nombreuses fonctionnalités avancées pour gérer les utilisateurs, l'accès, le partage, ainsi que la prévisualisation et l'édition des fichiers.<br />Cette version est appelée \"Quantum\" car elle regroupe de nombreuses fonctionnalités avancées dans un petit fichier facile à exécuter. Contrairement à la plupart des autres options disponibles, FileBrowser Quantum est simple à installer et facile à configurer. <br />L'objectif de ce dépôt est de devenir la meilleure application open source d'exploration de fichiers auto-hébergée qui existe, le tout gratuitement. Ce dépôt sera toujours gratuit et open source."
+    },
+    "it": {
+      "description": "Il miglior file manager web gratuito self-hosted con più fonti, autenticazione OIDC e indicizzazione in tempo reale.",
+      "longDescription": "FileBrowser Quantum offre un modo semplice per accedere e gestire i tuoi file dal web. Ha un'interfaccia moderna e reattiva che offre molte funzionalità avanzate per gestire utenti, accessi, condivisione, anteprima e modifica dei file.<br />Questa versione si chiama \"Quantum\" perché racchiude tantissime funzionalità avanzate in un file piccolo e facile da eseguire. A differenza della maggior parte delle opzioni alternative, FileBrowser Quantum è semplice da installare e facile da configurare. <br />L'obiettivo di questo repository è diventare la migliore applicazione open source self-hosted per la navigazione dei file esistente, il tutto gratuitamente. Questo repository sarà sempre gratuito e open source."
+    }
+  },
+  "tags": ["filebrowser", "open-source", "self-hosted", "file management", "custom commands", "permissions management", "shareable links", "text editor", "media previews", "go", "linux", "windows", "macos", "docker"],
+  "repository": "https://github.com/gtsteffaniak/filebrowser",
+  "image": "https://hub.docker.com/r/gtstef/filebrowser",
+  "supported_architectures": ["amd64", "arm64"]
+}

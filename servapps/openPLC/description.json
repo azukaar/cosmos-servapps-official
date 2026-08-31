@@ -1,0 +1,39 @@
+{
+  "name": "openPLC",
+  "description": "openPLC Runtime v4: A multi-hardware Programmable Logic Controller Suite based on Beremiz IDE",
+  "longDescription": "OpenPLC is an open-source Programmable Logic Controller that is based on an easy to use software. It is the first fully functional standardized open source PLC, both in software and in hardware. The OpenPLC project was created in accordance with the IEC 61131-3 standard, which defines the basic software architecture and programming languages for PLCs.",
+  "translation": {
+    "de": {
+      "description": "openPLC Runtime v4: Eine Multi-Hardware-Suite für speicherprogrammierbare Steuerungen basierend auf Beremiz IDE",
+      "longDescription": "OpenPLC ist eine quelloffene speicherprogrammierbare Steuerung, die auf einer einfach zu bedienenden Software basiert. Es ist die erste voll funktionsfähige, standardisierte Open-Source-SPS, sowohl in Software als auch in Hardware. Das OpenPLC-Projekt wurde in Übereinstimmung mit dem IEC 61131-3-Standard entwickelt, der die grundlegende Software-Architektur und Programmiersprachen für SPSen definiert."
+    },
+    "fr": {
+      "longDescription": "OpenPLC est un contrôleur logique programmable open source basé sur un logiciel facile à utiliser. Il s'agit du premier PLC open source entièrement fonctionnel et normalisé, tant au niveau logiciel que matériel. Le projet OpenPLC a été créé conformément à la norme CEI 61131-3, qui définit l'architecture logicielle de base et les langages de programmation des PLC.",
+      "description": "openPLC Runtime v4 : une suite de contrôleurs logiques programmables multi-matériels basée sur l'IDE Beremiz"
+    },
+    "it": {
+      "longDescription": "OpenPLC è un controllore logico programmabile open source basato su un software di facile utilizzo. È il primo PLC open source completamente funzionale e standardizzato, sia dal punto di vista software che hardware. Il progetto OpenPLC è stato creato in conformità con lo standard IEC 61131-3, che definisce l'architettura software di base e i linguaggi di programmazione per i PLC.",
+      "description": "openPLC Runtime v4: una suite di controllori logici programmabili multi-hardware basata su Beremiz IDE"
+    }
+  },
+  "tags": [
+    "smart home",
+    "home automation",
+    "IoT",
+    "Raspberry Pi",
+    "local server",
+    "privacy",
+    "control",
+    "automation",
+    "devices",
+    "services",
+    "Developer"
+  ],
+  "repository": "https://github.com/Autonomy-Logic/openplc-runtime",
+  "image": "https://ghcr.io/autonomy-logic/openplc-runtime",
+  "supported_architectures": [
+    "amd64",
+    "arm64",
+    "arm/v7"
+  ]
+}

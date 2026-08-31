@@ -1,0 +1,112 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "installWebClient",
+        "label": "Do you want to install a web-based MQTT-Explorer?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+      {if Context.installWebClient}
+      , {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+      {/if}
+    ],
+    "translation": {
+      "de": {
+        "form.installWebClient.label": "Möchten Sie einen webbasierten MQTT-Explorer mit dazu installieren?",
+        "form.adminOnly.label": "Möchten Sie den MQTT-Explorer nur für Administratoren zugänglich machen?"
+      }
+    }
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "woahbase/alpine-mosquitto",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "MOSQUITTO__allow_anonymous=true"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/mosquitto/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/mosquitto",
+          "type": "volume"
+        },
+        {
+          "source": "/etc/localtime",
+          "target": "/etc/localtime",
+          "type": "bind",
+          "mode": "ro"
+        }
+      ]
+    }
+    {if Context.installWebClient}
+     , "{ServiceName}-MQTT-Explorer": {
+      "container_name": "{ServiceName}-MQTT-Explorer",
+      "image": "smeagolworms4/mqtt-explorer",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "HTTP_PORT=80",
+        "CONFIG_PATH=/mqtt-explorer/config",
+        "INITIAL_CONFIG={\"ConnectionManager_connections\":{\"mosquitto\":{\"configVersion\":1,\"certValidation\":false,\"clientId\":\"mqtt-explorer-387011e3\",\"id\":\"mosquitto\",\"name\":\"Mosquitto\",\"encryption\":false,\"subscriptions\":[{\"topic\":\"#\",\"qos\":0},{\"topic\":\"$SYS/#\",\"qos\":0}],\"type\":\"mqtt\",\"host\":\"Mosquitto\",\"port\":1883,\"protocol\":\"mqtt\"}}}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/mosquitto/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "{ServiceName}-MQTT-Explorer-config",
+          "target": "/mqtt-explorer/config"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}-MQTT-Explorer",
+          "description": "Expose MQTT-Explorer to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}-MQTT-Explorer:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ],
+      "restart": "unless-stopped"
+    }
+    {/if}
+  }
+}

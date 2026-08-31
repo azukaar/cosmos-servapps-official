@@ -73,9 +73,9 @@
       "networks": {
         "{ServiceName}-databases": {}
       },
-      "depends_on": [
-        "{ServiceName}-db"
-      ],
+      "depends_on": {
+        "{ServiceName}-db": {}
+      },
       "volumes": [
         {
           "source": "{ServiceName}-backup-data",

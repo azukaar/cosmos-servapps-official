@@ -1,0 +1,9 @@
+{
+  "name": "Forgejo",
+  "longDescription": "<p>Forgejo is based on the codebase of Gitea and was created after a community fork to ensure a fully independent, open development path.</p><p>Forgejo is a lightweight, open-source Git platform that provides a self-hosted solution for managing repositories, collaborative code reviews, and issue tracking.</p><p>With Forgejo, you can easily create and manage Git repositories, track changes, collaborate with team members, and streamline your software development workflow. It offers a simple and intuitive user interface, powerful access control, and a range of features such as code highlighting, pull requests, and issue management.</p><p>Forgejo is written in Go and is designed to be lightweight, fast, and easy to deploy. It supports multiple authentication methods, including built-in user accounts, LDAP, and OAuth. Forgejo also provides integrations with popular development tools and services.</p><p>Whether you're a small team or a large organization, Forgejo provides a flexible and customizable platform for hosting your Git repositories and managing your software projects.</p>",
+  "description": "Forgejo is a lightweight, open-source Git platform for self-hosted repository management, code collaboration, and issue tracking. It offers an intuitive interface, powerful access control, and integrations with popular development tools.",
+  "tags": ["development", "git", "repository management", "code collaboration", "issue tracking", "go", "self-hosted", "gitea", "forgejo"],
+  "repository": "https://codeberg.org/forgejo/forgejo",
+  "image": "https://codeberg.org/forgejo/-/packages/container/forgejo",
+  "supported_architectures": ["amd64", "arm64"]
+}

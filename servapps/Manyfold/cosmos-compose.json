@@ -1,4 +1,4 @@
-{ 
+{
   "cosmos-installer": {
     "form": [
       {
@@ -29,12 +29,19 @@
         "REDIS_URL=redis://{ServiceName}-redis:6379",
         "REDIS_PORT=6379",
         "SECRET_KEY_BASE={Passwords.3}",
-        "DB_HOST={ServiceName}-postgres",
-        "DB_USER=manyfold",
-        "DB_NAME=manyfold",
-        "DB_PASS={Passwords.0}",
-        "DB_PORT=5432"
-        
+	"DATABASE_URL=postgresql://manyfold:{Passwords.0}@{ServiceName}-postgres/manyfold?pool=5"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "SETGID",
+        "SETUID"
       ],
       "labels": {
         "cosmos-persistent-env": "SECRET_KEY_BASE, DB_PASS, DB_USER, DB_NAME",
@@ -76,7 +83,7 @@
         }
       ]
     },
-    
+
     "{ServiceName}-redis": {
       "restart": "always",
       "image": "redis:7-alpine",
@@ -101,7 +108,7 @@
       }
     },
 
-    
+
     "{ServiceName}-postgres": {
       "image": "postgres:15-alpine",
       "container_name": "{ServiceName}-postgres",
@@ -133,7 +140,7 @@
       ]
     }
   },
-  
+
   "networks": {
     "{ServiceName}-data": {
     }

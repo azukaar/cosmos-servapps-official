@@ -1,4 +1,5 @@
 {
+  "minVersion": "0.10.3",
   "cosmos-installer": {
     "form": [
       {
@@ -26,7 +27,7 @@
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
-        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-unofficial/servapps/Navidrome/icon.png"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Navidrome/icon.png"
       },
       "volumes": [
         {

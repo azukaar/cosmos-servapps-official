@@ -1,4 +1,6 @@
-{ 
+{
+ 
+  "minVersion": "0.9.13",
   "cosmos-installer": {
     "form": [
       {
@@ -24,10 +26,9 @@
       "GID": 1000,
       "environment": [
         "DOZZLE_LEVEL=info",
-        "DOZZLE_TAILSIZE=300",
         "DOZZLE_FILTER=status=running"
         {if Context.useSocketProxy}
-          , "DOCKER_HOST=tcp://{ServiceName}-socket:2375"
+          , "DOZZLE_REMOTE_HOST=tcp://{ServiceName}-socket:2375"
         {/if}
       ],
       "labels": {
@@ -118,9 +119,9 @@
           "TASKS=0", 
           "VOLUMES=0"
         ],
-        "depends_on": [
-          "{ServiceName}"
-        ],
+        "depends_on": {
+          "{ServiceName}" : {}
+        },
         "links": [
           "{ServiceName}"
         ]

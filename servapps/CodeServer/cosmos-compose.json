@@ -13,16 +13,31 @@
         "initialValue": false,
         "type": "checkbox"
       }
-    ]
+    ],
+    "translation": {
+      "de": {
+        "form.workspacePath.label": "Wie lautet der Pfad zu Ihrem Arbeitsbereich? (leer lassen, um nichts zu mounten)",
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?"
+      },
+      "fr": {
+        "form.workspacePath.label": "Quel est le chemin d'accès à votre espace de travail ? (laissez ce champ vide pour ne rien monter)",
+        "form.adminOnly.label": "Souhaitez-vous rendre ce service accessible uniquement aux administrateurs ?"
+      },
+      "it": {
+        "form.workspacePath.label": "Qual è il percorso del tuo spazio di lavoro? (lascia vuoto per non montare nulla)",
+        "form.adminOnly.label": "Desideri rendere questo servizio accessibile solo agli amministratori?"
+      }
+    }
   },
-  "minVersion": "0.8.0",
+  "minVersion": "0.16.0",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/code-server:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "UID": 1000,
-      "GID": 1000,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
       "environment": [
         "PUID=1000",
         "PGID=1000",

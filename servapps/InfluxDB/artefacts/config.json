@@ -1,0 +1,6 @@
+{
+  "DEFAULT_INFLUX_SERVER": "http://influxdb:8181",
+  "DEFAULT_INFLUX_DATABASE": "default",
+  "DEFAULT_API_TOKEN": "",
+  "DEFAULT_SERVER_NAME": "Local InfluxDB 3"
+}

@@ -1,0 +1,66 @@
+{ 
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Service installed. Please add your configuration in the docker volume via Filebrowser: volumes/{ServiceName}-config/_data/enoceanmqtt.conf"
+      }
+    ],
+    "translation": {
+      "de": {
+        "form.adminOnly.label": "Möchten Sie diesen Dienst nur für Administratoren zugänglich machen?",
+        "post-install[0].label": "Dienst installiert. Bitte fügen Sie Ihre Konfiguration über den Filebrowser in das Docker-Volume ein: volumes/{ServiceName}-config/_data/enoceanmqtt.conf"
+      }
+    }
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/HA_enoceanmqtt/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "image": "ghcr.io/aseracorp/ha_enoceanmqtt",
+      "restart": "unless-stopped",
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "devices": [
+        "/dev/ttyUSB0:/dev/enocean:rwm"
+      ],
+      "UID": 1000,
+      "GID": 1000,
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "TZ=Europe/Zurich"
+      ],
+      "links": [
+        "Mosquitto"
+      ],
+      "healthcheck": {
+        "test": ["CMD-SHELL", "[ ! $TX ] && export TX=0 ; tx=`cat /sys/class/net/eth1/statistics/tx_bytes` && if [ ! $tx -gt $TX ] ; then TX=$tx && exit 1 ; fi"],
+        "interval": 100,
+        "timeout": 10,
+        "retries": 3,
+        "start_period": 600
+      }
+    }
+  }
+}

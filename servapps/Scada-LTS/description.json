@@ -1,0 +1,26 @@
+{
+  "name": "Scada-LTS",
+  "description": "Scada-LTS is an Open Source SCADA-System.",
+  "longDescription": "Scada-LTS is an Open Source, web-based, multi-platform solution for building your own SCADA (Supervisory Control and Data Acquisiton) system.<br />It comes bundled with many years of experience in real-world SCADA applications for Energy, Water Distribution, Manufacturing Plants, Home Automation, Laboratories... you name it!<br/>Scada-LTS includes everything you need to get started in a few minutes: Communication Protocols, the data acquisition engine, Alarms & Events, HMI Builder and much more.<br/>Our goal is to provide a rock-solid solution for mission-critical applications, while sharing knowledge and benefitting from an international and ever-growing community.",
+  "translation": {
+    "de": {
+      "description": "Scada-LTS ist ein Open Source SCADA-System (Supervisory Control and Data Acquisiton).",
+      "longDescription": "Scada-LTS ist eine Open Source, webbasierte, plattformübergreifende Lösung zum Aufbau Ihres eigenen SCADA-Systems (Supervisory Control and Data Acquisiton).<br/>Es kommt gebündelt mit vielen Jahren Erfahrung in realen SCADA-Anwendungen für Energie, Wasserversorgung, Produktionsanlagen, Heimautomatisierung, Laboratorien ... Sie wissen schon! Kommunikationsprotokolle, die Datenerfassungs-Engine, Alarme & Ereignisse, HMI Builder und vieles mehr.<br/>Unser Ziel ist es, eine grundsolide Lösung für unternehmenskritische Anwendungen zu bieten, während wir unser Wissen teilen und von einer internationalen und ständig wachsenden Gemeinschaft profitieren."
+    },
+    "fr": {
+      "longDescription": "Scada-LTS est une solution open source, basée sur le Web et multiplateforme qui vous permet de créer votre propre système SCADA (Supervisory Control and Data Acquisition, ou contrôle de supervision et acquisition de données).<br />Elle s'appuie sur de nombreuses années d'expérience dans les applications SCADA réelles pour l'énergie, la distribution d'eau, les usines de fabrication, la domotique, les laboratoires... etc. !<br/>Scada-LTS comprend tout ce dont vous avez besoin pour démarrer en quelques minutes : protocoles de communication, moteur d'acquisition de données, alarmes et événements, générateur d'interface homme-machine (IHM) et bien plus encore. <br/>Notre objectif est de fournir une solution solide pour les applications critiques, tout en partageant nos connaissances et en tirant parti d'une communauté internationale en constante expansion.",
+      "description": "Scada-LTS est un système SCADA open source."
+    },
+    "it": {
+      "longDescription": "Scada-LTS è una soluzione open source, basata sul web e multipiattaforma per creare il proprio sistema SCADA (Supervisory Control and Data Acquisition, controllo di supervisione e acquisizione dati).<br />È il risultato di molti anni di esperienza in applicazioni SCADA reali per i settori dell'energia, della distribuzione idrica, degli impianti di produzione, della domotica, dei laboratori... e chi più ne ha più ne metta!<br/>Scada-LTS include tutto il necessario per iniziare in pochi minuti: protocolli di comunicazione, motore di acquisizione dati, allarmi ed eventi, HMI Builder e molto altro ancora.<br/>Il nostro obiettivo è fornire una soluzione solida per applicazioni mission-critical, condividendo conoscenze e traendo vantaggio da una comunità internazionale in continua crescita.",
+      "description": "Scada-LTS è un sistema SCADA open source."
+    }
+  },
+  "tags": ["smart home",  "home automation", "IoT", "Raspberry Pi", "local server", "privacy", "control", "automation", "devices", "services","Developer"],
+  "repository": "https://github.com/SCADA-LTS/Scada-LTS",
+  "image": "https://hub.docker.com/r/scadalts/scadalts",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}

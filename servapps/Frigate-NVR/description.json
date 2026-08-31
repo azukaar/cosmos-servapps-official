@@ -1,9 +1,23 @@
 {
-        "name": "Frigate-NVR",
-            "longDescription": "Frigate-NVR is an open-source NVR (Network Video Recorder) designed for home automation and monitoring systems. It utilizes machine learning for object detection in surveillance footage. Frigate-NVR offers features like real-time alerts, customizable zones, and integrations with various camera systems. It is built to provide a flexible and customizable video surveillance solution for home users.",
-                "description": "Frigate-NVR is an open-source Network Video Recorder focusing on object detection for home automation and monitoring systems.",
-                    "tags": ["Frigate-NVR", "NVR", "surveillance", "home automation", "object detection"],
-                        "repository": "https://github.com/blakeblackshear/frigate",
-                            "image": "https://ghcr.io/blakeblackshear/frigate:stable",
-                                "supported_architectures": ["amd64", "arm64"]
-                                }
+  "name": "Frigate-NVR",
+  "longDescription": "Frigate-NVR is an open-source NVR (Network Video Recorder) designed for home automation and monitoring systems. It utilizes machine learning for object detection in surveillance footage. Frigate-NVR offers features like real-time alerts, customizable zones, and integrations with various camera systems. It is built to provide a flexible and customizable video surveillance solution for home users.",
+  "description": "Frigate-NVR is an open-source Network Video Recorder focusing on object detection for home automation and monitoring systems.",
+  "translation": {
+    "de": {
+      "description": "Frigate-NVR ist ein Open-Source-Netzwerk-Videorekorder, der sich auf die Objekterkennung für Hausautomations- und Überwachungssysteme konzentriert.",
+      "longDescription": "Frigate-NVR ist ein Open-Source-NVR (Network Video Recorder), der für Hausautomations- und Überwachungssysteme entwickelt wurde. Er nutzt maschinelles Lernen zur Objekterkennung in Überwachungsaufnahmen. Frigate-NVR bietet Funktionen wie Echtzeit-Warnmeldungen, anpassbare Zonen und die Integration mit verschiedenen Kamerasystemen. Er wurde entwickelt, um Privatanwendern eine flexible und anpassbare Videoüberwachungslösung zu bieten."
+    },
+    "fr": {
+      "longDescription": "Frigate-NVR est un enregistreur vidéo réseau (NVR) open source conçu pour les systèmes domotiques et de surveillance. Il utilise l'apprentissage automatique pour la détection d'objets dans les images de surveillance. Frigate-NVR offre des fonctionnalités telles que des alertes en temps réel, des zones personnalisables et des intégrations avec divers systèmes de caméras. Il est conçu pour fournir une solution de vidéosurveillance flexible et personnalisable aux utilisateurs particuliers.",
+      "description": "Frigate-NVR est un enregistreur vidéo réseau open source axé sur la détection d'objets pour les systèmes domotiques et de surveillance."
+    },
+    "it": {
+      "longDescription": "Frigate-NVR è un NVR (Network Video Recorder) open source progettato per i sistemi di automazione domestica e monitoraggio. Utilizza l'apprendimento automatico per il rilevamento di oggetti nelle riprese di sorveglianza. Frigate-NVR offre funzionalità quali avvisi in tempo reale, zone personalizzabili e integrazioni con vari sistemi di telecamere. È progettato per fornire una soluzione di videosorveglianza flessibile e personalizzabile per gli utenti domestici.",
+      "description": "Frigate-NVR è un videoregistratore di rete open source incentrato sul rilevamento di oggetti per sistemi di automazione domestica e monitoraggio."
+    }
+  },
+  "tags": ["Frigate-NVR", "NVR", "surveillance", "home automation", "object detection"],
+  "repository": "https://github.com/blakeblackshear/frigate",
+  "image": "https://ghcr.io/blakeblackshear/frigate:stable",
+  "supported_architectures": ["amd64", "arm64"]
+}

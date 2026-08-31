@@ -12,7 +12,7 @@
   "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
-      "image": "nextcloud",
+      "image": "nextcloud:production",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
@@ -67,6 +67,7 @@
           "Timeout": 14400000,
           "ThrottlePerMinute": 12000,
           "CORSOrigin": "",
+          "HideFromDashboard": true,
           "StripPathPrefix": false,
           "MaxBandwith": 0,
           "AuthEnabled": false,
@@ -91,6 +92,7 @@
           "ThrottlePerMinute": 12000,
           "CORSOrigin": "",
           "StripPathPrefix": false,
+          "HideFromDashboard": true,
           "MaxBandwith": 0,
           "AuthEnabled": false,
           "AdminOnly": false,
@@ -156,7 +158,7 @@
     },
 
     "{ServiceName}-redis": {
-      "image": "bitnami/redis:latest",
+      "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
@@ -176,15 +178,12 @@
       "volumes": [
         {
           "source": "{ServiceName}-redis-data",
-          "target": "/bitnami/redis",
+          "target": "/data",
           "type": "volume"
         }
       ],
-      "environment": [
-        "ALLOW_EMPTY_PASSWORD=no",
-        "REDIS_PASSWORD={Passwords.2}",
-        "REDIS_EXTRA_FLAGS=--auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb"
-      ]
+      "command": "redis-server --requirepass {Passwords.2} --appendonly yes --auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb",
+      "environment": []
     }
   },
 

@@ -32,7 +32,7 @@
         "type": "select",
         "options": [
           ["starttls", "starttls"],
-          ["force_tls ", "force_tls"],
+          ["force_tls", "force_tls"],
           ["off", "off"]
         ]
       },
