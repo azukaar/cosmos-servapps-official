@@ -1,0 +1,29 @@
+{
+  "name": "WebDataStudio",
+  "description": "A database studio that runs in your browser PostgreSQL, MySQL, SQL Server, SQLite, Oracle, DuckDB, ClickHouse, MongoDB and Redis in one container.",
+  "longDescription": "<p>WebDataStudio is a database client that lives on your server instead of on one laptop: PostgreSQL, MySQL/MariaDB, SQL Server, SQLite, Oracle, DuckDB, ClickHouse, MongoDB and Redis, all from a browser tab.</p><p>Explore a schema, write SQL with completion and history, or build a query visually without writing any. Results become charts, ER diagrams draw themselves from the foreign keys, two connections can be compared column by column, and schema edits are made in the UI rather than in DDL typed from memory. Queries can be saved, scheduled and exported as files, and an MCP endpoint lets an AI agent query the same connections under the same rules.</p><p>Connections are added in the studio or passed in as <code>WDS_CONN_&lt;NAME&gt;</code> variables. Set an admin user and password: with neither, there is no login screen at all. Read-only connections are enforced in the driver, not only in the interface.</p>",
+  "tags": [
+    "database",
+    "sql",
+    "sql editor",
+    "postgresql",
+    "mysql",
+    "mariadb",
+    "sql server",
+    "sqlite",
+    "oracle",
+    "duckdb",
+    "clickhouse",
+    "mongodb",
+    "redis",
+    "admin",
+    "developer tools",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/fgilde/WebDataStudio",
+  "image": "https://github.com/fgilde/WebDataStudio/pkgs/container/webdatastudio",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
