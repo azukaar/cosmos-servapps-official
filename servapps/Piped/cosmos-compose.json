@@ -75,11 +75,11 @@
                 "API_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/api",
                 "FRONTEND_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "PROXY_PART={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/proxy",
-                "HIBERNATE_CONNECTION_URL=jdbc:postgresql://{ServiceName}-postgres:5432/piped",
-                "HIBERNATE_CONNECTION_DRIVER_CLASS=org.postgresql.Driver",
-                "HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect",
-                "HIBERNATE_CONNECTION_USERNAME=piped",
-                "HIBERNATE_CONNECTION_PASSWORD={Passwords.0}"
+                "HIBERNATE__CONNECTION__URL=jdbc:postgresql://{ServiceName}-postgres:5432/piped",
+                "HIBERNATE__CONNECTION__DRIVER_CLASS=org.postgresql.Driver",
+                "HIBERNATE__DIALECT=org.hibernate.dialect.PostgreSQLDialect",
+                "HIBERNATE__CONNECTION__USERNAME=piped",
+                "HIBERNATE__CONNECTION__PASSWORD={Passwords.0}"
             ],
             "depends_on": {
                 "{ServiceName}-postgres": {}
