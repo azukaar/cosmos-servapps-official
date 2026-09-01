@@ -1,0 +1,57 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminUser",
+        "label": "Admin user name (leave empty to run without a login screen)",
+        "initialValue": "admin",
+        "type": "text"
+      },
+      {
+        "name": "adminPassword",
+        "label": "Admin password (required unless the studio should be open to anyone who reaches it)",
+        "initialValue": "",
+        "type": "password"
+      }
+    ]
+  },
+  "minVersion": "0.13.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/fgilde/webdatastudio:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TZ=auto",
+        "WDS_USER={Context.adminUser}",
+        "WDS_PASSWORD={Context.adminPassword}"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/WebDataStudio/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
