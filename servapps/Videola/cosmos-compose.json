@@ -1,0 +1,60 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "apiToken",
+        "label": "API token (required - the server will not listen on a reachable address without one; generate with: openssl rand -hex 24)",
+        "initialValue": "",
+        "type": "password"
+      },
+      {
+        "name": "locale",
+        "label": "Language of generated names and server messages (en or de)",
+        "initialValue": "en",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "0.13.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/fgilde/videola:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TZ=auto",
+        "VIDEOLA_HOST=0.0.0.0",
+        "VIDEOLA_PORT=7331",
+        "VIDEOLA_STORAGE_ROOT=/data",
+        "VIDEOLA_TOKEN={Context.apiToken}",
+        "VIDEOLA_LOCALE={Context.locale}"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Videola/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:7331",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
