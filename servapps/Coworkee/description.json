@@ -1,0 +1,24 @@
+{
+  "name": "Coworkee",
+  "description": "Self-hosted HR software for your company Employees, absence, time tracking, documents, onboarding, performance, analytics, recruiting and news.",
+  "longDescription": "<p>A self-hosted HR platform for one company, in the spirit of Personio or HR-Works, with its own PostgreSQL in the same app.</p><p>Employees with a searchable directory, detail profiles and an org chart; absence with leave balances, a request-and-approval workflow and a team overview; time tracking with clock in/out, weekly hours and manual entries; documents in access-controlled private storage; onboarding with checklist templates and a process per employee; performance with goals and reviews; an analytics dashboard; recruiting with jobs and a Kanban pipeline; and a news feed with in-app notifications.</p><p>Role-based access (ADMIN, HR, MANAGER, EMPLOYEE), light and dark mode, an audit log for every HR write action, and the whole interface in English and German. The first visit opens a setup wizard that creates the administrator: no demo data and no default login. The installer form asks for the session secret, so it never comes from a public file.</p>",
+  "tags": [
+    "hr",
+    "human resources",
+    "employees",
+    "absence",
+    "leave",
+    "time tracking",
+    "onboarding",
+    "recruiting",
+    "performance",
+    "documents",
+    "self-hosted",
+    "german"
+  ],
+  "repository": "https://github.com/fgilde/CoworkeeNextJs",
+  "image": "https://github.com/fgilde/CoworkeeNextJs/pkgs/container/coworkeenextjs",
+  "supported_architectures": [
+    "amd64"
+  ]
+}
