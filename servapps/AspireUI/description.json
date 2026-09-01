@@ -1,0 +1,12 @@
+{
+  "name": "AspireUI",
+  "description": "Self-hosted app platform and visual builder: install apps from a built-in store of 160+, deploy any docker-compose repository straight from Git, and manage everything that runs — logs, env vars, ports, volumes, backups and domains. Also a visual editor for .NET Aspire AppHost projects.",
+  "longDescription": "<p>AspireUI turns a server into a self-hosted app platform. Its built-in store carries 160+ ready-to-run apps, and anything else can be installed straight from a Git repository that has a <code>docker-compose.yml</code> — no manual file editing.</p><p>Everything it starts stays managed: start, stop, update and restart, live CPU and memory, container health that tells a crash-looping app from a healthy one, log streaming, an environment-variable and port editor, a volume file browser, a one-shot repair terminal for containers that will not stay up, scheduled volume backups with restore, notifications via webhook or Telegram, and your own domains with Let's Encrypt HTTPS.</p><p>It is also a visual editor for .NET Aspire AppHost projects: drag resources onto a canvas, get real C# code, run the stack, or publish it as Docker Compose, a Helm chart or Azure Bicep. Apps can be deployed to this machine, to another box over SSH, to a Kubernetes cluster or to a managed container platform — and moved between them together with their data.</p><p><b>Host access:</b> AspireUI mounts the Docker socket, because starting and hosting other containers is what it does. That is root-equivalent access to this server; install it only if you want AspireUI to control Docker here.</p><p>A setup wizard creates the admin account on first start.</p>",
+  "tags": [
+    "docker", "compose", "app store", "hosting", "self-hosted", "container management",
+    "dotnet", "aspire", "builder", "devops", "deployment", "backups", "developer tools"
+  ],
+  "repository": "https://github.com/fgilde/AspireUI",
+  "image": "https://github.com/fgilde/AspireUI/pkgs/container/aspireui",
+  "supported_architectures": ["amd64", "arm64"]
+}
