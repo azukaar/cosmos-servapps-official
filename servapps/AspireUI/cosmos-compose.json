@@ -1,0 +1,67 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminUser",
+        "label": "Admin user name (leave empty to use the first-run setup wizard)",
+        "initialValue": "",
+        "type": "text"
+      },
+      {
+        "name": "adminPassword",
+        "label": "Admin password (only used together with the user name above)",
+        "initialValue": "",
+        "type": "password"
+      }
+    ]
+  },
+  "minVersion": "0.13.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/fgilde/aspireui:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TZ=auto",
+        "ASPIREUI_SET_PublicHost={ServerHostname}"
+        {if Context.adminUser}
+        , "ASPIREUI_ADMIN_USERNAME={Context.adminUser}"
+        {/if}
+        {if Context.adminPassword}
+        , "ASPIREUI_ADMIN_PASSWORD={Context.adminPassword}"
+        {/if}
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/AspireUI/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
