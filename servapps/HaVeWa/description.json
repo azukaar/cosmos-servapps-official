@@ -1,0 +1,24 @@
+{
+  "name": "HaVeWa",
+  "description": "Property management for rentals and HOAs Properties, units, leases, service-charge and HOA statements, dunning, documents, maintenance and portals.",
+  "longDescription": "<p>Property-management software for rental and HOA (WEG) administration, with its own PostgreSQL: properties, units, people and meters; leases with stepped and index rent and deposits; charges, payments, open items, SEPA mandates and dunning; service-charge statements with a BetrKV allocation engine; co-ownership shares, economic plan, HOA fees, annual statement and reserves; owners meetings with agenda, voting and resolution collection; documents; maintenance tickets with workflow and time tracking; tenant and owner portals; camt.053 import and DATEV/SEPA export.</p><p>Multi-tenant, role-based and bilingual (German and English). A REST API and an MCP server with per-user tokens let an AI agent read and manage the portfolio under the same permissions a person has.</p><p>The first start opens a setup wizard for the administrator and the management company. The installer form asks for the session secret, so it never comes from a public file.</p>",
+  "tags": [
+    "property management",
+    "real estate",
+    "hoa",
+    "weg",
+    "rental",
+    "accounting",
+    "invoices",
+    "documents",
+    "maintenance",
+    "german",
+    "mcp",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/fgilde/hausverwaltung",
+  "image": "https://github.com/fgilde/hausverwaltung/pkgs/container/hausverwaltung",
+  "supported_architectures": [
+    "amd64"
+  ]
+}
