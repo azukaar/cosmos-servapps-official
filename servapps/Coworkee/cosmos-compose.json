@@ -1,0 +1,96 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "authSecret",
+        "label": "Session secret (required - it signs the login sessions; generate one with: openssl rand -base64 32)",
+        "initialValue": "",
+        "type": "password"
+      },
+      {
+        "name": "demo",
+        "label": "Type 1 to seed demo data and show demo logins, or leave empty for the setup wizard",
+        "initialValue": "",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "0.13.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/fgilde/coworkeenextjs:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "depends_on": ["{ServiceName}-postgres"],
+      "environment": [
+        "TZ=auto",
+        "DATABASE_URL=postgresql://coworkee:{Passwords.0}@{ServiceName}-postgres:5432/coworkee?schema=public",
+        "AUTH_SECRET={Context.authSecret}",
+        "AUTH_TRUST_HOST=true",
+        "DEMO={Context.demo}"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "DATABASE_URL, AUTH_SECRET",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Coworkee/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "networks": {
+        "{ServiceName}-postgres": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-storage",
+          "target": "/app/storage",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:16-alpine",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "networks": {
+        "{ServiceName}-postgres": {}
+      },
+      "environment": [
+        "POSTGRES_DB=coworkee",
+        "POSTGRES_USER=coworkee",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ]
+    }
+  },
+  "networks": {
+    "{ServiceName}-postgres": {}
+  }
+}
