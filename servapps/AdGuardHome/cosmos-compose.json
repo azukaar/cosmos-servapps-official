@@ -80,12 +80,11 @@
            "cosmos-auto-update": "true",
            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/AdGuardHome/icon.png"
       },
-         "ports": [
+         {if Context.localIP}
+             "ports": [
             {if Context.plainDNS}
-                {if Context.localIP}
-                    "53:53/tcp",
-                    "53:53/udp"
-                {/if}
+                "53:53/tcp",
+                "53:53/udp"
             {/if}
             {if Context.DHCP}
                 ,"67:67/udp",
@@ -105,6 +104,7 @@
                 "5443:5443/udp"    
             {/if}
          ]
+         {/if}
       }
    }
 }
