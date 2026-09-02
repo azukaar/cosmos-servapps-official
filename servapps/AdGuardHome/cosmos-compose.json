@@ -82,9 +82,8 @@
       },
          "ports": [
             {if Context.plainDNS}
-                {if Context.localIP}
-                    "53:53/tcp",
-                    "53:53/udp"
+                "{Context.localIP}:53:53/tcp",
+                "{Context.localIP}:53:53/udp"
                 {/if}
             {/if}
             {if Context.DHCP}
