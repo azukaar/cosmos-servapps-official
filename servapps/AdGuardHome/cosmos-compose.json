@@ -10,7 +10,7 @@
          {
             "name": "localIP",
             "label": "Please enter your local IP for cosmos(required)",
-            "initialValue": "",
+            "initialValue": "192.168.1.xxx",
             "type": "text"
          },
          {
