@@ -81,7 +81,7 @@
            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/AdGuardHome/icon.png"
       },
          {if Context.localIP}
-             "ports": [
+            "ports": [
                {if Context.plainDNS}
                    "53:53/tcp",
                    "53:53/udp"
