@@ -88,7 +88,7 @@
                 {/if}
             {/if}
             {if Context.DHCP}
-                "67:67/udp",
+                ,"67:67/udp",
                 "68:68/tcp",
                 "68:68/udp"
             {/if}
