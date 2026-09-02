@@ -80,32 +80,31 @@
            "cosmos-auto-update": "true",
            "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/AdGuardHome/icon.png"
       },
-         {if Context.localIP} [
-            "ports": [
-               {if Context.plainDNS}
-                   "53:53/tcp",
-                   "53:53/udp"
-               {/if}
-               {if Context.DHCP}
-                   ,"67:67/udp",
-                   "68:68/tcp",
-                   "68:68/udp"
-               {/if}
-               {if Context.DnsOverTls}
-                   ,"853:853/tcp"
-               {/if}
-               {if Context.DnsOverQuic}
-                   ,"853:853/udp",
-                   "784:784/udp",
-                   "8853:8853/udp"
-               {/if}
-               {if Context.DnsCrypt}
-                   ,"5443:5443/tcp",
-                   "5443:5443/udp"    
-               {/if}
-            ]
+         "ports": [
+            {if Context.plainDNS}
+                {if Context.localIP}
+                    "53:53/tcp",
+                    "53:53/udp"
+                {/if}
+            {/if}
+            {if Context.DHCP}
+                ,"67:67/udp",
+                "68:68/tcp",
+                "68:68/udp"
+            {/if}
+            {if Context.DnsOverTls}
+                ,"853:853/tcp"
+            {/if}
+            {if Context.DnsOverQuic}
+                ,"853:853/udp",
+                "784:784/udp",
+                "8853:8853/udp"
+            {/if}
+            {if Context.DnsCrypt}
+                ,"5443:5443/tcp",
+                "5443:5443/udp"    
+            {/if}
          ]
-         {/if}
       }
    }
 }
