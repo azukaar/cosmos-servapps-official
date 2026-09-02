@@ -8,6 +8,12 @@
             "label": "Select the features you would like to enable for AdGuard Home below. The number in parentheses indicates the open port required for each feature. Admin Panel is on port 3000 by default, copy on setup page"
          },
          {
+            "name": "localIP",
+            "label": "Please enter your local IP for cosmos(required)",
+            "initialValue": "",
+            "type": "text"
+         },
+         {
             "name": "plainDNS",
             "label": "Plain DNS? (53/both)",
             "initialValue": true,
@@ -76,8 +82,10 @@
       },
          "ports": [
             {if Context.plainDNS}
-                "53:53/tcp",
-                "53:53/udp"
+                {if Context.localIP}
+                    "53:53/tcp",
+                    "53:53/udp"
+                {/if}
             {/if}
             {if Context.DHCP}
                 ,"67:67/udp",
