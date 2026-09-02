@@ -84,7 +84,6 @@
             {if Context.plainDNS}
                 "{Context.localIP}:53:53/tcp",
                 "{Context.localIP}:53:53/udp"
-                {/if}
             {/if}
             {if Context.DHCP}
                 ,"67:67/udp",
