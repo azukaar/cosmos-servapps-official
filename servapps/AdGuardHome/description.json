@@ -1,0 +1,22 @@
+{
+  "name": "AdGuard Home",
+  "longDescription": "<p>AdGuard Home is a powerful open-source network-wide software for blocking ads and tracking. Operating as a DNS server, it protects all devices connected to your home network without requiring client-side software installation. It gives you full control over your privacy and security by preventing domain-level requests to known tracking, advertising, and malware servers.</p><p>Its intuitive web interface lets you monitor network traffic, set up parental control rules, block specific services, and configure custom DNS rewriting rules. AdGuard Home also supports modern encrypted DNS protocols like DNS-over-HTTPS (DoH) and DNS-over-TLS (DoT) to ensure your browsing history remains secure and private.</p><p>Available for cross-platform deployment, AdGuard Home is the ideal solution for self-hosters looking to secure their home or small office networks against privacy intrusions and intrusive advertising.</p>",
+  "description": "AdGuard Home is a free, open-source network-wide ad-blocking and tracking-prevention DNS server. It offers a comprehensive suite of tools for network monitoring, parental controls, and custom filtering. With an intuitive interface, it provides easy setup and robust privacy protection for all devices on your local network.",
+  "tags": [
+    "ad-blocker",
+    "dns-server",
+    "open-source",
+    "privacy",
+    "security",
+    "parental-control",
+    "network",
+    "doh",
+    "dot"
+  ],
+  "repository": "https://github.com/AdguardTeam/AdGuardHome",
+  "image": "https://hub.docker.com/r/adguard/adguardhome",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
