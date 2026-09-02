@@ -20,12 +20,6 @@
             "type": "checkbox"
          },
          {
-            "name": "DnsOverHttps",
-            "label": "DnsOverHttps? (443/both, 80/tcp)",
-            "initialValue": false,
-            "type": "checkbox"
-         },
-         {
             "name": "DnsOverTls",
             "label": "DnsOverTls? (853/tcp)",
             "initialValue": false,
@@ -89,11 +83,6 @@
                 ,"67:67/udp",
                 "68:68/tcp",
                 "68:68/udp"
-            {/if}
-            {if Context.DnsOverHttps}
-                ,"80:80/tcp",
-                "443:443/tcp"
-                "443:443/udp"
             {/if}
             {if Context.DnsOverTls}
                 ,"853:853/tcp"
