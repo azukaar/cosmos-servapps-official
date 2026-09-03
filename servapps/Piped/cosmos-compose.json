@@ -35,9 +35,6 @@
             "depends_on": {
                 "{ServiceName}-backend": {}
             },
-            "networks": {
-                "{ServiceName}-net": {}
-            },
             "routes": [
                 {
                     "name": "{ServiceName}",
@@ -75,6 +72,7 @@
                 "API_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/api",
                 "FRONTEND_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "PROXY_PART={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/proxy",
+                "BG_HELPER_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/bg-helper",
                 "HIBERNATE__CONNECTION__URL=jdbc:postgresql://{ServiceName}-postgres:5432/piped",
                 "HIBERNATE__CONNECTION__DRIVER_CLASS=org.postgresql.Driver",
                 "HIBERNATE__DIALECT=org.hibernate.dialect.PostgreSQLDialect",
@@ -83,16 +81,6 @@
             ],
             "depends_on": {
                 "{ServiceName}-postgres": {}
-            },
-            "volumes": [
-                {
-                    "source": "{ServiceName}-backend",
-                    "target": "/app",
-                    "type": "volume"
-                }
-            ],
-            "networks": {
-                "{ServiceName}-net": {}
             },
             "routes": [
                 {
@@ -104,6 +92,41 @@
                     "PathPrefix": "/api",
                     "StripPathPrefix": true,
                     "target": "http://{ServiceName}-backend:8080",
+                    "mode": "SERVAPP",
+                    "Timeout": 14400000,
+                    "ThrottlePerMinute": 12000,
+                    "BlockCommonBots": true,
+                    "HideFromDashboard": true,
+                    "SmartShield": {
+                        "Enabled": true
+                    }
+                }
+            ]
+        },
+        "{ServiceName}-bg-helper": {
+            "image": "1337kavin/bg-helper-server:latest",
+            "container_name": "{ServiceName}-bg-helper",
+            "restart": "unless-stopped",
+            "labels": {
+                "cosmos-force-network-secured": "true",
+                "cosmos-auto-update": "true",
+                "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Piped/icon.png",
+                "cosmos-stack": "{ServiceName}",
+                "cosmos-stack-main": "{ServiceName}"
+            },
+            "depends_on": {
+                "{ServiceName}-backend": {}
+            },
+            "routes": [
+                {
+                    "name": "{ServiceName}-bg-helper",
+                    "description": "Piped background helper (same origin)",
+                    "useHost": true,
+                    "Host": "{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+                    "UsePathPrefix": true,
+                    "PathPrefix": "/bg-helper",
+                    "StripPathPrefix": true,
+                    "target": "http://{ServiceName}-bg-helper:3000",
                     "mode": "SERVAPP",
                     "Timeout": 14400000,
                     "ThrottlePerMinute": 12000,
@@ -132,9 +155,6 @@
             "depends_on": {
                 "{ServiceName}-backend": {}
             },
-            "networks": {
-                "{ServiceName}-net": {}
-            },
             "routes": [
                 {
                     "name": "{ServiceName}-proxy",
@@ -157,7 +177,7 @@
             ]
         },
         "{ServiceName}-postgres": {
-            "image": "postgres:17-alpine",
+            "image": "pgautoupgrade/pgautoupgrade:16-alpine",
             "container_name": "{ServiceName}-postgres",
             "restart": "unless-stopped",
             "labels": {
@@ -179,13 +199,7 @@
                     "target": "/var/lib/postgresql/data",
                     "type": "volume"
                 }
-            ],
-            "networks": {
-                "{ServiceName}-net": {}
-            }
+            ]
         }
-    },
-    "networks": {
-        "{ServiceName}-net": {}
     }
 }
