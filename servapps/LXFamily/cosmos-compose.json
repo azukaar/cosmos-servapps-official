@@ -51,11 +51,11 @@
           "source": "{ServiceName}-backups",
           "target": "/app/backups",
           "type": "volume"
+        },
+        {
+          "target": "/tmp",
+          "type": "tmpfs"
         }
-      ],
-      "read_only": true,
-      "tmpfs": [
-        "/tmp:size=64m,mode=1777"
       ],
       "cap_drop": [
         "ALL"
