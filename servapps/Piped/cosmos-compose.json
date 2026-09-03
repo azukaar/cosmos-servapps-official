@@ -72,7 +72,8 @@
                 "API_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/api",
                 "FRONTEND_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
                 "PROXY_PART={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/proxy",
-                "BG_HELPER_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/bg-helper",
+                "PUBSUB_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}/api",
+                "BG_HELPER_URL=http://{ServiceName}-bg-helper:3000",
                 "HIBERNATE__CONNECTION__URL=jdbc:postgresql://{ServiceName}-postgres:5432/piped",
                 "HIBERNATE__CONNECTION__DRIVER_CLASS=org.postgresql.Driver",
                 "HIBERNATE__DIALECT=org.hibernate.dialect.PostgreSQLDialect",
@@ -116,27 +117,7 @@
             },
             "depends_on": {
                 "{ServiceName}-backend": {}
-            },
-            "routes": [
-                {
-                    "name": "{ServiceName}-bg-helper",
-                    "description": "Piped background helper (same origin)",
-                    "useHost": true,
-                    "Host": "{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
-                    "UsePathPrefix": true,
-                    "PathPrefix": "/bg-helper",
-                    "StripPathPrefix": true,
-                    "target": "http://{ServiceName}-bg-helper:3000",
-                    "mode": "SERVAPP",
-                    "Timeout": 14400000,
-                    "ThrottlePerMinute": 12000,
-                    "BlockCommonBots": true,
-                    "HideFromDashboard": true,
-                    "SmartShield": {
-                        "Enabled": true
-                    }
-                }
-            ]
+            }
         },
         "{ServiceName}-proxy": {
             "image": "1337kavin/piped-proxy:latest",
