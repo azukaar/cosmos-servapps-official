@@ -9,7 +9,7 @@
   },
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/ans-ib/keeyo:1.6.1",
+      "image": "ghcr.io/ans-ib/keeyo:2.0.0",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
