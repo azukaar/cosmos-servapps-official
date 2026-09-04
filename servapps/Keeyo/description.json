@@ -1,0 +1,9 @@
+{
+  "name": "Keeyo",
+  "description": "Self-hosted inventory for your hardware security keys — know which passkeys, 2FA registrations and TOTP codes live on which physical key.",
+  "longDescription": "<p>It always starts with one security key. Then you buy a backup. Then you get another one for work. Keeyo gives every physical security key (YubiKey, Token2, …) a digital asset tag so you always know what lives on which piece of plastic.</p><ul><li><b>Scan to detect</b> — plug a key in, tap it, and Keeyo reads its fingerprint via WebAuthn and fills in vendor and model from the live FIDO device registry.</li><li><b>Track what goes where</b> — every passkey, 2FA registration and TOTP per key, plus the reverse lookup per service.</li><li><b>Lost-key checklist</b> — mark a key lost and get a revocation checklist of every service that still trusts it.</li><li><b>Identify a mystery key</b> — found a random key in a drawer? One tap names it.</li><li><b>Tap-to-reveal secret notes</b> — end-to-end encrypted on PRF-capable keys.</li><li><b>Sign-in 2FA</b> — protect Keeyo itself with a hardware key or authenticator app, plus recovery codes.</li></ul><p>Keeyo stores metadata only — no TOTP seeds, no private keys, no secrets ever leave your hardware keys. Since Cosmos serves apps over HTTPS, Keeyo's WebAuthn features work out of the box.</p>",
+  "tags": ["self-hosted", "open-source", "security", "docker", "linux", "management", "2fa", "passkeys", "yubikey"],
+  "repository": "https://github.com/ans-ib/keeyo",
+  "image": "https://github.com/ans-ib/keeyo/pkgs/container/keeyo",
+  "supported_architectures": ["amd64", "arm64"]
+}
