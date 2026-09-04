@@ -27,9 +27,6 @@
                 "cosmos-stack": "{ServiceName}",
                 "cosmos-stack-main": "{ServiceName}"
             },
-            "networks": {
-                "{ServiceName}-postgres": {}
-            },
             "routes": [{
                 "name": "{ServiceName}",
                 "description": "Expose {ServiceName} to the web",
@@ -50,9 +47,6 @@
             "container_name": "{ServiceName}-postgres",
             "hostname": "{ServiceName}-postgres",
             "restart": "unless-stopped",
-            "networks": {
-                "{ServiceName}-postgres": {}
-            },
             "stop_grace_period": 5,
             "security_opt": [
                 "seccomp:unconfined",
@@ -74,9 +68,5 @@
                 "POSTGRES_PASSWORD={Passwords.0}"
             ]
         }
-    },
-
-    "networks": {
-        "{ServiceName}-postgres": {}
     }
 }

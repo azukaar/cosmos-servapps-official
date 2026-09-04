@@ -22,9 +22,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-network": {}
-      },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -58,13 +55,7 @@
       "labels": {
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
-      },
-      "networks": {
-        "{ServiceName}-network": {}
       }
     }
-  },
-  "networks": {
-    "{ServiceName}-network": {}
   }
 }

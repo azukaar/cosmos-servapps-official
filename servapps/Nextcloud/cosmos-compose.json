@@ -34,9 +34,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-databases": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-config",
@@ -131,9 +128,6 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
-      "networks": {
-        "{ServiceName}-databases": {}
-      },
       "command": "mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120",
       "volumes": [
         {
@@ -172,9 +166,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-databases": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-redis-data",
@@ -184,11 +175,6 @@
       ],
       "command": "redis-server --requirepass {Passwords.2} --appendonly yes --auto-aof-rewrite-percentage 100 --auto-aof-rewrite-min-size 64mb",
       "environment": []
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-databases": {
     }
   }
 }

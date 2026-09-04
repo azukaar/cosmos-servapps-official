@@ -24,9 +24,6 @@
        "{ServiceName}": {
           "image": "mondedie/flarum:stable",
           "container_name": "{ServiceName}",
-          "networks": {
-             "{ServiceName}-net": {}
-          },
           "routes": [
              {
                 "name": "{ServiceName}",
@@ -89,9 +86,6 @@
           "hostname": "{ServiceName}-mariadb",
           "image": "mariadb:10.5",
           "container_name": "{ServiceName}-mariadb",
-          "networks": {
-             "{ServiceName}-net": {}
-          },
           "environment": [
              "MYSQL_ROOT_PASSWORD={Passwords.0}",
              "MYSQL_DATABASE={ServiceName}-mariadb",
@@ -113,8 +107,5 @@
              "cosmos-stack-main": "{ServiceName}"
           }
        }
-    },
-    "networks": {
-       "{ServiceName}-net": {}
     }
  }

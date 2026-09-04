@@ -13,9 +13,6 @@
           "image": "passbolt/passbolt:latest-ce",
           "restart": "unless-stopped",
           "container_name": "{ServiceName}",
-          "networks": {
-             "{ServiceName}-net": {}
-          },
           "environment": [
              "APP_FULL_BASE_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
              "DATASOURCES_DEFAULT_HOST={ServiceName}-db",
@@ -66,9 +63,6 @@
           "image": "mariadb:10.11",
           "restart": "unless-stopped",
           "container_name": "{ServiceName}-db",
-          "networks": {
-             "{ServiceName}-net": {}
-          },
           "hostname": "{ServiceName}-mariadb",
           "environment": [
              "MARIADB_PASSWORD={Passwords.0}",
@@ -91,8 +85,5 @@
              "cosmos-stack-main": "{ServiceName}"
           }
        }
-    },
-    "networks": {
-       "{ServiceName}-net": {}
     }
  }

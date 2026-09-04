@@ -45,9 +45,6 @@
         "SUITECRM_ADMIN_USER={Context.SUITECRM_USERNAME}",
         "SUITECRM_ADMIN_PASSWORD={Context.SUITECRM_PASSWORD}"
       ],
-      "networks": {
-        "{ServiceName}": {}
-      },
       "labels": {
         "cosmos-persistent-env": "DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, SITE_URL, SUITECRM_ADMIN_USER, SUITECRM_ADMIN_PASSWORD",
         "cosmos-force-network-secured": "true",
@@ -77,9 +74,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": {
-        "{ServiceName}": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-db",
@@ -99,8 +93,5 @@
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-  "networks": {
-    "{ServiceName}": {}
   }
 }

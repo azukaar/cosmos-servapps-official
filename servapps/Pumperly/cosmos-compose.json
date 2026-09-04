@@ -28,9 +28,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-network": {}
-      },
       "depends_on": [
         "{ServiceName}-db"
       ],
@@ -71,13 +68,7 @@
         "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
-      },
-      "networks": {
-        "{ServiceName}-network": {}
       }
     }
-  },
-  "networks": {
-    "{ServiceName}-network": {}
   }
 }

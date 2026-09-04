@@ -27,9 +27,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-upload",
@@ -59,9 +56,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": {
-        "{ServiceName}": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-db",
@@ -81,9 +75,5 @@
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-
-  "networks": {
-    "{ServiceName}": {}
   }
 }
