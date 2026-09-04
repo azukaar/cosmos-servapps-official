@@ -1,0 +1,9 @@
+{
+  "name": "LogForge Unicron",
+  "longDescription": "<p>All in one UI, for Docker. Real-time logs, Interactive terminals, Custom alerts/notifications/Automations, File system access.</p><p><strong>Security notice:</strong> LogForge requires writable access to the Docker socket. This grants the application host-level Docker control and is required for its interactive operations features.</p>",
+  "description": "All-in-one Docker observability and operations UI.",
+  "tags": ["docker", "logs", "monitoring", "observability", "terminal", "automation"],
+  "repository": "https://github.com/log-forge/unicron-source",
+  "image": "https://hub.docker.com/r/logforge/unicron",
+  "supported_architectures": ["amd64", "arm64"]
+}
