@@ -30,7 +30,6 @@
         "MOODLE_PASSWORD={Context.MOODLE_PASSWORD}",
         "MOODLE_EMAIL={Context.MOODLE_EMAIL}"
       ],
-      "networks": { "{ServiceName}": {} },
       "labels": {
         "cosmos-persistent-env": "MOODLE_DATABASE_HOST, MOODLE_DATABASE_PORT_NUMBER, MOODLE_DATABASE_USER, MOODLE_DATABASE_NAME, MOODLE_DATABASE_PASSWORD",
         "cosmos-force-network-secured": "true",
@@ -58,7 +57,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": { "{ServiceName}": {} },
       "volumes": [
         { "source": "{ServiceName}-db", "target": "/var/lib/mysql", "type": "volume" }
       ],
@@ -74,6 +72,5 @@
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-  "networks": { "{ServiceName}": {} }
+  }
 }

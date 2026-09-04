@@ -30,9 +30,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-mysql": {}
-      },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -60,9 +57,6 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
-      "networks": {
-        "{ServiceName}-mysql": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-mysql-data",
@@ -81,11 +75,6 @@
         "MYSQL_PASSWORD={Passwords.0}",
         "MYSQL_ROOT_PASSWORD={Passwords.1}"
       ]
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-mysql": {
     }
   }
 }

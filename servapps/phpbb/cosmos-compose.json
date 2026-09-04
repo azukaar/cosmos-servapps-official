@@ -13,9 +13,6 @@
     "{ServiceName}-mariadb": {
       "image": "mariadb:11.4",
       "container_name": "{ServiceName}-mariadb",
-      "networks": {
-        "{ServiceName}-net": {}
-      },
       "hostname": "{ServiceName}-mariadb",
       "environment": [
         "MARIADB_PASSWORD={Passwords.0}",
@@ -41,9 +38,6 @@
     "{ServiceName}": {
       "image": "selim13/phpbb:3.3",
       "container_name": "{ServiceName}",
-      "networks": {
-        "{ServiceName}-net": {}
-      },
       "environment": [
         "PHPBB_INSTALL=true",
         "PHPBB_DB_DRIVER=mysqli",
@@ -103,8 +97,5 @@
         "{ServiceName}-mariadb": {}
       }
     }
-  },
-  "networks": {
-    "{ServiceName}-net": {}
   }
 }

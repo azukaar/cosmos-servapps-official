@@ -22,9 +22,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-n8n_storage",
@@ -54,9 +51,6 @@
       "container_name": "{ServiceName}-postgres",
       "hostname": "{ServiceName}-postgres",
       "restart": "unless-stopped",
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "stop_grace_period": 5,
       "security_opt": [
         "seccomp:unconfined",
@@ -79,11 +73,6 @@
         "POSTGRES_USER=n8n",
         "POSTGRES_PASSWORD={Passwords.0}"
       ]
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-postgres": {
     }
   }
 }
