@@ -1,0 +1,9 @@
+{
+  "name": "LX Family",
+  "description": "A private, self-hosted Family OS for calendars, tasks, shopping and more.",
+  "longDescription": "<p>LX Family brings calendars, chores, shopping, meal planning, chat, reminders and family files together on your own server.</p><p>Parents get calm planning tools, children get playful missions and rewards, and pet profiles stay focused on care. The guided onboarding creates the first family locally; further public registrations are protected by default.</p><p>Your data stays on your own Cosmos server. LX Family keeps its own profile and permission system, so the Cosmos route deliberately does not add a second login wall.</p>",
+  "tags": ["family", "calendar", "chores", "shopping", "meal-planning", "self-hosted", "privacy"],
+  "repository": "https://github.com/laxxx-lab/lx-family-planner",
+  "image": "https://github.com/laxxx-lab/lx-family-planner/pkgs/container/lx-family-planner",
+  "supported_architectures": ["amd64", "arm64"]
+}
