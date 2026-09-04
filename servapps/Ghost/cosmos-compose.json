@@ -37,6 +37,11 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
+      "depends_on": {
+        "{ServiceName}-db": {
+          "condition": "service_healthy"
+        }
+      },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -66,6 +71,19 @@
         "MYSQL_USER=ghost",
         "MYSQL_PASSWORD={Passwords.2}"
       ],
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost"
+        ],
+        "interval": 10,
+        "timeout": 20,
+        "retries": 10,
+        "start_period": 60
+      },
       "labels": {
         "cosmos-persistent-env": "MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD",
         "cosmos-stack": "{ServiceName}",
