@@ -24,9 +24,6 @@
           "APP_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
           "APP_ENV=production"
         ],
-        "networks": {
-            "{ServiceName}": {}
-          },
           "labels": {
             "cosmos-persistent-env": "DB_PASSWORD, DB_HOST, DB_PORT, DB_USERNAME",
             "cosmos-force-network-secured": "true",
@@ -55,9 +52,6 @@
         "container_name": "{ServiceName}-db",
         "hostname": "{ServiceName}-db",
         "restart": "unless-stopped",
-        "networks": {
-            "{ServiceName}": {}
-          },
         "volumes": [
           {
             "source": "{ServiceName}-db",
@@ -78,8 +72,5 @@
           "cosmos-stack-main": "{ServiceName}"
         }
       }
-    },
-    "networks": {
-        "{ServiceName}": {}
-      }
+    }
   }

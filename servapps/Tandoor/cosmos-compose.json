@@ -25,9 +25,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-staticfiles",
@@ -67,9 +64,6 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-postgres-data",
@@ -87,11 +81,6 @@
         "POSTGRES_USER=tandoor",
         "POSTGRES_PASSWORD={Passwords.0}"
       ]
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-postgres": {
     }
   }
 }

@@ -52,9 +52,6 @@
               "condition": "service_healthy"
           }
         },
-        "networks": {
-          "{ServiceName}-data": {}
-        },
         "healthcheck": {
           "test": [
             "CMD",
@@ -97,9 +94,6 @@
           "interval": 10,
           "start_period": 30
         },
-        "networks": {
-          "{ServiceName}-data": {}
-        },
         "labels": {
           "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
           "cosmos-force-network-secured": "true",
@@ -120,11 +114,6 @@
           "POSTGRES_USER=miniflux",
           "POSTGRES_PASSWORD={Passwords.0}"
         ]
-      }
-    },
-  
-    "networks": {
-      "{ServiceName}-data": {
       }
     }
   }

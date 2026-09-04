@@ -16,9 +16,6 @@
                 "cosmos-stack": "{ServiceName}",
                 "cosmos-stack-main": "{ServiceName}"
             },
-            "networks": {
-                "{ServiceName}-network": {}
-            },
             "environment": [
                 "BACK_URL={ServiceName}-backend:5000"
             ],
@@ -50,9 +47,6 @@
                 "cosmos-stack": "{ServiceName}",
                 "cosmos-stack-main": "{ServiceName}"
             },
-            "networks": {
-                "{ServiceName}-network": {}
-            },
             "volumes": [
                 {
                     "source": "{ServiceName}-data",
@@ -65,8 +59,5 @@
                 "JWT_SECRET_KEY={Passwords.0}"
             ]
         }
-    },
-    "networks": {
-        "{ServiceName}-network": {}
     }
 }

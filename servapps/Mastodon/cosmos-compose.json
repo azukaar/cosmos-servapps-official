@@ -68,9 +68,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-data": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-config",
@@ -105,9 +102,6 @@
       "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
-      "networks": {
-        "{ServiceName}-data": {}
-      },
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
@@ -135,9 +129,6 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
-      "networks": {
-        "{ServiceName}-data": {}
-      },
       "labels": {
         "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
         "cosmos-force-network-secured": "true",
@@ -158,11 +149,6 @@
         "POSTGRES_USER=mastodon",
         "POSTGRES_PASSWORD={Passwords.0}"
       ]
-    }
-  },
-  
-  "networks": {
-    "{ServiceName}-data": {
     }
   }
 }

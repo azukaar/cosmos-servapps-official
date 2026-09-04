@@ -20,7 +20,6 @@
         { "source": "{ServiceName}-themes", "target": "/var/www/html/themes", "type": "volume" },
         { "source": "{ServiceName}-sites", "target": "/var/www/html/sites", "type": "volume" }
       ],
-      "networks": { "{ServiceName}": {} },
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
@@ -47,7 +46,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": { "{ServiceName}": {} },
       "volumes": [
         { "source": "{ServiceName}-db", "target": "/var/lib/mysql", "type": "volume" }
       ],
@@ -63,6 +61,5 @@
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-  "networks": { "{ServiceName}": {} }
+  }
 }

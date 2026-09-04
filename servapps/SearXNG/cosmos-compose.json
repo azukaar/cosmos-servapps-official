@@ -6,9 +6,6 @@
          "container_name": "{ServiceName}",
          "image": "searxng/searxng:latest",
          "restart": "unless-stopped",
-         "networks": {
-            "{ServiceName}-net": {}
-         },
          "environment": [
          "SEARXNG_SECRET={Passwords.0}"
          ],
@@ -71,9 +68,6 @@
          "post_install": [
          "wget -O /etc/searxng/settings.yml https://raw.githubusercontent.com/searxng/searxng/refs/heads/master/utils/templates/etc/searxng/settings.yml"
          ],
-         "networks": {
-            "{ServiceName}-net": {}
-         },
          "volumes": [
             {
                "source": "{ServiceName}-data",
@@ -101,8 +95,5 @@
             "cosmos-stack-main": "{ServiceName}"
          }
       }
-   },
-   "networks": {
-      "{ServiceName}-net": {}
    }
 }

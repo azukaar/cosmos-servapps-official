@@ -92,8 +92,5 @@
         "cosmos.stack": "{ServiceName}"
       }
     }
-  },
-  "networks": {
-    "cosmos-{ServiceName}": {}
   }
 }
