@@ -39,9 +39,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-databases": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-postgres-data",
@@ -69,9 +66,6 @@
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Jellystat/icon.png",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
-      },
-      "networks": {
-        "{ServiceName}-databases": {}
       },
       "depends_on": {
         "{ServiceName}-db": {}
@@ -109,8 +103,5 @@
         {/if}
       ]
     }
-  },
-  "networks": {
-    "{ServiceName}-databases": {}
   }
 }

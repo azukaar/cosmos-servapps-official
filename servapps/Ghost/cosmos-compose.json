@@ -28,7 +28,6 @@
       "volumes": [
         { "source": "{ServiceName}-content", "target": "/var/lib/ghost/content", "type": "volume" }
       ],
-      "networks": { "{ServiceName}": {} },
       "labels": {
         "cosmos-persistent-env": "url, database__connection__password, database__connection__database, database__connection__user",
         "cosmos-force-network-secured": "true",
@@ -61,7 +60,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": { "{ServiceName}": {} },
       "volumes": [
         { "source": "{ServiceName}-db", "target": "/var/lib/mysql", "type": "volume" }
       ],
@@ -90,6 +88,5 @@
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-  "networks": { "{ServiceName}": {} }
+  }
 }

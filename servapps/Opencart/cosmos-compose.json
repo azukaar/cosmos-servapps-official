@@ -18,9 +18,6 @@
       "depends_on": {
         "{ServiceName}-db": {}
       },
-      "networks": {
-        "{ServiceName}": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-opencart-data",
@@ -57,9 +54,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": {
-        "{ServiceName}": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-db",
@@ -79,8 +73,5 @@
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-  "networks": {
-    "{ServiceName}": {}
   }
 }

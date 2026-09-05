@@ -59,9 +59,6 @@
           "REDMINE_FIRST_NAME={Context.REDMINE_FIRST_NAME}",
           "REDMINE_LAST_NAME={Context.REDMINE_LAST_NAME}"
         ],
-        "networks": {
-            "{ServiceName}": {}
-          },
           "labels": {
             "cosmos-persistent-env": "REDMINE_DB_PASSWORD, REDMINE_DB_MYSQL, REDMINE_DB_USERNAME, REDMINE_DB_DATABASE, REDMINE_DB_PORT, SECRET_KEY_BASE",
             "cosmos-force-network-secured": "true",
@@ -90,9 +87,6 @@
         "container_name": "{ServiceName}-db",
         "hostname": "{ServiceName}-db",
         "restart": "unless-stopped",
-        "networks": {
-            "{ServiceName}": {}
-          },
         "volumes": [
           {
             "source": "{ServiceName}-db",
@@ -112,8 +106,5 @@
           "cosmos-stack-main": "{ServiceName}"
         }
       }
-    },
-    "networks": {
-        "{ServiceName}": {}
-      }
+    }
   }

@@ -51,9 +51,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-data": {}
-      },
       "volumes": [
         {if Context.modelPaths}
         {
@@ -89,9 +86,6 @@
       "image": "redis:7-alpine",
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
-      "networks": {
-        "{ServiceName}-data": {}
-      },
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
@@ -115,9 +109,6 @@
       "hostname": "{ServiceName}-postgres",
       "restart": "unless-stopped",
       "stop_grace_period": 5,
-      "networks": {
-        "{ServiceName}-data": {}
-      },
       "labels": {
         "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
         "cosmos-force-network-secured": "true",
@@ -138,11 +129,6 @@
         "POSTGRES_USER=manyfold",
         "POSTGRES_PASSWORD={Passwords.0}"
       ]
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-data": {
     }
   }
 }

@@ -52,9 +52,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-mariadb": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-config",
@@ -99,9 +96,6 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
-      "networks": {
-        "{ServiceName}-mariadb": {}
-      },
       "labels": {
         "cosmos-persistent-env": "MARIADB_USER, MARIADB_PASSWORD, MARIADB_ROOT_PASSWORD, MARIADB_DATABASE",
         "cosmos-stack": "{ServiceName}",
@@ -123,11 +117,6 @@
         "MARIADB_PASSWORD={Passwords.0}",
         "MARIADB_ROOT_PASSWORD={Passwords.1}"
       ]
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-mariadb": {
     }
   }
 }
