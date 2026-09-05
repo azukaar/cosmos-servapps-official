@@ -32,7 +32,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": { "{ServiceName}-postgres": {} },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -52,7 +51,6 @@
       "container_name": "{ServiceName}-postgres",
       "hostname": "{ServiceName}-postgres",
       "restart": "unless-stopped",
-      "networks": { "{ServiceName}-postgres": {} },
       "volumes": [
         { "source": "{ServiceName}-postgres-data", "target": "/var/lib/postgresql/data", "type": "volume" }
       ],
@@ -67,6 +65,5 @@
         "POSTGRES_PASSWORD={Passwords.0}"
       ]
     }
-  },
-  "networks": { "{ServiceName}-postgres": {} }
+  }
 }

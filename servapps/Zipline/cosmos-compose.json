@@ -123,9 +123,6 @@
         "depends_on": {
           "{ServiceName}-postgres" : {}
         },
-        "networks": {
-          "{ServiceName}-data": {}
-        },
         "volumes": [
           {if Context.useBinds}
           {if not Context.s3storage}
@@ -201,9 +198,6 @@
           "timeout": 5,
           "retries": 5
         },
-        "networks": {
-          "{ServiceName}-data": {}
-        },
         "labels": {
           "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
           "cosmos-force-network-secured": "true",
@@ -224,11 +218,6 @@
           "POSTGRES_USER=zipline",
           "POSTGRES_PASSWORD={Passwords.0}"
         ]
-      }
-    },
-  
-    "networks": {
-      "{ServiceName}-data": {
       }
     }
   }

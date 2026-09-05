@@ -43,9 +43,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-discourse_data",
@@ -97,9 +94,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-sidekiq_data",
@@ -113,9 +107,6 @@
       "container_name": "{ServiceName}-postgres",
       "hostname": "{ServiceName}-postgres",
       "restart": "unless-stopped",
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "stop_grace_period": 5,
       "security_opt": [
         "seccomp:unconfined",
@@ -144,9 +135,6 @@
       "container_name": "{ServiceName}-redis",
       "hostname": "{ServiceName}-redis",
       "restart": "unless-stopped",
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-redis",
@@ -161,10 +149,6 @@
       },
       "command": "redis-server --requirepass {Passwords.1} --appendonly yes",
       "environment": []
-    }
-  },
-  "networks": {
-    "{ServiceName}-postgres": {
     }
   }
 }

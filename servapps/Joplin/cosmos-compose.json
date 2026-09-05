@@ -32,9 +32,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       },
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "routes": [
         {
           "name": "{ServiceName}",
@@ -62,9 +59,6 @@
         "seccomp:unconfined",
         "apparmor:unconfined"
       ],
-      "networks": {
-        "{ServiceName}-postgres": {}
-      },
       "volumes": [
         {
           "source": "{ServiceName}-postgres-data",
@@ -82,11 +76,6 @@
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       }
-    }
-  },
-
-  "networks": {
-    "{ServiceName}-postgres": {
     }
   }
 }

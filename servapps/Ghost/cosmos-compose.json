@@ -28,7 +28,6 @@
       "volumes": [
         { "source": "{ServiceName}-content", "target": "/var/lib/ghost/content", "type": "volume" }
       ],
-      "networks": { "{ServiceName}": {} },
       "labels": {
         "cosmos-persistent-env": "url, database__connection__password, database__connection__database, database__connection__user",
         "cosmos-force-network-secured": "true",
@@ -36,6 +35,11 @@
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Ghost/icon.png",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
+      },
+      "depends_on": {
+        "{ServiceName}-db": {
+          "condition": "service_healthy"
+        }
       },
       "routes": [
         {
@@ -56,7 +60,6 @@
       "container_name": "{ServiceName}-db",
       "hostname": "{ServiceName}-db",
       "restart": "unless-stopped",
-      "networks": { "{ServiceName}": {} },
       "volumes": [
         { "source": "{ServiceName}-db", "target": "/var/lib/mysql", "type": "volume" }
       ],
@@ -66,12 +69,24 @@
         "MYSQL_USER=ghost",
         "MYSQL_PASSWORD={Passwords.2}"
       ],
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost"
+        ],
+        "interval": 10,
+        "timeout": 20,
+        "retries": 10,
+        "start_period": 60
+      },
       "labels": {
         "cosmos-persistent-env": "MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD",
         "cosmos-stack": "{ServiceName}",
         "cosmos-stack-main": "{ServiceName}"
       }
     }
-  },
-  "networks": { "{ServiceName}": {} }
+  }
 }
