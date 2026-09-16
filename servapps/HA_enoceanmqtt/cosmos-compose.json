@@ -54,6 +54,25 @@
       "links": [
         "Mosquitto"
       ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} Web Configurator to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8091",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ],
       "healthcheck": {
         "test": ["CMD-SHELL", "[ ! $TX ] && export TX=0 ; tx=`cat /sys/class/net/eth1/statistics/tx_bytes` && if [ ! $tx -gt $TX ] ; then TX=$tx && exit 1 ; fi"],
         "interval": 100,
