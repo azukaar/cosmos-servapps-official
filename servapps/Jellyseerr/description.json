@@ -1,9 +1,0 @@
-{
-  "name": "Jellyseerr",
-  "description": "Jellyseerr is a free and open source software application for managing requests for your media library. It is a a fork of Overseerr built to bring support for Jellyfin & Emby media servers!",
-  "longDescription": "<p>Jellyseerr is a free and open source software application for managing requests for your media library. It is a a fork of Overseerr built to bring support for Jellyfin & Emby media servers!</p>",
-  "tags": ["media", "request", "library", "open-source", "self-hosted", "web application", "plex", "emby", "jellyfin", "request system", "media content", "windows", "linux", "macos", "docker", "radarr", "sonarr"],
-  "repository": "https://github.com/Fallenbagel/jellyseerr",
-  "image": "https://hub.docker.com/r/fallenbagel/jellyseerr",
-  "supported_architectures": ["amd64", "arm64"]
-}
