@@ -91,7 +91,7 @@
           "SmartShield": {
             "Enabled": true
           },
-          "AuthEnabled": false
+          "AuthEnabled": true
         }
       ]
     }
