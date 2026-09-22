@@ -26,6 +26,16 @@
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/nzbget:latest",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "curl -fsS 'http://localhost:6789/jsonrpc' -d '{\"method\":\"status\"}' >/dev/null 2>&1 || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 40,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,

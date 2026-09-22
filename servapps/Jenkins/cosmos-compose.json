@@ -11,6 +11,16 @@
   "services": {
     "{ServiceName}": {
       "image": "jenkins/jenkins:lts",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "curl -fsS http://localhost:8080/login >/dev/null 2>&1 || exit 1"
+          ],
+          "interval": 60,
+          "timeout": 10,
+          "start_period": 120,
+          "retries": 5
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [

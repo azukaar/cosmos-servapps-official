@@ -25,6 +25,16 @@
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/transmission:latest",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "curl -fsS http://localhost:9091/transmission/rpc | grep -q 'success' || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 40,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,

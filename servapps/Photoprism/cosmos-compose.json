@@ -25,6 +25,18 @@
   "services": {
     "{ServiceName}": {
       "image": "photoprism/photoprism",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:2342/api/v1/health"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "hostname": "{ServiceName}",
       "restart": "unless-stopped",

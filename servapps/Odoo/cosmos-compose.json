@@ -19,6 +19,18 @@
   "services": {
     "{ServiceName}": {
       "image": "odoo:17.0",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:8069/web/database/selector"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "environment": [
         "HOST={ServiceName}-mydb",
         "USER=odoo",

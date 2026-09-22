@@ -5,6 +5,18 @@
       "{ServiceName}": {
          "container_name": "{ServiceName}",
          "image": "searxng/searxng:latest",
+           "healthcheck": {
+             "test": [
+               "CMD",
+               "/usr/bin/wget",
+               "-qO-",
+               "http://localhost:8080/healthz"
+             ],
+             "interval": 30,
+             "timeout": 5,
+             "start_period": 20,
+             "retries": 3
+           },
          "restart": "unless-stopped",
          "environment": [
          "SEARXNG_SECRET={Passwords.0}"

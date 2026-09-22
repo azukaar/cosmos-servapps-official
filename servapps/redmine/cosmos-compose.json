@@ -37,6 +37,18 @@
     "services": {
       "{ServiceName}": {
         "image": "redmine:5.1.2-alpine",
+          "healthcheck": {
+            "test": [
+              "CMD",
+              "/usr/bin/wget",
+              "-qO-",
+              "http://localhost:3000/"
+            ],
+            "interval": 30,
+            "timeout": 5,
+            "start_period": 20,
+            "retries": 3
+          },
         "container_name": "{ServiceName}",
         "hostname": "{ServiceName}",
         "volumes": [

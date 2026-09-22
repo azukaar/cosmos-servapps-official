@@ -20,6 +20,19 @@
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/advplyr/audiobookshelf:latest",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/busybox",
+            "wget",
+            "-qO-",
+            "http://localhost:80/"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "labels": {

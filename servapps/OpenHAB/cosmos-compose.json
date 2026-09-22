@@ -24,6 +24,18 @@
   "services": {
     "{ServiceName}": {
       "image": "openhab/openhab:latest",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/usr/bin/wget",
+            "-qO-",
+            "http://localhost:8080/rest/health"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 90,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "security_opt": [

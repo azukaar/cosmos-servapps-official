@@ -12,6 +12,18 @@
   "services": {
     "{ServiceName}-mariadb": {
       "image": "mariadb:11.4",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:80/"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "container_name": "{ServiceName}-mariadb",
       "hostname": "{ServiceName}-mariadb",
       "environment": [
