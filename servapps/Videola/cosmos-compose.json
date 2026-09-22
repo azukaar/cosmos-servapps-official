@@ -52,7 +52,8 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
-          }
+          },
+          "AuthEnabled": true
         }
       ]
     }
