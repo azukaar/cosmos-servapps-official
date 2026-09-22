@@ -30,18 +30,6 @@
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/modbus2mqtt/icon.png"
       },
       "image": "ghcr.io/modbus2mqtt/modbus2mqtt",
-        "healthcheck": {
-          "test": [
-            "CMD",
-            "/bin/curl",
-            "-fsS",
-            "http://localhost:3000/api/specs"
-          ],
-          "interval": 30,
-          "timeout": 5,
-          "start_period": 20,
-          "retries": 3
-        },
       "restart": "unless-stopped",
       "security_opt": [
         "no-new-privileges:true"
