@@ -1,36 +1,52 @@
 # LogForge Unicron on Cosmos
 
-This package runs the Central appliance without access to the host Docker
-socket. Install it, open `/unicron` on its Cosmos URL, and manually enroll an
-agent from Settings for each Docker host you want to monitor. Use the remote
-enrollment flow even for the Cosmos host, with a Central address and the
-published mTLS port reachable from that host. Pull
+This package runs the Central appliance with Docker socket access for automatic
+local agent deployment and appliance self-update. Install it, open `/unicron`
+on its Cosmos URL, and add agents from Settings for the Docker hosts you want
+to manage. Remote agents need a Central address and published mTLS port
+reachable from their host. For manual enrollment, pull
 `logforge/unicron-agent:latest` before running the generated enrollment command
-so an older locally cached image is not reused. Enrollment is a separate,
-explicit host-administrator action.
+so an older locally cached image is not reused.
 
 ## Docker access and updates
 
-**Agents with writable Docker socket access have root-equivalent control of
-their Docker hosts.** Terminals, file access, and automations execute through
-these agents. Restrict LogForge administrator access and enroll only trusted
-hosts. Removing Central's socket is not a sandbox for an enrolled agent, nor
-does it prevent an authorized Central session from issuing agent commands.
+**Writable Docker socket access grants the Central appliance root-equivalent
+control of the Cosmos Docker host. Enrolled agents also have root-equivalent
+control of their Docker hosts.** Only grant LogForge administrator access to
+trusted users. Authentication, reduced container capabilities, and
+`no-new-privileges` do not constrain the authority of the host Docker daemon.
 
-Central has no socket mount or Docker API proxy, and
-`UNICRON_SELF_UPDATE_ENABLED=false` disables its self-updater. Update the
-appliance through Cosmos. Automatic local agent deployment from Central is
-unavailable; manual enrollment remains supported. The Cosmos host is not
-monitored automatically.
+LogForge is a Docker administration application with monitoring and interactive
+operations. Its access requirements differ by component:
 
-The review suggested Tecnativa's Docker socket proxy with container allow-list
-and token authentication. Its [documented configuration](https://github.com/Tecnativa/docker-socket-proxy)
-controls Docker API sections and HTTP methods; it does not provide that
-per-container/token policy. Central's updater and automatic local deployment
-require container creation, which would undermine the proposed restriction.
-This package therefore removes that host access entirely instead of granting
-write access through a proxy. Maintainers should review this alternative
-against their marketplace policy.
+- Central deploys local agents by pulling an image, creating a container with
+  the required socket and host mounts, and starting it. Replacement enrollment
+  can remove the previous agent container and reset its identity volume.
+- The appliance updater inspects the running container, pulls an updated image,
+  and creates a replacement preserving its mounts, networks, labels, ports,
+  and security settings. It uses a handoff container to stop the old appliance
+  and start the replacement; rollback also needs lifecycle access.
+- Agents list and inspect containers, collect logs and metrics, start/stop/
+  restart/remove containers, create and attach Docker exec sessions for
+  terminals and scripts, and read container files through the archive API.
+
+A read-only proxy would support some monitoring but prevent deployment,
+updates, terminals, and write operations. A proxy can still deny unrelated API
+sections; we do not claim that every Docker endpoint is needed or that a proxy
+has no value. However, preserving local deployment and self-update requires
+container creation with host mounts. Allowing that operation through an
+API-section proxy retains a path to host-level control. Exec access to
+privileged or socket-mounted containers can also reach host capabilities.
+
+The [Tecnativa proxy](https://github.com/Tecnativa/docker-socket-proxy) controls
+API sections and methods. Those controls do not validate the safety of a
+container's requested mounts, privileges, or exec commands. Therefore, simply
+inserting that proxy would not remove the root-equivalent trust requirement
+while preserving the supported feature set. This package uses direct socket
+access and discloses that requirement prominently. A narrower product mode or
+request-aware authorization policy would be a separate design and validation
+effort. Marketplace acceptance of this trust model remains the maintainers'
+decision.
 
 ## Cosmos compatibility and readiness
 
