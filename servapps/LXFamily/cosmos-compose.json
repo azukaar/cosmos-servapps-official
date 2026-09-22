@@ -2,12 +2,6 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "timeZone",
-        "label": "Time zone (IANA name, for example Europe/Berlin)",
-        "initialValue": "Europe/Berlin",
-        "type": "text"
-      },
-      {
         "name": "language",
         "label": "Default interface language (de, en, fr, es, it, nl or pl)",
         "initialValue": "en",
@@ -24,7 +18,7 @@
       "environment": [
         "NODE_ENV=production",
         "PORT=3001",
-        "TZ={Context.timeZone}",
+        "TZ=auto",
         "APP_LANGUAGE={Context.language}",
         "APP_SECRET={Passwords.0}",
         "SESSION_COOKIE_SECURE=auto",
