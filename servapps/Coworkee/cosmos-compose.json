@@ -9,9 +9,9 @@
       },
       {
         "name": "demo",
-        "label": "Type 1 to seed demo data and show demo logins, or leave empty for the setup wizard",
-        "initialValue": "",
-        "type": "text"
+        "label": "Seed the demo data set? It shows demo logins with known passwords - leave this off unless nobody else can reach this machine.",
+        "initialValue": false,
+        "type": "checkbox"
       }
     ]
   },
@@ -21,13 +21,25 @@
       "image": "ghcr.io/fgilde/coworkeenextjs:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.status<500?0:1)).catch(()=>process.exit(1))\""
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "start_period": 30
+      },
       "depends_on": ["{ServiceName}-postgres"],
       "environment": [
         "TZ=auto",
         "DATABASE_URL=postgresql://coworkee:{Passwords.0}@{ServiceName}-postgres:5432/coworkee?schema=public",
         "AUTH_SECRET={Context.authSecret}",
-        "AUTH_TRUST_HOST=true",
-        "DEMO={Context.demo}"
+        "AUTH_TRUST_HOST=true"
+        {if Context.demo}
+        , "DEMO=1"
+        {/if}
       ],
       "labels": {
         "cosmos-persistent-env": "DATABASE_URL, AUTH_SECRET",
@@ -59,7 +71,8 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
-          }
+          },
+          "AuthEnabled": true
         }
       ]
     },
