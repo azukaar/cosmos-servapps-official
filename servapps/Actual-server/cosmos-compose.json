@@ -3,6 +3,13 @@
     "minVersion": "0.9.0",
     "services": {
         "{ServiceName}": {
+          "healthcheck": {
+            "test": [
+              "CMD-SHELL",
+              "node src/scripts/health-check.js"
+            ],
+            "interval": 60
+          },
             "image": "actualbudget/actual-server:latest",
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",

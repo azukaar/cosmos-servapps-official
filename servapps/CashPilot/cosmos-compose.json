@@ -5,6 +5,18 @@
   
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import sys,http.client\ntry:\n    c = http.client.HTTPConnection('127.0.0.1', 8080, timeout=3)\n    c.request('GET', '/api/health')\n    sys.exit(0 if c.getresponse().status == 200 else 1)\nexcept Exception:\n    sys.exit(1)"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "start_period": 20,
+        "retries": 3
+      },
       "image": "drumsergio/cashpilot:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",

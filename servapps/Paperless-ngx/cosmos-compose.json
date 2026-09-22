@@ -76,6 +76,21 @@
   "minVersion": "0.22.30",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "curl",
+          "-fs",
+          "-S",
+          "-L",
+          "--max-time",
+          "2",
+          "http://localhost:8000"
+        ],
+        "interval": 30,
+        "timeout": 10,
+        "retries": 5
+      },
       "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
       "restart": "unless-stopped",
       "security_opt": [

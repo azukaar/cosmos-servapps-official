@@ -122,6 +122,15 @@
     },
     "services": {
        "{ServiceName}": {
+         "healthcheck": {
+           "test": [
+             "CMD",
+             "mc-health"
+           ],
+           "interval": 30,
+           "start_period": 120,
+           "retries": 2
+         },
           "image": "itzg/minecraft-bedrock-server",
           "container_name": "{ServiceName}",
           "restart": "unless-stopped",

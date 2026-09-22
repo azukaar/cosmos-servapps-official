@@ -59,6 +59,14 @@
   "minVersion": "0.16.0",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "curl --fail http://localhost:6052/version -A \"HealthCheck\" || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 30
+      },
       "container_name": "{ServiceName}",
       "image": "ghcr.io/esphome/esphome",
       "volumes": [

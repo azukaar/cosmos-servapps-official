@@ -59,6 +59,15 @@
   "minVersion": "0.16.0",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "/healthcheck.sh"
+        ],
+        "interval": 5,
+        "timeout": 3,
+        "start_period": 2
+      },
       "image": "filebrowser/filebrowser:s6",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",

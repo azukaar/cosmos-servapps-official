@@ -50,6 +50,17 @@
   "minVersion": "0.22.9",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "/updater/ddns-updater",
+          "healthcheck"
+        ],
+        "interval": 60,
+        "timeout": 5,
+        "start_period": 10,
+        "retries": 2
+      },
       "image": "ghcr.io/qdm12/ddns-updater:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",

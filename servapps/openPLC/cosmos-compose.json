@@ -4,6 +4,16 @@
   "minVersion": "0.22.4",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "curl -kfsS https://127.0.0.1:8443/api/version >/dev/null || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 10,
+        "start_period": 90,
+        "retries": 3
+      },
       "image": "ghcr.io/autonomy-logic/openplc-runtime:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",

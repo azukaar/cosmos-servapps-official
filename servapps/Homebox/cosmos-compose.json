@@ -18,6 +18,21 @@
   "minVersion": "0.8.0",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "-O",
+          "-",
+          "http://localhost:7745/api/v1/status"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "start_period": 5,
+        "retries": 3
+      },
       "container_name": "{ServiceName}",
       "image": "ghcr.io/sysadminsmedia/homebox:latest",
       "environment": [

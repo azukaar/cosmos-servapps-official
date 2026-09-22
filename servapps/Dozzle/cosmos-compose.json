@@ -19,6 +19,16 @@
   },
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "/dozzle",
+          "healthcheck"
+        ],
+        "interval": 5,
+        "start_period": 5,
+        "retries": 5
+      },
       "image": "amir20/dozzle:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
