@@ -3,13 +3,13 @@
     "form": [
       {
         "name": "adminUser",
-        "label": "Admin user name (leave empty to use the first-run setup wizard)",
+        "label": "Admin user name (required - the account that administers this instance)",
         "initialValue": "",
         "type": "text"
       },
       {
         "name": "adminPassword",
-        "label": "Admin password (only used together with the user name above)",
+        "label": "Admin password (required - at least 12 characters)",
         "initialValue": "",
         "type": "password"
       }
@@ -21,6 +21,16 @@
       "image": "ghcr.io/fgilde/aspireui:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "curl -fsS http://127.0.0.1:8080/ -o /dev/null || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "start_period": 30
+      },
       "environment": [
         "TZ=auto",
         "ASPIREUI_SET_PublicHost={ServerHostname}"
@@ -59,7 +69,9 @@
           "BlockCommonBots": true,
           "SmartShield": {
             "Enabled": true
-          }
+          },
+          "AuthEnabled": true,
+          "AuthAdmin": true
         }
       ]
     }
