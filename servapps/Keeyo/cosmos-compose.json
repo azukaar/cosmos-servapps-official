@@ -3,18 +3,22 @@
     "post-install": [
       {
         "type": "info",
-        "label": "Your first visit to Keeyo creates the admin account — there are no default credentials."
+        "label": "Sign in with your Cosmos account — the first person to sign in becomes the Keeyo admin."
       }
     ]
   },
-  "minVersion": "0.8.0",
+  "minVersion": "0.22.29",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/ans-ib/keeyo:2.0.0",
+      "image": "ghcr.io/ans-ib/keeyo:2.1.0",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
-        "TRUST_PROXY=1"
+        "TRUST_PROXY=1",
+        "KEEYO_OIDC_ISSUER={RootProtocol}://{RootHostname}",
+        "KEEYO_OIDC_CLIENT_ID=__route_{ServiceName}",
+        "KEEYO_OIDC_NAME=Cosmos",
+        "KEEYO_OIDC_ADMIN_BOOTSTRAP=1"
       ],
       "volumes": [
         {
@@ -32,6 +36,7 @@
         {
           "name": "{ServiceName}",
           "description": "Expose {ServiceName} to the web",
+          "publicOpenIDName": "__route_{ServiceName}",
           "useHost": true,
           "target": "http://{ServiceName}:5390",
           "mode": "SERVAPP",
