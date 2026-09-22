@@ -1,0 +1,9 @@
+{
+  "name": "LogForge Unicron",
+  "longDescription": "<p>All in one UI, for Docker. Real-time logs, Interactive terminals, Custom alerts/notifications/Automations, File system access through enrolled agents.</p><p><strong>Security notice: writable Docker socket access grants LogForge root-equivalent control of the Cosmos Docker host.</strong> Central uses this access for automatic local agent deployment and appliance self-update. Agents use Docker access for container operations, terminals, file access, and automation on their hosts. These are trusted administrator capabilities; only grant LogForge administrator access to trusted users.</p><p>Agent enrollment uses logforge/unicron-agent:latest. For manual enrollment, pull the image on the agent host before running its enrollment command.</p><p><strong>Build transparency:</strong> The appliance packages Python services with PyInstaller. Source and build recipes are available in the linked source repository. This listing does not attest reproducible builds, source-to-image equivalence, or SBOM availability; verify any release provenance and SBOM with the publisher.</p>",
+  "description": "All-in-one Docker observability and operations UI.",
+  "tags": ["docker", "logs", "monitoring", "observability", "terminal", "automation"],
+  "repository": "https://github.com/log-forge/unicron-source",
+  "image": "https://hub.docker.com/r/logforge/unicron",
+  "supported_architectures": ["amd64", "arm64"]
+}
