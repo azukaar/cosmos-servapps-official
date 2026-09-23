@@ -2,6 +2,10 @@
   "cosmos-installer": {
     "form": [
       {
+        "type": "warning",
+        "label": "Security notice: LogForge has writable Docker socket access and root-equivalent control of the Cosmos Docker host. This is required for automatic local agent deployment and appliance self-update. Enrolled agents also have root-equivalent control of their Docker hosts for container operations, terminals, and automation. Only grant LogForge administrator access to trusted users."
+      },
+      {
         "name": "adminUsername",
         "label": "Initial administrator username",
         "initialValue": "admin",
@@ -28,7 +32,7 @@
     ],
     "post-install": [
       {
-        "type": "info",
+        "type": "warning",
         "label": "Security notice: LogForge has writable Docker socket access and root-equivalent control of the Cosmos Docker host. This is required for automatic local agent deployment and appliance self-update. Enrolled agents also have root-equivalent control of their Docker hosts for container operations, terminals, and automation. Only grant LogForge administrator access to trusted users."
       },
       {
