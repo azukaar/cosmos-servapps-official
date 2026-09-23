@@ -15,7 +15,7 @@
       }
     ]
   },
-  "minVersion": "0.10.3",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}-db": {
       "image": "postgres:15.2",
@@ -51,6 +51,14 @@
       "image": "cyfershepard/jellystat:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1"
+        ],
+        "interval": 60,
+        "timeout": 10
+      },
       "environment": [
         "TZ=auto",
         "POSTGRES_USER=postgres",

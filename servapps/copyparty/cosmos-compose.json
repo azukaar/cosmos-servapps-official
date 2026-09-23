@@ -53,6 +53,18 @@
   "services": {
     "{ServiceName}": {
       "image": "copyparty/ac:latest",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:3923/"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",

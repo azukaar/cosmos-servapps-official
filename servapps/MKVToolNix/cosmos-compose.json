@@ -15,10 +15,20 @@
       }
     ]
   },
-  "minVersion": "0.9.19",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "jlesage/mkvtoolnix",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "bash -c 'exec 3<>/dev/tcp/localhost/5800' 2>/dev/null || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 10,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,

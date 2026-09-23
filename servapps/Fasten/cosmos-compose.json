@@ -1,9 +1,21 @@
 {
   "cosmos-installer": {},
-  "minVersion": "0.8.0",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/fastenhealth/fasten-onprem:main",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:8080/"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "restart": "unless-stopped",
       "container_name": "{ServiceName}",
       "labels": {

@@ -5,10 +5,20 @@
       { "name": "KEYCLOAK_ADMIN_PASSWORD", "label": "What Keycloak admin password do you want?", "initialValue": "change-me", "type": "password" }
     ]
   },
-  "minVersion": "0.9.0",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "quay.io/keycloak/keycloak:latest",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "bash -c 'exec 3<>/dev/tcp/localhost/9000' 2>/dev/null || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 60,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "command": "start --http-enabled=true --proxy-headers=xforwarded --hostname={Hostnames.{StaticServiceName}.{StaticServiceName}.host}",

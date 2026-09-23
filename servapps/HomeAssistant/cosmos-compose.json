@@ -24,6 +24,16 @@
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/homeassistant:latest",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "curl -s http://localhost:8123/ >/dev/null 2>&1 || python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8123/') if 1 else None\" >/dev/null 2>&1 || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 60,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "security_opt": [

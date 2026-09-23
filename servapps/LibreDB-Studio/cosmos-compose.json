@@ -1,9 +1,21 @@
 {
     "cosmos-installer": {},
-    "minVersion": "0.9.0",
+    "minVersion": "0.11.0",
     "services": {
         "{ServiceName}": {
             "image": "ghcr.io/libredb/libredb-studio:latest",
+              "healthcheck": {
+                "test": [
+                  "CMD",
+                  "node",
+                  "-e",
+                  "require('http').get('http://localhost:80/',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "start_period": 30,
+                "retries": 3
+              },
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",
             "environment": [

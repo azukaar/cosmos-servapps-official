@@ -1,8 +1,15 @@
 {
     "cosmos-installer": {},
-    "minVersion": "0.9.0",
+    "minVersion": "0.11.0",
     "services": {
         "{ServiceName}": {
+          "healthcheck": {
+            "test": [
+              "CMD-SHELL",
+              "curl -ILfks https://localhost:8181/status > /dev/null || curl -ILfs http://localhost:8181/status > /dev/null || exit 1"
+            ],
+            "start_period": 90
+          },
             "image": "lscr.io/linuxserver/tautulli",
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",
