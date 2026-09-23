@@ -75,15 +75,6 @@
   "minVersion": "0.9.0",
   "services": {
     "{ServiceName}": {
-      "healthcheck": {
-        "test": [
-          "CMD",
-          "mc-health"
-        ],
-        "interval": 30,
-        "start_period": 120,
-        "retries": 2
-      },
       "image": "itzg/minecraft-server:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",

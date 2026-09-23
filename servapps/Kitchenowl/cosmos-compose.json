@@ -3,14 +3,6 @@
     "minVersion": "0.8.4",
     "services": {
         "{ServiceName}": {
-          "healthcheck": {
-            "test": [
-              "CMD-SHELL",
-              "uwsgi_curl localhost:5000 /api/health/8M4F88S8ooi4sMbLBfkkV7ctWwgibW6V || exit 1"
-            ],
-            "interval": 60,
-            "timeout": 3
-          },
             "image": "tombursch/kitchenowl-web",
             "container_name": "{ServiceName}",
             "restart": "unless-stopped",

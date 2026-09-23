@@ -27,12 +27,6 @@
   "minVersion": "0.12.0",
   "services": {
     "{ServiceName}": {
-      "healthcheck": {
-        "test": [
-          "CMD",
-          "immich-healthcheck"
-        ]
-      },
       "container_name": "{ServiceName}",
       "hostname": "{ServiceName}",
       "image": "ghcr.io/immich-app/immich-server:v3.1.0",

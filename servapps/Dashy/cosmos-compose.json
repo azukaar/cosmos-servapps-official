@@ -12,17 +12,6 @@
   },
   "services": {
     "{ServiceName}": {
-      "healthcheck": {
-        "test": [
-          "CMD",
-          "node",
-          "/app/services/healthcheck.js"
-        ],
-        "interval": 90,
-        "timeout": 10,
-        "start_period": 20,
-        "retries": 3
-      },
       "image": "lissy93/dashy:latest",
       "container_name": "{ServiceName}",
       "UID": 1000,

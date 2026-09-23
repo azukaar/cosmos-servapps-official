@@ -15,16 +15,6 @@
       "image": "ghcr.io/alexta69/metube",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
-      "healthcheck": {
-        "test": [
-          "CMD-SHELL",
-          "case \"$HTTPS\" in true|True|on|1) curl -fsSk \"https://localhost:8081/\";; *) curl -fsS \"http://localhost:8081/\";; esac"
-        ],
-        "interval": 30,
-        "timeout": 5,
-        "start_period": 20,
-        "retries": 3
-      },
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
