@@ -7,9 +7,9 @@
         "healthcheck": {
           "test": [
             "CMD",
-            "/bin/curl",
-            "-fsS",
-            "http://localhost:5678/healthz"
+            "node",
+            "-e",
+            "require('http').get('http://localhost:5678/healthz',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
           ],
           "interval": 30,
           "timeout": 5,
