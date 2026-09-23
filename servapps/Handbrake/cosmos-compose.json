@@ -33,7 +33,7 @@
       }
     ]
   },
-  "minVersion": "0.9.19",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "jlesage/handbrake:latest",

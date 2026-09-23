@@ -19,7 +19,7 @@
       }
     ]
 },
-  "minVersion": "0.10.3",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "fyb3roptik/threadfin:latest",

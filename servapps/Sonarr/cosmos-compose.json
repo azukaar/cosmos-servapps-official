@@ -42,7 +42,7 @@
       {/if}
     ]
   },
-  "minVersion": "0.7.6",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "lscr.io/linuxserver/sonarr:latest",

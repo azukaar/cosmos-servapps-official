@@ -8,7 +8,7 @@
     ],
     "form": []
   },
-  "minVersion": "0.8.0",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "vimagick/opencart:latest",

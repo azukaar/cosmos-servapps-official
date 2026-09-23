@@ -21,7 +21,7 @@
       }
     ]
   },
-  "minVersion": "0.7.6",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "photoprism/photoprism",

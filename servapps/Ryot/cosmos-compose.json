@@ -1,7 +1,7 @@
 {
   "cosmos-installer": {
   },
-  "minVersion": "0.9.0",
+  "minVersion": "0.11.0",
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/ignisda/ryot:latest",
