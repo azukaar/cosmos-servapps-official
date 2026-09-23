@@ -2,6 +2,10 @@
   "cosmos-installer": {
     "form": [
       {
+        "type": "warning",
+        "label": "Security notice: AspireUI mounts the Docker socket and has root-equivalent control of this Cosmos host. It needs it to do its job - it creates containers, networks and volumes, pulls images, runs docker compose for stacks you install, and opens a shell inside a container that will not stay up. A filtering socket proxy cannot serve that, because every section it would have to grant (CONTAINERS, IMAGES, EXEC, POST, VOLUMES) is the whole socket again. Anyone who becomes an AspireUI administrator is effectively root on this machine, so grant that account only to people you would give root to."
+      },
+      {
         "name": "adminUser",
         "label": "Admin user name (required - the account that administers this instance)",
         "initialValue": "",
@@ -12,6 +16,12 @@
         "label": "Admin password (required - at least 12 characters)",
         "initialValue": "",
         "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "Security notice: AspireUI mounts the Docker socket and has root-equivalent control of this Cosmos host. It needs it to do its job - it creates containers, networks and volumes, pulls images, runs docker compose for stacks you install, and opens a shell inside a container that will not stay up. A filtering socket proxy cannot serve that, because every section it would have to grant (CONTAINERS, IMAGES, EXEC, POST, VOLUMES) is the whole socket again. Anyone who becomes an AspireUI administrator is effectively root on this machine, so grant that account only to people you would give root to."
       }
     ]
   },
