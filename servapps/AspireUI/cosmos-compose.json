@@ -1,0 +1,89 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "type": "warning",
+        "label": "Security notice: AspireUI mounts the Docker socket and has root-equivalent control of this Cosmos host. It needs it to do its job - it creates containers, networks and volumes, pulls images, runs docker compose for stacks you install, and opens a shell inside a container that will not stay up. A filtering socket proxy cannot serve that, because every section it would have to grant (CONTAINERS, IMAGES, EXEC, POST, VOLUMES) is the whole socket again. Anyone who becomes an AspireUI administrator is effectively root on this machine, so grant that account only to people you would give root to."
+      },
+      {
+        "name": "adminUser",
+        "label": "Admin user name (required - the account that administers this instance)",
+        "initialValue": "",
+        "type": "text"
+      },
+      {
+        "name": "adminPassword",
+        "label": "Admin password (required - at least 12 characters)",
+        "initialValue": "",
+        "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "Security notice: AspireUI mounts the Docker socket and has root-equivalent control of this Cosmos host. It needs it to do its job - it creates containers, networks and volumes, pulls images, runs docker compose for stacks you install, and opens a shell inside a container that will not stay up. A filtering socket proxy cannot serve that, because every section it would have to grant (CONTAINERS, IMAGES, EXEC, POST, VOLUMES) is the whole socket again. Anyone who becomes an AspireUI administrator is effectively root on this machine, so grant that account only to people you would give root to."
+      }
+    ]
+  },
+  "minVersion": "0.13.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/fgilde/aspireui:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "curl -fsS http://127.0.0.1:8080/ -o /dev/null || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "start_period": 30
+      },
+      "environment": [
+        "TZ=auto",
+        "ASPIREUI_SET_PublicHost={ServerHostname}"
+        {if Context.adminUser}
+        , "ASPIREUI_ADMIN_USERNAME={Context.adminUser}"
+        {/if}
+        {if Context.adminPassword}
+        , "ASPIREUI_ADMIN_PASSWORD={Context.adminPassword}"
+        {/if}
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/AspireUI/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true,
+          "AuthAdmin": true
+        }
+      ]
+    }
+  }
+}
