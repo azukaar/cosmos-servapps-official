@@ -4,6 +4,6 @@
   "description": "Soulseek client with discovery, downloads, and mesh features.",
   "tags": ["soulseek", "music", "downloads", "p2p", "self-hosted", "docker"],
   "repository": "https://github.com/snapetech/slskdn",
-  "image": "https://hub.docker.com/r/snapetech/slskdn",
+  "image": "docker.io/snapetech/slskdn:2026092517-slskdn.325",
   "supported_architectures": ["amd64", "arm64"]
 }

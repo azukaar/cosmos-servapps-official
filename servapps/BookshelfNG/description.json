@@ -4,6 +4,6 @@
   "description": "Ebook and audiobook collection manager with download automation.",
   "tags": ["ebooks", "audiobooks", "library", "readarr", "self-hosted", "docker"],
   "repository": "https://github.com/snapetech/bookshelfng",
-  "image": "https://hub.docker.com/r/snapetech/bookshelfng",
+  "image": "docker.io/snapetech/bookshelfng:hardcover-v0.4.21.37",
   "supported_architectures": ["amd64", "arm64"]
 }

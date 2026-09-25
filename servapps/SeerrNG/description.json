@@ -4,6 +4,6 @@
   "description": "Self-hosted media requests and discovery across movies, TV, music, and books.",
   "tags": ["media", "request", "plex", "jellyfin", "emby", "books", "self-hosted", "docker"],
   "repository": "https://github.com/snapetech/seerrng",
-  "image": "https://hub.docker.com/r/snapetech/seerrng",
+  "image": "docker.io/snapetech/seerrng:v3.27.1",
   "supported_architectures": ["amd64", "arm64"]
 }
