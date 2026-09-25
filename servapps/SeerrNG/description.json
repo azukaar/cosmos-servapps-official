@@ -1,0 +1,9 @@
+{
+  "name": "SeerrNG",
+  "longDescription": "<p>SeerrNG is a self-hosted request and discovery application for Plex, Jellyfin, and Emby.</p><p>It supports movie, TV, music, ebook, and audiobook requests and connects approved requests to Radarr, Sonarr, Lidarr, and Bookshelf or Readarr-compatible services.</p>",
+  "description": "Self-hosted media requests and discovery across movies, TV, music, and books.",
+  "tags": ["media", "request", "plex", "jellyfin", "emby", "books", "self-hosted", "docker"],
+  "repository": "https://github.com/snapetech/seerrng",
+  "image": "https://hub.docker.com/r/snapetech/seerrng",
+  "supported_architectures": ["amd64", "arm64"]
+}

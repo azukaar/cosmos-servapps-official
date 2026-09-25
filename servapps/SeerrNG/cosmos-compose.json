@@ -1,0 +1,53 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "adminOnly",
+        "label": "Make this service administrator-only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ]
+  },
+  "minVersion": "0.9.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "docker.io/snapetech/seerrng:v3.27.1",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "init": true,
+      "uid": 1000,
+      "gid": 1000,
+      "environment": ["LOG_LEVEL=info", "PORT=5055"],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://raw.githubusercontent.com/snapetech/seerrng/main/public/android-chrome-512x512.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/app/config",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose SeerrNG to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5055",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {"Enabled": true},
+          "AuthEnabled": true
+          {if Context.adminOnly}
+          , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}

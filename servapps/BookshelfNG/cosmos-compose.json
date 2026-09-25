@@ -1,0 +1,50 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "booksPath",
+        "label": "Where is your ebook and audiobook library?",
+        "initialValue": "{DefaultDataPath}/books",
+        "type": "text"
+      },
+      {
+        "name": "downloadsPath",
+        "label": "Where should downloads be stored?",
+        "initialValue": "{DefaultDataPath}/downloads",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "0.9.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "docker.io/snapetech/bookshelfng:hardcover-v0.4.21.37",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://raw.githubusercontent.com/snapetech/bookshelfng/main/Logo/512.png"
+      },
+      "volumes": [
+        {"source": "{ServiceName}-config", "target": "/config", "type": "volume"},
+        {"source": "{Context.booksPath}", "target": "/books", "type": "bind"},
+        {"source": "{Context.downloadsPath}", "target": "/downloads", "type": "bind"}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose BookshelfNG to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8787",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {"Enabled": true},
+          "AuthEnabled": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "BookshelfNG",
+  "longDescription": "<p>BookshelfNG is a self-hosted ebook and audiobook library manager descended from Readarr.</p><p>Follow authors and books, monitor indexers, import existing libraries, organize downloads, and use Hardcover or softcover-compatible metadata.</p>",
+  "description": "Ebook and audiobook collection manager with download automation.",
+  "tags": ["ebooks", "audiobooks", "library", "readarr", "self-hosted", "docker"],
+  "repository": "https://github.com/snapetech/bookshelfng",
+  "image": "https://hub.docker.com/r/snapetech/bookshelfng",
+  "supported_architectures": ["amd64", "arm64"]
+}
