@@ -59,7 +59,7 @@
       "image": "fxerkan/my_network_scanner:1.8.2",
       "restart": "unless-stopped",
       "network_mode": "host",
-      "capabilities": ["NET_ADMIN", "NET_RAW"],
+      "cap_add": ["NET_ADMIN", "NET_RAW"],
       "environment": [
         "MYNES_PORT=5883",
         "MYNES_AUTH_ENABLED={MYNES_AUTH_ENABLED}",
@@ -90,7 +90,7 @@
       ],
       "labels": {
         "cosmos-force-network-secured": "false",
-        "cosmos-icon": "https://raw.githubusercontent.com/fxerkan/my_network_scanner/main/assets/logo.svg"
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/MyNeS/icon.png"
       }
     }
   }
