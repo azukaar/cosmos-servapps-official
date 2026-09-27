@@ -2,6 +2,28 @@
   "cosmos-installer": {
     "form": [
       {
+        "name": "MYNES_AUTH_ENABLED",
+        "label": "Require sign-in (recommended on an open LAN)",
+        "initialValue": "false",
+        "type": "text",
+        "description": "Set to true to turn on the single-user login gate. Needs a username and password below.",
+        "required": false
+      },
+      {
+        "name": "MYNES_AUTH_USERNAME",
+        "label": "Login username",
+        "initialValue": "",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "MYNES_AUTH_PASSWORD",
+        "label": "Login password",
+        "initialValue": "",
+        "type": "password",
+        "required": false
+      },
+      {
         "name": "MYNES_MQTT_HOST",
         "label": "MQTT broker host (optional)",
         "initialValue": "",
@@ -34,16 +56,26 @@
   "services": {
     "{ServiceName}": {
       "container_name": "{ServiceName}",
-      "image": "fxerkan/my_network_scanner:1.3.0",
+      "image": "fxerkan/my_network_scanner:1.8.2",
       "restart": "unless-stopped",
       "network_mode": "host",
       "capabilities": ["NET_ADMIN", "NET_RAW"],
       "environment": [
         "MYNES_PORT=5883",
+        "MYNES_AUTH_ENABLED={MYNES_AUTH_ENABLED}",
+        "MYNES_AUTH_USERNAME={MYNES_AUTH_USERNAME}",
+        "MYNES_AUTH_PASSWORD={MYNES_AUTH_PASSWORD}",
         "MYNES_MQTT_HOST={MYNES_MQTT_HOST}",
         "MYNES_HA_URL={MYNES_HA_URL}",
         "MYNES_HA_TOKEN={MYNES_HA_TOKEN}"
       ],
+      "healthcheck": {
+        "test": ["CMD", "python", "-c", "import http.client as h; c=h.HTTPConnection('localhost',5883,timeout=5); c.request('GET','/api/health'); exit(0 if c.getresponse().status < 500 else 1)"],
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "start_period": "40s"
+      },
       "volumes": [
         {
           "source": "{Context.storagePath}/{ServiceName}/data",
