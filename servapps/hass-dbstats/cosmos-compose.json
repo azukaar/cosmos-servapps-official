@@ -24,6 +24,18 @@
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/jehy/hass-dbstats:latest",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:80/"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "user": "1000:1000",

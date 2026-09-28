@@ -6,6 +6,18 @@
   "services": {
     "{ServiceName}": {
       "image": "drumsergio/genieacs:latest",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/usr/bin/wget",
+            "-qO-",
+            "http://localhost:7547/"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [

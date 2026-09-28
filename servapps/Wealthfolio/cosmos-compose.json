@@ -45,6 +45,17 @@
   "minVersion": "0.22.18",
   "services": {
     "{ServiceName}": {
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://127.0.0.1:8088/api/v1/healthz"
+        ],
+        "interval": 30
+      },
       "image": "wealthfolio/wealthfolio:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",

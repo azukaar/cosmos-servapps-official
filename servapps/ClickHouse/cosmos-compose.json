@@ -75,6 +75,18 @@
   "services": {
     "{ServiceName}": {
       "image": "clickhouse/clickhouse-server:latest",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/usr/bin/wget",
+            "-qO-",
+            "http://localhost:8123/ping"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "user": "1000:1000",
       "environment": [
         {if Context.customSetup}

@@ -78,6 +78,16 @@
   "services": {
     "{ServiceName}": {
       "image": "3cky/mbusd",
+        "healthcheck": {
+          "test": [
+            "CMD-SHELL",
+            "nc -z localhost 502 || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 10,
+          "retries": 3
+        },
       "container_name": "{ServiceName}-{Context.serialPort}",
       "restart": "unless-stopped",
       "UID": 1000,

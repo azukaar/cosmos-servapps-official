@@ -25,6 +25,19 @@
     "{ServiceName}": {
       "container_name": "{ServiceName}",
       "image": "prom/prometheus",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/busybox",
+            "wget",
+            "-qO-",
+            "http://localhost:9090/-/healthy"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "security_opt": [
         "no-new-privileges:true"
       ],

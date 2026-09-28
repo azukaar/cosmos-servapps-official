@@ -57,6 +57,18 @@
     {if Context.v3}
     "{ServiceName}": {
       "image": "influxdb:3-core",
+        "healthcheck": {
+          "test": [
+            "CMD",
+            "/bin/curl",
+            "-fsS",
+            "http://localhost:8086/health"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "start_period": 20,
+          "retries": 3
+        },
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "UID": 1000,
