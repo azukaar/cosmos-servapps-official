@@ -748,6 +748,259 @@ function checkComposeSchema(app, rendered, isYaml, composeFileLabel) {
   }
 }
 // ---------------------------------------------------------------------------
+// minVersion support matrix
+//
+// The minimum Cosmos-Server version that honors each template feature. This
+// is used to check that a template's `minVersion` is high enough for the
+// fields it uses - otherwise the template could be installed on a Cosmos that
+// silently ignores those fields (or the fields' newer behavior).
+//
+// Verified against azukaar/Cosmos-Server git history with `git log -S` +
+// `git tag --contains` on the introducing commits (only STABLE tags count;
+// "-unstableNNN" pre-release tags are not released versions). Concretely:
+//   - src/docker/api_blueprint.go      (ContainerCreateRequestContainer service fields)
+//   - src/utils/types.go              (ProxyRouteConfig / SmartShieldPolicy route fields)
+//   - client/src/pages/servapps/containers/docker-compose.jsx + newService.jsx
+//     (installer form types, template variables, post-install, translations)
+//   - changelog.md                    (market/store feature introductions)
+// See CREATING_A_MARKET_TEMPLATE.md §9 for the full human-readable matrix.
+// ---------------------------------------------------------------------------
+
+// Generic semver-ish compare used only to decide "is B ≥ A". Handles the
+// 1..4 part dotted versions found in the store, with optional -suffix
+// (e.g. "0.16.0-unstable26"). Suffixed prerelease builds sort BELOW the
+// corresponding release (0.16.0-unstable26 < 0.16.0) but versions in the
+// store are compared numerically against release floors, which is what we
+// want. Returns:
+//   -1 if a < b, 0 if a == b, 1 if a > b
+// For a === b it returns 0. Non-numeric components break ties by treating
+// "has suffix" as smaller.
+function compareVersions(a, b) {
+  const pa = String(a || '').trim().split('-')[0].split('.').map((x) => { const n = parseInt(x, 10); return Number.isNaN(n) ? 0 : n; });
+  const pb = String(b || '').trim().split('-')[0].split('.').map((x) => { const n = parseInt(x, 10); return Number.isNaN(n) ? 0 : n; });
+  const len = Math.max(pa.length, pb.length);
+  for (let i = 0; i < len; i++) {
+    const x = pa[i] || 0, y = pb[i] || 0;
+    if (x !== y) return x < y ? -1 : 1;
+  }
+  // numeric parts equal: a version with a pre-release suffix is older
+  const sa = /^[0-9.]+(-.+)?$/.test(String(a || '').trim()) ? (String(a || '').trim().includes('-') ? 1 : 0) : 0;
+  const sb = /^[0-9.]+(-.+)?$/.test(String(b || '').trim()) ? (String(b || '').trim().includes('-') ? 1 : 0) : 0;
+  if (sa !== sb) return sa === 1 ? -1 : 1; // a has a prerelease suffix => a is older
+  return 0;
+}
+
+// Minimum Cosmos version for each feature a template may use. Keys are the
+// raw fields/values as they appear in the template.
+const FEATURE_MINVERSION = {
+  // --- installer (cosmos-installer) features ---
+  // All of these landed together with the market in v0.7.0 (verified via
+  // git tag --contains on the introducing commits).
+  'cosmos-installer.form':              '0.7.0',
+  'cosmos-installer.form.passwords':    '0.7.0',   // {Passwords.N} in initialValue / template
+  'cosmos-installer.frozen-volumes':    '0.7.0',
+  'cosmos-installer.skip-default-network': '0.14.0',
+  'cosmos-installer.translation':       '0.16.0',  // i18next support (PR #303)
+  'cosmos-installer.post-install':      '0.7.0',   // rendered in newService.jsx since 0.7.0
+
+  // --- installer form field types ---
+  'form-type.text':          '0.7.0',
+  'form-type.password':      '0.7.0',
+  'form-type.email':         '0.7.0',
+  'form-type.checkbox':      '0.7.0',
+  'form-type.warning':       '0.7.0',
+  'form-type.info':          '0.7.0',
+  'form-type.error':         '0.7.0',
+  'form-type.select':        '0.7.0',
+  'form-type.hostname':      '0.7.0',
+  'form-type.container':     '0.7.0',
+  'form-type.container-full':'0.7.0',
+  'form-type.path':          '0.17.0',
+  // 'success' is NOT a form type - it is a post-install message severity
+  // (MUI Alert severity) and has existed since post-install itself (0.7.0).
+
+  // --- template variables ---
+  'var.ServiceName':        '0.7.0',
+  'var.Context':            '0.7.0',
+  'var.Passwords':          '0.7.0',
+  'var.DefaultDataPath':    '0.7.6',   // pickaxe: introduced in v0.7.6
+  'var.Hostnames':          '0.7.0',
+  'var.CPU_ARCH':           '0.7.0',   // pickaxe: same commit as market (0.7.0)
+  'var.CPU_AVX':            '0.7.0',
+  'var.RootHostname':       '0.22.23',
+  'var.RootProtocol':       '0.22.23',
+
+  // --- service-level (container) fields > the 0.5.x baseline ---
+  'svc.uid':                '0.7.0',
+  'svc.gid':                '0.7.0',
+  'svc.post_install':       '0.7.0',
+  'svc.runtime':            '0.16.0',  // PR #299 (Add runtime support)
+  'svc.mem_limit':          '0.20.0',  // pickaxe: introduced in v0.20.0
+  'svc.mem_reservation':    '0.20.0',
+  'svc.cpus':               '0.20.0',
+  'svc.cpu_shares':         '0.20.0',
+  'svc.cpuset_cpus':        '0.20.0',
+
+  // --- template top-level ---
+  'top.minVersion':         '0.7.0',
+  'top.cosmos-installer':   '0.7.0',
+  'top.services':           '0.5.0',   // cosmos-compose service creation existed pre-market
+};
+
+// Fields that exist in the store vocabulary but are NOT (yet) honored by
+// Cosmos-Server at all. Using one does not bump minVersion - it is simply
+// ignored at install time - but we keep them out of the "is newer than the
+// declared minVersion" calculation to avoid false positives on legacy apps.
+const STORE_ONLY_FIELDS = new Set(['init', 'logging', 'shm_size', 'group_add', 'deploy']);
+
+// Detect the highest Cosmos version required by every feature used in a
+// rendered compose document. Returns { max, fields } where fields lists the
+// concrete feature keys that required the maximum (for the error message).
+function requiredMinVersion(rendered, isYaml) {
+  let doc = rendered;
+  if (typeof doc === 'string') { try { doc = JSON.parse(doc); } catch (e) { return { max: null, fields: [] }; } }
+  if (!doc || typeof doc !== 'object') return { max: null, fields: [] };
+
+  let max = null;
+  const maxFields = [];
+
+  const bump = (key, why) => {
+    const v = FEATURE_MINVERSION[key];
+    if (!v) return;
+    if (max === null || compareVersions(v, max) > 0) {
+      max = v;
+      maxFields.length = 0;
+      maxFields.push(why);
+    } else if (max !== null && compareVersions(v, max) === 0) {
+      maxFields.push(why);
+    }
+  };
+
+  // top-level
+  if (doc.services) bump('top.services', 'top-level "services" (required field)');
+  if (doc['cosmos-installer']) bump('top.cosmos-installer', 'top-level "cosmos-installer" (required field)');
+  if (doc.minVersion) bump('top.minVersion', 'top-level "minVersion" (required field)');
+
+  // installer options - each is independent of the others (e.g. post-install
+  // can exist without any form fields), so each is checked separately.
+  const ci = doc['cosmos-installer'];
+  if (ci && typeof ci === 'object') {
+    if (Array.isArray(ci['frozen-volumes']) && ci['frozen-volumes'].length) bump('cosmos-installer.frozen-volumes', '"cosmos-installer.frozen-volumes"');
+    if (Array.isArray(ci['post-install']) && ci['post-install'].length) bump('cosmos-installer.post-install', '"cosmos-installer.post-install"');
+    if (ci.translation && typeof ci.translation === 'object' && Object.keys(ci.translation).length) bump('cosmos-installer.translation', '"cosmos-installer.translation"');
+    if (ci['skip-default-network']) bump('cosmos-installer.skip-default-network', '"cosmos-installer.skip-default-network"');
+    if (Array.isArray(ci.form) && ci.form.length) {
+      bump('cosmos-installer.form', '"cosmos-installer.form"');
+      for (const f of ci.form) {
+        if (!f || typeof f !== 'object') continue;
+        const t = String(f.type || 'text').toLowerCase();
+        const key = 'form-type.' + t;
+        if (FEATURE_MINVERSION[key]) bump(key, 'form field "' + (f.name || f.label || '?') + '" type "' + t + '"');
+      }
+    }
+  }
+
+  // template variables anywhere in the raw text (initialValue, labels, envs, volumes...)
+  if (typeof rendered === 'string') {
+    // variables are detected on the RAW (pre-render) text in the caller; here
+    // rendered may be a parsed object for JSON templates, so variables are
+    // detected via the raw template in checkMinVersionTemplate.
+  }
+
+  // service fields
+  const services = doc.services;
+  if (services && typeof services === 'object') {
+    for (const [name, conf] of Object.entries(services)) {
+      if (!conf || typeof conf !== 'object') continue;
+      for (const k of Object.keys(conf)) {
+        const low = k.toLowerCase();
+        if (STORE_ONLY_FIELDS.has(low)) continue;
+        const key = 'svc.' + low;
+        if (FEATURE_MINVERSION[key]) bump(key, 'services.' + name + '.' + k);
+      }
+    }
+  }
+
+  return { max, fields: maxFields };
+}
+
+// Detect template variables ({...}) and installer features on the RAW
+// (unrendered) template text, because {Passwords.N} etc. are substituted by
+// whiskers before JSON parsing and are invisible on the rendered object.
+// Returns the highest required version and the matching feature keys.
+function requiredMinVersionRaw(raw) {
+  let max = null;
+  const maxFields = [];
+  const bump = (key, why) => {
+    const v = FEATURE_MINVERSION[key];
+    if (!v) return;
+    if (max === null || compareVersions(v, max) > 0) {
+      max = v; maxFields.length = 0; maxFields.push(why);
+    } else if (max !== null && compareVersions(v, max) === 0) {
+      maxFields.push(why);
+    }
+  };
+
+  // {Passwords.N}
+  if (/\{Passwords\./.test(raw)) bump('var.Passwords', '{Passwords.N} variable');
+  // {DefaultDataPath}
+  if (/\{DefaultDataPath\}/.test(raw)) bump('var.DefaultDataPath', '{DefaultDataPath} variable');
+  // {RootHostname} / {RootProtocol}
+  if (/\{RootHostname\}/.test(raw)) bump('var.RootHostname', '{RootHostname} variable');
+  if (/\{RootProtocol\}/.test(raw)) bump('var.RootProtocol', '{RootProtocol} variable');
+  // {CPU_ARCH} / {CPU_AVX}
+  if (/\{CPU_ARCH\}/.test(raw)) bump('var.CPU_ARCH', '{CPU_ARCH} variable');
+  if (/\{CPU_AVX\}/.test(raw)) bump('var.CPU_AVX', '{CPU_AVX} variable');
+  // {ServiceName} / {Context.*} / {Hostnames...} are baseline (0.7.2), no bump needed
+  // but we track them for completeness of the "used features" summary
+  if (/\{ServiceName\}/.test(raw)) bump('var.ServiceName', '{ServiceName} variable');
+  if (/\{Context\./.test(raw)) bump('var.Context', '{Context.*} variable');
+  if (/\{Hostnames/.test(raw)) bump('var.Hostnames', '{Hostnames} variable');
+
+  return { max, fields: maxFields };
+}
+
+function mergeRequired(a, b) {
+  if (!a.max) return b;
+  if (!b.max) return a;
+  if (compareVersions(b.max, a.max) > 0) return b;
+  if (compareVersions(b.max, a.max) === 0) {
+    return { max: a.max, fields: a.fields.concat(b.fields) };
+  }
+  return a;
+}
+
+// The actual check: does the template's declared minVersion cover every
+// feature it uses? Errors when it does not, warns when it is well above.
+function checkMinVersion(app, composeFileLabel, raw, rendered, isYaml) {
+  if (!raw || typeof raw !== 'string') return;
+
+  // 1) find declared minVersion on the raw text (it is a literal JSON string
+  //    field, but {if} blocks can place it anywhere in the object so we scan
+  //    the raw text instead of relying on the parsed doc).
+  const m = raw.match(/"minVersion"\s*:\s*"([^"]+)"/);
+  if (!m) return; // missing minVersion is already reported as a schema error
+  const declared = m[1];
+
+  // 2) desired = max(required from parsed structure, required from raw vars)
+  const fromStruct = requiredMinVersion(rendered, isYaml);
+  const fromRaw = requiredMinVersionRaw(raw);
+  const desired = mergeRequired(fromStruct, fromRaw);
+  if (!desired.max) return;
+
+  if (compareVersions(declared, desired.max) < 0) {
+    err(app, composeFileLabel,
+      'minVersion "' + declared + '" is too low: the template uses features that require at least Cosmos "' +
+      desired.max + '" (' + desired.fields.slice(0, 8).join(', ') + (desired.fields.length > 8 ? ', …' : '') +
+      '). Bump minVersion to >= ' + desired.max + ' so the installer blocks older Cosmos versions that would otherwise ignore or mishandle these fields.');
+  }
+  // Note: a minVersion HIGHER than the used features require is intentionally
+  // NOT flagged - templates often pin a higher version on purpose (known bug
+  // fixes, intended feature behavior, or to guarantee a minimum supported
+  // Cosmos). Only under-declaration is a problem we can detect reliably.
+}
+
+// ---------------------------------------------------------------------------
 // Per-app checks
 // ---------------------------------------------------------------------------
 
@@ -894,6 +1147,10 @@ async function checkApp(app) {
       // description.image against the primary ({ServiceName}) service image.
       await checkComposeImages(app, rendered, !isJson, cfile.split('/').pop());
       checkComposeSchema(app, rendered, !isJson, cfile.split('/').pop());
+      // Check that the template's declared minVersion covers every feature it
+      // uses (form types, template variables, service fields, installer
+      // options). Errors when a field requires a newer Cosmos than minVersion.
+      checkMinVersion(app, cfile.split('/').pop(), raw, rendered, !isJson);
       // Only store-served icon URLs and store-hosted artifact URLs are referenced against the whitelist; every
       // other URL in the compose file (homepages, config defaults, app 3rd
       // -party sources) is intentionally skipped.

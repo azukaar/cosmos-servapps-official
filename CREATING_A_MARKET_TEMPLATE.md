@@ -209,11 +209,11 @@ conversions in `docker-compose.jsx`):
 | `storage_opt` / `sysctls` | ❌ | all | |
 | `isolation` | ❌ | all | |
 | `cap_add` / `cap_drop` | ❌ | all | |
-| `uid` / `gid` | ❌ | 0.7.6 | Numeric UID/GID for the container user. |
-| `runtime` | ❌ | 0.16.45 | Container runtime (e.g. `nvidia`). Added in PR #299. |
-| `mem_limit` / `mem_reservation` | ❌ | 0.22.0 | Memory constraints. |
-| `cpus` / `cpu_shares` / `cpuset_cpus` | ❌ | 0.22.0 | CPU constraints. |
-| `post_install` | ❌ | 0.8.0 | Service-level post-install (less used than installer-level `post-install`). |
+| `uid` / `gid` | ❌ | 0.7.0 | Numeric UID/GID for the container user. |
+| `runtime` | ❌ | 0.16.0 | Container runtime (e.g. `nvidia`). Added in PR #299. |
+| `mem_limit` / `mem_reservation` | ❌ | 0.20.0 | Memory constraints. |
+| `cpus` / `cpu_shares` / `cpuset_cpus` | ❌ | 0.20.0 | CPU constraints. |
+| `post_install` | ❌ | 0.7.0 | Service-level post-install (less used than installer-level `post-install`). |
 | `init` / `logging` / `shm_size` / `group_add` / `deploy` | ❌ | ⚠️ | Used by existing store apps but **not** in Cosmos-Server's struct; accepted by CI validator as legacy but not guaranteed honored. |
 
 The CI validator enforces the *exact set* of supported keys
@@ -229,11 +229,11 @@ dialog. All sub-keys and their support versions:
 
 | Key | Required | Since | Notes |
 |---|---|---|---|
-| `form` | ❌ | 0.7.2 | Array of form field definitions shown before install. |
-| `post-install` | ❌ | 0.17.0 | Array of messages shown after successful install. |
-| `translation` | ❌ | 0.16.45 | UI-string overrides per locale. |
-| `frozen-volumes` | ❌ | 0.7.2 | Volume sources the user cannot customize in the form. |
-| `skip-default-network` | ❌ | 0.15.0 | Skip auto-creating the default `cosmos-<name>-default` network. |
+| `form` | ❌ | 0.7.0 | Array of form field definitions shown before install. |
+| `post-install` | ❌ | 0.7.0 | Array of messages shown after successful install (rendered in `newService.jsx` since 0.7.0). |
+| `translation` | ❌ | 0.16.0 | UI-string overrides per locale (i18next, PR #303). |
+| `frozen-volumes` | ❌ | 0.7.0 | Volume sources the user cannot customize in the form. |
+| `skip-default-network` | ❌ | 0.14.0 | Skip auto-creating the default `cosmos-<name>-default` network. |
 
 #### Form fields
 
@@ -252,25 +252,25 @@ Supported form types (verified against docker-compose.jsx at each tag):
 
 | Type | Since | Renders as | Notes |
 |---|---|---|---|
-| `text` | 0.7.2 | Text field | Default. |
-| `password` | 0.7.2 | Password field | Value stays available as `{Context.<name>}`. |
-| `email` | 0.7.2 | Email field | |
-| `checkbox` | 0.7.2 | Checkbox | Combine with `{if Context.<name>}` conditionals. |
-| `warning` | 0.7.2 | Warning alert | `label` shown; no input. |
-| `info` | 0.7.2 | Info alert | |
-| `error` | 0.7.2 | Error alert | |
-| `select` | 0.7.2 | Dropdown | `options: [[value,label],…]`. |
-| `hostname` | 0.7.2 | Text + hostname checker | |
-| `container` | 0.7.2 | Container picker (name) | Writes to `name-container` key too. |
-| `container-full` | 0.7.2 | Container picker (full) | |
+| `text` | 0.7.0 | Text field | Default. |
+| `password` | 0.7.0 | Password field | Value stays available as `{Context.<name>}`. |
+| `email` | 0.7.0 | Email field | |
+| `checkbox` | 0.7.0 | Checkbox | Combine with `{if Context.<name>}` conditionals. |
+| `warning` | 0.7.0 | Warning alert | `label` shown; no input. |
+| `info` | 0.7.0 | Info alert | |
+| `error` | 0.7.0 | Error alert | |
+| `select` | 0.7.0 | Dropdown | `options: [[value,label],…]`. |
+| `hostname` | 0.7.0 | Text + hostname checker | |
+| `container` | 0.7.0 | Container picker (name) | Writes to `name-container` key too. |
+| `container-full` | 0.7.0 | Container picker (full) | |
 | `path` | 0.17.0 | Folder picker + text | |
-| `success` | 0.17.0 | Success alert | Used mainly in `post-install`. |
+| `success` | 0.7.0 | Success alert | *Not a form type* — it is a valid `post-install` message severity (MUI Alert), rendered via `Alert severity={m.type}` in `newService.jsx` since 0.7.0. |
 
 > ✅ **Correcting a common misconception:** `select`, `container`,
 > `container-full`, `hostname`, `name-container` and `frozen-volumes` all
-> existed **already in v0.7.2** (the first release with `cosmos-installer`).
-> Only `path` and `success` are newer (0.17.0). `skip-default-network` arrived
-> in 0.15.x.
+> existed **already in v0.7.0** (the first release with the market and
+> `cosmos-installer`). Only `path` is newer (0.17.0); `skip-default-network`
+> arrived in 0.14.0.
 
 ### 3.5 `post-install` messages
 
@@ -301,8 +301,8 @@ Shown as `Alert` banners after the container is created. Localizable via
 
 The client resolves `translation?.[resolvedLanguage]?.[key]` first, then
 `translation?.[resolvedLanguage.substr(0,2)]?.[key]`, falling back to the
-hardcoded `label`. This is supported in the template **since 0.16.45** and in
-`description.json` since market inception.
+hardcoded `label`. This is supported in the template and in `description.json`
+**since 0.16.0** (i18next, PR #303).
 
 ### 3.7 Template variables (whiskers context)
 
@@ -310,15 +310,15 @@ The client renders templates with this context (`docker-compose.jsx`):
 
 | Variable | Value | Since |
 |---|---|---|
-| `{ServiceName}` | Chosen service name | 0.7.2 |
-| `{Context.<name>}` | Form field values | 0.7.2 |
-| `{Passwords.0}` … `{Passwords.4}` | Auto-generated strong passwords | 0.7.2 |
-| `{DefaultDataPath}` | Cosmos data path (config `DockerConfig.DefaultDataPath`, default `/cosmos-storage`) | 0.7.2 |
+| `{ServiceName}` | Chosen service name | 0.7.0 |
+| `{Context.<name>}` | Form field values | 0.7.0 |
+| `{Passwords.0}` … `{Passwords.4}` | Auto-generated strong passwords | 0.7.0 |
+| `{DefaultDataPath}` | Cosmos data path (config `DockerConfig.DefaultDataPath`, default `/cosmos-storage`) | 0.7.6 |
 | `{RootHostname}` | Server hostname / config `HTTPConfig.Hostname` | 0.22.23 |
 | `{RootProtocol}` | `http` or `https` (from `HTTPSCertificateMode`) | 0.22.23 |
-| `{Hostnames}` | Computed route hostnames (`{Hostnames.<svc>.<route>.host}`) | 0.7.2 |
-| `{CPU_ARCH}` | Client CPU architecture | 0.9.0 |
-| `{CPU_AVX}` | Whether CPU supports AVX | 0.9.0 |
+| `{Hostnames}` | Computed route hostnames (`{Hostnames.<svc>.<route>.host}`) | 0.7.0 |
+| `{CPU_ARCH}` | Client CPU architecture | 0.7.0 |
+| `{CPU_AVX}` | Whether CPU supports AVX | 0.7.0 |
 
 `{if Context.<name>}` / `{if Context.<name> == 'value'}` / `{/if}` conditionals
 work throughout the template:
@@ -395,15 +395,15 @@ version is read from `client/package.json` and compared with `semver-compare`.
 | If your template uses… | minimum Cosmos version |
 |---|---|
 | Only basic `services` + one route | **0.7.0** (market launch) |
-| `cosmos-installer` with `form` (text/password/email/checkbox/warning/info/error/select/hostname/container/container-full), `initialValue`, `frozen-volumes`, `{Passwords.N}`, `{DefaultDataPath}`, `{Context.*}`, `{ServiceName}` | **0.7.2** |
-| `description.translation` / store-level translations | **0.7.0** (in templates: 0.16.45) |
+| `cosmos-installer` with `form` (text/password/email/checkbox/warning/info/error/select/hostname/container/container-full), `initialValue`, `frozen-volumes`, `post-install`, `{Passwords.N}`, `{Context.*}`, `{ServiceName}`, `{CPU_ARCH}`, `{CPU_AVX}` | **0.7.0** |
+| `description.translation` / store-level translations | **0.16.0** |
 | `docker-compose.yml` templates | **0.14.0** |
-| `skip-default-network` | **0.15.0** |
-| `cosmos-installer.translation` (form label i18n) | **0.16.45** |
-| `runtime` service field | **0.16.45** |
-| `post-install` messages, `path`/`success` form types | **0.17.0** |
+| `skip-default-network` | **0.14.0** |
+| `cosmos-installer.translation` (form label i18n) | **0.16.0** |
+| `runtime` service field | **0.16.0** |
+| `path` (and `{DefaultDataPath}`=0.7.6) | **0.17.0** |
 | `{RootHostname}` / `{RootProtocol}` | **0.22.23** |
-| `mem_limit` / `mem_reservation` / `cpus` / `cpu_shares` / `cpuset_cpus` | **0.22.19** |
+| `mem_limit` / `mem_reservation` / `cpus` / `cpu_shares` / `cpuset_cpus` | **0.20.0** |
 | Any newer `ProxyRouteConfig` field (LB, tunnels, OIDC, extra headers…) | Check the exact release that introduced it; when unsure, use a recent version (≥ 0.22.x) |
 
 > The **store currently runs on Cosmos ≥ 0.23.x** (see `changelog.md`). Old
@@ -472,6 +472,13 @@ on every PR touching `servapps/**` (and on push to `master`/`unstable`, plus
    stores.
 7. **Extra files** — non-mandatory files (e.g. `artefacts/` scripts) warn
    unless referenced by the compose file.
+8. **`minVersion` vs used fields** — the validator detects every feature a
+   template uses (form types, template variables, service/installer fields)
+   and computes the minimum Cosmos version that honors them (see §9). If the
+   template's `minVersion` is **lower** than what its own features require, it
+   is a hard error: the app would be installable on a Cosmos that silently
+   ignores those fields. A `minVersion` *higher* than required is **not**
+   flagged — that is the author's choice (intentional feature floor).
 
 Run locally:
 
@@ -511,6 +518,12 @@ This is the complete data, verified against Cosmos-Server git history
 (`src/docker/api_blueprint.go`, `src/utils/types.go`,
 `client/src/pages/servapps/containers/docker-compose.jsx`, `changelog.md`).
 
+> ⚙️ **Enforced by CI.** The validator's `FEATURE_MINVERSION` table in
+> `.github/scripts/validate-servapps.js` mirrors this matrix and **fails CI**
+> when a template's `minVersion` is lower than the highest version any used
+> feature requires. Keep `minVersion` ≥ the largest "Min Cosmos" in the rows
+> that apply to your template.
+
 ### description.json
 
 | Field | Min Cosmos |
@@ -523,36 +536,37 @@ This is the complete data, verified against Cosmos-Server git history
 | Field | Min Cosmos | Required |
 |---|---|---|
 | `services` | 0.7.0 | ✅ |
-| `cosmos-installer` | 0.7.2 | ✅ |
-| `minVersion` | 0.7.2 | ✅ |
+| `cosmos-installer` | 0.7.0 | ✅ |
+| `minVersion` | 0.7.0 | ✅ |
 | `networks` / `volumes` / `version` | 0.7.0 | ❌ |
 
 ### cosmos-installer
 
 | Field | Min Cosmos |
 |---|---|
-| `form`, `form[].name/label/type/initialValue/options/name-container` | 0.7.2 |
-| `frozen-volumes` | 0.7.2 |
-| `skip-default-network` | 0.15.0 |
-| `translation` | 0.16.45 |
-| `post-install` | 0.17.0 |
+| `form`, `form[].name/label/type/initialValue/options/name-container` | 0.7.0 |
+| `frozen-volumes` | 0.7.0 |
+| `skip-default-network` | 0.14.0 |
+| `translation` | 0.16.0 |
+| `post-install` | 0.7.0 |
 
 ### Form types
 
 | Type | Min Cosmos |
 |---|---|
-| `text` (default), `password`, `email`, `checkbox`, `warning`, `info`, `error`, `select`, `hostname`, `container`, `container-full` | 0.7.2 |
-| `path`, `success` | 0.17.0 |
+| `text` (default), `password`, `email`, `checkbox`, `warning`, `info`, `error`, `select`, `hostname`, `container`, `container-full` | 0.7.0 |
+| `path` | 0.17.0 |
+| `success` (post-install message severity) | 0.7.0 |
 
 ### services.* (container)
 
 | Field(s) | Min Cosmos |
 |---|---|
 | `image`, `container_name`, `labels`, `environment`, `volumes`, `ports`, `networks`, `routes`, `restart`, `devices`, `expose`, `depends_on`, `tty`, `stdin_open`, `command`, `entrypoint`, `working_dir`, `user`, `hostname`, `domainname`, `mac_address`, `privileged`, `network_mode`, `stop_signal`, `stop_grace_period`, `healthcheck`, `dns`, `dns_search`, `extra_hosts`, `security_opt`, `storage_opt`, `sysctls`, `isolation`, `cap_add`, `cap_drop` | 0.5.x |
-| `uid`, `gid` | 0.7.6 |
-| `post_install` (service-level) | 0.8.0 |
-| `runtime` | 0.16.45 |
-| `mem_limit`, `mem_reservation`, `cpus`, `cpu_shares`, `cpuset_cpus` | 0.22.0 |
+| `uid`, `gid` | 0.7.0 |
+| `post_install` (service-level) | 0.7.0 |
+| `runtime` | 0.16.0 |
+| `mem_limit`, `mem_reservation`, `cpus`, `cpu_shares`, `cpuset_cpus` | 0.20.0 |
 | `container_name` auto-fill when missing | 0.22.19 |
 | `init`, `logging`, `shm_size`, `group_add`, `deploy` | ⚠️ not guaranteed (accepted by validator only) |
 
@@ -568,8 +582,9 @@ This is the complete data, verified against Cosmos-Server git history
 
 | Variable | Min Cosmos |
 |---|---|
-| `{ServiceName}`, `{Context.*}`, `{Passwords.0..4}`, `{DefaultDataPath}`, `{Hostnames.*}` | 0.7.2 |
-| `{CPU_ARCH}`, `{CPU_AVX}` | 0.9.0 |
+| `{ServiceName}`, `{Context.*}`, `{Passwords.0..4}`, `{Hostnames.*}` | 0.7.0 |
+| `{DefaultDataPath}` | 0.7.6 |
+| `{CPU_ARCH}`, `{CPU_AVX}` | 0.7.0 |
 | `{RootHostname}`, `{RootProtocol}` | 0.22.23 |
 
 ### Routes
@@ -588,6 +603,7 @@ This is the complete data, verified against Cosmos-Server git history
 | CI: `field "x" is not documented` | Unknown service key. Use only the supported vocabulary (see §9) or remove. |
 | CI: `field "X" should be spelled "x"` | Non-canonical casing. Go matches case-insensitively, but CI wants lowercase. |
 | CI: `tmpfs/read_only` service field error | These only work as `volumes` mount types, not as service-level fields. |
+| CI: `minVersion "x" is too low: ... requires at least Cosmos "y"` | Your template uses a feature that needs Cosmos ≥ `y` (e.g. `translation`/`runtime` = 0.16.0, `path` = 0.17.0, `mem_limit`/`cpus` = 0.20.0). Bump `minVersion` to ≥ `y`. See §9. |
 | Install blocked: "requires a newer version of Cosmos" | `minVersion` too high (or Cosmos outdated). Set `minVersion` to the highest *needed* version, not latest. |
 | CI render fail | Template isn't valid after whiskers render — check `{if}`/`{/if}` balance and JSON commas around conditionals. |
 | Missing `screenshots/` crashes deploy | Every servapp dir must have `screenshots/` with ≥1 image. |
