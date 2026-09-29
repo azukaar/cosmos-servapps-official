@@ -1,7 +1,7 @@
 # cosmos-servapps-official
 
 The official application store (aka **market / servapps registry**) for
-[Cosmos](https://github.com/azukaar/Cosmos-Server) — the self-hosted home
+[Cosmos Cloud](https://github.com/azukaar/Cosmos-Server) — the self-hosted home
 server platform. Every app in this repository appears in the Cosmos
 marketplace and can be installed with a few clicks.
 
@@ -22,7 +22,7 @@ It covers:
 - the `cosmos-installer` wizard (form fields, `post-install` messages,
   translations), whiskers variables and conditionals
 - how to choose `minVersion` for each field, with a version-support matrix
-  cross-checked against Cosmos-Server
+  cross-checked against Cosmos Cloud
 - validation, testing, and the submission checklist
 
 ## Validation
@@ -48,7 +48,7 @@ marketplace.
 
 ## Useful links
 
-- [Cosmos server](https://github.com/azukaar/Cosmos-Server) — the platform
+- [Cosmos Cloud](https://github.com/azukaar/Cosmos-Server) — the platform
   that consumes this store
 - [`CREATING_A_MARKET_TEMPLATE.md`](CREATING_A_MARKET_TEMPLATE.md) — template
   authoring documentation
