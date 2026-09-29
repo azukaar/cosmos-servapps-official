@@ -9,7 +9,7 @@
       }
     ]
   },
-  "minVersion": "0.4.0",
+  "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
       "image": "ghcr.io/hotio/unpackerr:release",
