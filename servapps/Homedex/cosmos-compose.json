@@ -1,0 +1,135 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "type": "info",
+        "label": "Homedex only reads. It reaches Docker through a socket proxy ({ServiceName}-socket) that alone receives /var/run/docker.sock, read only, allows GET on containers, images, networks, info and version, and rejects every write (POST=0). The proxy publishes no port."
+      },
+      {
+        "name": "adminPassword",
+        "label": "Homedex admin password (12 or more characters). Set on the first start and ignored once an admin exists. Leave empty only if you will open Homedex and create the admin right away.",
+        "initialValue": "",
+        "type": "password"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Restrict Homedex to Cosmos administrators? (recommended: it lists every container, route and host in your lab)",
+        "initialValue": true,
+        "type": "checkbox"
+      },
+      {
+        "name": "httpsOnly",
+        "label": "Is Homedex reached only over HTTPS through Cosmos? (marks the session cookie Secure; untick if Cosmos serves plain HTTP)",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Open Homedex and sign in with the admin password you set (or create the admin now if you left it empty). Then add the first Docker source with the endpoint tcp://{ServiceName}-socket:2375."
+      }
+    ]
+  },
+  "minVersion": "0.18.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/harshshah0203/homedex:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "user": "65532:65532",
+      "environment": [
+        "HOMEDEX_DATA_DIR=/data",
+        "HOMEDEX_LISTEN=:7377"
+        {if Context.httpsOnly}
+        , "HOMEDEX_SECURE_COOKIES=true"
+        {/if}
+        {if Context.adminPassword}
+        , "HOMEDEX_ADMIN_PASSWORD={Context.adminPassword}"
+        {/if}
+      ],
+      "healthcheck": {
+        "test": ["CMD", "/homedex", "healthcheck"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "start_period": 10
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
+          "target": "/tmp",
+          "type": "tmpfs"
+        }
+      ],
+      "cap_drop": ["ALL"],
+      "security_opt": ["no-new-privileges:true"],
+      "depends_on": {
+        "{ServiceName}-socket": {}
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Homedex/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:7377",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+          , "AdminOnly": true
+          {/if}
+        }
+      ]
+    },
+    "{ServiceName}-socket": {
+      "image": "tecnativa/docker-socket-proxy:v0.4.2",
+      "container_name": "{ServiceName}-socket",
+      "hostname": "{ServiceName}-socket",
+      "restart": "unless-stopped",
+      "environment": [
+        "CONTAINERS=1",
+        "IMAGES=1",
+        "INFO=1",
+        "NETWORKS=1",
+        "VERSION=1",
+        "POST=0",
+        "ALLOW_START=0",
+        "ALLOW_STOP=0",
+        "ALLOW_RESTARTS=0"
+      ],
+      "volumes": [
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind",
+          "ReadOnly": true
+        }
+      ],
+      "cap_drop": ["ALL"],
+      "security_opt": ["no-new-privileges:true"],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
+    }
+  }
+}
