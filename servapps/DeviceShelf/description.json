@@ -1,0 +1,9 @@
+{
+  "name": "DeviceShelf",
+  "longDescription": "<p>DeviceShelf scans your local network and builds an inventory of everything it finds: vendor, hostname, operating system, device type, open ports and the services behind them. Devices that give away little get identified from several signals at once, so the unlabelled box in the corner usually still ends up with a name.</p><p>It all runs on your own server, and there is no account to create. Nothing about your network leaves the machine unless you switch on one of the optional lookups.</p><p>After the first scan it keeps watching. You get an alert when a device you have never seen joins the network, when one you depend on drops offline, or when a port opens that was closed before. Alerts go to ntfy, Gotify, a webhook or any Apprise target, and a digest mode stops a rebooting switch from producing forty separate notifications.</p><p>Devices on other VLANs can be inventoried by reading the ARP tables of routers and switches over SNMP, so you do not need an agent on every segment. Favourites are published to Home Assistant over MQTT discovery as native entities.</p><p>Commercial software: 59 euros once, not a subscription, with a seven-day trial that needs no credit card. The same licence covers the desktop apps for macOS, Windows and Linux and the mobile apps. Host networking is required, so the dashboard answers on port 8088 of the host itself.</p>",
+  "description": "DeviceShelf scans your local network and keeps an inventory of every device on it, with vendor, operating system, device type and open ports.",
+  "tags": ["network", "monitoring", "security", "inventory", "lan", "ip-scanner", "sysadmin", "self-hosted", "docker"],
+  "repository": "https://deviceshelf.app",
+  "image": "https://github.com/wealthwallet/deviceshelf/pkgs/container/deviceshelf-server",
+  "supported_architectures": ["amd64", "arm64"]
+}
