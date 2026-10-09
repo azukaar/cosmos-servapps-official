@@ -2,9 +2,15 @@
   "cosmos-installer": {
     "form": [
       {
+        "name": "timeZone",
+        "label": "Time zone (IANA name, for example Europe/Berlin)",
+        "initialValue": "Europe/Berlin",
+        "type": "text"
+      },
+      {
         "name": "language",
-        "label": "Default interface language (de, en, fr, es, it, nl or pl)",
-        "initialValue": "en",
+        "label": "Default interface language (de, en, fr, es, it, nl, pl or zh)",
+        "initialValue": "de",
         "type": "text"
       }
     ]
@@ -12,13 +18,13 @@
   "minVersion": "0.18.0",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/laxxx-lab/lx-family-planner:1.20.3",
+      "image": "ghcr.io/laxxx-lab/lx-family-planner:1.21.4",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
         "NODE_ENV=production",
         "PORT=3001",
-        "TZ=auto",
+        "TZ={Context.timeZone}",
         "APP_LANGUAGE={Context.language}",
         "APP_SECRET={Passwords.0}",
         "SESSION_COOKIE_SECURE=auto",
