@@ -51,10 +51,6 @@
           "source": "{ServiceName}-backups",
           "target": "/app/backups",
           "type": "volume"
-        },
-        {
-          "target": "/tmp",
-          "type": "tmpfs"
         }
       ],
       "cap_drop": [
