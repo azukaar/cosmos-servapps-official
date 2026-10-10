@@ -94,16 +94,6 @@
           "readOnly": false
         },
         {
-          "target": "/tmp",
-          "type": "tmpfs",
-          "TmpfsOptions": {"SizeBytes": 268435456, "Mode": 1023}
-        },
-        {
-          "target": "/run",
-          "type": "tmpfs",
-          "TmpfsOptions": {"SizeBytes": 67108864, "Mode": 493}
-        },
-        {
           "source": "{ServiceName}-pyinstaller",
           "target": "/run/pyinstaller",
           "type": "volume"
