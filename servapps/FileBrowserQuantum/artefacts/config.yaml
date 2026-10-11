@@ -1,14 +1,29 @@
+# FileBrowser Quantum v2.0.0+ configuration (servapp)
+# Managed by the FileBrowserQuantum Cosmos servapp.
 server:
-  port: 80
   sources:
     - path: "/volumes"
       config:
         defaultEnabled: true
+        defaultPermissions:
+          view: true
+          modify: true
+          create: true
+          delete: true
+          download: true
       name: "ServApp Volumes"
     - path: "/host"
       config:
         defaultEnabled: true
+        defaultPermissions:
+          view: true
+          modify: true
+          create: true
+          delete: true
+          download: true
       name: "Host"
+  database:
+    path: "data/database.sqlite"          # v2 SQLite database
 
 auth:
   methods:
@@ -19,7 +34,7 @@ auth:
 
 frontend:
   name: "Filebrowser Quantum"
- 
+
 userDefaults:
   preview:
     highQuality: true
@@ -29,13 +44,15 @@ userDefaults:
     office: true
     popup: true
     folder: true
-  permissions:
-    api: false
-    admin: false
-    modify: true
-    share: false
-    realtime: false
-    delete: true
-    create: true
-    download: true
-  disableOnlyOfficeExt: ".md .txt .pdf"   # list of file extensions to disable onlyoffice editor for
+  fileViewer:
+    disableOnlyOfficeExt: ".md .txt .pdf"
+  account:
+    permissions:
+      admin: false
+      api: false
+      share: false
+      realtime: false
+
+http:
+  port: 80
+  trustProxyHeaders: true                # behind Cosmos reverse proxy
