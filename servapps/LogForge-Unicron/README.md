@@ -51,13 +51,15 @@ decision.
 ## Cosmos compatibility and readiness
 
 The [Cosmos service schema](https://github.com/azukaar/Cosmos-Server/blob/master/src/docker/api_blueprint.go)
-does not honor service-level `read_only` or `tmpfs`. This package uses supported
-Docker mount objects for `/tmp` (256 MiB, mode 1777) and `/run` (64 MiB, mode
-0755). Cosmos's Docker 26 mount schema cannot request executable tmpfs, so
-`/run/pyinstaller` uses a separate named volume for executable extraction.
-This is disposable runtime storage, not application data; unlike tmpfs it
-persists across container restarts. Application data remains in the separate
-volume at `/var/lib/unicron`. The container root filesystem is writable;
+does not honor service-level `read_only` or `tmpfs`, and source-less
+tmpfs mounts crash the Cosmos installer dialog, so this package does not
+declare tmpfs mounts. Runtime scratch in `/tmp` and `/run` uses the
+container's own writable layer instead. Cosmos's Docker 26 mount schema
+cannot request executable tmpfs, so `/run/pyinstaller` uses a separate named
+volume for executable extraction. This is disposable runtime storage, not
+application data; unlike tmpfs it persists across container restarts.
+Application data remains in the separate volume at
+`/var/lib/unicron`. The container root filesystem is writable;
 capability restrictions and `no-new-privileges` remain enabled.
 
 Readiness invokes the image's compiled
