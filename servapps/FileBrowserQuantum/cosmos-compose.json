@@ -62,10 +62,7 @@
         "FILEBROWSER_CONFIG=data/config.yaml",
         "FILEBROWSER_ADMIN_PASSWORD={Passwords.0}"
       ],
-      "post_install": [
-        "wget -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml",
-        "sh -c 'if [ -f data/database.db ] && [ ! -f data/database.sqlite ]; then printf \"\nserver:\n  database:\n    migrateFrom: data/database.db\n\" >> data/config.yaml; fi'"
-      ],
+      "entrypoint": "/bin/sh -c 'cd /home/filebrowser && if [ ! -s data/config.yaml ] || ! grep -q \"^http:\" data/config.yaml; then (wget -q -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml || curl -fsSL -o data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml); fi; if [ -f data/database.db ] && [ ! -f data/database.sqlite ] && ! grep -q migrateFrom data/config.yaml; then printf \"\\nserver:\\n  database:\\n    migrateFrom: data/database.db\\n\" >> data/config.yaml; fi; exec ./filebrowser \"$@\"'",
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
