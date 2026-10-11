@@ -1,4 +1,4 @@
-{ 
+{
   "cosmos-installer": {
     "form": [
       {
@@ -26,7 +26,7 @@
         "initialValue": true,
         "type": "checkbox"
       }
-    {/if}
+      {/if}
     ],
     "translation": {
       "de": {
@@ -59,10 +59,15 @@
       "stdin_open": true,
       "user": "root",
       "environment": [
-        "FILEBROWSER_CONFIG=data/config.yaml",
         "FILEBROWSER_ADMIN_PASSWORD={Passwords.0}"
       ],
-      "entrypoint": "/bin/sh -c 'cd /home/filebrowser && if [ ! -s data/config.yaml ] || ! grep -q \"^http:\" data/config.yaml; then (wget -q -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml || curl -fsSL -o data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml); fi; if [ -f data/database.db ] && [ ! -f data/database.sqlite ] && ! grep -q migrateFrom data/config.yaml; then printf \"\\nserver:\\n  database:\\n    migrateFrom: data/database.db\\n\" >> data/config.yaml; fi; exec ./filebrowser \"$@\"'",
+      "post_install": [
+        "wget -q -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml || curl -fsSL -o data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml",
+        "if [ -f data/database.db ] && [ ! -f data/database.sqlite ]; then sed -i 's|^    path: \"data/database.sqlite\".*|&\\n    migrateFrom: data/database.db|' data/config.yaml; fi",
+        "cp data/config.yaml config.yaml",
+        "./filebrowser init",
+        "sed -i '/migrateFrom/d' data/config.yaml config.yaml"
+      ],
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
