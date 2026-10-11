@@ -52,19 +52,19 @@
   "minVersion": "0.21.0",
   "services": {
     "{ServiceName}": {
-      "image": "gtstef/filebrowser:latest",
+      "image": "gtstef/filebrowser:2.0.0-stable",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "tty": true,
       "stdin_open": true,
       "user": "root",
       "environment": [
-        "FILEBROWSER_DATABASE=data/database.db",
         "FILEBROWSER_CONFIG=data/config.yaml",
         "FILEBROWSER_ADMIN_PASSWORD={Passwords.0}"
       ],
       "post_install": [
-        "wget -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml"
+        "wget -O data/config.yaml https://azukaar.github.io/cosmos-servapps-official/servapps/FileBrowserQuantum/artefacts/config.yaml",
+        "sh -c 'if [ -f data/database.db ] && [ ! -f data/database.sqlite ]; then printf \"\nserver:\n  database:\n    migrateFrom: data/database.db\n\" >> data/config.yaml; fi'"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
