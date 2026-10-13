@@ -24,6 +24,7 @@ server:
       name: "Host"
   database:
     path: "data/database.sqlite"          # v2 SQLite database
+    migrateFrom: "data/database.db"       # v1→v2 migration source; removed on fresh install by post_install
 
 auth:
   methods:
