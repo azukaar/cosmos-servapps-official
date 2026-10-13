@@ -1,0 +1,61 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "downloadsPath",
+        "label": "Where should downloads be stored?",
+        "initialValue": "{DefaultDataPath}/downloads",
+        "type": "text"
+      },
+      {
+        "name": "musicPath",
+        "label": "Where is the shared music library?",
+        "initialValue": "{DefaultDataPath}/music",
+        "type": "text"
+      }
+    ]
+  },
+  "minVersion": "0.9.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "docker.io/snapetech/slskdn:2026092517-slskdn.325",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "SLSKD_HTTP_ADDRESS=0.0.0.0",
+        "SLSKD_HTTP_PORT=5030",
+        "SLSKD_HTTPS_PORT=5031",
+        "SLSKD_SLSK_LISTEN_PORT=50300",
+        "SLSKD_APP_DIR=/app",
+        "SLSKD_DOWNLOADS_DIR=/downloads",
+        "SLSKD_SHARED_DIR=/music",
+        "SLSKD_UMASK=0022"
+      ],
+      "ports": ["50300:50300/tcp", "50300:50300/udp"],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/slskdN/icon.png"
+      },
+      "volumes": [
+        {"source": "{ServiceName}-app", "target": "/app", "type": "volume"},
+        {"source": "{Context.downloadsPath}", "target": "/downloads", "type": "bind"},
+        {"source": "{Context.musicPath}", "target": "/music", "type": "bind", "read_only": true}
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose slskdN to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:5030",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {"Enabled": true},
+          "AuthEnabled": true
+        }
+      ]
+    }
+  }
+}
