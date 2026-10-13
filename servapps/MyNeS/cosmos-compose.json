@@ -1,0 +1,97 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "MYNES_AUTH_ENABLED",
+        "label": "Require sign-in (recommended on an open LAN)",
+        "initialValue": "false",
+        "type": "text",
+        "description": "Set to true to turn on the single-user login gate. Needs a username and password below.",
+        "required": false
+      },
+      {
+        "name": "MYNES_AUTH_USERNAME",
+        "label": "Login username",
+        "initialValue": "",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "MYNES_AUTH_PASSWORD",
+        "label": "Login password",
+        "initialValue": "",
+        "type": "password",
+        "required": false
+      },
+      {
+        "name": "MYNES_MQTT_HOST",
+        "label": "MQTT broker host (optional)",
+        "initialValue": "",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "MYNES_HA_URL",
+        "label": "Home Assistant URL (optional)",
+        "initialValue": "",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "MYNES_HA_TOKEN",
+        "label": "Home Assistant long-lived token (optional)",
+        "initialValue": "",
+        "type": "password",
+        "required": false
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "MyNeS runs on the host network so it can send raw ARP frames and hear mDNS/SSDP. Open http://<ip-of-cosmos-server>:5883 to start your first scan. Only scan networks you own."
+      }
+    ]
+  },
+  "minVersion": "0.9.0",
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "fxerkan/my_network_scanner:1.8.2",
+      "restart": "unless-stopped",
+      "network_mode": "host",
+      "cap_add": ["NET_ADMIN", "NET_RAW"],
+      "environment": [
+        "MYNES_PORT=5883",
+        "MYNES_AUTH_ENABLED={MYNES_AUTH_ENABLED}",
+        "MYNES_AUTH_USERNAME={MYNES_AUTH_USERNAME}",
+        "MYNES_AUTH_PASSWORD={MYNES_AUTH_PASSWORD}",
+        "MYNES_MQTT_HOST={MYNES_MQTT_HOST}",
+        "MYNES_HA_URL={MYNES_HA_URL}",
+        "MYNES_HA_TOKEN={MYNES_HA_TOKEN}"
+      ],
+      "healthcheck": {
+        "test": ["CMD", "python", "-c", "import http.client as h; c=h.HTTPConnection('localhost',5883,timeout=5); c.request('GET','/api/health'); exit(0 if c.getresponse().status < 500 else 1)"],
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "start_period": "40s"
+      },
+      "volumes": [
+        {
+          "source": "{Context.storagePath}/{ServiceName}/data",
+          "target": "/app/data",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.storagePath}/{ServiceName}/config",
+          "target": "/app/config",
+          "type": "bind"
+        }
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "false",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/MyNeS/icon.png"
+      }
+    }
+  }
+}

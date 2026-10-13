@@ -1,0 +1,21 @@
+{
+  "name": "MyNeS",
+  "description": "Discover, identify and monitor every device on your LAN - Wi-Fi, Zigbee, Z-Wave, Bluetooth LE and Matter.",
+  "longDescription": "MyNeS (My Network Scanner) discovers, identifies and monitors every device on your home network, including the ones an IP scan cannot see.\n\nBeyond ARP and port scanning it speaks mDNS/Bonjour, SSDP/UPnP, Matter, Bluetooth LE and MQTT. Reading retained Zigbee2MQTT / Z-Wave JS / Tasmota topics is the only way to inventory a radio device that has no IP address at all, so Zigbee bulbs and Z-Wave sensors end up in the same list as your laptops and NAS.\n\nIt also gives you vendor lookup over a 1000+ entry OUI database, automatic device-type classification, network topology and force-directed graph views, scan history, rule-based alerts on new / missing / changed devices delivered by Web Push, webhook, e-mail or Home Assistant, and a two-way Home Assistant integration that pushes devices in over MQTT Discovery and pulls HA's device registry back to diff it against what is actually on the wire.\n\nTurkish and English UI, light and dark themes, installable as a PWA. No cloud, no account, no telemetry.\n\nNote: MyNeS runs on the host network with NET_ADMIN and NET_RAW because raw ARP frames and mDNS/SSDP multicast do not cross a bridge network. It does not run as root and is not a privileged container. Only scan networks you own.",
+  "tags": [
+    "network",
+    "monitoring",
+    "homelab",
+    "home-assistant",
+    "iot",
+    "security",
+    "docker",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/fxerkan/my_network_scanner",
+  "image": "https://hub.docker.com/r/fxerkan/my_network_scanner",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
