@@ -1,0 +1,9 @@
+{
+  "name": "SolidPing",
+  "description": "Self-hosted uptime monitoring with alerting, incidents and status pages. 43 check types, SQLite by default, one container.",
+  "longDescription": "<p>SolidPing is an uptime and synthetic monitoring server written in Go. It checks HTTP(S), DNS, TCP, ICMP, TLS certificate expiry, databases (PostgreSQL, MySQL, Redis, MongoDB and others), Kafka, RabbitMQ, MQTT, gRPC, SMTP and IMAP, plus heartbeats for cron jobs, headless browser checks and custom JavaScript checks.</p><p>Alerts go to email, Slack, Discord, Telegram, webhooks and other channels, with incidents, on-call schedules and escalation policies. It also serves public status pages, a REST API and an MCP server. Monitors can be imported from Uptime Kuma, UptimeRobot, Better Stack and Gatus.</p><p>Data is stored in SQLite in the /data volume. First login: admin@solidping.io / solidpass, organization \"default\". Change the password right after the first login.</p>",
+  "tags": ["monitoring", "uptime", "status page", "alerts", "incidents", "on-call", "self-hosted", "open-source", "network", "ssl", "cron"],
+  "repository": "https://github.com/fclairamb/solidping",
+  "image": "https://hub.docker.com/r/fclairamb/solidping",
+  "supported_architectures": ["amd64", "arm64"]
+}
