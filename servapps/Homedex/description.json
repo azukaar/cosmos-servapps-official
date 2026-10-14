@@ -1,0 +1,9 @@
+{
+  "name": "Homedex",
+  "description": "Read-only inventory of the services, hosts, ports, routes, certificates, domains and changes in your homelab.",
+  "longDescription": "<p><b>The missing inventory for your homelab.</b> Homedex builds a searchable record of what runs where from what your infrastructure reports, instead of another spreadsheet to maintain.</p><ul><li><b>Docker</b>: containers, images, Compose stacks, ports and networks, read through the bundled socket proxy that rejects every write.</li><li><b>Proxmox VE and Tailscale</b>: nodes, VMs, containers and tailnet devices, each shown on the machine it runs on.</li><li><b>Reverse proxies</b>: Traefik, Caddy, Nginx Proxy Manager and nginx routes followed from domain to container, with broken chains flagged.</li><li><b>Expiry and changes</b>: certificates and domains by days remaining, containers with a newer image, and what moved between scans.</li></ul><p>Homedex only reads. It never starts, stops or reconfigures anything and sends no telemetry.</p><p><b>Host access:</b> only the socket proxy receives the Docker socket, read only, with POST=0 so the Docker API rejects every write; Homedex itself runs as an unprivileged user with every capability dropped.</p>",
+  "tags": ["homedex", "inventory", "homelab", "docker", "proxmox", "tailscale", "reverse proxy", "ports", "certificates", "self-hosted", "open-source"],
+  "repository": "https://github.com/HarshShah0203/homedex",
+  "image": "https://github.com/HarshShah0203/homedex/pkgs/container/homedex",
+  "supported_architectures": ["amd64", "arm64", "arm/v7"]
+}
