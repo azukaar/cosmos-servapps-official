@@ -1,0 +1,9 @@
+{
+  "name": "Seawise.io Client",
+  "description": "Share your self-hosted apps with family and friends without port forwarding. Outbound-only tunnel, no open ports. Requires a free Seawise.io account.",
+  "longDescription": "<p>Seawise.io Client connects your server to Seawise.io over an outbound-only tunnel, so you can share apps like Jellyfin, Immich, Home Assistant or Nextcloud without opening ports or setting up a VPN.</p><p>Add an app by its local address (for example http://192.168.1.10:8096), and Seawise.io gives it a secure link. Share it with family and friends, or group apps into portals.</p><p>Requires a free account at <a href=\"https://seawise.io\">seawise.io</a>. After install, open the Web UI within 5 minutes to set a password, then pair the client with your account.</p>",
+  "tags": ["networking", "tunnel", "remote access", "sharing", "reverse proxy", "self-hosted", "jellyfin", "plex", "immich", "home assistant"],
+  "repository": "https://github.com/seawise-io/seawise-client",
+  "image": "https://hub.docker.com/r/seawiseinc/seawise-client",
+  "supported_architectures": ["amd64", "arm64"]
+}
