@@ -1,0 +1,50 @@
+{
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "warning",
+        "label": "Open the Seawise.io Client Web UI within 5 minutes to set a password, then pair it with your free Seawise.io account. To share an app running on this host, add it as http://host.docker.internal:PORT or by its LAN IP."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "seawiseinc/seawise-client:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "SEAWISE_ALLOWED_HOSTS={Hostnames.{StaticServiceName}.{StaticServiceName}.host}"
+      ],
+      "extra_hosts": [
+        "host.docker.internal:host-gateway"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Seawise/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8082",
+          "mode": "SERVAPP",
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+        }
+      ]
+    }
+  }
+}
