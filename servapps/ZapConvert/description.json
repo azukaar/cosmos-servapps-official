@@ -1,0 +1,9 @@
+{
+  "name": "ZapConvert",
+  "description": "Private file converter for PDF, Office, images, spreadsheets, audio and video. Most tools run in your browser, so files never leave the device.",
+  "longDescription": "<p>ZapConvert converts, compresses, merges, splits and protects PDFs, Office documents, images, spreadsheets, audio and video from any browser.</p><p>38 of its 52 tools run entirely in the browser (pdf-lib, PDF.js, Tesseract and qpdf compiled to WebAssembly), so files are never uploaded. Office to PDF, PDF to Word or Excel, and audio and video conversions run in two companion containers, Gotenberg and an ffmpeg worker, which keep their working files in RAM and never store them.</p><p>No ads, no analytics, no accounts, and no storage to configure. The free Community edition allows 100 MB per file for server conversions; an optional Lifetime Pass unlocks 1 GB.</p>",
+  "tags": ["pdf", "converter", "documents", "office", "images", "media", "ocr", "privacy", "productivity", "tools"],
+  "repository": "https://github.com/zapconvert/zapconvert",
+  "image": "ghcr.io/zapconvert/zapconvert",
+  "supported_architectures": ["amd64", "arm64"]
+}

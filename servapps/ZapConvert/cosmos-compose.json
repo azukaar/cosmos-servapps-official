@@ -1,0 +1,137 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "licenseKey",
+        "label": "Lifetime Pass key (optional). Leave empty for the free Community edition.",
+        "initialValue": "",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only? (Otherwise any signed-in Cosmos user can use it.)",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "ZapConvert needs no setup. Office and media conversions become available once the Gotenberg and media worker containers report healthy, which can take a minute or two on the first start."
+      }
+    ]
+  },
+  "minVersion": "0.7.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/zapconvert/zapconvert:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "GOTENBERG_URL=http://{ServiceName}-gotenberg:3000",
+        "MEDIA_WORKER_URL=http://{ServiceName}-media-worker:8080",
+        "MEDIA_WORKER_TOKEN={Passwords.0}",
+        "LICENSE_KEY={Context.licenseKey}"
+      ],
+      "depends_on": {
+        "{ServiceName}-gotenberg": {},
+        "{ServiceName}-media-worker": {}
+      },
+      "labels": {
+        "cosmos-persistent-env": "MEDIA_WORKER_TOKEN",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/ZapConvert/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    },
+    "{ServiceName}-gotenberg": {
+      "image": "gotenberg/gotenberg:8",
+      "container_name": "{ServiceName}-gotenberg",
+      "restart": "unless-stopped",
+      "command": [
+        "gotenberg",
+        "--api-timeout=120s",
+        "--api-start-timeout=180s",
+        "--libreoffice-start-timeout=120s",
+        "--libreoffice-auto-start=true",
+        "--chromium-disable-routes=true",
+        "--log-level=error"
+      ],
+      "volumes": [
+        {
+          "source": "",
+          "target": "/tmp",
+          "type": "tmpfs"
+        }
+      ],
+      "healthcheck": {
+        "test": ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/health"],
+        "interval": "30s",
+        "timeout": "10s",
+        "start_period": "120s",
+        "retries": 5
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/ZapConvert/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
+    },
+    "{ServiceName}-media-worker": {
+      "image": "ghcr.io/zapconvert/zapconvert-media-worker:latest",
+      "container_name": "{ServiceName}-media-worker",
+      "restart": "unless-stopped",
+      "environment": [
+        "WORKER_TOKEN={Passwords.0}",
+        "MAX_UPLOAD_MB=1024",
+        "MAX_JOBS=2",
+        "JOB_TIMEOUT_SEC=300"
+      ],
+      "volumes": [
+        {
+          "source": "",
+          "target": "/work",
+          "type": "tmpfs"
+        }
+      ],
+      "healthcheck": {
+        "test": ["CMD", "python3", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"],
+        "interval": "30s",
+        "timeout": "10s",
+        "start_period": "120s",
+        "retries": 5
+      },
+      "labels": {
+        "cosmos-persistent-env": "WORKER_TOKEN",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/ZapConvert/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
+    }
+  }
+}
