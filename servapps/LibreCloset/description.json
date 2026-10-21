@@ -1,0 +1,9 @@
+{
+  "name": "Libre Closet",
+  "description": "Free, open-source, self-hosted wardrobe organizer with photo cataloging, outfit planning and a weather-aware outfit calendar.",
+  "longDescription": "<p>Libre Closet is a free, open-source wardrobe organizer you host yourself. Photograph and catalog garments by category, color, season and custom tags, build outfits in a visual outfit builder, and schedule them on a calendar with weather forecasts.</p><p>It runs as a single Docker container that defaults to SQLite and local file storage, so there is no separate database or cache to maintain. Background removal, washing and acquisition dates, garment cloning and archival, and wardrobe sharing with view or edit permissions are built in. The web app installs as an offline-ready PWA on your phone.</p><p>Libre Closet is AGPL-3.0 licensed, with no ads, tracking or data selling. The install form can enable optional Libre Closet user accounts and login; by default the app opens without its own login screen.</p>",
+  "tags": ["wardrobe", "clothing", "fashion", "outfit", "closet", "organizer", "catalog", "photos", "pwa", "self-hosted", "open-source", "life", "personal"],
+  "repository": "https://github.com/Lazztech/Libre-Closet",
+  "image": "https://ghcr.io/lazztech/libre-closet",
+  "supported_architectures": ["amd64", "arm64"]
+}
