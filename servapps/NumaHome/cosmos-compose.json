@@ -1,0 +1,80 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "photosPath",
+        "label": "Where are your photographs stored? Numa Home writes a small catalog into a .numa folder inside each library.",
+        "initialValue": "{DefaultDataPath}/photos",
+        "type": "text"
+      },
+      {
+        "name": "dataPath",
+        "label": "Where should Numa Home keep its accounts, thumbnails, models and what is sent home?",
+        "initialValue": "{DefaultDataPath}/numa-home",
+        "type": "text"
+      },
+      {
+        "name": "timezone",
+        "label": "Your time zone, for example Europe/Berlin. The night shift runs from 01:00 to 06:00 in it.",
+        "initialValue": "Etc/UTC",
+        "type": "text"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "success",
+        "label": "Numa Home is running at {Hostnames.{ServiceName}.{ServiceName}.host}. Open it and make the first account: it is the admin. The face and search models (about 520 MB) are downloaded on the first start."
+      }
+    ]
+  },
+  "minVersion": "0.7.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/simmmmm/numa-home:latest",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TZ={Context.timezone}",
+        "NUMA_HOME_PROXY=172.16.0.0/12"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/NumaHome/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{Context.photosPath}",
+          "target": "/photos",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.dataPath}/sent",
+          "target": "/sent",
+          "type": "bind"
+        },
+        {
+          "source": "{Context.dataPath}/data",
+          "target": "/data",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8283",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
