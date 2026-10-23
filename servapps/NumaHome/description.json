@@ -1,0 +1,9 @@
+{
+  "name": "Numa Home",
+  "description": "Your household's photographs on your own server: a timeline of every photograph in the house, raws rendered with Numa's colour and edits, faces and search in words, and an account for each person.",
+  "longDescription": "<p>Numa Home shows every photograph in the house in a browser, on a phone or on the TV. Raws such as RAF, ARW, CR3, NEF and DNG are rendered with Numa's colour and your edits, not the camera's small preview. Faces are found and grouped, and search understands words such as \"beach at sunset\". Nothing goes to the cloud.</p><p>A timeline of every month with a scrubber that shows each trip; an account for each person and a filter by who took a photograph; albums, stars and picks shared by the household; Send Home from the Numa apps for Linux, Mac and iPhone; your archive as it is.</p><p>One container with SQLite. No database server and no separate machine-learning container. On the first start the face and search models (about 520 MB) are downloaded. Open the page and make the first account: it is the admin.</p>",
+  "tags": ["photos", "photo management", "raw", "gallery", "faces", "search", "family", "self-hosted", "numa"],
+  "repository": "https://github.com/simmmmm/Numa",
+  "image": "https://ghcr.io/simmmmm/numa-home",
+  "supported_architectures": ["amd64"]
+}
