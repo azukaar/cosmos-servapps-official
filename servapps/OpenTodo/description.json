@@ -1,0 +1,9 @@
+{
+  "name": "OpenTodo",
+  "description": "Open-source, local-first task manager. Works offline and syncs every device from one small container.",
+  "longDescription": "<p>OpenTodo is an open-source (AGPL-3.0) task manager you host yourself: one small container with the web app and a SQLite database. Projects, labels, due dates, reminders and sharing work in the browser and as an installable app that keeps working offline and syncs when your devices reconnect.</p><p>The first person to open it creates the owner account, using the setup token Cosmos shows after the install; after that the owner invites people.</p><p>Documentation: <a href=\"https://open-todo.app/docs/self-hosting/\">open-todo.app/docs/self-hosting</a></p>",
+  "tags": ["productivity", "tasks", "todo", "planner", "self-hosted", "local-first"],
+  "repository": "https://github.com/pixari/opentodo",
+  "image": "ghcr.io/pixari/opentodo:stable",
+  "supported_architectures": ["amd64", "arm64"]
+}

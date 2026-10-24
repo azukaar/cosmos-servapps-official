@@ -1,0 +1,53 @@
+{
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "warning",
+        "name": "setupToken",
+        "label": "Open {RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host} and create the owner account. The setup screen asks for this setup token: {Passwords.0}"
+      }
+    ]
+  },
+  "minVersion": "0.22.23",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/pixari/opentodo:stable",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "OPENTODO_BASE_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "OPENTODO_SETUP_TOKEN={Passwords.0}",
+        "OPENTODO_ALLOW_SIGNUP=false",
+        "OPENTODO_TRUSTED_PROXIES="
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "OPENTODO_BASE_URL, OPENTODO_SETUP_TOKEN",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/OpenTodo/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
