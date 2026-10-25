@@ -1,0 +1,81 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "dataPath",
+        "label": "Where should your music and downloads live? It is mounted at /data (music in /data/music, downloads in /data/downloads) and must be writable by user 1000.",
+        "initialValue": "{DefaultDataPath}/wondarr-data",
+        "type": "text"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Cosmos handles signing in to Wondarr. Open it and follow First run: https://wulfftech.github.io/wondarr/getting-started/first-run/"
+      },
+      {
+        "type": "info",
+        "label": "Forward port 50300 on your router for better Soulseek results."
+      }
+    ]
+  },
+  "minVersion": "0.7.6",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/wulfftech/wondarr:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID=1000",
+        "PGID=1000",
+        "UMASK=002",
+        "APP__SERVER__AUTH=external"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Wondarr/icon.png"
+      },
+      "ports": [
+        "50300:50300"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {
+          "source": "{Context.dataPath}",
+          "target": "/data",
+          "type": "bind"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:1077",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+          , "AdminOnly": true
+          {/if}
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Wondarr",
+  "description": "An *arr for single songs. It finds each song you want on Soulseek, YouTube Music, torrents or usenet, checks it is the right recording and files it into your music library.",
+  "longDescription": "<p>Wondarr is a self-hosted *arr that thinks in songs, not albums. Tell it which songs you want and it looks on Soulseek first (slskd is bundled), then YouTube Music, then torrents and usenet through qBittorrent, SABnzbd and your indexers or Prowlarr.</p><p>Every download is checked by length and an AcoustID fingerprint, so a karaoke version or a live bootleg never lands in your library. Quality profiles keep it looking for a better copy until it gets there, and library layouts include a Plexamp preset that keeps albums together in Plex.</p><p>If you have used Sonarr or Radarr, you already know how to drive it. Documentation: <a href=\"https://wulfftech.github.io/wondarr/\">wulfftech.github.io/wondarr</a>.</p>",
+  "tags": ["music", "download", "soulseek", "torrent", "usenet", "automation", "arr", "media", "plex", "manager"],
+  "repository": "https://github.com/wulfftech/wondarr",
+  "image": "https://github.com/wulfftech/wondarr/pkgs/container/wondarr",
+  "supported_architectures": ["amd64", "arm64"]
+}
