@@ -1,0 +1,15 @@
+{
+  "name": "Kumbara",
+  "description": "Budgeting that files your bank feed for you and opens instantly on your phone.",
+  "longDescription": "<p>Kumbara pulls your bank transactions through SimpleFIN and files what it recognizes. For the rest it asks once per merchant, and one answer covers every charge from that merchant. Transfers between your own accounts are paired, so they never count as spending.</p><p>The budget is Needs, Wants and Savings, with what is left per day. It also tracks stock grants, investments, and paychecks from gross to net.</p><p>Kumbara is a phone app you install from the browser. Every screen loads from data already on your phone, so it opens instantly. Connect your bank from the app with a SimpleFIN setup token (SimpleFIN costs about $15 a year, paid to them). Single household.</p>",
+  "tags": [
+    "finance",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/armanckeser/kumbara",
+  "image": "ghcr.io/armanckeser/kumbara:0.22.0",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
