@@ -1,0 +1,112 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "AUTH_PASSWORD_help",
+        "label": "Set one if anyone else on your network can reach this server.",
+        "type": "info"
+      },
+      {
+        "name": "AUTH_PASSWORD",
+        "label": "Password for the app (leave empty for no login)",
+        "initialValue": "",
+        "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "USCIS Tracker is installed. It may take a minute to start the first time."
+      },
+      {
+        "type": "info",
+        "label": "Cosmos asks you to sign in before USCIS Tracker. If you add USCIS Tracker to a phone's home screen, set its own password and turn off Cosmos's login on its URL: the redirect breaks home-screen apps."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/armanckeser/uscis-tracker:0.3.0",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "DATABASE_URL=postgresql://postgres:{Passwords.0}@{ServiceName}-postgres:5432/app",
+        "AUTH_PASSWORD={Context.AUTH_PASSWORD}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "DATABASE_URL, AUTH_PASSWORD",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/USCIS-Tracker/icon.png"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "depends_on": {
+        "{ServiceName}-postgres": {
+          "condition": "service_healthy"
+        }
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "USCIS Tracker web app",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "AuthEnabled": true,
+          "Timeout": 120000,
+          "ThrottlePerMinute": 6000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:16-alpine",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "environment": [
+        "POSTGRES_DB=app",
+        "POSTGRES_USER=postgres",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U postgres -d app"
+        ],
+        "interval": 5,
+        "timeout": 5,
+        "retries": 20
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-pgdata",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ]
+    }
+  },
+  "networks": {
+    "{ServiceName}": {}
+  }
+}
