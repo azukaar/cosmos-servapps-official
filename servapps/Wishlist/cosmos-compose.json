@@ -1,0 +1,99 @@
+{
+  "cosmos-installer": {
+    "form": [],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Wishlist is installed. It may take a minute to start the first time."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/armanckeser/wishlist:0.33.0",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "POSTGRES_SERVER={ServiceName}-postgres",
+        "POSTGRES_DB=wishlist",
+        "POSTGRES_USER=wishlist",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "POSTGRES_SERVER, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Wishlist/icon.png"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "depends_on": {
+        "{ServiceName}-postgres": {
+          "condition": "service_healthy"
+        }
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Wishlist web app",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "AuthEnabled": true,
+          "Timeout": 120000,
+          "ThrottlePerMinute": 6000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:17",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "environment": [
+        "PGDATA=/var/lib/postgresql/data/pgdata",
+        "POSTGRES_DB=wishlist",
+        "POSTGRES_USER=wishlist",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "PGDATA, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U wishlist -d wishlist"
+        ],
+        "interval": 5,
+        "timeout": 5,
+        "retries": 20
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-pgdata",
+          "target": "/var/lib/postgresql/data/pgdata",
+          "type": "volume"
+        }
+      ]
+    }
+  },
+  "networks": {
+    "{ServiceName}": {}
+  }
+}
