@@ -1,0 +1,76 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "AUTH_PASSWORD_help",
+        "label": "Set one if anyone else on your network can reach this server.",
+        "type": "info"
+      },
+      {
+        "name": "AUTH_PASSWORD",
+        "label": "Password for the app (leave empty for no login)",
+        "initialValue": "",
+        "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Jellymeme is installed. It may take a minute to start the first time."
+      },
+      {
+        "type": "info",
+        "label": "Cosmos asks you to sign in before Jellymeme. If you add Jellymeme to a phone's home screen, set its own password and turn off Cosmos's login on its URL: the redirect breaks home-screen apps."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/armanckeser/jellymeme:1.1.0",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "AUTH_PASSWORD={Context.AUTH_PASSWORD}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "AUTH_PASSWORD",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Jellymeme/icon.png"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Jellymeme web app",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "AuthEnabled": true,
+          "Timeout": 120000,
+          "ThrottlePerMinute": 6000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  },
+  "networks": {
+    "{ServiceName}": {}
+  }
+}
