@@ -1,0 +1,15 @@
+{
+  "name": "Stars Organizer",
+  "description": "Search, tag, rate and sort your GitHub stars into GitHub Lists.",
+  "longDescription": "<p>Stars Organizer imports every repo you have starred on GitHub into one searchable table, with language, stars, last push and a health score. Tag repos, rate them, write notes, and sort them into GitHub Lists. Lists you make here are real GitHub Lists, so they show on your profile.</p><p>Explore finds repos you starred and forgot, and the ones that went quiet or were archived, so you can unstar them in bulk.</p><p>Needs a classic GitHub token with the repo scope, which you paste into the install form. Create one at https://github.com/settings/tokens/new?scopes=repo Tags, ratings and notes stay in this server's database; Lists and unstars are written to GitHub. Not affiliated with GitHub.</p>",
+  "tags": [
+    "developer",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/armanckeser/github-stars-organizer",
+  "image": "ghcr.io/armanckeser/github-stars-organizer:1.2.1",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}

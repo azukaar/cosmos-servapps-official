@@ -1,0 +1,162 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "GITHUB_TOKEN_help",
+        "label": "Create one at https://github.com/settings/tokens/new?scopes=repo",
+        "type": "info"
+      },
+      {
+        "name": "GITHUB_TOKEN",
+        "label": "GitHub token (classic, repo scope)",
+        "initialValue": "",
+        "type": "password"
+      },
+      {
+        "name": "AUTH_PASSWORD_help",
+        "label": "Set one if anyone else on your network can reach this server.",
+        "type": "info"
+      },
+      {
+        "name": "AUTH_PASSWORD",
+        "label": "Password for the app (leave empty for no login)",
+        "initialValue": "",
+        "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Stars Organizer is installed. It may take a minute to start the first time."
+      },
+      {
+        "type": "info",
+        "label": "Cosmos asks you to sign in before Stars Organizer. If you add Stars Organizer to a phone's home screen, set its own password and turn off Cosmos's login on its URL: the redirect breaks home-screen apps."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/armanckeser/github-stars-organizer:1.2.1",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "DATABASE_URL=postgresql://postgres:{Passwords.0}@{ServiceName}-postgres:5432/app",
+        "ELECTRIC_URL=http://{ServiceName}-electric:3000",
+        "GITHUB_TOKEN={Context.GITHUB_TOKEN}",
+        "AUTH_PASSWORD={Context.AUTH_PASSWORD}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "DATABASE_URL, ELECTRIC_URL, GITHUB_TOKEN, AUTH_PASSWORD",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Stars-Organizer/icon.png"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "depends_on": {
+        "{ServiceName}-postgres": {
+          "condition": "service_healthy"
+        },
+        "{ServiceName}-electric": {
+          "condition": "service_started"
+        }
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Stars Organizer web app",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "AuthEnabled": true,
+          "Timeout": 120000,
+          "ThrottlePerMinute": 6000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:16-alpine",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "environment": [
+        "POSTGRES_DB=app",
+        "POSTGRES_USER=postgres",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "command": "postgres -c wal_level=logical -c max_replication_slots=10 -c max_wal_senders=10",
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U postgres"
+        ],
+        "interval": 5,
+        "timeout": 5,
+        "retries": 20
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-pgdata",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ]
+    },
+    "{ServiceName}-electric": {
+      "image": "electricsql/electric:1.7.6",
+      "container_name": "{ServiceName}-electric",
+      "hostname": "{ServiceName}-electric",
+      "restart": "unless-stopped",
+      "environment": [
+        "DATABASE_URL=postgresql://postgres:{Passwords.0}@{ServiceName}-postgres:5432/app?sslmode=disable",
+        "ELECTRIC_INSECURE=true",
+        "ELECTRIC_STORAGE_DIR=/var/lib/electric/persistent"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "DATABASE_URL, ELECTRIC_INSECURE, ELECTRIC_STORAGE_DIR"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "depends_on": {
+        "{ServiceName}-postgres": {
+          "condition": "service_healthy"
+        }
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-electricdata",
+          "target": "/var/lib/electric/persistent",
+          "type": "volume"
+        }
+      ]
+    }
+  },
+  "networks": {
+    "{ServiceName}": {}
+  }
+}
