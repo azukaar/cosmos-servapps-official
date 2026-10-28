@@ -1,0 +1,71 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "authEnabled",
+        "label": "Require a Libre Closet account and login? Leave this off to open the wardrobe directly (Cosmos still secures the route).",
+        "initialValue": "false",
+        "type": "checkbox"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Libre Closet is ready. Open it and start adding garments; the SQLite database and uploaded photos are stored in the app's data volume."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/lazztech/libre-closet:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "APP_NAME=Libre Closet",
+        "DATA_PATH=/app/data",
+        "PWA_ENABLED=true",
+        "AUTH_ENABLED={Context.authEnabled}",
+        "ACCESS_TOKEN_SECRET={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "ACCESS_TOKEN_SECRET",
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/LibreCloset/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/app/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+           , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    }
+  }
+}
