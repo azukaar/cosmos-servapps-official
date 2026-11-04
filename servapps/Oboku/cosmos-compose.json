@@ -123,7 +123,6 @@
         }
       },
       "environment": [
-        "NODE_ENV=production",
         "APP_PUBLIC_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
         "ADMIN_PUBLIC_URL=https://{Hostnames.{StaticServiceName}-admin.{StaticServiceName}-admin.host}",
         "COUCH_DB_URL=http://{ServiceName}-couchdb:5984",
