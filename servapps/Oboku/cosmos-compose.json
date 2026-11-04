@@ -2,23 +2,6 @@
   "cosmos-installer": {
     "form": [
       {
-        "name": "jwtKeysWarning",
-        "type": "warning",
-        "label": "oboku signs its sessions with an RSA key pair that you provide. Generate one on any machine with: openssl genrsa -out jwt_private_key.pem 4096 && openssl rsa -in jwt_private_key.pem -pubout -outform PEM -out jwt_public_key.pem, then paste each file base64-encoded (base64 -w0 jwt_private_key.pem) in the two fields below. Keep them safe: losing them signs every user out."
-      },
-      {
-        "name": "JWT_PRIVATE_KEY",
-        "label": "JWT private key, base64 encoded",
-        "initialValue": false,
-        "type": "password"
-      },
-      {
-        "name": "JWT_PUBLIC_KEY",
-        "label": "JWT public key, base64 encoded",
-        "initialValue": false,
-        "type": "password"
-      },
-      {
         "name": "adminLogin",
         "label": "Login for the oboku admin panel",
         "initialValue": "admin",
@@ -32,6 +15,10 @@
       }
     ],
     "post-install": [
+      {
+        "type": "info",
+        "label": "The admin panel is the {ServiceName}-admin URL. Cosmos asks for an admin sign-in first, then the panel asks for the oboku admin login above. Without an email provider, readers can only create an account from a sign-up link that the panel generates."
+      },
       {
         "type": "warning",
         "label": "oboku only exposes the options its installer needs. Email sign-up, cloud sync providers (Dropbox, Google Drive, OneDrive) and the performance settings are configured through extra environment variables: https://docs.oboku.me/self-hosting/configuration"
@@ -50,6 +37,12 @@
       "environment": [
         "VITE_API_URL=https://{Hostnames.{StaticServiceName}-api.{StaticServiceName}-api.host}"
       ],
+      "healthcheck": {
+        "test": ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3
+      },
       "labels": {
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
@@ -75,30 +68,82 @@
       ]
     },
 
+    "{ServiceName}-admin": {
+      "image": "mbret/oboku-admin",
+      "container_name": "{ServiceName}-admin",
+      "restart": "unless-stopped",
+      "depends_on": {
+        "{ServiceName}-api": {}
+      },
+      "environment": [
+        "VITE_API_URL=https://{Hostnames.{StaticServiceName}-api.{StaticServiceName}-api.host}"
+      ],
+      "healthcheck": {
+        "test": ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3
+      },
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}-admin",
+          "description": "Expose the {ServiceName} admin panel to Cosmos admins",
+          "useHost": true,
+          "target": "http://{ServiceName}-admin:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true,
+          "AdminOnly": true
+        }
+      ]
+    },
+
     "{ServiceName}-api": {
       "image": "mbret/oboku-api",
       "container_name": "{ServiceName}-api",
       "restart": "unless-stopped",
       "depends_on": {
-        "{ServiceName}-couchdb": {},
-        "{ServiceName}-postgres": {}
+        "{ServiceName}-couchdb": {
+          "condition": "service_healthy"
+        },
+        "{ServiceName}-postgres": {
+          "condition": "service_healthy"
+        }
       },
       "environment": [
         "NODE_ENV=production",
         "APP_PUBLIC_URL=https://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "ADMIN_PUBLIC_URL=https://{Hostnames.{StaticServiceName}-admin.{StaticServiceName}-admin.host}",
         "COUCH_DB_URL=http://{ServiceName}-couchdb:5984",
         "POSTGRES_HOST={ServiceName}-postgres",
         "POSTGRES_DB=oboku",
         "POSTGRES_USER=oboku",
         "POSTGRES_PASSWORD={Passwords.0}",
-        "JWT_PRIVATE_KEY={Context.JWT_PRIVATE_KEY}",
-        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}",
+        "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
+        "JWT_PUBLIC_KEY_FILE=/secrets/jwt_public_key.pem",
         "ADMIN_LOGIN={Context.adminLogin}",
         "ADMIN_PASSWORD={Context.adminPassword}",
         "API_DATA_DIR=/var/lib/oboku/data",
         "API_CONFIG_DIR=/var/lib/oboku/config"
       ],
       "volumes": [
+        {
+          "source": "{ServiceName}-secrets",
+          "target": "/secrets",
+          "type": "volume"
+        },
         {
           "source": "{ServiceName}-api-data",
           "target": "/var/lib/oboku/data",
@@ -110,8 +155,15 @@
           "type": "volume"
         }
       ],
+      "healthcheck": {
+        "test": ["CMD", "curl", "-f", "http://localhost:3000/web/config"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "start_period": 30
+      },
       "labels": {
-        "cosmos-persistent-env": "ADMIN_LOGIN, ADMIN_PASSWORD, JWT_PRIVATE_KEY, JWT_PUBLIC_KEY, POSTGRES_PASSWORD",
+        "cosmos-persistent-env": "ADMIN_LOGIN, ADMIN_PASSWORD, POSTGRES_PASSWORD",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
@@ -131,7 +183,8 @@
           "SmartShield": {
             "Enabled": true
           },
-          "AuthEnabled": false
+          "AuthEnabled": false,
+          "DisableHeaderHardening": true
         }
       ]
     },
@@ -143,9 +196,15 @@
       "environment": [
         "COUCHDB_USER=admin",
         "COUCHDB_PASSWORD={Passwords.1}",
-        "JWT_PUBLIC_KEY={Context.JWT_PUBLIC_KEY}"
+        "JWT_PRIVATE_KEY_FILE=/secrets/jwt_private_key.pem",
+        "JWT_PUBLIC_KEY_FILE=/secrets/jwt_public_key.pem"
       ],
       "volumes": [
+        {
+          "source": "{ServiceName}-secrets",
+          "target": "/secrets",
+          "type": "volume"
+        },
         {
           "source": "{ServiceName}-couchdb-data",
           "target": "/opt/couchdb/data",
@@ -157,8 +216,15 @@
           "type": "volume"
         }
       ],
+      "healthcheck": {
+        "test": ["CMD", "curl", "-f", "http://localhost:5984/_up"],
+        "interval": 10,
+        "timeout": 5,
+        "retries": 10,
+        "start_period": 20
+      },
       "labels": {
-        "cosmos-persistent-env": "COUCHDB_PASSWORD, COUCHDB_USER, JWT_PUBLIC_KEY",
+        "cosmos-persistent-env": "COUCHDB_PASSWORD, COUCHDB_USER",
         "cosmos-force-network-secured": "true",
         "cosmos-auto-update": "true",
         "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Oboku/icon.png",
@@ -168,7 +234,7 @@
     },
 
     "{ServiceName}-postgres": {
-      "image": "postgres:17",
+      "image": "postgres:17-trixie",
       "container_name": "{ServiceName}-postgres",
       "restart": "unless-stopped",
       "environment": [
@@ -183,6 +249,12 @@
           "type": "volume"
         }
       ],
+      "healthcheck": {
+        "test": ["CMD", "pg_isready", "-U", "oboku", "-d", "oboku"],
+        "interval": 10,
+        "timeout": 5,
+        "retries": 10
+      },
       "labels": {
         "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER",
         "cosmos-force-network-secured": "true",
