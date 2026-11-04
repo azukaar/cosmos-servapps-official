@@ -131,9 +131,7 @@
         "POSTGRES_USER=oboku",
         "POSTGRES_PASSWORD={Passwords.0}",
         "ADMIN_LOGIN={Context.adminLogin}",
-        "ADMIN_PASSWORD={Context.adminPassword}",
-        "API_DATA_DIR=/var/lib/oboku/data",
-        "API_CONFIG_DIR=/var/lib/oboku/config"
+        "ADMIN_PASSWORD={Context.adminPassword}"
       ],
       "volumes": [
         {
