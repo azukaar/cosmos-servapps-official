@@ -92,6 +92,11 @@
         "type": "info",
         "name": "setup",
         "label": "Media Manager is installed with its Cosmos routes. Open the UI and add AltMount, Plex, your Newznab indexer and a quality profile. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
+      },
+      {
+        "type": "info",
+        "name": "secret-key",
+        "label": "Media Manager creates its secret encryption key on first start in the volume {ServiceName}-api-state. Keep that volume when you update or move the app: the keys you save on the website (Plex, AltMount, indexers) can only be read with it."
       }
     ]
   },
@@ -126,7 +131,7 @@
         {
           "name": "{ServiceName}-api",
           "description": "Media Manager API with server-side owner bearer injection",
-          "useHost": false,
+          "useHost": true,
           "host": "{Hostnames.{ServiceName}.{ServiceName}.host}",
           "usePathPrefix": true,
           "PathPrefix": "/api",
@@ -140,7 +145,7 @@
             "Enabled": true
           },
           "AuthEnabled": true,
-          "AdminOnly": false,
+          "AdminOnly": true,
           "ExtraHeaders": {
             "Authorization": "Bearer {Context.ownerToken}"
           }
@@ -148,7 +153,7 @@
         {
           "name": "{ServiceName}-health",
           "description": "Media Manager health and readiness endpoints",
-          "useHost": false,
+          "useHost": true,
           "host": "{Hostnames.{ServiceName}.{ServiceName}.host}",
           "usePathPrefix": true,
           "PathPrefix": "/health",
@@ -162,12 +167,13 @@
             "Enabled": true
           },
           "AuthEnabled": true,
-          "AdminOnly": false
+          "AdminOnly": true
         },
         {
           "name": "{ServiceName}",
           "description": "Media Manager UI",
           "useHost": true,
+          "host": "{Hostnames.{ServiceName}.{ServiceName}.host}",
           "target": "http://{ServiceName}:3000",
           "mode": "SERVAPP",
           "Timeout": 14400000,
@@ -177,7 +183,7 @@
             "Enabled": true
           },
           "AuthEnabled": true,
-          "AdminOnly": false
+          "AdminOnly": true
         }
       ]
     },
@@ -221,6 +227,7 @@
         "ALTMOUNT_SECRET={Context.altmountSecret}",
         "BACKUP_ENCRYPTION_KEY={Context.backupKey}",
         "SERVARR_API_KEY={Passwords.3}",
+        "SECRET_ENCRYPTION_KEY_FILE=/var/lib/media-manager/state/secret-encryption.key",
         "SEERR_BASE_URL=",
         "SEERR_API_KEY=",
         "SEERR_INSTANCE_ID=",
@@ -238,30 +245,38 @@
       },
       "volumes": [
         {
+          "type": "bind",
           "source": "{Context.altmountParentPath}",
           "target": "/mnt",
+          "readOnly": true,
+          "bindOptions": {
+            "propagation": "rslave"
+          }
+        },
+        {
           "type": "bind",
-          "readOnly": true
-        },
-        {
           "source": "{Context.moviesPath}",
-          "target": "/libraries/movies",
-          "type": "bind"
+          "target": "/libraries/movies"
         },
         {
+          "type": "bind",
           "source": "{Context.tvPath}",
-          "target": "/libraries/tv",
-          "type": "bind"
+          "target": "/libraries/tv"
         },
         {
+          "type": "bind",
           "source": "{Context.mediaLibraryPath}",
-          "target": "/srv/media",
-          "type": "bind"
+          "target": "/srv/media"
         },
         {
+          "type": "bind",
           "source": "{Context.backupPath}",
-          "target": "/var/lib/media-manager/backups",
-          "type": "bind"
+          "target": "/var/lib/media-manager/backups"
+        },
+        {
+          "source": "{ServiceName}-api-state",
+          "target": "/var/lib/media-manager/state",
+          "type": "volume"
         }
       ],
       "networks": {
@@ -318,7 +333,8 @@
     }
   },
   "volumes": {
-    "{ServiceName}-postgres-data": {}
+    "{ServiceName}-postgres-data": {},
+    "{ServiceName}-api-state": {}
   },
   "networks": {
     "{ServiceName}": {},
