@@ -58,31 +58,7 @@
       },
       {
         "name": "tmdbToken",
-        "label": "TMDB API read access token (recommended; can be added later)",
-        "type": "password",
-        "initialValue": ""
-      },
-      {
-        "name": "plexToken",
-        "label": "Plex token (optional; can be added later)",
-        "type": "password",
-        "initialValue": ""
-      },
-      {
-        "name": "newznabKey",
-        "label": "First Newznab API key (optional; can be added later)",
-        "type": "password",
-        "initialValue": ""
-      },
-      {
-        "name": "altmountSecret",
-        "label": "AltMount API secret (optional; leave blank for anonymous_admin)",
-        "type": "password",
-        "initialValue": ""
-      },
-      {
-        "name": "backupKey",
-        "label": "Base64 32-byte backup key from 'openssl rand -base64 32' (optional; leave blank to disable backups)",
+        "label": "TMDB API read access token (optional; you can also add it later on the website under Indstillinger → Forbindelser)",
         "type": "password",
         "initialValue": ""
       }
@@ -91,12 +67,12 @@
       {
         "type": "info",
         "name": "setup",
-        "label": "Media Manager is installed with its Cosmos routes. Open the UI and add AltMount, Plex, your Newznab indexer and a quality profile. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
+        "label": "Media Manager is installed with its Cosmos routes. Open the UI: under Indstillinger → Forbindelser choose \"Log ind med Plex\", add AltMount (and TMDB unless you use Seerr), add your indexer under Kilder, then use \"Brug anbefalet opsætning\" on Kom i gang. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
       },
       {
         "type": "info",
         "name": "secret-key",
-        "label": "Media Manager creates its secret encryption key on first start in the volume {ServiceName}-api-state. Keep that volume when you update or move the app: the keys you save on the website (Plex, AltMount, indexers) can only be read with it."
+        "label": "Media Manager creates its secret encryption key and its backup key on first start in the volume {ServiceName}-api-state (secret-encryption.key and backup-encryption.key). Keep that volume when you update or move the app, and save a copy of backup-encryption.key somewhere safe: without it a backup cannot be restored on another server."
       }
     ]
   },
@@ -222,12 +198,9 @@
         "LISTEN_ADDR=0.0.0.0:8080",
         "COMMISSIONING_V2_OWNER_ORIGIN={RootProtocol}://{Hostnames.{ServiceName}.{ServiceName}.host}",
         "TMDB_ACCESS_TOKEN={Context.tmdbToken}",
-        "PLEX_TOKEN={Context.plexToken}",
-        "NEWZNAB_PRIMARY_API_KEY={Context.newznabKey}",
-        "ALTMOUNT_SECRET={Context.altmountSecret}",
-        "BACKUP_ENCRYPTION_KEY={Context.backupKey}",
         "SERVARR_API_KEY={Passwords.3}",
         "SECRET_ENCRYPTION_KEY_FILE=/var/lib/media-manager/state/secret-encryption.key",
+        "BACKUP_ENCRYPTION_KEY_FILE=/var/lib/media-manager/state/backup-encryption.key",
         "SEERR_BASE_URL=",
         "SEERR_API_KEY=",
         "SEERR_INSTANCE_ID=",
