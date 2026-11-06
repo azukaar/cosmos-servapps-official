@@ -1,0 +1,9 @@
+{
+  "name": "Yuvomi",
+  "description": "Self-hosted family planner: calendar, tasks, shopping, meals and budget in one app",
+  "longDescription": "<p>Yuvomi is a self-hosted family planner for the whole household: shared calendar, tasks, shopping lists, meal planning and recipes, budget, health, birthdays, notes and more, each module optional. It is an installable web app (PWA) for phones and desktops, available in 27 languages.</p><p>Everything runs in a single container with an encrypted SQLite database. The session secret and the database key are generated on the first start and kept in the data volume. Open the app after installation to create the first admin account.</p><p>Website: <a href=\"https://yuvomi.cloud\">yuvomi.cloud</a></p>",
+  "tags": ["family", "planner", "calendar", "tasks", "shopping", "meals", "budget", "household", "pwa"],
+  "repository": "https://github.com/ulsklyc/yuvomi",
+  "image": "ghcr.io/ulsklyc/yuvomi:latest",
+  "supported_architectures": ["amd64", "arm64"]
+}

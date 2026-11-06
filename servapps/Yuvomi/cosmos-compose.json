@@ -1,0 +1,64 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "HTTPS",
+        "label": "Yuvomi will be opened over HTTPS (keep checked unless you use plain HTTP). Login cookies are then only sent over HTTPS.",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Open Yuvomi in your browser to create the first admin account. The database key is generated on the first start and stored in the data volume. Keep a copy of it somewhere else (Settings > Household > Backup and restore shows it): without it, backups cannot be opened once the volume is lost."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/ulsklyc/yuvomi:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "NODE_ENV=production",
+        "DB_PATH=/data/yuvomi.db",
+        "BACKUP_DIR=/backups",
+        "TRUST_PROXY=1",
+        "SESSION_SECURE={if Context.HTTPS}true{/if}{if not Context.HTTPS}false{/if}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Yuvomi/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-backups",
+          "target": "/backups",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    }
+  }
+}
