@@ -1,5 +1,13 @@
 {
   "cosmos-installer": {
+    "form": [
+      {
+        "name": "HTTPS",
+        "label": "Yuvomi will be opened over HTTPS (keep checked unless you use plain HTTP). Login cookies are then only sent over HTTPS.",
+        "initialValue": true,
+        "type": "checkbox"
+      }
+    ],
     "post-install": [
       {
         "type": "info",
@@ -17,7 +25,8 @@
         "NODE_ENV=production",
         "DB_PATH=/data/yuvomi.db",
         "BACKUP_DIR=/backups",
-        "TRUST_PROXY=1"
+        "TRUST_PROXY=1",
+        "SESSION_SECURE={if Context.HTTPS}true{/if}{if not Context.HTTPS}false{/if}"
       ],
       "labels": {
         "cosmos-force-network-secured": "true",
