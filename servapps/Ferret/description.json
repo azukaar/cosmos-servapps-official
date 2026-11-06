@@ -1,0 +1,9 @@
+{
+  "name": "Ferret",
+  "description": "Self-hosted home inventory: find anything you own.",
+  "longDescription": "<p>Ferret is a self-hosted home inventory for the whole household. Add things by photo, barcode or a walk through a room, find them again by what they are, print QR labels for boxes, and keep warranties, manuals, maintenance and an insurance report in one place.</p><p>Several households and people with roles, a REST API, and an MCP server for AI assistants. Every AI feature is optional and runs on your own models.</p><p>Ferret makes its own secrets on first start. Once it runs, make a key file (Settings → Server → Keys) and keep it off this server: without the file key, uploaded photos and documents can't be read.</p>",
+  "tags": ["inventory", "home", "warranty", "insurance", "barcode", "labels", "mcp", "self-hosted"],
+  "repository": "https://github.com/ferret-project/ferret",
+  "image": "https://hub.docker.com/r/ferretproject/ferret",
+  "supported_architectures": ["amd64", "arm64"]
+}
