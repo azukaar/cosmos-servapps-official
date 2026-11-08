@@ -1,0 +1,9 @@
+{
+  "name": "bananana brain",
+  "description": "Your own control room for servers, Macs and PCs, reached from anywhere at your-name.bananana.dev without opening ports.",
+  "longDescription": "<p>The bananana brain keeps your machines' live readings, alerts, automations, files, terminals and history on your own hardware, not in someone's cloud, and you reach it from anywhere at your-name.bananana.dev and in the bananana.dev apps for iPhone and Android. It connects out through an end-to-end encrypted relay, so it opens no ports and needs no VPN.</p><p>First create a free account at <a href=\"https://bananana.dev/start\">bananana.dev/start</a> and copy the setup token it shows (it starts with bst_). Paste it into the installer; it's only used on the first start. Then add your other machines from the brain's Nodes page.</p><p>The dashboard is also served on your network at https://&lt;server&gt;:18771 with a self-signed certificate (same sign-in). It only answers on port 18771, so it is published on that port rather than behind a Cosmos route; remote access goes through your-name.bananana.dev.</p><p>bananana.dev is free to use under its <a href=\"https://bananana.dev/terms\">terms</a>; the app is not open source. Docs: <a href=\"https://bananana.dev/help/docker\">bananana.dev/help/docker</a>, support: <a href=\"https://bananana.dev/support\">bananana.dev/support</a>.</p>",
+  "tags": ["monitoring", "remote management", "rmm", "fleet", "dashboard", "servers", "terminal", "alerts"],
+  "repository": "https://bananana.dev/help/docker",
+  "image": "https://hub.docker.com/r/romanvaxman/bananana-brain",
+  "supported_architectures": ["amd64", "arm64"]
+}
