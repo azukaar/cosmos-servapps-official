@@ -1,0 +1,52 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "setupToken",
+        "label": "Setup token from https://bananana.dev/start (starts with bst_). Only used on the first start.",
+        "initialValue": "",
+        "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Open your brain at the address bananana.dev gave you (your-name.bananana.dev). On your network it is also at https://<this server>:18771 (self-signed certificate). Then add your other machines from its Nodes page."
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "romanvaxman/bananana-brain:latest",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TZ=auto",
+        "BANANANA_SETUP_TOKEN={Context.setupToken}"
+      ],
+      "labels": {
+        "cosmos-persistent-env": "BANANANA_SETUP_TOKEN",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/bananana-brain/icon.png"
+      },
+      "ports": [
+        "18771:18771"
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "healthcheck": {
+        "test": ["CMD", "python3", "-c", "import socket; socket.create_connection(('127.0.0.1', 18770), 3)"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "start_period": 20
+      }
+    }
+  }
+}
