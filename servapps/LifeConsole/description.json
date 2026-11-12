@@ -1,0 +1,9 @@
+{
+  "name": "Life Console",
+  "description": "Keyboard-first planner that shows what to do right now: time-block your week, count down deadlines and link tasks to goals.",
+  "longDescription": "<p>Life Console answers one question all day: what should I be doing right now? The Command Center shows the current time block with a live countdown, the task to work on, what comes next and the next deadline.</p><p>Plan the week by moving tasks from a backlog into a daily budget and onto the timeline; Auto time-box fills free gaps by priority. Deadlines show as ticking countdowns, and strategic plans break a vision into goals and milestones that tasks link to.</p><p>Multi-user, keyboard-first, works offline and installs on phones with push reminders. License: AGPL-3.0.</p>",
+  "tags": ["productivity", "planner", "time-blocking", "tasks", "todo", "deadlines", "goals", "pomodoro", "pwa"],
+  "repository": "https://github.com/TJ-coding/life-console",
+  "image": "https://ghcr.io/tj-coding/life-console",
+  "supported_architectures": ["amd64", "arm64"]
+}
