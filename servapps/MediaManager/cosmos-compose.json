@@ -3,94 +3,119 @@
     "skip-default-network": true,
     "form": [
       {
-        "name": "moviesPath",
-        "label": "Movie library folder on this host (the API user must be able to write symlinks here)",
-        "type": "path",
-        "initialValue": "{DefaultDataPath}/media-manager/movies"
-      },
-      {
-        "name": "tvPath",
-        "label": "TV library folder on this host (the API user must be able to write symlinks here)",
-        "type": "path",
-        "initialValue": "{DefaultDataPath}/media-manager/tv"
+        "name": "intro",
+        "type": "info",
+        "label": "Media Manager finds movies and TV shows on Usenet, streams them through AltMount and adds them to Plex. You need a Usenet news-server account and an indexer; both, and Plex, are set up on the website after this install. The defaults below work for most people."
       },
       {
         "name": "bundleAltmount",
-        "label": "Install AltMount together with Media Manager (recommended). Turn off only if you already run your own AltMount",
+        "label": "Install AltMount with Media Manager (recommended; turn off only to use an AltMount you already run)",
         "type": "checkbox",
         "initialValue": true
       },
       {
         "name": "bundlePlex",
-        "label": "Install Plex too. Only if you have no Plex server yet: this Plex sees AltMount's files and the library folders from the start",
+        "label": "Also install Plex (only if you do not have a Plex server yet)",
         "type": "checkbox",
         "initialValue": false
       },
       {
         "name": "plexClaim",
-        "label": "Only with Install Plex too: claim code from https://plex.tv/claim, so the new Plex joins your Plex account (valid 4 minutes)",
+        "label": "Plex claim code, only with \"Also install Plex\" (optional, from plex.tv/claim, valid 4 minutes)",
         "type": "text",
         "initialValue": ""
       },
       {
+        "name": "foldersInfo",
+        "type": "info",
+        "label": "Folders on this server. Missing folders are created for you."
+      },
+      {
+        "name": "moviesPath",
+        "label": "Movies folder",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/movies"
+      },
+      {
+        "name": "tvPath",
+        "label": "TV shows folder",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/tv"
+      },
+      {
         "name": "altmountParentPath",
-        "label": "Host folder for AltMount's files: the installed AltMount mounts its drive in an 'altmount' folder here. With your own AltMount: the folder that CONTAINS its FUSE mount",
+        "label": "AltMount folder (with your own AltMount: the folder that contains its drive)",
         "type": "path",
         "initialValue": "{DefaultDataPath}/media-manager/usenet"
       },
       {
-        "name": "mediaLibraryPath",
-        "label": "Optional parent for extra Plex library folders (Seerr root routing)",
-        "type": "path",
-        "initialValue": "{DefaultDataPath}/media-manager/media"
-      },
-      {
         "name": "backupPath",
-        "label": "Host folder for encrypted backups (the API user must be able to write here)",
+        "label": "Backups folder (backups are encrypted)",
         "type": "path",
         "initialValue": "{DefaultDataPath}/media-manager/backups"
       },
       {
+        "name": "tmdbToken",
+        "label": "TMDB read access token (optional, can be added later; needed to search for titles unless you use Seerr)",
+        "type": "password",
+        "initialValue": ""
+      },
+      {
+        "name": "advancedInfo",
+        "type": "info",
+        "label": "Advanced: leave these as they are unless you know you need to change them."
+      },
+      {
         "name": "mediaUid",
-        "label": "UID that can read AltMount and write the library folders",
+        "label": "User ID that owns the folders",
         "type": "text",
         "initialValue": "1000"
       },
       {
         "name": "mediaGid",
-        "label": "GID for the same user",
+        "label": "Group ID that owns the folders",
         "type": "text",
         "initialValue": "1000"
       },
       {
         "name": "mediaNetwork",
-        "label": "Existing Docker network shared with AltMount, Plex and Seerr",
+        "label": "Docker network shared with Plex and Seerr (created if it does not exist)",
         "type": "text",
         "initialValue": "media-stack"
       },
       {
-        "name": "ownerToken",
-        "label": "Owner API token (generated; keep it for direct API access)",
-        "type": "password",
-        "initialValue": "{Passwords.1}{Passwords.2}"
+        "name": "mediaLibraryPath",
+        "label": "Folder for extra Plex libraries (optional, for Seerr requests to more libraries)",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/media"
       },
       {
-        "name": "tmdbToken",
-        "label": "TMDB API read access token (optional; you can also add it later on the website under Indstillinger → Forbindelser)",
+        "name": "ownerToken",
+        "label": "Owner API token (generated; only needed for direct API access)",
         "type": "password",
-        "initialValue": ""
+        "initialValue": "{Passwords.1}{Passwords.2}"
       }
     ],
     "post-install": [
       {
-        "type": "info",
+        "type": "success",
         "name": "setup",
-        "label": "Media Manager is installed with its Cosmos routes. Open the UI: under Indstillinger → Forbindelser choose \"Log ind med Plex\" (with Install Plex too: pick the new server; it is reachable on port 32400 and at app.plex.tv), add your news-server login under Indstillinger → Usenet-servere (with your own AltMount instead: add it under Forbindelser first), add TMDB unless you use Seerr, add your indexer under Kilder, then use \"Brug anbefalet opsætning\" on Kom i gang. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
+        "label": "Media Manager is installed. Open it and follow the \"Kom i gang\" page: 1) Log ind med Plex, 2) add your news-server login under Usenet-servere, 3) add an indexer under Kilder, 4) press \"Brug anbefalet opsætning\". Then add your first title."
       },
-      {
+      {if Context.bundlePlex}{
         "type": "info",
+        "name": "plex",
+        "label": "Plex was installed too (port 32400). Without a claim code, open Plex once from your own network to claim it. Then choose it under \"Log ind med Plex\"; Media Manager creates its Film and Serier libraries."
+      },{/if}
+      {if not Context.bundleAltmount}{
+        "type": "info",
+        "name": "own-altmount",
+        "label": "You chose your own AltMount: add it under Indstillinger → Forbindelser before step 2. Media Manager can later switch it to its own AltMount build under System → AltMount."
+      },{/if}
+      {
+        "type": "warning",
         "name": "secret-key",
-        "label": "Media Manager creates its secret encryption key and its backup key on first start in the volume {ServiceName}-api-state (secret-encryption.key and backup-encryption.key). Keep that volume when you update or move the app, and save a copy of backup-encryption.key somewhere safe: without it a backup cannot be restored on another server."
+        "label": "Keep the volume {ServiceName}-api-state when you update or move the app: it holds the keys for your saved logins and backups. Save a copy of backup-encryption.key somewhere safe (System → Backup shows where); without it a backup cannot be restored on another server."
       }
     ]
   },
