@@ -1,0 +1,23 @@
+{
+  "name": "Media Manager",
+  "description": "Finds movies and TV shows on Usenet, streams them through AltMount and adds them to Plex. AltMount comes included; Plex can be installed too.",
+  "longDescription": "<p><strong>Media Manager</strong> finds the movies and TV shows you ask for, picks a good release on your Usenet indexers, streams it through AltMount (no waiting for downloads) and adds it to Plex. A title only counts as done when Plex shows it. Requests can come from the website or from Seerr.</p><p><strong>What you need</strong></p><ul><li>A Usenet news-server account and at least one Newznab indexer.</li><li>Plex, or tick <em>Also install Plex</em> during the install.</li><li>Optional: a free TMDB token for searching titles (not needed with Seerr).</li></ul><p><strong>What gets installed</strong>: Media Manager (website, API and database) and AltMount, with a Cosmos address for the website. Logins are entered on the website afterwards and stored encrypted.</p><p><strong>Getting started</strong> takes four steps on the <em>Kom i gang</em> page: sign in with Plex, add your news-server login, add an indexer, and press <em>Brug anbefalet opsætning</em>, which sets up the library folders and a quality profile. The website is in Danish.</p><p><strong>License:</strong> GNU AGPL v3.0 only (<code>AGPL-3.0-only</code>). Source: <a href=\"https://github.com/Media-manager52/Media-manager\">github.com/Media-manager52/Media-manager</a>. Third-party notices are included with the project.</p>",
+  "tags": [
+    "media",
+    "movies",
+    "tv",
+    "usenet",
+    "plex",
+    "altmount",
+    "seerr",
+    "newznab",
+    "automation",
+    "danish",
+    "media manager"
+  ],
+  "repository": "https://github.com/Media-manager52/Media-manager",
+  "image": "ghcr.io/media-manager52/media-manager-ui:main",
+  "supported_architectures": [
+    "amd64"
+  ]
+}

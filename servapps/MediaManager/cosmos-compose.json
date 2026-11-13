@@ -1,0 +1,476 @@
+{
+  "cosmos-installer": {
+    "skip-default-network": true,
+    "form": [
+      {
+        "name": "intro",
+        "type": "info",
+        "label": "Media Manager finds movies and TV shows on Usenet, streams them through AltMount and adds them to Plex. You need a Usenet news-server account and an indexer; both, and Plex, are set up on the website after this install. The defaults below work for most people."
+      },
+      {
+        "name": "bundleAltmount",
+        "label": "Install AltMount with Media Manager (recommended; turn off only to use an AltMount you already run)",
+        "type": "checkbox",
+        "initialValue": true
+      },
+      {
+        "name": "bundlePlex",
+        "label": "Also install Plex (only if you do not have a Plex server yet)",
+        "type": "checkbox",
+        "initialValue": false
+      },
+      {
+        "name": "plexClaim",
+        "label": "Plex claim code, only with \"Also install Plex\" (optional, from plex.tv/claim, valid 4 minutes)",
+        "type": "text",
+        "initialValue": ""
+      },
+      {
+        "name": "foldersInfo",
+        "type": "info",
+        "label": "Folders on this server. Missing folders are created for you."
+      },
+      {
+        "name": "moviesPath",
+        "label": "Movies folder",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/movies"
+      },
+      {
+        "name": "tvPath",
+        "label": "TV shows folder",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/tv"
+      },
+      {
+        "name": "altmountParentPath",
+        "label": "AltMount folder (with your own AltMount: the folder that contains its drive)",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/usenet"
+      },
+      {
+        "name": "backupPath",
+        "label": "Backups folder (backups are encrypted)",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/backups"
+      },
+      {
+        "name": "tmdbToken",
+        "label": "TMDB read access token (optional, can be added later; needed to search for titles unless you use Seerr)",
+        "type": "password",
+        "initialValue": ""
+      },
+      {
+        "name": "advancedInfo",
+        "type": "info",
+        "label": "Advanced: leave these as they are unless you know you need to change them."
+      },
+      {
+        "name": "mediaUid",
+        "label": "User ID that owns the folders",
+        "type": "text",
+        "initialValue": "1000"
+      },
+      {
+        "name": "mediaGid",
+        "label": "Group ID that owns the folders",
+        "type": "text",
+        "initialValue": "1000"
+      },
+      {
+        "name": "mediaNetwork",
+        "label": "Docker network shared with Plex and Seerr (created if it does not exist)",
+        "type": "text",
+        "initialValue": "media-stack"
+      },
+      {
+        "name": "mediaLibraryPath",
+        "label": "Folder for extra Plex libraries (optional, for Seerr requests to more libraries)",
+        "type": "path",
+        "initialValue": "{DefaultDataPath}/media-manager/media"
+      },
+      {
+        "name": "ownerToken",
+        "label": "Owner API token (generated; only needed for direct API access)",
+        "type": "password",
+        "initialValue": "{Passwords.1}{Passwords.2}"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "success",
+        "name": "setup",
+        "label": "Media Manager is installed. Open it and follow the \"Kom i gang\" page: 1) Log ind med Plex, 2) add your news-server login under Usenet-servere, 3) add an indexer under Kilder, 4) press \"Brug anbefalet opsætning\". Then add your first title."
+      },
+      {if Context.bundlePlex}{
+        "type": "info",
+        "name": "plex",
+        "label": "Plex was installed too (port 32400). Without a claim code, open Plex once from your own network to claim it. Then choose it under \"Log ind med Plex\"; Media Manager creates its Film and Serier libraries."
+      },{/if}
+      {if not Context.bundleAltmount}{
+        "type": "info",
+        "name": "own-altmount",
+        "label": "You chose your own AltMount: add it under Indstillinger → Forbindelser before step 2. Media Manager can later switch it to its own AltMount build under System → AltMount."
+      },{/if}
+      {
+        "type": "warning",
+        "name": "secret-key",
+        "label": "Keep the volume {ServiceName}-api-state when you update or move the app: it holds the keys for your saved logins and backups. Save a copy of backup-encryption.key somewhere safe (System → Backup shows where); without it a backup cannot be restored on another server."
+      }
+    ]
+  },
+  "minVersion": "0.23.4",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/media-manager52/media-manager-ui:main",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "depends_on": {
+        "{ServiceName}-api": {
+          "condition": "service_healthy"
+        }
+      },
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/MediaManager/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}-api",
+          "description": "Media Manager API with server-side owner bearer injection",
+          "useHost": true,
+          "host": "{Hostnames.{ServiceName}.{ServiceName}.host}",
+          "usePathPrefix": true,
+          "PathPrefix": "/api",
+          "StripPathPrefix": false,
+          "target": "http://{ServiceName}-api:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true,
+          "AdminOnly": true,
+          "ExtraHeaders": {
+            "Authorization": "Bearer {Context.ownerToken}"
+          }
+        },
+        {
+          "name": "{ServiceName}-health",
+          "description": "Media Manager health and readiness endpoints",
+          "useHost": true,
+          "host": "{Hostnames.{ServiceName}.{ServiceName}.host}",
+          "usePathPrefix": true,
+          "PathPrefix": "/health",
+          "StripPathPrefix": false,
+          "target": "http://{ServiceName}-api:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true,
+          "AdminOnly": true
+        },
+        {
+          "name": "{ServiceName}",
+          "description": "Media Manager UI",
+          "useHost": true,
+          "host": "{Hostnames.{ServiceName}.{ServiceName}.host}",
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true,
+          "AdminOnly": true
+        }
+      ]
+    },
+    {if Context.bundleAltmount}"{ServiceName}-altmount": {
+      "image": "ghcr.io/media-manager52/altmount:mm-stable",
+      "container_name": "{ServiceName}-altmount",
+      "restart": "unless-stopped",
+      "UID": {Context.mediaUid},
+      "GID": {Context.mediaGid},
+      "environment": [
+        "PUID={Context.mediaUid}",
+        "PGID={Context.mediaGid}",
+        "ALTMOUNT_PRESET=media-manager"
+      ],
+      "devices": [
+        "/dev/fuse:/dev/fuse:rwm"
+      ],
+      "cap_add": [
+        "SYS_ADMIN"
+      ],
+      "security_opt": [
+        "apparmor:unconfined"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-altmount-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.altmountParentPath}",
+          "target": "/mnt",
+          "bindOptions": {
+            "propagation": "rshared"
+          }
+        }
+      ],
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://localhost:8080/api/auth/config"
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 4,
+        "start_period": 30
+      }
+    },{/if}
+    {if Context.bundlePlex}"{ServiceName}-plex": {
+      "image": "lscr.io/linuxserver/plex:latest",
+      "container_name": "{ServiceName}-plex",
+      "restart": "unless-stopped",
+      "UID": {Context.mediaUid},
+      "GID": {Context.mediaGid},
+      "environment": [
+        "PUID={Context.mediaUid}",
+        "PGID={Context.mediaGid}",
+        "VERSION=docker",
+        "PLEX_CLAIM={Context.plexClaim}"
+      ],
+      "ports": [
+        "32400:32400/tcp"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-plex-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.altmountParentPath}",
+          "target": "/mnt",
+          "readOnly": true,
+          "bindOptions": {
+            "propagation": "rslave"
+          }
+        },
+        {
+          "type": "bind",
+          "source": "{Context.moviesPath}",
+          "target": "/libraries/movies",
+          "readOnly": true
+        },
+        {
+          "type": "bind",
+          "source": "{Context.tvPath}",
+          "target": "/libraries/tv",
+          "readOnly": true
+        },
+        {
+          "type": "bind",
+          "source": "{Context.mediaLibraryPath}",
+          "target": "/srv/media",
+          "readOnly": true
+        }
+      ],
+      "networks": {
+        "{ServiceName}": {}
+      }
+    },{/if}
+    "{ServiceName}-api": {
+      "image": "ghcr.io/media-manager52/media-manager-api:main",
+      "container_name": "{ServiceName}-api",
+      "restart": "unless-stopped",
+      "user": "{Context.mediaUid}:{Context.mediaGid}",
+      "depends_on": {
+        "{ServiceName}-postgres": {
+          "condition": "service_healthy"
+        }
+      },
+      "extra_hosts": [
+        "host.docker.internal:host-gateway"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "sysctls": {
+        "net.ipv6.conf.all.disable_ipv6": "1",
+        "net.ipv6.conf.default.disable_ipv6": "1"
+      },
+      "environment": [
+        "PGHOST={ServiceName}-postgres",
+        "PGPORT=5432",
+        "PGUSER=media_manager",
+        "PGPASSWORD={Passwords.0}",
+        "PGDATABASE=media_manager",
+        "PGSSLMODE=disable",
+        "OWNER_TOKEN={Context.ownerToken}",
+        "AUTO_MIGRATE=true",
+        {if Context.bundleAltmount}"BUNDLED_ALTMOUNT_URL=http://{ServiceName}-altmount:8080",{/if}
+        "LISTEN_ADDR=0.0.0.0:8080",
+        "TMDB_ACCESS_TOKEN={Context.tmdbToken}",
+        "SERVARR_API_KEY={Passwords.3}",
+        "SECRET_ENCRYPTION_KEY_FILE=/var/lib/media-manager/state/secret-encryption.key",
+        "BACKUP_ENCRYPTION_KEY_FILE=/var/lib/media-manager/state/backup-encryption.key",
+        "SEERR_BASE_URL=",
+        "SEERR_API_KEY=",
+        "SEERR_INSTANCE_ID=",
+        "SEERR_WEBHOOK_SECRET=",
+        "SEERR_ALLOW_HTTP=false",
+        "ACQUISITION_ATTEMPTS_PER_ROUND=2",
+        "ACQUISITION_RETAINED_OUTPUT_LIMIT=4"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "PGPASSWORD, OWNER_TOKEN, TMDB_ACCESS_TOKEN, PLEX_TOKEN, NEWZNAB_PRIMARY_API_KEY, ALTMOUNT_SECRET, BACKUP_ENCRYPTION_KEY, SERVARR_API_KEY",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "{Context.altmountParentPath}",
+          "target": "/mnt",
+          "readOnly": true,
+          "bindOptions": {
+            "propagation": "rslave"
+          }
+        },
+        {
+          "type": "bind",
+          "source": "{Context.moviesPath}",
+          "target": "/libraries/movies"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.tvPath}",
+          "target": "/libraries/tv"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.mediaLibraryPath}",
+          "target": "/srv/media"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.backupPath}",
+          "target": "/var/lib/media-manager/backups"
+        },
+        {
+          "source": "{ServiceName}-api-state",
+          "target": "/var/lib/media-manager/state",
+          "type": "volume"
+        }
+      ],
+      "networks": {
+        "{ServiceName}": {},
+        "{Context.mediaNetwork}": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "/usr/local/bin/media-manager",
+          "healthcheck"
+        ],
+        "interval": 15,
+        "timeout": 4,
+        "retries": 4,
+        "start_period": 20
+      }
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:18.6-alpine3.24",
+      "container_name": "{ServiceName}-postgres",
+      "restart": "unless-stopped",
+      "environment": [
+        "POSTGRES_DB=media_manager",
+        "POSTGRES_USER=media_manager",
+        "POSTGRES_PASSWORD={Passwords.0}"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-persistent-env": "POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql",
+          "type": "volume"
+        }
+      ],
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U media_manager -d media_manager"
+        ],
+        "interval": 5,
+        "timeout": 5,
+        "retries": 12
+      }
+    }
+  },
+  "volumes": {
+    "{ServiceName}-postgres-data": {},
+    "{ServiceName}-api-state": {}{if Context.bundleAltmount},
+    "{ServiceName}-altmount-config": {}{/if}{if Context.bundlePlex},
+    "{ServiceName}-plex-config": {}{/if}
+  },
+  "networks": {
+    "{ServiceName}": {},
+    "{Context.mediaNetwork}": {
+      "external": true
+    }
+  }
+}
