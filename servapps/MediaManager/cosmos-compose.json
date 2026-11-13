@@ -21,6 +21,18 @@
         "initialValue": true
       },
       {
+        "name": "bundlePlex",
+        "label": "Install Plex too. Only if you have no Plex server yet: this Plex sees AltMount's files and the library folders from the start",
+        "type": "checkbox",
+        "initialValue": false
+      },
+      {
+        "name": "plexClaim",
+        "label": "Only with Install Plex too: claim code from https://plex.tv/claim, so the new Plex joins your Plex account (valid 4 minutes)",
+        "type": "text",
+        "initialValue": ""
+      },
+      {
         "name": "altmountParentPath",
         "label": "Host folder for AltMount's files: the installed AltMount mounts its drive in an 'altmount' folder here. With your own AltMount: the folder that CONTAINS its FUSE mount",
         "type": "path",
@@ -73,7 +85,7 @@
       {
         "type": "info",
         "name": "setup",
-        "label": "Media Manager is installed with its Cosmos routes. Open the UI: under Indstillinger → Forbindelser choose \"Log ind med Plex\", add your news-server login under Indstillinger → Usenet-servere (with your own AltMount instead: add it under Forbindelser first), add TMDB unless you use Seerr, add your indexer under Kilder, then use \"Brug anbefalet opsætning\" on Kom i gang. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
+        "label": "Media Manager is installed with its Cosmos routes. Open the UI: under Indstillinger → Forbindelser choose \"Log ind med Plex\" (with Install Plex too: pick the new server; it is reachable on port 32400 and at app.plex.tv), add your news-server login under Indstillinger → Usenet-servere (with your own AltMount instead: add it under Forbindelser first), add TMDB unless you use Seerr, add your indexer under Kilder, then use \"Brug anbefalet opsætning\" on Kom i gang. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
       },
       {
         "type": "info",
@@ -173,6 +185,8 @@
       "image": "ghcr.io/media-manager52/altmount:mm-stable",
       "container_name": "{ServiceName}-altmount",
       "restart": "unless-stopped",
+      "UID": {Context.mediaUid},
+      "GID": {Context.mediaGid},
       "environment": [
         "PUID={Context.mediaUid}",
         "PGID={Context.mediaGid}",
@@ -220,6 +234,64 @@
         "timeout": 5,
         "retries": 4,
         "start_period": 30
+      }
+    },{/if}
+    {if Context.bundlePlex}"{ServiceName}-plex": {
+      "image": "lscr.io/linuxserver/plex:latest",
+      "container_name": "{ServiceName}-plex",
+      "restart": "unless-stopped",
+      "UID": {Context.mediaUid},
+      "GID": {Context.mediaGid},
+      "environment": [
+        "PUID={Context.mediaUid}",
+        "PGID={Context.mediaGid}",
+        "VERSION=docker",
+        "PLEX_CLAIM={Context.plexClaim}"
+      ],
+      "ports": [
+        "32400:32400/tcp"
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-plex-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.altmountParentPath}",
+          "target": "/mnt",
+          "readOnly": true,
+          "bindOptions": {
+            "propagation": "rslave"
+          }
+        },
+        {
+          "type": "bind",
+          "source": "{Context.moviesPath}",
+          "target": "/libraries/movies",
+          "readOnly": true
+        },
+        {
+          "type": "bind",
+          "source": "{Context.tvPath}",
+          "target": "/libraries/tv",
+          "readOnly": true
+        },
+        {
+          "type": "bind",
+          "source": "{Context.mediaLibraryPath}",
+          "target": "/srv/media",
+          "readOnly": true
+        }
+      ],
+      "networks": {
+        "{ServiceName}": {}
       }
     },{/if}
     "{ServiceName}-api": {
@@ -367,7 +439,8 @@
   "volumes": {
     "{ServiceName}-postgres-data": {},
     "{ServiceName}-api-state": {}{if Context.bundleAltmount},
-    "{ServiceName}-altmount-config": {}{/if}
+    "{ServiceName}-altmount-config": {}{/if}{if Context.bundlePlex},
+    "{ServiceName}-plex-config": {}{/if}
   },
   "networks": {
     "{ServiceName}": {},
