@@ -15,10 +15,16 @@
         "initialValue": "{DefaultDataPath}/media-manager/tv"
       },
       {
+        "name": "bundleAltmount",
+        "label": "Install AltMount together with Media Manager (recommended). Turn off only if you already run your own AltMount",
+        "type": "checkbox",
+        "initialValue": true
+      },
+      {
         "name": "altmountParentPath",
-        "label": "Host folder that CONTAINS AltMount's FUSE mount (mounted read-only at /mnt)",
+        "label": "Host folder for AltMount's files: the installed AltMount mounts its drive in an 'altmount' folder here. With your own AltMount: the folder that CONTAINS its FUSE mount",
         "type": "path",
-        "initialValue": "/mnt"
+        "initialValue": "{DefaultDataPath}/media-manager/usenet"
       },
       {
         "name": "mediaLibraryPath",
@@ -67,7 +73,7 @@
       {
         "type": "info",
         "name": "setup",
-        "label": "Media Manager is installed with its Cosmos routes. Open the UI: under Indstillinger → Forbindelser choose \"Log ind med Plex\", add AltMount (and TMDB unless you use Seerr), add your indexer under Kilder, then use \"Brug anbefalet opsætning\" on Kom i gang. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
+        "label": "Media Manager is installed with its Cosmos routes. Open the UI: under Indstillinger → Forbindelser choose \"Log ind med Plex\", add your news-server login under Indstillinger → Usenet-servere (with your own AltMount instead: add it under Forbindelser first), add TMDB unless you use Seerr, add your indexer under Kilder, then use \"Brug anbefalet opsætning\" on Kom i gang. The /api route already injects the owner token; do not add a second proxy or Basic-auth layer."
       },
       {
         "type": "info",
@@ -163,6 +169,59 @@
         }
       ]
     },
+    {if Context.bundleAltmount}"{ServiceName}-altmount": {
+      "image": "ghcr.io/media-manager52/altmount:mm-stable",
+      "container_name": "{ServiceName}-altmount",
+      "restart": "unless-stopped",
+      "environment": [
+        "PUID={Context.mediaUid}",
+        "PGID={Context.mediaGid}",
+        "ALTMOUNT_PRESET=media-manager"
+      ],
+      "devices": [
+        "/dev/fuse:/dev/fuse:rwm"
+      ],
+      "cap_add": [
+        "SYS_ADMIN"
+      ],
+      "security_opt": [
+        "apparmor:unconfined"
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-altmount-config",
+          "target": "/config",
+          "type": "volume"
+        },
+        {
+          "type": "bind",
+          "source": "{Context.altmountParentPath}",
+          "target": "/mnt",
+          "bindOptions": {
+            "propagation": "rshared"
+          }
+        }
+      ],
+      "networks": {
+        "{ServiceName}": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://localhost:8080/api/auth/config"
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 4,
+        "start_period": 30
+      }
+    },{/if}
     "{ServiceName}-api": {
       "image": "ghcr.io/media-manager52/media-manager-api:main",
       "container_name": "{ServiceName}-api",
@@ -195,8 +254,8 @@
         "PGSSLMODE=disable",
         "OWNER_TOKEN={Context.ownerToken}",
         "AUTO_MIGRATE=true",
+        {if Context.bundleAltmount}"BUNDLED_ALTMOUNT_URL=http://{ServiceName}-altmount:8080",{/if}
         "LISTEN_ADDR=0.0.0.0:8080",
-        "COMMISSIONING_V2_OWNER_ORIGIN={RootProtocol}://{Hostnames.{ServiceName}.{ServiceName}.host}",
         "TMDB_ACCESS_TOKEN={Context.tmdbToken}",
         "SERVARR_API_KEY={Passwords.3}",
         "SECRET_ENCRYPTION_KEY_FILE=/var/lib/media-manager/state/secret-encryption.key",
@@ -307,7 +366,8 @@
   },
   "volumes": {
     "{ServiceName}-postgres-data": {},
-    "{ServiceName}-api-state": {}
+    "{ServiceName}-api-state": {}{if Context.bundleAltmount},
+    "{ServiceName}-altmount-config": {}{/if}
   },
   "networks": {
     "{ServiceName}": {},
