@@ -1,0 +1,28 @@
+{
+  "name": "OpenFamily",
+  "description": "Self-hosted family organizer with shared calendar, chores, shopping, meals, pantry and budget.",
+  "longDescription": "<p>OpenFamily brings the family's shared calendar, chores, shopping lists, recipes, meal planning, pantry and household budget into one self-hosted application. It offers web/PWA and Android clients, individual accounts, invitations and parent/child roles.</p><p>This template runs the official all-in-one image, including the web interface, API and PostgreSQL. Data and generated secrets persist in a named volume. Create your first account after installation; SMTP, OpenID Connect and the AI assistant are optional.</p><p>Licensed under GNU AGPL-3.0. <a href=\"https://openfamily.fr/demo/\">Try the public browser demo</a> or read the <a href=\"https://github.com/NexaFlowFrance/OpenFamily/blob/main/INSTALLATION.md\">installation guide</a>.</p>",
+  "tags": [
+    "family",
+    "calendar",
+    "tasks",
+    "shopping",
+    "recipes",
+    "meal-planning",
+    "pantry",
+    "budget",
+    "pwa"
+  ],
+  "repository": "https://github.com/NexaFlowFrance/OpenFamily",
+  "image": "ghcr.io/nexaflowfrance/openfamily:2.2.0",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "translation": {
+    "fr": {
+      "description": "Organisateur familial à auto-héberger : calendrier, tâches, courses, repas, garde-manger et budget.",
+      "longDescription": "<p>OpenFamily réunit le calendrier partagé, les tâches et corvées, les courses, les recettes, les menus, le garde-manger et le budget du foyer. Accès web/PWA et application Android, comptes individuels, invitations et rôles parent/enfant.</p><p>Cette définition utilise l’image officielle tout-en-un avec l’interface web, l’API et PostgreSQL. La base et les secrets générés sont conservés dans un volume persistant. Créez votre premier compte après l’installation ; SMTP, OpenID Connect et l’assistant IA sont facultatifs.</p><p>Logiciel sous licence GNU AGPL-3.0. <a href=\"https://openfamily.fr/demo/\">Démonstration publique</a> et <a href=\"https://github.com/NexaFlowFrance/OpenFamily/blob/main/INSTALLATION.fr.md\">guide d’installation en français</a>.</p>"
+    }
+  }
+}

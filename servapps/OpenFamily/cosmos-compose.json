@@ -1,0 +1,52 @@
+{
+  "cosmos-installer": {
+    "post-install": [
+      {
+        "type": "info",
+        "name": "firstAccount",
+        "label": "Open the application URL and create your first account to start a family."
+      },
+      {
+        "type": "info",
+        "name": "persistence",
+        "label": "Keep the {ServiceName}-data volume when updating: it contains the database and generated secrets."
+      }
+    ],
+    "translation": {
+      "fr": {
+        "post-install.firstAccount.label": "Ouvrez l’application et créez votre premier compte pour démarrer une famille.",
+        "post-install.persistence.label": "Conservez le volume {ServiceName}-data lors des mises à jour : il contient la base et les secrets générés."
+      }
+    }
+  },
+  "minVersion": "0.16.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/nexaflowfrance/openfamily:2.2.0",
+      "container_name": "{ServiceName}",
+      "restart": "unless-stopped",
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "false",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/OpenFamily/icon.png"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "OpenFamily",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "AuthEnabled": false
+        }
+      ]
+    }
+  }
+}
