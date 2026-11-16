@@ -1,0 +1,93 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "accounts",
+        "label": "Give each person their own account and library? (off: everyone who can open TubeHaus shares one library)",
+        "initialValue": false,
+        "type": "checkbox"
+      },
+      {
+        "name": "adminOnly",
+        "label": "Do you want to make this service admin only?",
+        "initialValue": false,
+        "type": "checkbox"
+      }
+    ]
+  },
+  "minVersion": "0.8.0",
+  "services": {
+    "{ServiceName}": {
+      "image": "ghcr.io/biolend83/tubehaus-web:latest",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "restart": "unless-stopped",
+      "environment": [
+        "TUBEHAUS_SITE=:8080",
+        "TUBEHAUS_SERVER={ServiceName}-server:3010",
+        {if Context.accounts}
+        "TUBEHAUS_AUTH=accounts"
+        {/if}
+        {if not Context.accounts}
+        "TUBEHAUS_AUTH=none"
+        {/if}
+      ],
+      "labels": {
+        "cosmos-force-network-secured": "true",
+        "cosmos-auto-update": "true",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/TubeHaus/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "depends_on": ["{ServiceName}-server"],
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose {ServiceName} to the web",
+          "useHost": true,
+          "target": "http://{ServiceName}:8080",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": true,
+          "SmartShield": {
+            "Enabled": true
+          },
+          "AuthEnabled": true
+          {if Context.adminOnly}
+          , "AuthAdmin": true
+          {/if}
+        }
+      ]
+    },
+    "{ServiceName}-server": {
+      "image": "ghcr.io/biolend83/tubehaus:latest",
+      "container_name": "{ServiceName}-server",
+      "hostname": "{ServiceName}-server",
+      "restart": "unless-stopped",
+      "init": true,
+      "stop_grace_period": "30s",
+      "environment": [
+        "HT_WARP=0",
+        {if Context.accounts}
+        "TUBEHAUS_AUTH=accounts"
+        {/if}
+        {if not Context.accounts}
+        "TUBEHAUS_AUTH=none"
+        {/if}
+      ],
+      "volumes": [
+        {
+          "source": "{ServiceName}-data",
+          "target": "/data",
+          "type": "volume"
+        }
+      ],
+      "labels": {
+        "cosmos-auto-update": "true",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      }
+    }
+  }
+}

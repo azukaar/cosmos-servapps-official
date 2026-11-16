@@ -1,0 +1,9 @@
+{
+  "name": "TubeHaus",
+  "description": "Your own YouTube for the whole household, without ads, tracking or a Google account.",
+  "longDescription": "<p>TubeHaus is a YouTube app you host yourself. It looks and feels like YouTube, but there are no ads, no tracking and no account with Google: your subscriptions, history, playlists and resume points live on your own server, and every phone, computer and TV in the house sees the same library.</p><p>It asks YouTube itself (TubeHaus' own engine), so nothing else needs to be installed: no Invidious, no database. The app is two containers: the server and the web app with its Caddy router.</p><ul><li>Up to 4K, SponsorBlock, chapters, captions and translated subtitles</li><li>Live streams with live captions transcribed on your server (whisper.cpp)</li><li>Send to TV, and watch together in a room that keeps everyone on the same moment</li><li>Offline save, a music mode with lyrics, and a big-screen mode for TVs</li><li>Calm mode: a home screen of only your subscriptions, with Shorts, trending, recommendations and autoplay turned off</li></ul><p>Everyone who can open the address shares one library by default; tick \"separate accounts\" to give each person their own. Independent open-source software (AGPL-3.0), not affiliated with YouTube or Google.</p>",
+  "tags": ["youtube", "video", "media", "privacy", "invidious", "alternative-frontend", "self-hosted", "streaming"],
+  "repository": "https://github.com/biolend83/tubehaus",
+  "image": "ghcr.io/biolend83/tubehaus-web",
+  "supported_architectures": ["amd64", "arm64"]
+}
