@@ -1,0 +1,528 @@
+{
+  "cosmos-installer": {
+    "skip-default-network": true
+  },
+  "minVersion": "0.22.23",
+  "networks": {
+    "{ServiceName}_default": {
+      "driver": "bridge",
+      "attachable": true,
+      "labels": {
+        "com.docker.compose.network": "default",
+        "com.docker.compose.project": "{ServiceName}"
+      }
+    }
+  },
+  "services": {
+    "{ServiceName}": {
+      "image": "nginx:1.29-alpine",
+      "container_name": "{ServiceName}",
+      "hostname": "{ServiceName}",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "nginx"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "entrypoint": "/bin/sh -c",
+      "command": "printf$IFS'%s'$IFS'ZXZlbnRzIHsKICAgIHdvcmtlcl9jb25uZWN0aW9ucyAxMDI0Owp9CgpodHRwIHsKICAgIGluY2x1ZGUgL2V0Yy9uZ2lueC9taW1lLnR5cGVzOwogICAgZGVmYXVsdF90eXBlIGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbTsKICAgIHJlc29sdmVyIDEyNy4wLjAuMTEgaXB2Nj1vZmYgdmFsaWQ9MXM7CiAgICBzZXJ2ZXJfdG9rZW5zIG9mZjsKCiAgICBhZGRfaGVhZGVyIFgtQ29udGVudC1UeXBlLU9wdGlvbnMgbm9zbmlmZiBhbHdheXM7CiAgICBhZGRfaGVhZGVyIFgtRnJhbWUtT3B0aW9ucyBERU5ZIGFsd2F5czsKICAgIGFkZF9oZWFkZXIgUmVmZXJyZXItUG9saWN5IHN0cmljdC1vcmlnaW4td2hlbi1jcm9zcy1vcmlnaW4gYWx3YXlzOwogICAgYWRkX2hlYWRlciBDcm9zcy1PcmlnaW4tT3BlbmVyLVBvbGljeSBzYW1lLW9yaWdpbiBhbHdheXM7CgogICAgbGFyZ2VfY2xpZW50X2hlYWRlcl9idWZmZXJzIDQgMzJrOwogICAgcHJveHlfYnVmZmVyX3NpemUgMTZrOwogICAgcHJveHlfYnVmZmVycyA0IDE2azsKCiAgICBtYXAgJGh0dHBfdXBncmFkZSAkY29ubmVjdGlvbl91cGdyYWRlIHsKICAgICAgICBkZWZhdWx0IHVwZ3JhZGU7CiAgICAgICAgJycgY2xvc2U7CiAgICB9CgogICAgbWFwICRodHRwX3hfZm9yd2FyZGVkX3Byb3RvICRub3JhX2ZvcndhcmRlZF9wcm90byB7CiAgICAgICAgZGVmYXVsdCAkaHR0cF94X2ZvcndhcmRlZF9wcm90bzsKICAgICAgICAnJyAkc2NoZW1lOwogICAgfQoKICAgIGxpbWl0X3JlcV96b25lICRiaW5hcnlfcmVtb3RlX2FkZHIgem9uZT1hdXRoX2xpbWl0OjEwbSByYXRlPTVyL3M7CiAgICBsaW1pdF9yZXFfem9uZSAkYmluYXJ5X3JlbW90ZV9hZGRyIHpvbmU9YXBpX2xpbWl0OjEwbSByYXRlPTMwci9zOwogICAgbGltaXRfcmVxX3N0YXR1cyA0Mjk7CgogICAgc2VydmVyIHsKICAgICAgICBsaXN0ZW4gODA7CiAgICAgICAgc2VydmVyX25hbWUgXzsKCiAgICAgICAgcHJveHlfaHR0cF92ZXJzaW9uIDEuMTsKICAgICAgICBwcm94eV9zZXRfaGVhZGVyIEhvc3QgJGhvc3Q7CiAgICAgICAgcHJveHlfc2V0X2hlYWRlciBYLVJlYWwtSVAgJHJlbW90ZV9hZGRyOwogICAgICAgIHByb3h5X3NldF9oZWFkZXIgWC1Gb3J3YXJkZWQtRm9yICRwcm94eV9hZGRfeF9mb3J3YXJkZWRfZm9yOwogICAgICAgIHByb3h5X3NldF9oZWFkZXIgWC1Gb3J3YXJkZWQtUHJvdG8gJG5vcmFfZm9yd2FyZGVkX3Byb3RvOwogICAgICAgIHByb3h5X3NldF9oZWFkZXIgVXBncmFkZSAkaHR0cF91cGdyYWRlOwogICAgICAgIHByb3h5X3NldF9oZWFkZXIgQ29ubmVjdGlvbiAkY29ubmVjdGlvbl91cGdyYWRlOwoKICAgICAgICBzZXQgJGJhY2tlbmRfYXBpIGh0dHA6Ly97U2VydmljZU5hbWV9LWJhY2tlbmQtYXBpOjQwMDA7CiAgICAgICAgc2V0ICRhcHBfZGFzaGJvYXJkIGh0dHA6Ly97U2VydmljZU5hbWV9LWZyb250ZW5kLWRhc2hib2FyZDozMDAwOwogICAgICAgIHNldCAkYWRtaW5fZGFzaGJvYXJkIGh0dHA6Ly97U2VydmljZU5hbWV9LWFkbWluLWRhc2hib2FyZDozMDAwOwogICAgICAgIHNldCAkbWFya2V0aW5nX3NpdGUgaHR0cDovL3tTZXJ2aWNlTmFtZX0tZnJvbnRlbmQtbWFya2V0aW5nOjMwMDA7CgogICAgICAgIGxvY2F0aW9uIC9hcGkvd3MvIHsKICAgICAgICAgICAgcHJveHlfcGFzcyAkYmFja2VuZF9hcGkvd3MvOwogICAgICAgICAgICBwcm94eV9odHRwX3ZlcnNpb24gMS4xOwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIFVwZ3JhZGUgJGh0dHBfdXBncmFkZTsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBDb25uZWN0aW9uICJ1cGdyYWRlIjsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBIb3N0ICRob3N0OwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIFgtUmVhbC1JUCAkcmVtb3RlX2FkZHI7CiAgICAgICAgICAgIHByb3h5X3JlYWRfdGltZW91dCA4NjQwMDsKICAgICAgICB9CgogICAgICAgIGxvY2F0aW9uIH4gXi9hcGkvKGFnZW50cy9bXi9dKy9nYXRld2F5L2NoYXQpJCB7CiAgICAgICAgICAgIHByb3h5X3Bhc3MgJGJhY2tlbmRfYXBpLyQxJGlzX2FyZ3MkYXJnczsKICAgICAgICAgICAgcHJveHlfYnVmZmVyaW5nIG9mZjsKICAgICAgICAgICAgcHJveHlfY2FjaGUgb2ZmOwogICAgICAgICAgICBwcm94eV9yZWFkX3RpbWVvdXQgMzAwOwogICAgICAgICAgICBjaHVua2VkX3RyYW5zZmVyX2VuY29kaW5nIG9mZjsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBBY2NlcHQtRW5jb2RpbmcgIiI7CiAgICAgICAgfQoKICAgICAgICBsb2NhdGlvbiB+IF4vYXBpLyhhZ2VudHMvW14vXSsvZ2F0ZXdheS8odWl8YXNzZXRzfGZhdmljb258X19vcGVuY2xhd19ffGVtYmVkKS4qKSQgewogICAgICAgICAgICBwcm94eV9wYXNzICRiYWNrZW5kX2FwaS8kMSRpc19hcmdzJGFyZ3M7CiAgICAgICAgICAgIHByb3h5X2J1ZmZlcmluZyBvZmY7CiAgICAgICAgICAgIHByb3h5X3JlYWRfdGltZW91dCAzMDsKICAgICAgICB9CgogICAgICAgIGxvY2F0aW9uIH4gXi9hcGkvYXV0aC8obG9naW58c2lnbnVwfG9hdXRoLWxvZ2lufHNlc3Npb24tdXBncmFkZXxsb2dvdXQpIHsKICAgICAgICAgICAgbGltaXRfcmVxIHpvbmU9YXV0aF9saW1pdCBidXJzdD0xMCBub2RlbGF5OwogICAgICAgICAgICByZXdyaXRlIF4vYXBpLyguKikkIC8kMSBicmVhazsKICAgICAgICAgICAgcHJveHlfcGFzcyAkYmFja2VuZF9hcGk7CiAgICAgICAgfQoKICAgICAgICBsb2NhdGlvbiAvYXBpLyB7CiAgICAgICAgICAgIGxpbWl0X3JlcSB6b25lPWFwaV9saW1pdCBidXJzdD02MCBub2RlbGF5OwogICAgICAgICAgICByZXdyaXRlIF4vYXBpLyguKikkIC8kMSBicmVhazsKICAgICAgICAgICAgcHJveHlfcGFzcyAkYmFja2VuZF9hcGk7CiAgICAgICAgfQoKICAgICAgICBsb2NhdGlvbiAvYWRtaW4gewogICAgICAgICAgICBwcm94eV9wYXNzICRhZG1pbl9kYXNoYm9hcmQ7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgSG9zdCAkaG9zdDsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBYLVJlYWwtSVAgJHJlbW90ZV9hZGRyOwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIFgtRm9yd2FyZGVkLUZvciAkcHJveHlfYWRkX3hfZm9yd2FyZGVkX2ZvcjsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBYLUZvcndhcmRlZC1Qcm90byAkbm9yYV9mb3J3YXJkZWRfcHJvdG87CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgVXBncmFkZSAkaHR0cF91cGdyYWRlOwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIENvbm5lY3Rpb24gJGNvbm5lY3Rpb25fdXBncmFkZTsKICAgICAgICB9CgogICAgICAgIGxvY2F0aW9uIC9hZG1pbi9fbmV4dC8gewogICAgICAgICAgICBwcm94eV9wYXNzICRhZG1pbl9kYXNoYm9hcmQ7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgSG9zdCAkaG9zdDsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBVcGdyYWRlICRodHRwX3VwZ3JhZGU7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgQ29ubmVjdGlvbiAkY29ubmVjdGlvbl91cGdyYWRlOwogICAgICAgIH0KCiAgICAgICAgbG9jYXRpb24gL2FwcCB7CiAgICAgICAgICAgIHByb3h5X3Bhc3MgJGFwcF9kYXNoYm9hcmQ7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgSG9zdCAkaG9zdDsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBYLVJlYWwtSVAgJHJlbW90ZV9hZGRyOwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIFgtRm9yd2FyZGVkLUZvciAkcHJveHlfYWRkX3hfZm9yd2FyZGVkX2ZvcjsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBYLUZvcndhcmRlZC1Qcm90byAkbm9yYV9mb3J3YXJkZWRfcHJvdG87CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgVXBncmFkZSAkaHR0cF91cGdyYWRlOwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIENvbm5lY3Rpb24gJGNvbm5lY3Rpb25fdXBncmFkZTsKICAgICAgICB9CgogICAgICAgIGxvY2F0aW9uIC9fbmV4dC8gewogICAgICAgICAgICBwcm94eV9wYXNzICRtYXJrZXRpbmdfc2l0ZTsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBIb3N0ICRob3N0OwogICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyIFVwZ3JhZGUgJGh0dHBfdXBncmFkZTsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBDb25uZWN0aW9uICRjb25uZWN0aW9uX3VwZ3JhZGU7CiAgICAgICAgfQoKICAgICAgICBsb2NhdGlvbiAvYXBwL19uZXh0LyB7CiAgICAgICAgICAgIHByb3h5X3Bhc3MgJGFwcF9kYXNoYm9hcmQ7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgSG9zdCAkaG9zdDsKICAgICAgICAgICAgcHJveHlfc2V0X2hlYWRlciBVcGdyYWRlICRodHRwX3VwZ3JhZGU7CiAgICAgICAgICAgIHByb3h5X3NldF9oZWFkZXIgQ29ubmVjdGlvbiAkY29ubmVjdGlvbl91cGdyYWRlOwogICAgICAgIH0KCiAgICAgICAgbG9jYXRpb24gLyB7CiAgICAgICAgICAgIHByb3h5X3Bhc3MgJG1hcmtldGluZ19zaXRlOwogICAgICAgIH0KICAgIH0KfQo='|base64$IFS'-d'>'/etc/nginx/nginx.conf';P='{'ServiceName'}';sed$IFS'-i'$IFS\"s/$P/$NORA_SERVICE_NAME/g\"$IFS'/etc/nginx/nginx.conf';G=daemon$IFS'off;';exec$IFS'nginx'$IFS'-g'$IFS\"$G\"",
+      "environment": [
+        "NORA_SERVICE_NAME={ServiceName}"
+      ],
+      "expose": [
+        "80"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png"
+      },
+      "depends_on": {
+        "{ServiceName}-backend-api": {},
+        "{ServiceName}-frontend-marketing": {},
+        "{ServiceName}-frontend-dashboard": {},
+        "{ServiceName}-admin-dashboard": {}
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "Expose Nora through Cosmos",
+          "useHost": true,
+          "target": "http://{ServiceName}:80",
+          "mode": "SERVAPP",
+          "Timeout": 14400000,
+          "ThrottlePerMinute": 12000,
+          "BlockCommonBots": false,
+          "SmartShield": {
+            "Enabled": true
+          }
+        }
+      ]
+    },
+    "{ServiceName}-frontend-marketing": {
+      "image": "ghcr.io/solomon2773/nora-frontend-marketing:v1.16.4@sha256:0e09112822fb9c5dbeae9fff33a2c81548817195fe762e1a0870f7426e1e917b",
+      "container_name": "{ServiceName}-frontend-marketing",
+      "hostname": "{ServiceName}-frontend-marketing",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "frontend-marketing"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "environment": [
+        "PORT=3000",
+        "NODE_ENV=production",
+        "PLATFORM_MODE=selfhosted"
+      ],
+      "expose": [
+        "3000"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget -q -O- http://127.0.0.1:3000/ >/dev/null || exit 1"
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 5,
+        "start_period": 20
+      }
+    },
+    "{ServiceName}-frontend-dashboard": {
+      "image": "ghcr.io/solomon2773/nora-frontend-dashboard:v1.16.4@sha256:d03ad06a1ea5c329fbec97e87150b04bec8ae8fa905e33a099da798db9f05fc9",
+      "container_name": "{ServiceName}-frontend-dashboard",
+      "hostname": "{ServiceName}-frontend-dashboard",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "frontend-dashboard"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "environment": [
+        "PORT=3000",
+        "NODE_ENV=production"
+      ],
+      "expose": [
+        "3000"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget -q -O- http://127.0.0.1:3000/app >/dev/null || exit 1"
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 5,
+        "start_period": 20
+      }
+    },
+    "{ServiceName}-admin-dashboard": {
+      "image": "ghcr.io/solomon2773/nora-admin-dashboard:v1.16.4@sha256:745bec0aef3ee04a9978de2dd99e812b26272c48f5a5b97841b791a4c29d5f92",
+      "container_name": "{ServiceName}-admin-dashboard",
+      "hostname": "{ServiceName}-admin-dashboard",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "admin-dashboard"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "environment": [
+        "PORT=3000",
+        "NODE_ENV=production"
+      ],
+      "expose": [
+        "3000"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget -q -O- http://127.0.0.1:3000/admin >/dev/null || exit 1"
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 5,
+        "start_period": 20
+      }
+    },
+    "{ServiceName}-backend-api": {
+      "image": "ghcr.io/solomon2773/nora-backend-api:v1.16.4@sha256:26dd38a4448a2335025157034489e0b11f904c85715743d755d9be15ff862196",
+      "container_name": "{ServiceName}-backend-api",
+      "hostname": "{ServiceName}-backend-api",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "backend-api"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "user": "0:0",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "entrypoint": "/bin/sh -c",
+      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');node$IFS'-e'$IFS'const{Pool}=require(\"pg\"),fs=require(\"fs\"),p=new/**/Pool({host:process.env.DB_HOST,port:Number(process.env.DB_PORT),user:process.env.DB_USER,password:process.env.DB_PASSWORD,database:process.env.DB_NAME});(async()=>{for(;;){try{await/**/p.query(fs.readFileSync(\"/app/db_schema.sql\",\"utf8\"));await/**/p.end();break}catch(e){console.error(\"waiting_for_database:\",e.message);await/**/new/**/Promise(r=>setTimeout(r,2000))}}})().catch(e=>{console.error(e);process.exit(1)})';exec$IFS'/usr/local/bin/nora-container-entrypoint'$IFS'npm'$IFS'start'",
+      "environment": [
+        "NODE_ENV=production",
+        "PLATFORM_MODE=selfhosted",
+        "ENABLED_BACKENDS=docker",
+        "ENABLED_RUNTIME_FAMILIES=openclaw,hermes",
+        "ENABLED_SANDBOX_PROFILES=standard",
+        "OPENCLAW_DOCKER_IMAGE=node:24-slim",
+        "NEXTAUTH_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "CORS_ORIGINS={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "DB_HOST={ServiceName}-postgres",
+        "DB_PORT=5432",
+        "DB_USER=nora",
+        "DB_PASSWORD={Passwords.3}",
+        "DB_NAME=nora",
+        "REDIS_HOST={ServiceName}-redis",
+        "REDIS_PORT=6379",
+        "JWT_SECRET={Passwords.0}{Passwords.1}",
+        "NORA_API_KEY_HASH_SECRET={Passwords.3}{Passwords.0}",
+        "NORA_AGENT_HUB_API_KEY_HASH_SECRET={Passwords.2}{Passwords.0}",
+        "NORA_ENCRYPTION_SEED={Passwords.1}{Passwords.2}",
+        "NORA_BACKUP_SEED={Passwords.2}{Passwords.3}",
+        "NORA_INSTALL_METHOD=docker_image",
+        "NORA_CURRENT_VERSION=v1.16.4",
+        "NORA_GITHUB_REPO=solomon2773/nora",
+        "NORA_AUTO_UPGRADE_ENABLED=false",
+        "NORA_BACKUP_STORAGE=local",
+        "NORA_BACKUP_DIR=/var/lib/nora-backups",
+        "PORT=4000"
+      ],
+      "expose": [
+        "4000"
+      ],
+      "extra_hosts": [
+        "host.docker.internal:host-gateway"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png",
+        "cosmos-persistent-env": "JWT_SECRET,NORA_API_KEY_HASH_SECRET,NORA_AGENT_HUB_API_KEY_HASH_SECRET,NORA_ENCRYPTION_SEED,NORA_BACKUP_SEED,DB_PASSWORD"
+      },
+      "volumes": [
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        },
+        {
+          "source": "{ServiceName}-upgrade-state",
+          "target": "/var/lib/nora-upgrade",
+          "type": "volume"
+        },
+        {
+          "source": "{ServiceName}-backups",
+          "target": "/var/lib/nora-backups",
+          "type": "volume"
+        }
+      ],
+      "depends_on": {
+        "{ServiceName}-postgres": {},
+        "{ServiceName}-redis": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "node -e \"require('http').get('http://127.0.0.1:4000/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))\""
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 5,
+        "start_period": 30
+      }
+    },
+    "{ServiceName}-worker-provisioner": {
+      "image": "ghcr.io/solomon2773/nora-worker-provisioner:v1.16.4@sha256:6c3d3c19b5b15991867f4cfcf694f74539ffc9b37daf3d32e5a016ae711008a4",
+      "container_name": "{ServiceName}-worker-provisioner",
+      "hostname": "{ServiceName}-worker-provisioner",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "worker-provisioner"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "user": "0:0",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "entrypoint": "/bin/sh -c",
+      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');exec$IFS'/usr/local/bin/nora-container-entrypoint'$IFS'npm'$IFS'start'",
+      "environment": [
+        "NODE_ENV=production",
+        "PLATFORM_MODE=selfhosted",
+        "ENABLED_BACKENDS=docker",
+        "ENABLED_RUNTIME_FAMILIES=openclaw,hermes",
+        "ENABLED_SANDBOX_PROFILES=standard",
+        "OPENCLAW_DOCKER_IMAGE=node:24-slim",
+        "NEXTAUTH_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "CORS_ORIGINS={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "DB_HOST={ServiceName}-postgres",
+        "DB_PORT=5432",
+        "DB_USER=nora",
+        "DB_PASSWORD={Passwords.3}",
+        "DB_NAME=nora",
+        "REDIS_HOST={ServiceName}-redis",
+        "REDIS_PORT=6379",
+        "JWT_SECRET={Passwords.0}{Passwords.1}",
+        "NORA_API_KEY_HASH_SECRET={Passwords.3}{Passwords.0}",
+        "NORA_AGENT_HUB_API_KEY_HASH_SECRET={Passwords.2}{Passwords.0}",
+        "NORA_ENCRYPTION_SEED={Passwords.1}{Passwords.2}",
+        "NORA_BACKUP_SEED={Passwords.2}{Passwords.3}",
+        "NORA_INSTALL_METHOD=docker_image",
+        "NORA_CURRENT_VERSION=v1.16.4",
+        "NORA_GITHUB_REPO=solomon2773/nora",
+        "NORA_AUTO_UPGRADE_ENABLED=false",
+        "NORA_BACKUP_STORAGE=local",
+        "NORA_BACKUP_DIR=/var/lib/nora-backups",
+        "DEPLOYMENT_WORKER_CONCURRENCY=6",
+        "NODE_PATH=/app/node_modules"
+      ],
+      "extra_hosts": [
+        "host.docker.internal:host-gateway"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png",
+        "cosmos-persistent-env": "JWT_SECRET,NORA_API_KEY_HASH_SECRET,NORA_AGENT_HUB_API_KEY_HASH_SECRET,NORA_ENCRYPTION_SEED,NORA_BACKUP_SEED,DB_PASSWORD"
+      },
+      "volumes": [
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        }
+      ],
+      "depends_on": {
+        "{ServiceName}-backend-api": {},
+        "{ServiceName}-postgres": {},
+        "{ServiceName}-redis": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "node -e \"require('http').get('http://127.0.0.1:4001/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))\""
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 5,
+        "start_period": 30
+      }
+    },
+    "{ServiceName}-worker-backup": {
+      "image": "ghcr.io/solomon2773/nora-worker-backup:v1.16.4@sha256:f4fd540bf6f66eabe7bf03a0e3c9832fe3434728b6cf7c6e1bb0bc845149de19",
+      "container_name": "{ServiceName}-worker-backup",
+      "hostname": "{ServiceName}-worker-backup",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "worker-backup"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "user": "0:0",
+      "cap_drop": [
+        "ALL"
+      ],
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "entrypoint": "/bin/sh -c",
+      "command": "export$IFS'ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_ENCRYPTION_SEED\"|sha256sum|cut$IFS'-c1-64');export$IFS'NORA_BACKUP_ENCRYPTION_KEY'=$(printf$IFS'%s'$IFS\"$NORA_BACKUP_SEED\"|sha256sum|cut$IFS'-c1-64');exec$IFS'/usr/local/bin/nora-container-entrypoint'$IFS'npm'$IFS'start'",
+      "environment": [
+        "NODE_ENV=production",
+        "PLATFORM_MODE=selfhosted",
+        "ENABLED_BACKENDS=docker",
+        "ENABLED_RUNTIME_FAMILIES=openclaw,hermes",
+        "ENABLED_SANDBOX_PROFILES=standard",
+        "OPENCLAW_DOCKER_IMAGE=node:24-slim",
+        "NEXTAUTH_URL={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "CORS_ORIGINS={RootProtocol}://{Hostnames.{StaticServiceName}.{StaticServiceName}.host}",
+        "DB_HOST={ServiceName}-postgres",
+        "DB_PORT=5432",
+        "DB_USER=nora",
+        "DB_PASSWORD={Passwords.3}",
+        "DB_NAME=nora",
+        "REDIS_HOST={ServiceName}-redis",
+        "REDIS_PORT=6379",
+        "JWT_SECRET={Passwords.0}{Passwords.1}",
+        "NORA_API_KEY_HASH_SECRET={Passwords.3}{Passwords.0}",
+        "NORA_AGENT_HUB_API_KEY_HASH_SECRET={Passwords.2}{Passwords.0}",
+        "NORA_ENCRYPTION_SEED={Passwords.1}{Passwords.2}",
+        "NORA_BACKUP_SEED={Passwords.2}{Passwords.3}",
+        "NORA_INSTALL_METHOD=docker_image",
+        "NORA_CURRENT_VERSION=v1.16.4",
+        "NORA_GITHUB_REPO=solomon2773/nora",
+        "NORA_AUTO_UPGRADE_ENABLED=false",
+        "NORA_BACKUP_STORAGE=local",
+        "NORA_BACKUP_DIR=/var/lib/nora-backups",
+        "BACKUP_WORKER_CONCURRENCY=2",
+        "NODE_PATH=/app/node_modules"
+      ],
+      "extra_hosts": [
+        "host.docker.internal:host-gateway"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png",
+        "cosmos-persistent-env": "JWT_SECRET,NORA_API_KEY_HASH_SECRET,NORA_AGENT_HUB_API_KEY_HASH_SECRET,NORA_ENCRYPTION_SEED,NORA_BACKUP_SEED,DB_PASSWORD"
+      },
+      "volumes": [
+        {
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "type": "bind"
+        },
+        {
+          "source": "{ServiceName}-backups",
+          "target": "/var/lib/nora-backups",
+          "type": "volume"
+        }
+      ],
+      "depends_on": {
+        "{ServiceName}-backend-api": {},
+        "{ServiceName}-postgres": {},
+        "{ServiceName}-redis": {}
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "node -e \"require('http').get('http://127.0.0.1:4002/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))\""
+        ],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 5,
+        "start_period": 30
+      }
+    },
+    "{ServiceName}-postgres": {
+      "image": "postgres:15-alpine",
+      "container_name": "{ServiceName}-postgres",
+      "hostname": "{ServiceName}-postgres",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "postgres"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "environment": [
+        "POSTGRES_USER=nora",
+        "POSTGRES_PASSWORD={Passwords.3}",
+        "POSTGRES_DB=nora",
+        "PGDATA=/var/lib/postgresql/data/pgdata"
+      ],
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png",
+        "cosmos-persistent-env": "POSTGRES_PASSWORD"
+      },
+      "volumes": [
+        {
+          "source": "{ServiceName}-postgres-data",
+          "target": "/var/lib/postgresql/data",
+          "type": "volume"
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -h 127.0.0.1 -U nora -d nora"
+        ],
+        "interval": 10,
+        "timeout": 5,
+        "retries": 10,
+        "start_period": 10
+      }
+    },
+    "{ServiceName}-redis": {
+      "image": "redis:7-alpine",
+      "container_name": "{ServiceName}-redis",
+      "hostname": "{ServiceName}-redis",
+      "networks": {
+        "{ServiceName}_default": {
+          "aliases": [
+            "redis"
+          ]
+        }
+      },
+      "restart": "unless-stopped",
+      "labels": {
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}",
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/Nora/icon.png"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ],
+        "interval": 10,
+        "timeout": 5,
+        "retries": 10,
+        "start_period": 5
+      }
+    }
+  }
+}
