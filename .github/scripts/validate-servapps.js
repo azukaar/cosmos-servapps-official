@@ -111,22 +111,54 @@ function eachApp() {
     .filter((name) => fs.lstatSync(path.join(dir, name)).isDirectory());
 }
 
+// Canonical icon/artefact bases this store actually serves content from.
+// All are lowercase on purpose: GitHub Pages serves case-sensitively, so any
+// differently-cased variant of these bases is a 404 and must be flagged, not
+// normalized away.
+function canonicalIconBases() {
+  const bases = [];
+  if (OWN_STORE_BASE) bases.push(OWN_STORE_BASE);
+  // The official azukaar/cosmos-servapps-official Pages base. Kept in
+  // addition to OWN_STORE_BASE so fork CI (where the Pages base would be the
+  // fork's own) still accepts the upstream-served icon URLs.
+  bases.push('https://azukaar.github.io/cosmos-servapps-official/servapps/');
+  // Official raw.githubusercontent.com artefact base. Both master and
+  // unstable branches are valid (an unstable branch is planned).
+  bases.push('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/servapps/');
+  bases.push('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/unstable/servapps/');
+  return bases;
+}
+
 // Whitelist of URL bases this repository legitimately ships icons from
 // (store-hosted artefact files fall under the same base). Anything else is
 // treated as a copy-paste from another store and flagged.
-function isAllowedIconUrl(lower) {
+// Comparison is CASE-SENSITIVE: canonical bases are lowercase and GitHub
+// Pages only serves the lowercase path, so a differently-cased URL is not
+// whitelisted (it would 404).
+function isAllowedIconUrl(url) {
+  const s = (url || '').trim();
+  if (!s) return false;
   // Only the canonical, actually-served icon bases are whitelisted.
   // (All other forms, e.g. a bare apps/<app>/icon.png under the repo root,
   //  resolve to 404 and must be fixed, not allowed.)
-  // 1. This repository's own GitHub Pages store base (e.g. .../servapps/).
-  if (OWN_STORE_BASE && lower.startsWith(OWN_STORE_BASE)) return true;
-  // 2. The canonical official cosmos-servapps-official Pages base (/servapps/).
-  if (lower.startsWith('https://azukaar.github.io/cosmos-servapps-official/servapps/')) return true;
-  // 3. Official raw.githubusercontent.com artefact base. Both master and
-  //    unstable branches are valid (an unstable branch is planned).
-  if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/master/servapps/')) return true;
-  if (lower.startsWith('https://raw.githubusercontent.com/azukaar/cosmos-servapps-official/unstable/servapps/')) return true;
+  for (const base of canonicalIconBases()) {
+    if (s.startsWith(base)) return true;
+  }
   return false;
+}
+
+// If the URL is a case-variant of one of the canonical bases (lowercases to
+// one of them but is not byte-identical), return the canonical base it
+// should use. Otherwise return null. GitHub Pages is case-sensitive, so such
+// a URL resolves to 404 even though it "looks" like this store.
+function caseMismatchedCanonicalBase(url) {
+  const s = (url || '').trim();
+  const lower = s.toLowerCase();
+  if (!s) return null;
+  for (const base of canonicalIconBases()) {
+    if (lower.startsWith(base) && !s.startsWith(base)) return base;
+  }
+  return null;
 }
 
 // Check a single store-served URL (an icon or a store-hosted artefact file).
@@ -134,10 +166,15 @@ function isAllowedIconUrl(lower) {
 // hints, homepages, config defaults) is intentionally skipped and never
 // checked.
 function checkIconUrl(app, file, url) {
-  const lower = (url || '').toLowerCase().trim();
-  if (!lower) return;
-  if (isAllowedIconUrl(lower)) return;
-  err(app, file, 'store icon URL is not served by this store (copy-paste?): ' + url);
+  const s = (url || '').trim();
+  if (!s) return;
+  const caseFix = caseMismatchedCanonicalBase(s);
+  if (caseFix) {
+    err(app, file, "store icon URL uses the wrong case for this store's base (GitHub Pages serves it as 404; should start with " + caseFix + "): " + s);
+    return;
+  }
+  if (isAllowedIconUrl(s)) return;
+  err(app, file, 'store icon URL is not served by this store (copy-paste?): ' + s);
 }
 
 
