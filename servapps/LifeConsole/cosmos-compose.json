@@ -10,7 +10,7 @@
   "minVersion": "0.9.0",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/tj-coding/life-console:0.1",
+      "image": "ghcr.io/tj-coding/life-console:0.2",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
       "environment": [
