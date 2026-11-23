@@ -1,0 +1,9 @@
+{
+  "name": "oboku",
+  "longDescription": "<p>Sync and read your books from the cloud. oboku is a web reader that syncs your own ebooks from your cloud storage, so that you can manage and read your library. It works offline, reads many formats (.epub, .cbz, .pdf, ...) and runs on any device with a web browser.</p>",
+  "description": "E-book reader that lets you sync your books from your cloud storages.",
+  "tags": ["e-book", "library", "audiobook", "manga", "open-source", "management", "web", "reader", "cloud", "sync", "offline", "epub", "cbz", "comics"],
+  "repository": "https://github.com/mbret/oboku",
+  "image": "https://hub.docker.com/r/mbret/oboku-web",
+  "supported_architectures": ["amd64", "arm64"]
+}
