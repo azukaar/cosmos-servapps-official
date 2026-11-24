@@ -1,0 +1,23 @@
+{
+  "name": "Bindery",
+  "description": "Self-hosted book manager for ebooks and audiobooks. Track authors, search indexers, send grabs to your download client and import into a tidy library.",
+  "longDescription": "<p>Bindery is a self-hosted manager for ebooks and audiobooks, a single Go binary with a web UI. Add the authors you follow and Bindery looks up their books, searches your Usenet and torrent indexers, hands the grab to your download client and imports the result into a library folder with consistent naming.</p><p>It works with SABnzbd, NZBGet, qBittorrent, Transmission, Deluge and others, and it can read and write Calibre libraries and import from Audiobookshelf. It is MIT licensed.</p><p>The container ships with a single mount for settings (<code>/config</code>), one for your library (<code>/books</code>) and one for your download client's finished folder (<code>/downloads</code>). Put your download client's completed folder on the downloads path, or set a path remap in Settings, Download clients. Docs: <a href=\"https://getbindery.dev\">getbindery.dev</a>.</p>",
+  "tags": [
+    "ebooks",
+    "audiobooks",
+    "books",
+    "library",
+    "media",
+    "download",
+    "usenet",
+    "torrent",
+    "calibre",
+    "self-hosted"
+  ],
+  "repository": "https://github.com/vavallee/bindery",
+  "image": "https://github.com/vavallee/bindery/pkgs/container/bindery",
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ]
+}
