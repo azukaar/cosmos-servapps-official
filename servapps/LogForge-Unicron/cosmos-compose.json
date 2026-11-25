@@ -94,6 +94,12 @@
           "readOnly": false
         },
         {
+          "source": "/",
+          "target": "/host/root",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
           "source": "{ServiceName}-pyinstaller",
           "target": "/run/pyinstaller",
           "type": "volume"

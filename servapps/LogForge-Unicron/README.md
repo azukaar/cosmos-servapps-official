@@ -48,6 +48,16 @@ request-aware authorization policy would be a separate design and validation
 effort. Marketplace acceptance of this trust model remains the maintainers'
 decision.
 
+## Host metrics
+
+The appliance's bundled OpenTelemetry collector reads host CPU, memory, disk,
+filesystem, and network metrics through the `hostmetrics` receiver, which
+expects the host root filesystem at `/host/root`. This package bind-mounts the
+host `/` there **read-only**. Without it, the collector exits with
+`invalid root_path: stat /host/root` and restarts in a loop, and host metrics
+for the Cosmos host are missing. The mount grants no write access; the
+writable Docker socket described above already exceeds its authority.
+
 ## Cosmos compatibility and readiness
 
 The [Cosmos service schema](https://github.com/azukaar/Cosmos-Server/blob/master/src/docker/api_blueprint.go)
