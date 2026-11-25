@@ -1,0 +1,53 @@
+{
+  "cosmos-installer": {
+    "form": [
+      {
+        "name": "signingSecret",
+        "label": "Signing secret (required). Generate with openssl rand -hex 32.",
+        "type": "password"
+      },
+      {
+        "name": "verificationSecret",
+        "label": "Verification secret (required). Run openssl rand -hex 32 again for a different value.",
+        "type": "password"
+      }
+    ],
+    "post-install": [
+      {
+        "type": "info",
+        "label": "Open the service route and append /demo/ to try the widget. Use the verification secret only in your application backend."
+      },
+      {
+        "type": "info",
+        "label": "For public use, enable HTTPS. Set FCAPTCHA_ALLOWED_HOSTNAMES to the hostnames that embed the widget and set TRUSTED_PROXIES to the specific Cosmos proxy addresses. See the FCaptcha HARDENING.md guide."
+      }
+    ]
+  },
+  "minVersion": "0.7.0",
+  "services": {
+    "{ServiceName}": {
+      "container_name": "{ServiceName}",
+      "image": "ghcr.io/webdecoy/fcaptcha:1.51.4",
+      "restart": "unless-stopped",
+      "environment": [
+        "FCAPTCHA_SECRET={Context.signingSecret}",
+        "FCAPTCHA_VERIFY_SECRET={Context.verificationSecret}"
+      ],
+      "labels": {
+        "cosmos-icon": "https://azukaar.github.io/cosmos-servapps-official/servapps/FCaptcha/icon.png",
+        "cosmos-stack": "{ServiceName}",
+        "cosmos-stack-main": "{ServiceName}"
+      },
+      "routes": [
+        {
+          "name": "{ServiceName}",
+          "description": "FCaptcha widget and verification API",
+          "useHost": true,
+          "target": "http://{ServiceName}:3000",
+          "mode": "SERVAPP",
+          "authEnabled": false
+        }
+      ]
+    }
+  }
+}

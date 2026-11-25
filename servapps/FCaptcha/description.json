@@ -1,0 +1,9 @@
+{
+  "name": "FCaptcha",
+  "description": "Self-hosted CAPTCHA widget and server-side verification for web forms.",
+  "longDescription": "<p>FCaptcha runs a browser widget and its token verifier on your own server. Use it to protect contact forms and custom signup flows. Deploy a single container, try its bundled demo at /demo/, and verify tokens in your application backend.</p><p>The single-instance template stores security state in memory. It requires two distinct user-generated secrets and an HTTPS route for public use.</p>",
+  "tags": ["security", "captcha", "privacy"],
+  "repository": "https://github.com/WebDecoy/FCaptcha",
+  "image": "ghcr.io/webdecoy/fcaptcha:1.51.4",
+  "supported_architectures": ["amd64", "arm64"]
+}
