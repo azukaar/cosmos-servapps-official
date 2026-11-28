@@ -5,5 +5,5 @@
   "tags": ["download", "games", "roms", "retro", "emulation", "torrent", "usenet", "automated", "downloader", "media", "arr", "prowlarr", "romm", "gaseous", "retrom", "retro gaming", "game library", "romarr", "cartridge"],
   "repository": "https://github.com/BlizzHacker/romarr",
   "image": "https://github.com/BlizzHacker/romarr/pkgs/container/romarr",
-  "supported_architectures": ["amd64", "arm64"]
+  "supported_architectures": ["amd64", "arm64", "arm/v7"]
 }

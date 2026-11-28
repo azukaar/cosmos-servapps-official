@@ -60,8 +60,8 @@
         "retries": 3,
         "start_period": "30s"
       },
-      "UID": 1000,
-      "GID": 1000,
+      "uid": 1000,
+      "gid": 1000,
       "environment": [
         "PUID=1000",
         "PGID=1000",
