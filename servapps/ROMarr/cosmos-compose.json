@@ -34,6 +34,10 @@
       {
         "type": "warning",
         "label": "Open ROMarr and set your Prowlarr URL and API key, your download client, and your game library on the Settings page. At least one download client is required: a release found with no client that speaks its protocol is ranked and then refused."
+      },
+      {
+        "type": "warning",
+        "label": "Restrict access to the config volume. /config/romarr.json stores indexer and download-client credentials."
       }
       {if Context.downloader}
       , {
@@ -46,9 +50,16 @@
   "minVersion": "0.7.6",
   "services": {
     "{ServiceName}": {
-      "image": "ghcr.io/blizzhacker/romarr:0.7.0",
+      "image": "ghcr.io/blizzhacker/romarr:latest",
       "container_name": "{ServiceName}",
       "restart": "unless-stopped",
+      "healthcheck": {
+        "test": ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:6868/api/health', timeout=3).close()"],
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "start_period": "30s"
+      },
       "UID": 1000,
       "GID": 1000,
       "environment": [
@@ -97,7 +108,7 @@
             "Enabled": true,
             "PolicyStrictness": 2
           },
-          "AuthEnabled": "{Context.adminOnly}",
+          "AuthEnabled": true,
           "AdminOnly": "{Context.adminOnly}"
         }
       ]
